@@ -9,12 +9,9 @@ use yii\base\Model;
  */
 class ReportForm extends Model
 {
+    public $first;
+    public $last;
 
-    const OPTION_DATE_ISSUED    = 'date_issued';
-
-    public $data_first;
-    public $data_last;
-    public $option_date;
 
     /**
      * @inheritdoc
@@ -23,16 +20,15 @@ class ReportForm extends Model
     {
         return [
             // username and password are both required
-            [['data_first', 'data_last', 'option_date'], 'required'],
+            [['first', 'last'], 'required'],
         ];
     }
-
+    
     public function attributeLabels()
     {
         return [
-            'data_first'    => 'First',
-            'data_last'     => 'Last',
-            'option_date'   => 'Date',
+            'first' => 'First',
+            'last' => 'Last',
         ];
     }
 }

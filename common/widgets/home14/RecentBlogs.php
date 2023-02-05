@@ -5,7 +5,6 @@ use Yii;
 use yii\base\Widget;
 use backend\models\Blog as Blog;
 use backend\models\Comment as Comment;
-use backend\models\Lookup as Lookup;
 
 class RecentBlogs extends Widget
 {
@@ -23,7 +22,7 @@ class RecentBlogs extends Widget
 
     public function run()
     {
-        $blogs = Blog::find()->where(['publish_status' =>Lookup::getId(Yii::$app->params['LookupToken_Publish'])])->orderBy(['create_time' => SORT_DESC])->limit($this->maxData)->all();
+        $blogs = Blog::find()->where(['publish_status' =>Blog::PUBLISH_STATUS_YES])->orderBy(['created_at' => SORT_DESC])->limit($this->maxData)->all();
         $countComments=Comment::find()->count();
         return $this->render('_recent_blog', [
             'title' => $this->title,

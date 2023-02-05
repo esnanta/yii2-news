@@ -1,6 +1,7 @@
 <?php
 namespace common\models;
 
+use Yii;
 use dektrium\user\models\User as BaseUser;
 
 /**
@@ -19,6 +20,19 @@ use dektrium\user\models\User as BaseUser;
  */
 class User extends BaseUser
 {
+    
+    public function beforeSave($insert) {
+        if (!parent::beforeSave($insert)) {
+            return false;
+        }
+
+        if ($this->isNewRecord) {
+            $this->username  = $this->email;
+        }
+        
+        return true;
+    }     
+    
     public function afterSave($insert, $changedAttributes)
     {
         parent::afterSave($insert, $changedAttributes);
@@ -32,6 +46,30 @@ class User extends BaseUser
                     'created_at' => time(),
                 ])
                 ->execute();
+            
+            $this->saveApplicant();
         }
-    }    
+    }
+
+    private function saveApplicant(){
+        if(Yii::$app->params['Feat-Applicant']){
+
+            $applicant = new \backend\models\Applicant;
+            $applicant->user_id = $this->id;
+            $applicant->save();
+            
+            if(Yii::$app->params['Feat-Applicant-Academic']){
+                $model = new \backend\models\ApplicantAcademic;
+                $model->applicant_id = $applicant->id;
+                $model->save();
+            }   
+
+            if(Yii::$app->params['Feat-Applicant-Almamater']){
+                $model = new \backend\models\ApplicantAlmamater;
+                $model->applicant_id = $applicant->id;
+                $model->save();
+            }   
+
+        }                    
+    }
 }

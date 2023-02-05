@@ -2,28 +2,27 @@
     "name": "yiisoft/yii2-app-advanced",
     "description": "Yii 2 Advanced Project Template",
     "keywords": ["yii2", "framework", "advanced", "project template"],
-    "homepage": "http://www.yiiframework.com/",
-    "type": "project",
+    "homepage": "https://www.yiiframework.com/",
+    "type": "yii2-extension",
     "license": "BSD-3-Clause",
     "support": {
         "issues": "https://github.com/yiisoft/yii2/issues?state=open",
-        "forum": "https://forum.yiiframework.com/",
-        "wiki": "https://www.yiiframework.com/wiki",
-        "irc": "ircs://irc.libera.chat:6697/yii",
+        "forum": "https://www.yiiframework.com/forum/",
+        "wiki": "https://www.yiiframework.com/wiki/",
+        "irc": "irc://irc.freenode.net/yii",
         "source": "https://github.com/yiisoft/yii2"
     },
-    "minimum-stability": "beta",
-    "prefer-stable" : true,
+    "minimum-stability": "stable",
     "require": {
-        "php": ">=7.2.0",
-        "yiisoft/yii2": "~2.0.14",
-        "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0",
+        "php": ">=7.4.0",
+        "yiisoft/yii2": "~2.0.45",
+        "yiisoft/yii2-symfonymailer": "~2.0.3",
+        
         "yiisoft/yii2-bootstrap": "~2.0.0",
         "yiisoft/yii2-bootstrap4": "~2.0.6",
-        
         "yiisoft/yii2-authclient": "~2.1.7",
 
-        "fxp/composer-asset-plugin":"1.4.1",
+        "bower-asset/bootstrap": "3.3.* | 3.2.* | 3.1.*",
         "dmstr/yii2-adminlte-asset":"2.*",
         
         "kartik-v/yii2-widgets": "*",
@@ -43,6 +42,7 @@
         "kartik-v/yii2-slider": "*",
         "kartik-v/yii2-checkbox-x": "*",
         "kartik-v/yii2-social": "dev-master", 
+        "kartik-v/yii2-bootstrap4-dropdown": "dev-master",
         
         "ercling/yii2-pace": "dev-master",
         
@@ -51,7 +51,7 @@
         "bajadev/yii2-ckeditor": "*",
         "budyaga/yii2-cropper": "*",  
         "dektrium/yii2-user": "*",
-
+               
         "2amigos/yii2-taggable-behavior": "~1.0",
         "2amigos/yii2-chartjs-widget" : "~2.0",
         "2amigos/yii2-google-maps-library": "*",
@@ -63,38 +63,44 @@
         "mike42/escpos-php":"*",
         
         "philippfrenzel/yii2fullcalendar": ">=3.9.0",
-        "yii2tech/ar-softdelete": "*"
+        "yii2tech/ar-softdelete": "*",
         
+        "mootensai/yii2-enhanced-gii": "dev-master",
+        "warrence/yii2-kartikgii": "dev-master",
+        
+        "dektrium/yii2-rbac": "1.0.0-alpha@dev",
+        "buttflattery/yii2-formwizard":"@dev"
     },
     "require-dev": {
-        
         "yiisoft/yii2-debug": "~2.1.0",
         "yiisoft/yii2-gii": "~2.2.0",
         "yiisoft/yii2-faker": "~2.0.0",
-        "codeception/codeception": "^4.0",
-        "codeception/module-asserts": "^1.0",
-        "codeception/module-yii2": "^1.0",
-        "codeception/module-filesystem": "^1.0",
-        "codeception/verify": "~0.5.0 || ~1.1.0",
-        "symfony/browser-kit": ">=2.7 <=4.2.4",
-
-        
-        "phpunit/phpunit": "~5.7.27 || ~6.5.5",
-
-        "mootensai/yii2-enhanced-gii": "dev-master",
-        "warrence/yii2-kartikgii": "dev-master",
-        "dektrium/yii2-rbac": "1.0.0-alpha@dev"
+        "phpunit/phpunit": "~9.5.0",
+        "codeception/codeception": "^5.0.0 || ^4.0",
+        "codeception/lib-innerbrowser": "^3.0 || ^1.1",
+        "codeception/module-asserts": "^3.0 || ^1.1",
+        "codeception/module-yii2": "^1.1",
+        "codeception/module-filesystem": "^2.0 || ^1.1",
+        "codeception/verify": "^2.2",
+        "symfony/browser-kit": "^6.0 || >=2.7 <=4.2.4"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "common\\tests\\": ["common/tests/", "common/tests/_support"],
+            "backend\\tests\\": ["backend/tests/", "backend/tests/_support"],
+            "frontend\\tests\\": ["frontend/tests/", "frontend/tests/_support"]
+        }
     },
     "config": {
+        "allow-plugins": {
+            "yiisoft/yii2-composer" : true
+        },
         "process-timeout": 1800,
         "fxp-asset": {
             "enabled": false
         },
-        "allow-plugins": {
-            "yiisoft/yii2-composer": true
-        },
         "github-oauth": {
-            "github.com": "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"
+            "github.com": "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"
         }
     },
     "repositories": [
@@ -102,21 +108,30 @@
             "type": "composer",
             "url": "https://asset-packagist.org"
         }
-    ],    
+    ],
     "extra": {
-        "branch-alias": {
-            "dev-master": "master-dev"
-        },        
-        "installer-paths": {
-            "npm-asset-library": "vendor/npm",
-            "bower-asset-library": "vendor/bower"
+        "bootstrap": "yii\\jui\\Extension",
+        "yii\\composer\\Installer::postCreateProject": {
+            "setPermission": [
+                {
+                    "runtime": "0777",
+                    "web/assets": "0777",
+                    "yii": "0755"
+                }
+            ]
         },
-        "vcs-driver-options": {
-            "github-no-api": true
-        },
-        "pattern-skip-version": "(-build|-patch)"
-    },
-    "scripts": {
-        "post-install-cmd": "php init --env=Development --overwrite=n"
+        "yii\\composer\\Installer::postInstall": {
+            "copyFiles": [
+                {
+                    "config/templates/console-local.php": "config/console-local.php",
+                    "config/templates/web-local.php": "config/web-local.php",
+                    "config/templates/db-local.php": "config/db-local.php",
+                    "config/templates/cache.json": ["runtime/cache.json", true]
+                }
+            ],
+            "generateCookieValidationKey": [
+                "config/web-local.php"
+            ]
+        }
     }
 }

@@ -23,7 +23,7 @@ class File extends \bajadev\ckeditor\models\File
             [
                 ['file'],
                 'file',
-                'extensions' => 'jpg,bmp,gif,png,jpeg','maxSize' => (900 * 1024), 'tooBig' => 'Limit is 900KB',
+                'extensions' => 'jpg,bmp,gif,png,jpeg','maxSize' => (1 * 1024 * 1024), 'tooBig' => 'Limit is 1 MB',
             ],
         ];
     }

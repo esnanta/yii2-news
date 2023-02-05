@@ -65,4 +65,5 @@ return [
             'frontend/config/main-local.php',
         ],
     ],
+
 ];

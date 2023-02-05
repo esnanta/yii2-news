@@ -29,7 +29,7 @@ class ChartYearly extends Model
     public function attributeLabels()
     {
         return [
-            'option_year'    => 'Tahun',
+            'option_year'    => 'Year',
         ];
     }
 }

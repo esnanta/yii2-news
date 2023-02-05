@@ -27,7 +27,7 @@ class ReportCloud {
         $headerStyle = (new StyleBuilder())
             ->setBackgroundColor(Color::LIGHT_BLUE)
             ->setBorder($border)
-            ->setShouldWrapText(false)
+            //->setShouldWrapText(false)
             ->build();
 
         return $headerStyle;
@@ -37,7 +37,7 @@ class ReportCloud {
         $border = self::getBorderStyle();
         $rowStyle = (new StyleBuilder())
             ->setBorder($border)
-            ->setShouldWrapText(false)
+            //->setShouldWrapText(false)
             ->build();
 
         return $rowStyle;

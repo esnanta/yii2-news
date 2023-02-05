@@ -99,7 +99,6 @@ class BrowseAction extends \bajadev\ckeditor\actions\BrowseAction
                     echo "<script type='text/javascript'>alert('" . $model->getFirstError('file') . "');</script>";
                     exit;
                 }
-
             }
         }
 

@@ -70,6 +70,10 @@
   php_value session.cookie_httponly true
 </IfModule>
 
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php72 .php .php7 .phtml
+</IfModule>
+
 # Settings to hide index.php and ensure pretty urls
 RewriteEngine on
 

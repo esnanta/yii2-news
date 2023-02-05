@@ -29,6 +29,11 @@ class Home14Asset extends AssetBundle
         'vendor/hs-megamenu/src/hs.megamenu.css',
         'vendor/hamburgers/hamburgers.min.css',
         
+        'vendor/slick-carousel/slick/slick.css',
+        'vendor/typedjs/typed.css',
+ 
+        'vendor/cubeportfolio-full/cubeportfolio/css/cubeportfolio.min.css',
+        
         'vendor/revolution-slider/revolution/fonts/pe-icon-7-stroke/css/pe-icon-7-stroke.css',
         'vendor/revolution-slider/revolution/css/settings.css',
         'vendor/revolution-slider/revolution/css/layers.css',
@@ -47,12 +52,17 @@ class Home14Asset extends AssetBundle
         'vendor/jquery/jquery.min.js',
         'vendor/jquery-migrate/jquery-migrate.min.js',
         'vendor/jquery.easing/js/jquery.easing.js',
-        'vendor/popper.min.js',
+        'vendor/popper.js/popper.min.js',
         'vendor/bootstrap/bootstrap.min.js',
         
         'vendor/appear.js',
         'vendor/hs-megamenu/src/hs.megamenu.js',
         'vendor/fancybox/jquery.fancybox.min.js',
+        
+        'vendor/slick-carousel/slick/slick.js',
+        'vendor/typedjs/typed.min.js',
+      
+        'vendor/cubeportfolio-full/cubeportfolio/js/jquery.cubeportfolio.min.js',
         
         'vendor/gmaps/gmaps.min.js',
 
@@ -73,17 +83,21 @@ class Home14Asset extends AssetBundle
         'js/components/hs.header.js',
         'js/helpers/hs.hamburgers.js',
         'js/components/hs.tabs.js',
+        'js/components/hs.cubeportfolio.js',
         'js/components/hs.popup.js',
         'js/components/hs.onscroll-animation.js',
+        
         'js/components/hs.sticky-block.js',
         'js/components/hs.go-to.js',
-  
+        'js/components/hs.carousel.js',
+        'js/components/text-animation/hs.text-slideshow.js',
+
         'js/custom.js',
             
     
     ];
     public $depends = [
-        //'yii\web\YiiAsset',
-        //'yii\bootstrap\BootstrapAsset',
+        'yii\web\YiiAsset',
+//        'yii\bootstrap\BootstrapAsset',
     ];
 }
