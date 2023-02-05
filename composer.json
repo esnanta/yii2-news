@@ -1,0 +1,122 @@
+{
+    "name": "yiisoft/yii2-app-advanced",
+    "description": "Yii 2 Advanced Project Template",
+    "keywords": ["yii2", "framework", "advanced", "project template"],
+    "homepage": "http://www.yiiframework.com/",
+    "type": "project",
+    "license": "BSD-3-Clause",
+    "support": {
+        "issues": "https://github.com/yiisoft/yii2/issues?state=open",
+        "forum": "https://forum.yiiframework.com/",
+        "wiki": "https://www.yiiframework.com/wiki",
+        "irc": "ircs://irc.libera.chat:6697/yii",
+        "source": "https://github.com/yiisoft/yii2"
+    },
+    "minimum-stability": "beta",
+    "prefer-stable" : true,
+    "require": {
+        "php": ">=7.2.0",
+        "yiisoft/yii2": "~2.0.14",
+        "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0",
+        "yiisoft/yii2-bootstrap": "~2.0.0",
+        "yiisoft/yii2-bootstrap4": "~2.0.6",
+        
+        "yiisoft/yii2-authclient": "~2.1.7",
+
+        "fxp/composer-asset-plugin":"1.4.1",
+        "dmstr/yii2-adminlte-asset":"2.*",
+        
+        "kartik-v/yii2-widgets": "*",
+        "kartik-v/yii2-grid": "*",
+        "kartik-v/yii2-krajee-base": "*",
+        "kartik-v/yii2-detail-view": "*",
+        "kartik-v/yii2-widget-datepicker": "*",
+        "kartik-v/yii2-datecontrol": "*",
+        "kartik-v/yii2-editable": "*",
+        "kartik-v/yii2-tabs-x": "*",
+        "kartik-v/bootstrap-tabs-x":"*",
+        "kartik-v/yii2-widget-select2": "*",
+        "kartik-v/yii2-export": "*",
+        "kartik-v/yii2-mpdf": "*",
+        "kartik-v/yii2-tree-manager": "*",
+        "kartik-v/yii2-date-range": "*",
+        "kartik-v/yii2-slider": "*",
+        "kartik-v/yii2-checkbox-x": "*",
+        "kartik-v/yii2-social": "dev-master", 
+        
+        "ercling/yii2-pace": "dev-master",
+        
+        "lesha724/yii2-document-viewer": "*",
+
+        "bajadev/yii2-ckeditor": "*",
+        "budyaga/yii2-cropper": "*",  
+        "dektrium/yii2-user": "*",
+
+        "2amigos/yii2-taggable-behavior": "~1.0",
+        "2amigos/yii2-chartjs-widget" : "~2.0",
+        "2amigos/yii2-google-maps-library": "*",
+        "2amigos/yii2-date-picker-widget": "~1.0",
+        "2amigos/yii2-ckeditor-widget" : "~2.1",
+        
+        "voime/yii2-google-maps": "*",
+        "box/spout": "*",
+        "mike42/escpos-php":"*",
+        
+        "philippfrenzel/yii2fullcalendar": ">=3.9.0",
+        "yii2tech/ar-softdelete": "*"
+        
+    },
+    "require-dev": {
+        
+        "yiisoft/yii2-debug": "~2.1.0",
+        "yiisoft/yii2-gii": "~2.2.0",
+        "yiisoft/yii2-faker": "~2.0.0",
+        "codeception/codeception": "^4.0",
+        "codeception/module-asserts": "^1.0",
+        "codeception/module-yii2": "^1.0",
+        "codeception/module-filesystem": "^1.0",
+        "codeception/verify": "~0.5.0 || ~1.1.0",
+        "symfony/browser-kit": ">=2.7 <=4.2.4",
+
+        
+        "phpunit/phpunit": "~5.7.27 || ~6.5.5",
+
+        "mootensai/yii2-enhanced-gii": "dev-master",
+        "warrence/yii2-kartikgii": "dev-master",
+        "dektrium/yii2-rbac": "1.0.0-alpha@dev"
+    },
+    "config": {
+        "process-timeout": 1800,
+        "fxp-asset": {
+            "enabled": false
+        },
+        "allow-plugins": {
+            "yiisoft/yii2-composer": true
+        },
+        "github-oauth": {
+            "github.com": "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"
+        }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ],    
+    "extra": {
+        "branch-alias": {
+            "dev-master": "master-dev"
+        },        
+        "installer-paths": {
+            "npm-asset-library": "vendor/npm",
+            "bower-asset-library": "vendor/bower"
+        },
+        "vcs-driver-options": {
+            "github-no-api": true
+        },
+        "pattern-skip-version": "(-build|-patch)"
+    },
+    "scripts": {
+        "post-install-cmd": "php init --env=Development --overwrite=n"
+    }
+}

@@ -1,0 +1,8 @@
+/backend/web/assets
+/backend/web/uploads
+/backend/runtime
+/frontend/runtime
+/frontend/web/assets
+/frontend/web/uploads
+/vendor
+/nbproject

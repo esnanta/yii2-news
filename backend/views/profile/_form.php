@@ -1,0 +1,35 @@
+<?php
+
+use yii\helpers\Html;
+use yii\helpers\Url;
+use kartik\widgets\ActiveForm;
+use budyaga\cropper\Widget;
+
+/**
+ * @var yii\web\View $this
+ * @var backend\models\Profile $model
+ * @var yii\widgets\ActiveForm $form
+ */
+?>
+
+<div class="profile-form">
+
+    <?php $form = ActiveForm::begin(['type' => ActiveForm::TYPE_HORIZONTAL]); 
+
+    echo $form->field($model, 'file_name')->widget(Widget::className(), [
+        'uploadUrl' => Url::toRoute('/profile/avatar'),
+        'width'=> '400',
+        'height'=> '400',
+        //'maxSize'=> 4097152,
+        'cropAreaWidth'=> '100%',
+        'cropAreaHeight'=> '600px', 
+    ]); 
+    
+    echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'),
+        ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']
+    );
+        
+
+    ActiveForm::end(); ?>
+
+</div>

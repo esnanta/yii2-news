@@ -1,0 +1,6 @@
+1 akun penerimaan
+    - error unique di detail gak ditandai
+    - hapus elemen detail harus mengubah jumlah claim
+    
+2. archive
+    - belum dipasang rbac untuk download
