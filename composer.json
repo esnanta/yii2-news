@@ -1,7 +1,7 @@
 {
-    "name": "esnanta/yii2-blog",
-    "description": "esnanta/yii2-blog",
-    "keywords": ["yii2", "framework", "esnanta", "blog", "news"],
+    "name": "esnanta/yii2-news",
+    "description": "esnanta/yii2-news",
+    "keywords": ["yii2", "framework", "esnanta", "blog", "news", "profile"],
     "homepage": "https://www.yiiframework.com/",
     "type": "yii2-extension",
     "license": "BSD-3-Clause",
@@ -99,9 +99,6 @@
         "fxp-asset": {
             "enabled": false
         },
-        "github-oauth": {
-            "github.com": "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"
-        }
     },
     "repositories": [
         {
