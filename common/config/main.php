@@ -6,7 +6,7 @@ return [
     ],
     
     //Yii::$app->name
-    'name' => 'ARSIP SMAN MBA',
+    'name' => 'YII2-NEWS',
     'timeZone' => 'Asia/Jakarta',
     
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
@@ -15,11 +15,7 @@ return [
         
         'db' => [
             'class' => \yii\db\Connection::class,
-            'dsn' => 'mysql:host=localhost;dbname=yii2-escyber13',
-            //'dsn' => 'mysql:host=localhost;dbname=zttrhcuc_smanmba',
-            //'dsn' => 'mysql:host=localhost;dbname=zttrhcuc_liniwarta',
-            //'dsn' => 'mysql:host=localhost;dbname=yii2-escyber13_mail',
-            //'dsn' => 'mysql:host=localhost;dbname=yii2-arsip',
+            'dsn' => 'mysql:host=localhost;dbname=yii2-news',
             'username' => 'root',
             'password' => '',
             'charset' => 'utf8',
