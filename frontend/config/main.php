@@ -43,46 +43,6 @@ return [
         'view' => [
             'theme' => [
 
-/*//////////////////////////////////////////////////////////////////////////////
-EDIT JUGA THEME PARAM-LOCAL COMMON
- *///////////////////////////////////////////////////////////////////////////////
-
-//                 'pathMap' => [
-//                     '@app/views' => '@app/web/themes/home14/views',
-//                     '@dektrium/user/views' => '@app/web/themes/home14/views/user',
-//                 ],
-//                 'basePath' => '@app/web/themes/home14',
-//                 'baseUrl' => '@web/web/themes/home14',
-
-//               'pathMap' => [
-//                                   '@app/views' => '@app/web/themes/blog19/views',
-//                                   '@dektrium/user/views' => '@app/web/themes/blog19/views/user'
-//                               ],
-//                               'basePath' => '@app/web/themes/blog19',
-//                               'baseUrl' => '@web/web/themes/blog19',
-//                
-//                                'pathMap' => [
-//                                    '@app/views' => '@app/web/themes/college/views',
-//                                    '@dektrium/user/views' => '@app/web/themes/college/views/user'
-//                                ],
-//                                'basePath' => '@app/web/themes/college',
-//                                'baseUrl' => '@web/web/themes/college',
-
-//               'pathMap' => [
-//                                   '@app/views' => '@app/web/themes/unify196/views',
-//                                   '@dektrium/user/views' => '@app/web/themes/unify196/views/user'
-//                               ],
-//                               'basePath' => '@app/web/themes/unify196',
-//                               'baseUrl' => '@web/web/themes/unify196',
-
-//                'pathMap' => [
-//                                    '@app/views' => '@app/web/themes/home8/views',
-//                                    '@dektrium/user/views' => '@app/web/themes/home8/views/user'
-//                                ],
-//                                'basePath' => '@app/web/themes/home8',
-//                                'baseUrl' => '@web/web/themes/home8',
-                
-                
                  'pathMap' => [
                                      '@app/views' => '@app/web/themes/unify263blog/views',
                                      '@dektrium/user/views' => '@app/web/themes/unify263blog/views/user'

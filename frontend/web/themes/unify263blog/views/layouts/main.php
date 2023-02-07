@@ -12,8 +12,6 @@ use backend\models\Office;
 use backend\models\Blog;
 use backend\models\ThemeDetail;
 use backend\models\Category;
-use backend\models\PageType;
-use backend\models\Page;
 use backend\models\SiteLink;
 
 use kartik\social\TwitterPlugin;
@@ -46,7 +44,6 @@ $this->registerMetaTag(Yii::$app->params['googleplus_image'], 'googleplus_image'
 $office = Office::findOne(1);
 $siteLinks = SiteLink::find()->limit(8)->orderBy(['sequence' => SORT_ASC])->all();
 $categories = Category::find()->orderBy(['sequence' => SORT_ASC])->all();
-$pageTypes = PageType::find()->orderBy(['sequence' => SORT_ASC])->all();
 $timeLine = Category::find()->where(['time_line' => Category::TIME_LINE_YES])->orderBy(['sequence' => SORT_ASC])->one();
 
 $footerLinks = ThemeDetail::getByToken(Yii::$app->params['ContentToken_Links']);
@@ -288,46 +285,47 @@ Unify263BlogAsset::register($this);
                                         <!-- End Submenu -->
                                     </li>
 
-                                    <li class="nav-item hs-has-sub-menu g-mr-10--lg g-mr-20--xl">
+<!--                                    <li class="nav-item hs-has-sub-menu g-mr-10--lg g-mr-20--xl">
                                         <a id="nav-link--home" class="nav-link text-uppercase g-color-primary--hover g-px-0"
                                            href="#" aria-haspopup="true" aria-expanded="false"
                                            aria-controls="nav-submenu--home">
                                             Page
                                         </a>
 
-                                        <!-- Submenu -->
+                                         Submenu 
                                         <ul id="nav-submenu--home"
                                             class="hs-sub-menu list-unstyled u-shadow-v11 g-min-width-220 g-brd-top g-brd-primary g-brd-top-2 g-mt-17"
                                             aria-labelledby="nav-link--home">
 
                                             <?php
-                                            foreach ($pageTypes as $pageTypeModel) {
-                                                $pages = Page::find()->where(['page_type_id' => $pageTypeModel->id])->orderBy(['sequence' => SORT_ASC])->all();
-                                                ?>
+//                                            foreach ($pageTypes as $pageTypeModel) {
+//                                                $pages = Page::find()->where(['page_type_id' => $pageTypeModel->id])->orderBy(['sequence' => SORT_ASC])->all();
+                                            ?>
 
                                                 <div class="dropright dropdown-item g-bg-secondary--hover">
                                                     <div data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                         <a class="nav-link g-color-secondary-dark-v1">
-                                                            <?= $pageTypeModel->title ?>
+                                                            <?php //$pageTypeModel->title ?>
                                                             <span class="pull-right"><i class="fa fa-angle-right"></i></span>
                                                         </a>
                                                     </div>
                                                     <div class="dropdown-menu">
                                                         <?php
-                                                        foreach ($pages as $pageModel) {
-                                                            echo '<li class="dropdown-item g-bg-secondary--hover">' . Html::a($pageModel->title, $pageModel->getUrl(), ['class' => 'nav-link g-color-secondary-dark-v1']) . '</li>';
-                                                        }
+//                                                        foreach ($pages as $pageModel) {
+//                                                            echo '<li class="dropdown-item g-bg-secondary--hover">' . Html::a($pageModel->title, $pageModel->getUrl(), ['class' => 'nav-link g-color-secondary-dark-v1']) . '</li>';
+//                                                        }
                                                         ?>
                                                     </div>
                                                 </div>
 
-                                                <?php
-                                            }
+                                            <?php
+                                            //}
                                             ?>
 
                                         </ul>
-                                        <!-- End Submenu -->
+                                         End Submenu 
                                     </li>
+-->
                                     <!-- End Home - Submenu -->
 
                                 </ul>

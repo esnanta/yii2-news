@@ -29,12 +29,6 @@ insert  into `tx_auth_item`(`name`,`type`,`description`,`rule_name`,`data`,`crea
 ('delete-transaction',2,'Delete Transaction',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
 ('report-transaction',2,'Report Transaction',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP());
 
-insert  into `tx_auth_item`(`name`,`type`,`description`,`rule_name`,`data`,`created_at`,`updated_at`) values
-('index-album',2,'Index Album',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
-('create-album',2,'Create Album',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
-('update-album',2,'Update Album',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
-('view-album',2,'View Album',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
-('delete-album',2,'Delete Album',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP());
 
 insert  into `tx_auth_item`(`name`,`type`,`description`,`rule_name`,`data`,`created_at`,`updated_at`) values
 ('index-archive',2,'Index Archive',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
@@ -87,27 +81,6 @@ insert  into `tx_auth_item`(`name`,`type`,`description`,`rule_name`,`data`,`crea
 ('delete-office',2,'Delete Office',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP());
 
 insert  into `tx_auth_item`(`name`,`type`,`description`,`rule_name`,`data`,`created_at`,`updated_at`) values
-('index-page',2,'Index Page',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
-('create-page',2,'Create Page',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
-('update-page',2,'Update Page',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
-('view-page',2,'View Page',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
-('delete-page',2,'Delete Page',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP());
-
-insert  into `tx_auth_item`(`name`,`type`,`description`,`rule_name`,`data`,`created_at`,`updated_at`) values
-('index-page-type',2,'Index Page Type',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
-('create-page-type',2,'Create Page Type',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
-('update-page-type',2,'Update Page Type',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
-('view-page-type',2,'View Page Type',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
-('delete-page-type',2,'Delete Page Type',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP());
-
-insert  into `tx_auth_item`(`name`,`type`,`description`,`rule_name`,`data`,`created_at`,`updated_at`) values
-('index-photo',2,'Index Photo',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
-('create-photo',2,'Create Photo',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
-('update-photo',2,'Update Photo',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
-('view-photo',2,'View Photo',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
-('delete-photo',2,'Delete Photo',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP());
-
-insert  into `tx_auth_item`(`name`,`type`,`description`,`rule_name`,`data`,`created_at`,`updated_at`) values
 ('index-profile',2,'Index Profile',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
 ('create-profile',2,'Create Profile',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
 ('update-profile',2,'Update Profile',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
@@ -129,13 +102,6 @@ insert  into `tx_auth_item`(`name`,`type`,`description`,`rule_name`,`data`,`crea
 ('delete-staff',2,'Delete Staff',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP());
 
 insert  into `tx_auth_item`(`name`,`type`,`description`,`rule_name`,`data`,`created_at`,`updated_at`) values
-('index-subscriber',2,'Index Subscriber',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
-('create-subscriber',2,'Create Subscriber',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
-('update-subscriber',2,'Update Subscriber',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
-('view-subscriber',2,'View Subscriber',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
-('delete-subscriber',2,'Delete Subscriber',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP());
-
-insert  into `tx_auth_item`(`name`,`type`,`description`,`rule_name`,`data`,`created_at`,`updated_at`) values
 ('index-theme',2,'Index Theme',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
 ('create-theme',2,'Create Theme',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
 ('update-theme',2,'Update Theme',NULL,NULL,UNIX_TIMESTAMP(),UNIX_TIMESTAMP()),
@@ -148,12 +114,6 @@ insert  into `tx_auth_item`(`name`,`type`,`description`,`rule_name`,`data`,`crea
 
 /*Data for the table `tx_auth_item_child` */
 
-insert  into `tx_auth_item_child`(`parent`,`child`) values 
-('index-master','index-album'),
-('create-master','create-album'),
-('update-master','update-album'),
-('view-master','view-album'),
-('delete-master','delete-album');
 
 insert  into `tx_auth_item_child`(`parent`,`child`) values
 ('index-master','index-author'),
@@ -191,27 +151,6 @@ insert  into `tx_auth_item_child`(`parent`,`child`) values
 ('delete-master','delete-office');
 
 insert  into `tx_auth_item_child`(`parent`,`child`) values
-('index-master','index-page'),
-('create-master','create-page'),
-('update-master','update-page'),
-('view-master','view-page'),
-('delete-master','delete-page');
-
-insert  into `tx_auth_item_child`(`parent`,`child`) values
-('index-master','index-page-type'),
-('create-master','create-page-type'),
-('update-master','update-page-type'),
-('view-master','view-page-type'),
-('delete-master','delete-page-type');
-
-insert  into `tx_auth_item_child`(`parent`,`child`) values
-('index-master','index-photo'),
-('create-master','create-photo'),
-('update-master','update-photo'),
-('view-master','view-photo'),
-('delete-master','delete-photo');
-
-insert  into `tx_auth_item_child`(`parent`,`child`) values
 ('index-master','index-profile'),
 ('create-master','create-profile'),
 ('update-master','update-profile'),
@@ -231,13 +170,6 @@ insert  into `tx_auth_item_child`(`parent`,`child`) values
 ('update-master','update-staff'),
 ('view-master','view-staff'),
 ('delete-master','delete-staff');
-
-insert  into `tx_auth_item_child`(`parent`,`child`) values
-('index-master','index-subscriber'),
-('create-master','create-subscriber'),
-('update-master','update-subscriber'),
-('view-master','view-subscriber'),
-('delete-master','delete-subscriber');
 
 insert  into `tx_auth_item_child`(`parent`,`child`) values
 ('index-master','index-theme'),
@@ -260,14 +192,6 @@ insert  into `tx_auth_item_child`(`parent`,`child`) values
 ('update-transaction','update-blog'),
 ('view-transaction','view-blog'),
 ('delete-transaction','delete-blog');
-
-insert  into `tx_auth_item_child`(`parent`,`child`) values
-('index-transaction','index-photo'),
-('create-transaction','create-photo'),
-('update-transaction','update-photo'),
-('view-transaction','view-photo'),
-('delete-transaction','delete-photo');
-
 
 /*Data for the table `tx_auth_assignment` */
 /* ALOKASI ITEM KEPADA USER */
