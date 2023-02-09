@@ -82,19 +82,7 @@ return [
                 '<controller:\w+>/<action:\w+>' => '<controller>/<action>',                
             ],
         ],  
-        
-        'assetManager' => [
-            'bundles' => [
-                'dosamigos\google\maps\MapAsset' => [
-                    'options' => [
-                        'key' => 'AIzaSyAHGeVcgIBNn9znRnlwmOh6j4x9TEFFOGk',
-                        'language' => 'id',
-                        'version' => '3.1.18'
-                    ]
-                ]
-            ]
-        ],       
-        
+
         'formatter' => [
             'class' => 'yii\i18n\Formatter',
             'locale' => 'en-US', 
