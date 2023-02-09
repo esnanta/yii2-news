@@ -8,9 +8,6 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\data\ActiveDataProvider;
-
-use app\components\AuthHandler;
-
 use common\models\LoginForm;
 
 use frontend\models\PasswordResetRequestForm;
