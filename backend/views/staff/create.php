@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= $this->render('_form', [
                 'model' => $model,
                 'employmentList'=>$employmentList,
-                'genderStatusList'=>$genderStatusList
+                'genderList'=>$genderList
             ]) 
             ?>
 

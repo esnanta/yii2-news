@@ -275,7 +275,6 @@ class ArchiveController extends Controller
             Yii::$app->getSession()->setFlash(Yii::$app->params['LabelMessage'], ['message' => Yii::t('app', Helper::getLoginInfo())]);
             throw new ForbiddenHttpException(Yii::t('app', Helper::getAccessDenied()));
         }
-
     }
     
     /**

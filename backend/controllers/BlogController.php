@@ -241,10 +241,22 @@ class BlogController extends Controller
     public function actionDelete($id)
     {
         if(Yii::$app->user->can('delete-blog')){
-            $model = $this->findModel($id);
-            $model->deleteImage();
-            $model->delete();
-            return $this->redirect(['index']);         
+            $transaction = \Yii::$app->db->beginTransaction();
+            try {  
+                $model = $this->findModel($id);
+                $model->deleteImage();
+                $model->delete();
+                $transaction->commit();
+                return $this->redirect(['index']);  
+            } 
+            catch (\Exception $e) {
+                $transaction->rollBack();
+                throw $e;
+            } 
+            catch (\Throwable $e) {
+                $transaction->rollBack();
+                throw $e;
+            }        
         }
         else{
             Yii::$app->getSession()->setFlash('danger', ['message' => Yii::t('app', Helper::getAccessDenied())]);

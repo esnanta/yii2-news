@@ -18,7 +18,7 @@ use backend\models\Category;
  */
 class AuthorController extends Controller
 {
-    public $layout = "/column1_author";
+    public $layout = "/column1";
     
     public function behaviors()
     {

@@ -1,7 +1,6 @@
 <?php
 
-use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use kartik\widgets\ActiveForm;
 
 /**
  * @var yii\web\View $this
@@ -10,15 +9,31 @@ use yii\widgets\ActiveForm;
  */
 ?>
 
-<div class="blog-search">
 
-    <?php $form = ActiveForm::begin([
-        'action' => ['time-line'],
+<?php $form = ActiveForm::begin([
+        'action' => ['index'],
         'method' => 'get',
+        'fieldConfig' => [
+            'options' => [
+                'class' => 'col-lg-12 col-sm-12 col-xs-12 form-group' ,
+                'tag' => 'div',
+            ],
+        ],    
+        'formConfig' => [
+            'showLabels' => false ,
+            'formConfig' => [ 'deviceSize' => ActiveForm::SIZE_LARGE ],
+        ], 
+        'options' => [
+            'class' => 'input-group rounded',
+        ],    
     ]); ?>
 
-    <?= $form->field($model, 'title')->label(false)->textInput(['placeholder' => 'Search Title']) ?>
-   
-    <?php ActiveForm::end(); ?>
+    <?= $form->field($model, 'title')->label(false)->textInput([
+            'class'=>'form-control g-brd-secondary-light-v2 g-brd-primary--focus g-color-secondary-dark-v1 g-placeholder-secondary-dark-v1 g-bg-white g-font-weight-400 g-font-size-13 g-px-20 g-py-12',
+            'placeholder' => 'Search Blog'
+    ]) ?>
 
-</div>
+<?php ActiveForm::end(); ?>
+
+
+

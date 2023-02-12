@@ -83,10 +83,19 @@ class EventController extends Controller
         if(Yii::$app->user->can('view-event')){
             $model = $this->findModel($id);
 
+            $isOpenRegistrationList     = Event::getArrayIsOpenRegistration();
+            $isUsingComingsoonList      = Event::getArrayIsUsingComingsoon();
+            $isActiveList               = Event::getArrayIsActive();
+            
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
-                return $this->render('view', ['model' => $model]);
+                return $this->render('view', [
+                    'model' => $model,
+                    'isOpenRegistrationList' => $isOpenRegistrationList,
+                    'isUsingComingsoonList' => $isUsingComingsoonList,
+                    'isActiveList' => $isActiveList
+                ]);
             }           
         }
         else{
@@ -106,36 +115,13 @@ class EventController extends Controller
         if(Yii::$app->user->can('create-event')){
             $model = new Event;
 
-            $transaction = \Yii::$app->db->beginTransaction();
-            try {
-                
-                if ($model->load(Yii::$app->request->post())) {
-
-                    $model->save();
-                    $transaction->commit();
-                    
-                    $test = $model->id;
-                    $test1 = $model->title;
-                    $test3 = $model->date_start;
-                    $test4 = $model->date_end;
-                    
-                    return $this->redirect(['view', 'id' => $model->id]);
-                } else {
-                    return $this->render('create', [
-                        'model' => $model,
-                    ]);
-                } 
-
-                
-                
-            } catch (\Exception $e) {
-                $transaction->rollBack();
-                throw $e;
-            } catch (\Throwable $e) {
-                $transaction->rollBack();
-                throw $e;
-            }
-         
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }          
         }
         else{
             Yii::$app->getSession()->setFlash('danger', ['message' => Yii::t('app', Helper::getAccessDenied())]);

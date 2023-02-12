@@ -70,7 +70,7 @@ Unify263BlogAsset::register($this);
         <meta charset="<?= Yii::$app->charset ?>">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <?php
-            Yii::$app->params['meta_author']['content']         = 'nanta es | www.escyber.com';
+            Yii::$app->params['meta_author']['content']         = Yii::$app->params['Copyright'].' '.Yii::$app->params['Website'];
             Yii::$app->params['meta_description']['content']    = strip_tags($description->content);
             Yii::$app->params['meta_keywords']['content']       = strip_tags($keyword->content);
             

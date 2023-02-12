@@ -50,7 +50,7 @@ class AuthorController extends Controller
             'avatar' => [
                 'class' => 'budyaga\cropper\actions\UploadAction',
                 'url' => Yii::$app->urlManager->baseUrl.self::$pathTmpCrop,
-                'path' => str_replace('frontend', 'backend', Yii::getAlias('@webroot')).self::$pathTmpCrop,
+                'path' => Yii::getAlias('@webroot').self::$pathTmpCrop,
                 //'name' => Yii::$app->security->generateRandomString(),   
                 'width'=> '400',
                 'height'=> '400' ,    
@@ -172,7 +172,7 @@ class AuthorController extends Controller
                     file_exists($urlTmpCrop.'/'.$model->file_name) ? unlink($urlTmpCrop.'/'.$model->file_name) : '' ;
                     //PINDAHIN DATA DARI TMP KE DIREKTORI MODEL
                     rename(Yii::getAlias('@webroot').self::$pathTmpCrop.'/'.$model->file_name, $model->getImageFile());
-                    return $this->redirect(['view', 'id'=>$model->id, 'title'=>$model->title]);
+                    return $this->redirect(['view', 'id'=>$model->id]);
                 }
                 
                 else {

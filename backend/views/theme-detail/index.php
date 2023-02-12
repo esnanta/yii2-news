@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'description:ntext',
             [
                 'header'=>'Image',
-                'format' => ['image',['width'=>'100','height'=>'100']],
+                'format' => (!empty($model->file_name)) ? ['image',['width'=>'100','height'=>'100']] : 'raw',
                 'vAlign'=>'middle',
                 'width'=>'80px',
                 'value'=>function ($model, $key, $index, $widget) {

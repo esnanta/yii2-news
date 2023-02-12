@@ -15,7 +15,7 @@ use kartik\widgets\ActiveForm;
         'method' => 'get',
         'fieldConfig' => [
             'options' => [
-                'class' => 'col-sm-12 col-xs-12 form-group' ,
+                'class' => 'col-lg-12 col-sm-12 col-xs-12 form-group' ,
                 'tag' => 'div',
             ],
         ],    

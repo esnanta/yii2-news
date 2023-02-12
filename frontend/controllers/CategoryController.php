@@ -14,7 +14,7 @@ use backend\models\Category;
  */
 class CategoryController extends Controller
 {
-//    public $layout = "/column2_blog";
+    public $layout = "/column1";
 
     public function actionTimeLine() {
 

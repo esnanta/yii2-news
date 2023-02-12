@@ -34,7 +34,7 @@ use kartik\widgets\Select2;
                 'type' => Form::INPUT_WIDGET, 
                 'widgetClass'=> Select2::className(),
                 'options' => [
-                    'data' => $genderStatusList,
+                    'data' => $genderList,
                     'options' => ['placeholder' => 'Choose Gender', 'disabled'=>false],
                 ],                            
                 'pluginOptions' => [

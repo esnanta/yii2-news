@@ -1,6 +1,5 @@
 <?php
 use yii\helpers\Html;
-$unset = '#NA';
 ?>
 
 <?php
@@ -37,7 +36,7 @@ $unset = '#NA';
             <!-- Timeline Content -->
             <article class="u-timeline-v1 g-pa-5">
                 <figure class="g-pos-rel">
-                    <?= Html::img($src, ['class' => 'img-fluid w-100', 'style' => 'width:450px;height:300px']) ?>
+                    <?= Html::img($src, ['class' => 'img-fluid w-100']) ?>
 
                     <figcaption class="g-pos-abs g-top-20 g-left-20">
                         <?= Html::a($model->category->title,
@@ -99,7 +98,7 @@ $unset = '#NA';
             <!-- Timeline Content -->
             <article class="u-timeline-v1 g-pa-5">
                 <figure class="g-pos-rel">
-                    <?= Html::img($src, ['class' => 'img-fluid w-100', 'style' => 'width:450px;height:300px']) ?>
+                    <?= Html::img($src, ['class' => 'img-fluid w-100']) ?>
 
                     <figcaption class="g-pos-abs g-top-20 g-right-20">
                         <?= Html::a($model->category->title,

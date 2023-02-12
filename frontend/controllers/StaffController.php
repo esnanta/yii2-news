@@ -18,7 +18,7 @@ use backend\models\Employment;
 class StaffController extends Controller
 {
     
-    public $layout = "/column1_staff";
+    public $layout = "/column1";
     
     public function behaviors()
     {

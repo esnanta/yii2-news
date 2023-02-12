@@ -1,6 +1,6 @@
 <?php
 use yii\widgets\ListView;
-$this->title = 'F I R S T 2 0 1 8';
+$this->title = 'Timeline';
 ?>
 
 <?php echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -64,7 +64,3 @@ $this->title = 'F I R S T 2 0 1 8';
         </div>
     </div>
 </section>
-
-
-
-

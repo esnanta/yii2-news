@@ -12,19 +12,19 @@ use \backend\models\base\ThemeDetail as BaseThemeDetail;
 
 class ThemeDetail extends BaseThemeDetail
 {
+    public $image;
+    public static $path='/uploads/theme';   
     
-    public static $path='/uploads/theme';
-
     /**
      * @inheritdoc
-     */
+     */ 
     public function rules()
     {
         return [
             //TAMBAHAN
             [['theme_id'], 'required'],
-            [['file_name'], 'file', 'extensions'=>'jpg, gif, png, jpeg','maxSize' => (1024 * 1024 * 2), 'tooBig' => 'Limit is 2MB'],
-
+            [['image'], 'file', 'extensions'=>'jpg, gif, png, jpeg','maxSize' => (500 * 1024 * 1024), 'tooBig' => 'Limit is 1MB'],                        
+            
             [['theme_id', 'created_at', 'updated_at', 'created_by', 'updated_by', 'is_deleted', 'deleted_at', 'deleted_by', 'verlock'], 'integer'],
             [['content', 'description'], 'string'],
             [['title'], 'string', 'max' => 100],
@@ -33,44 +33,38 @@ class ThemeDetail extends BaseThemeDetail
             [['token'], 'unique'],
             [['id'], 'exist', 'skipOnError' => true, 'targetClass' => Theme::className(), 'targetAttribute' => ['theme_id' => 'id']],
             [['verlock', 'is_deleted'], 'default', 'value' => '0'],
-            [['verlock'], 'mootensai\components\OptimisticLockValidator']
-        ];
-
-    }
-
+            [['verlock'], 'mootensai\components\OptimisticLockValidator']            
+        ];        
+        
+    }       
+    
     /**
-     * fetch stored image file name with complete path
+     * fetch stored image file name with complete path 
      * @return string
      */
-    public function getImageFile()
+    public function getImageFile() 
     {
         $directory = str_replace('frontend', 'backend', Yii::getAlias('@webroot')) . self::$path;
         if (!is_dir($directory)) {
-            FileHelper::createDirectory($directory, $mode = 0777);
+            FileHelper::createDirectory($directory, $mode = 0777);      
         }
 
         return (!empty($this->file_name)) ? $directory.'/'. $this->file_name : '';
-    }
-
+    }   
+    
     /**
      * fetch stored image url
      * @return string
      */
-    public function getImageUrl()
+    public function getImageUrl() 
     {
         // return a default image placeholder if your source avatar is not found
-        $defaultImage = '/images/default-images-01.jpg';
-        $file_name = isset($this->file_name) ? $this->file_name : $defaultImage;
-        $directory = str_replace('frontend', 'backend', Yii::getAlias('@webroot')) . self::$path;
-
-        if (file_exists($directory.'/'.$file_name)) {
-            return Yii::$app->urlManager->baseUrl . self::$path.'/'.$file_name;
-        }
-        else{
-            return Yii::$app->urlManager->baseUrl . $defaultImage;
-        }
-    }
-
+        $file_name = isset($this->file_name) ? 
+            Yii::$app->urlManager->baseUrl .self::$path.'/'.$this->file_name : 
+            Yii::$app->urlManager->baseUrl .'/images/no-picture-available-icon-1.jpg';
+        return $file_name;
+    }    
+    
     /**
     * Process upload of image
     *
@@ -80,7 +74,7 @@ class ThemeDetail extends BaseThemeDetail
         // get the uploaded file instance. for multiple file uploads
         // the following data will return an array (you may need to use
         // getInstances method)
-        $image = UploadedFile::getInstance($this, 'file_name');
+        $image = UploadedFile::getInstance($this, 'image');
 
         // if no image was uploaded abort the upload
         if (empty($image)) {
@@ -90,13 +84,13 @@ class ThemeDetail extends BaseThemeDetail
         //generate a unique file name
         //$ext = end((explode(".", $image->name)));
         $tmp = explode('.', $image->name);
-        $ext = end($tmp);
+        $ext = end($tmp);  
         $this->file_name = Yii::$app->security->generateRandomString().".{$ext}";
 
         // the uploaded image instance
         return $image;
-    }
-
+    }    
+    
     /**
     * Process deletion of image
     *
@@ -120,14 +114,14 @@ class ThemeDetail extends BaseThemeDetail
         //$this->title = null;
 
         return true;
-    }
-
+    }        
+    
     public static function getByToken($token)
     {
         $model = ThemeDetail::find()->where(['token' => $token])->one();
         return $model;
-    }
-
+    }    
+    
     public function behaviors() {
         return [
             [
@@ -143,5 +137,5 @@ class ThemeDetail extends BaseThemeDetail
                 ],
             ],
         ];
-    }
+    }     
 }

@@ -35,11 +35,9 @@ $deleteAsset = Html::a('<i class="fa fa-trash"></i> Delete File', ['archive/dele
                 <!-- /.box-header -->
                 <div class="box-body">
                     <?php 
-                        if($model->getAssetFile()){
-                            echo Html::a('DOWNLOAD FILE', 
-                                    ['archive/download','id'=>$model->id,'title'=>$model->title],
-                                    ['title'=>'Download']);
-                        }
+                        echo Html::a('DOWNLOAD FILE', 
+                                ['archive/download','id'=>$model->id,'title'=>$model->title],
+                                ['title'=>'Download']);
                     ?>
 
                     <?php

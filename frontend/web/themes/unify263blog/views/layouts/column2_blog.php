@@ -27,7 +27,7 @@ use common\widgets\blogunify236\TagCloud;
         <div class="col-lg-9 g-mb-80">
             <div class="g-pr-20--lg">
                 <div class="masonry-grid row g-mb-70">
-                    <div class="masonry-grid-sizer col-sm-1"></div>
+                    <!--<div class="masonry-grid-sizer col-sm-1"></div>-->
                     <?= $content; ?>
                 </div>
             </div>
