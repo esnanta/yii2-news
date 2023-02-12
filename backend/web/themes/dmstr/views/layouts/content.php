@@ -89,7 +89,7 @@ use backend\models\Profile;
     <div class="pull-right hidden-xs">
         <b>Version</b> <?php echo Yii::$app->params['App Version']; ?>
     </div>
-    <strong><?= date('Y') ?> © <?php echo Yii::$app->params['Copyright']; ?> | <a href="<?php echo Yii::$app->params['Website']; ?>">EsCyber</a></strong> | All rights
+    <strong><?= date('Y') ?> © <?php echo Yii::$app->params['Copyright']; ?> | <a href="<?php echo Yii::$app->params['Website']; ?>"><?php echo Yii::$app->params['Website']; ?></a></strong> | All rights
     reserved.
 </footer>
 
