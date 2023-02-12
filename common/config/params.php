@@ -15,7 +15,7 @@ return [
 
     'Copyright'             => 'Copyright By Nanta Es',
     'App Version'           => '3.0.2',
-    'Website'               => 'https://www.esnanta.my.id',
+    'Website'               => 'https://esnanta.my.id',
 
     'Theme_Global'          => 'Global',
     'Theme_Active'          => 'college',    //college blog19 home14 unify196 home8
