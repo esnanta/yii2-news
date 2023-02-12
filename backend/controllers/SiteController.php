@@ -5,18 +5,12 @@ use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use yii\helpers\ArrayHelper;
-use yii\data\ArrayDataProvider;
-
 use common\models\LoginForm;
 use common\models\ChartYearly;
 
 use backend\models\Profile;
 use backend\models\Blog;
-use backend\models\Note;
-use backend\models\NoteType;
-use backend\models\AuthAssignment;
-use backend\models\Staff;
+
 /**
  * Site controller
  */

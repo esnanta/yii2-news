@@ -105,6 +105,7 @@ class ComposerStaticInit503fb3fdac61a386c767926417461d77
         ),
         'd' => 
         array (
+            'dosamigos\\chartjs\\' => 18,
             'dmstr\\' => 6,
             'dektrium\\user\\' => 14,
             'dektrium\\rbac\\' => 14,
@@ -240,8 +241,8 @@ class ComposerStaticInit503fb3fdac61a386c767926417461d77
         ),
         'mootensai\\components\\' => 
         array (
-            0 => __DIR__ . '/..' . '/mootensai/yii2-optimistic-lock-validator',
-            1 => __DIR__ . '/..' . '/mootensai/yii2-jsblock',
+            0 => __DIR__ . '/..' . '/mootensai/yii2-jsblock',
+            1 => __DIR__ . '/..' . '/mootensai/yii2-optimistic-lock-validator',
         ),
         'mootensai\\behaviors\\' => 
         array (
@@ -426,6 +427,10 @@ class ComposerStaticInit503fb3fdac61a386c767926417461d77
         'ercling\\pace\\' => 
         array (
             0 => __DIR__ . '/..' . '/ercling/yii2-pace',
+        ),
+        'dosamigos\\chartjs\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/2amigos/yii2-chartjs-widget/src',
         ),
         'dmstr\\' => 
         array (

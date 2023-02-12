@@ -60,7 +60,6 @@
                             'url' => ['#'],
                             'items' => [
                                 ['label' => 'Index', 'icon' => 'angle-right', 'url' => ['/site/index'],],                               
-                                ['label' => 'Summary', 'icon' => 'angle-right', 'url' => ['/site/summary'],],
                                 [
                                     'label' => 'Profile',
                                     'icon' => 'caret-right',

@@ -25,6 +25,8 @@
         "bower-asset/bootstrap": "3.3.* | 3.2.* | 3.1.*",
         "dmstr/yii2-adminlte-asset":"2.*",
         
+        "2amigos/yii2-chartjs-widget" : "~2.0",
+        
         "kartik-v/yii2-widgets": "*",
         "kartik-v/yii2-grid": "*",
         "kartik-v/yii2-krajee-base": "*",
@@ -81,7 +83,7 @@
             "enabled": false
         },
         "github-oauth": {
-            "github.com": "PostYourTokenHere"
+
         }
     },
     "repositories": [
