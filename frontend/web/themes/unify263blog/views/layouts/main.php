@@ -52,11 +52,11 @@ $keyword = ThemeDetail::getByToken(Yii::$app->params['ContentToken_Keyword']);
 
 $logo1 = ThemeDetail::getByToken(Yii::$app->params['ContentToken_Logo1']);
 $logo1Url = str_replace('frontend', 'backend', $logo1->getImageUrl());
-$logo1Image = Html::img($logo1Url, ['style' => 'width:200px;height:40px'], ['alt' => 'Logo']);
+$logo1Image = Html::img($logo1Url, ['class' => 'g-width-150 g-height-40'], ['alt' => 'Logo']);
 
 $logo2 = ThemeDetail::getByToken(Yii::$app->params['ContentToken_Logo2']);
 $logo2Url = str_replace('frontend', 'backend', $logo2->getImageUrl());
-$logo2Image = Html::img($logo2Url, ['style' => 'width:200px;height:40px'], ['alt' => 'Logo']);
+$logo2Image = Html::img($logo2Url, ['class' => 'g-width-150 g-height-40'], ['alt' => 'Logo']);
 
 Unify263BlogAsset::register($this);
 ?>
@@ -575,7 +575,7 @@ Unify263BlogAsset::register($this);
                         <div class="row align-items-center">
                             <div class="col-md-4 g-hidden-sm-down g-mb-30">
                                 <!-- Logo -->
-                                <?= str_replace('user/', '', Html::a($logo2Image, ['site/index'], ['class' => 'g-width-150'])); ?>
+                                <?= str_replace('user/', '', Html::a($logo2Image, ['site/index'])); ?>
                                 <!-- End Logo -->
                             </div>
 
