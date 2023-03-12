@@ -144,9 +144,10 @@
                             'icon' => 'laptop',
                             'url' => ['#'],
                             'items' => [
-                                ['label' => 'Theme', 'icon' => 'angle-right', 'url' => ['/theme/index'],],
+                                //['label' => 'Theme', 'icon' => 'angle-right', 'url' => ['/theme/index'],],
                                 ['label' => 'Index', 'icon' => 'angle-right', 'url' => ['/theme-detail/index'],],
                                 ['label' => 'Links', 'icon' => 'angle-right', 'url' => ['/site-link/index'],],
+                                ['label' => 'Social', 'icon' => 'angle-right', 'url' => ['/social-media/index'],],
                             ],
                             'visible' => Yii::$app->user->identity->isAdmin
                         ],

@@ -38,6 +38,38 @@ class ThemeDetail extends BaseThemeDetail
         
     }       
     
+    public static function getArraySocMed()
+    {
+        return [
+            //MASTER
+            self::SOCMED_ICONS_1  => 'Fecebook',
+            self::SOCMED_ICONS_2  => 'Twitter',
+            self::SOCMED_ICONS_3  => 'Youtube',
+            self::SOCMED_ICONS_4  => 'Instagram',
+            self::SOCMED_ICONS_5  => 'Github',
+        ];
+    }
+    
+    public static function getOneSocMed($_module = null)
+    {
+        if($_module)
+        {
+            $arrayModule = self::getArrayIsVisible();
+            $returnValue = 'NULL';
+
+            switch ($_module) {
+                
+                default:
+                    $returnValue = '<span class="label label-success">'.$arrayModule[$_module].'</span>';
+            }
+
+            return $returnValue;
+
+        }
+        else
+            return;
+    }
+    
     /**
      * fetch stored image file name with complete path 
      * @return string

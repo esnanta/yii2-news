@@ -13,6 +13,7 @@ use backend\models\Blog;
 use backend\models\ThemeDetail;
 use backend\models\Category;
 use backend\models\SiteLink;
+use backend\models\SocialMedia;
 
 use kartik\social\TwitterPlugin;
 use kartik\social\FacebookPlugin;
@@ -42,7 +43,8 @@ $this->registerMetaTag(Yii::$app->params['googleplus_description'], 'googleplus_
 $this->registerMetaTag(Yii::$app->params['googleplus_image'], 'googleplus_image');
 
 $office = Office::findOne(1);
-$siteLinks = SiteLink::find()->limit(8)->orderBy(['sequence' => SORT_ASC])->all();
+$siteLinks = SiteLink::find()->limit(5)->orderBy(['sequence' => SORT_ASC])->all();
+$socialMedias = SocialMedia::find()->limit(5)->orderBy(['title' => SORT_ASC])->all();
 $categories = Category::find()->orderBy(['sequence' => SORT_ASC])->all();
 $timeLine = Category::find()->where(['time_line' => Category::TIME_LINE_YES])->orderBy(['sequence' => SORT_ASC])->one();
 
@@ -582,46 +584,18 @@ Unify263BlogAsset::register($this);
                             <div class="col-md-4 ml-auto g-mb-30">
                                 <!-- Social Icons -->
                                 <ul class="list-inline mb-0">
-                                    <li class="list-inline-item g-mx-2">
-                                        <a class="u-icon-v2 u-icon-size--sm g-brd-secondary-light-v2 g-color-secondary-dark-v2 g-color-white--hover g-bg-primary--hover g-font-size-default rounded"
-                                           href="#" data-toggle="tooltip" data-placement="top" title="Like Us on Facebook">
-                                            <i class="fa fa-facebook"></i>
-                                        </a>
-                                    </li>
-                                    <li class="list-inline-item g-mx-2">
-                                        <a class="u-icon-v2 u-icon-size--sm g-brd-secondary-light-v2 g-color-secondary-dark-v2 g-color-white--hover g-bg-primary--hover g-font-size-default rounded"
-                                           href="#" data-toggle="tooltip" data-placement="top"
-                                           title="Follow Us on Twitter">
-                                            <i class="fa fa-twitter"></i>
-                                        </a>
-                                    </li>
-                                    <li class="list-inline-item g-mx-2">
-                                        <a class="u-icon-v2 u-icon-size--sm g-brd-secondary-light-v2 g-color-secondary-dark-v2 g-color-white--hover g-bg-primary--hover g-font-size-default rounded"
-                                           href="#" data-toggle="tooltip" data-placement="top"
-                                           title="Join Our Cirlce on Google Plus">
-                                            <i class="fa fa-google-plus"></i>
-                                        </a>
-                                    </li>
-                                    <li class="list-inline-item g-mx-2">
-                                        <a class="u-icon-v2 u-icon-size--sm g-brd-secondary-light-v2 g-color-secondary-dark-v2 g-color-white--hover g-bg-primary--hover g-font-size-default rounded"
-                                           href="#" data-toggle="tooltip" data-placement="top"
-                                           title="Subscribe to Our YouTube Channel">
-                                            <i class="fa fa-youtube"></i>
-                                        </a>
-                                    </li>
-                                    <li class="list-inline-item g-mx-2">
-                                        <a class="u-icon-v2 u-icon-size--sm g-brd-secondary-light-v2 g-color-secondary-dark-v2 g-color-white--hover g-bg-primary--hover g-font-size-default rounded"
-                                           href="#" data-toggle="tooltip" data-placement="top"
-                                           title="Follow Us on Instagram">
-                                            <i class="fa fa-instagram"></i>
-                                        </a>
-                                    </li>
-                                    <li class="list-inline-item g-mx-2">
-                                        <a class="u-icon-v2 u-icon-size--sm g-brd-secondary-light-v2 g-color-secondary-dark-v2 g-color-white--hover g-bg-primary--hover g-font-size-default rounded"
-                                           href="#" data-toggle="tooltip" data-placement="top" title="RSS">
-                                            <i class="fa fa-rss"></i>
-                                        </a>
-                                    </li>
+                                    <?php
+                                        foreach ($socialMedias as $socialMediaModel) {
+                                    ?>
+                                        <li class="list-inline-item g-mx-2">
+                                            <a class="u-icon-v2 u-icon-size--sm g-brd-secondary-light-v2 g-color-secondary-dark-v2 g-color-white--hover g-bg-primary--hover g-font-size-default rounded"
+                                               href="<?=$socialMediaModel->url;?>" data-toggle="tooltip" data-placement="top" title="<?=$socialMediaModel->description;?>">
+                                                <?=$socialMediaModel->icon;?>
+                                            </a>
+                                        </li>
+                                    <?php
+                                        }
+                                    ?>
                                 </ul>
                                 <!-- End Social Icons -->
                             </div>

@@ -28,7 +28,7 @@ $view = Html::a('<i class="glyphicon glyphicon-eye-open"></i>', ['view','id'=>$m
 
         <div class="theme-detail-update">
 
-            <?= $this->render('_form', [
+            <?= $this->render($form, [
                 'model' => $model,
                 'dataList'=>$dataList,
                 'editor'=>$editor

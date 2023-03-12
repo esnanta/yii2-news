@@ -175,7 +175,7 @@ class ThemeDetailController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id,$editor=false)
+    public function actionUpdateImage($id,$editor=false)
     {
         if(Yii::$app->user->can('update-theme')){
             $model = $this->findModel($id);
@@ -202,7 +202,7 @@ class ThemeDetailController extends Controller
                         $path = $model->getImageFile();
                         $image->saveAs($path);
                     }
-                    return $this->redirect(['view', 'id'=>$model->id]);
+                    return $this->redirect(['index']);
                 } else {
                     // error in saving model
                 }
@@ -210,17 +210,70 @@ class ThemeDetailController extends Controller
             return $this->render('update', [
                 'model'=>$model,
                 'editor'=>$editor,
-                'dataList'=>$dataList
+                'dataList'=>$dataList,
+                'form'=>'_form_image'
             ]);            
         }
         else{
             Yii::$app->getSession()->setFlash('danger', ['message' => Yii::t('app', Helper::getAccessDenied())]);
             throw new ForbiddenHttpException;
         }           
-                    
-        
     }
 
+    public function actionUpdateText($id,$editor=false)
+    {
+        if(Yii::$app->user->can('update-theme')){
+            $model = $this->findModel($id);
+            $dataList=ArrayHelper::map(Theme::find()->asArray()->all(), 'id','title');
+
+            if ($model->load(Yii::$app->request->post())) {
+                if ($model->save()) {
+                    return $this->redirect(['index']);
+                } else {
+                    // error in saving model
+                }
+            }
+            return $this->render('update', [
+                'model'=>$model,
+                'editor'=>$editor,
+                'dataList'=>$dataList,
+                'form'=>'_form_text'
+            ]);            
+        }
+        else{
+            Yii::$app->getSession()->setFlash('danger', ['message' => Yii::t('app', Helper::getAccessDenied())]);
+            throw new ForbiddenHttpException;
+        }           
+    }
+    
+    public function actionUpdateIcon($id,$editor=false)
+    {
+        if(Yii::$app->user->can('update-theme')){
+            $model = $this->findModel($id);
+            $dataList       = ArrayHelper::map(Theme::find()->asArray()->all(), 'id','title');
+            $socMedList     = ThemeDetail::getArraySocMed();
+            
+            if ($model->load(Yii::$app->request->post())) {
+                if ($model->save()) {
+                    return $this->redirect(['index']);
+                } else {
+                    // error in saving model
+                }
+            }
+            return $this->render('update', [
+                'model'=>$model,
+                'editor'=>$editor,
+                'dataList'=>$dataList,
+                'socMedList'=>$socMedList,
+                'form'=>'_form_icon'
+            ]);            
+        }
+        else{
+            Yii::$app->getSession()->setFlash('danger', ['message' => Yii::t('app', Helper::getAccessDenied())]);
+            throw new ForbiddenHttpException;
+        }           
+    }
+    
     /**
      * Deletes an existing ThemeDetail model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
