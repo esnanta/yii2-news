@@ -12,17 +12,7 @@ composer require esnanta/yii2-news
 LICENCE
 -------------------
 GNU General Public License v3.0
-
-Permissions         Conditions                          Limitations
-
-Commercial use      Disclose source                     Liability
-Distribution        License and copyright notice        Warranty
-Modification        State changes
-Patent use          Same license
-Private use
-	
-
-DO NOT REMOVE COPYRIGHT AFTER FOOTER.   
+Do not remove copyright part.   
     
 
 DIRECTORY STRUCTURE
