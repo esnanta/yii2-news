@@ -618,13 +618,20 @@ Unify263BlogAsset::register($this);
                     </div>
                     <!-- End Footer - Top Section -->
 
-                    <!-- Footer - Bottom Section -->
+<!-- 
+    COPYRIGHT SECTION 
+    DO NOT REMOVE COPYRIGHT PART
+-->
                     <div class="row align-items-center">
 
                         <div class="col-md-4 g-brd-right--md g-brd-secondary-light-v2 g-mb-30">
                             <!-- Copyright -->
                             <p class="g-color-secondary-light-v1 g-font-size-12 mb-0"><?= date('Y') ?> ©
-                                <?php echo Yii::$app->params['Copyright']; ?>
+                                <?php echo Yii::$app->params['Copyright']; ?> | 
+                                <a class="u-link-v5 g-color-secondary-light-v1 g-font-size-12"
+                                   href="<?php echo Yii::$app->params['Website']; ?>">
+                                    <?php echo Yii::$app->params['Website']; ?>
+                                </a>
                             </p>
                             <!-- End Copyright -->
                         </div>
@@ -632,20 +639,17 @@ Unify263BlogAsset::register($this);
                         <div class="col-md-6 g-brd-right--md g-brd-secondary-light-v2 g-mb-30">
                             <!-- Links -->
                             <ul class="list-inline mb-0">
-                                <li class="list-inline-item g-pl-0 g-pr-10">
-                                    <a class="u-link-v5 g-color-secondary-light-v1 g-font-size-12"
-                                       href="<?php echo Yii::$app->params['Website']; ?>">
-                                        <?php echo Yii::$app->params['Website']; ?>
-                                    </a>
-                                </li>
                                 <li class="list-inline-item g-px-10">
-                                    <span class="u-link-v5 g-color-secondary-light-v1 g-font-size-12">All rights
-                                        reserved
+                                    <span class="u-link-v5 g-color-secondary-light-v1 g-font-size-12">
+                                        GNU General Public License v3.0
                                     </span>
                                 </li>
                                 <li class="list-inline-item g-px-10">
-                                    <span class="u-link-v5 g-color-secondary-light-v1 g-font-size-12">Version
-                                        <?php echo Yii::$app->params['App Version']; ?>
+                                    
+                                </li>
+                                <li class="list-inline-item g-px-10">
+                                    <span class="u-link-v5 g-color-secondary-light-v1 g-font-size-12">
+                                        All rights reserved
                                     </span>
                                 </li>
                             </ul>
@@ -653,9 +657,19 @@ Unify263BlogAsset::register($this);
                         </div>
 
                         <div class="col-md-2 g-mb-30">
+                            <ul class="list-inline mb-0">
+                                <li class="list-inline-item g-px-10">
+                                    <span class="u-link-v5 g-color-secondary-light-v1 g-font-size-12">Version
+                                        <?php echo Yii::$app->params['App Version']; ?>
+                                    </span>
+                                </li>
+                            </ul>
                         </div>
                     </div>
-                    <!-- End Footer - Bottom Section -->
+<!-- 
+    DO NOT REMOVE COPYRIGHT PART
+    END COPYRIGHT SECTION 
+-->
                 </div>
             </footer>
             <!-- End Footer -->
