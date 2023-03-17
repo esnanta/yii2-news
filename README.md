@@ -1,7 +1,9 @@
+
+
 REQUIREMENT
 -------------------
-PHP 7.x
-Composer 2.x
+PHP 7.x <br>
+Composer 2.x <br>
 
 INSTALLATION
 -------------------
@@ -11,7 +13,7 @@ composer require esnanta/yii2-news
 
 LICENCE
 -------------------
-GNU General Public License v3.0
+GNU General Public License v3.0 <br>
 Do not remove copyright part.   
     
 

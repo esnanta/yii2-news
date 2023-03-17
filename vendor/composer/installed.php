@@ -3,7 +3,7 @@
         'name' => 'esnanta/yii2-news',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '0bee5fc5c91359bce62b64cf3bf7abb0ca6409a8',
+        'reference' => '719912d3094f5d914fca0603eeabb2d4219bbaff',
         'type' => 'yii2-extension',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -350,7 +350,7 @@
         'esnanta/yii2-news' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '0bee5fc5c91359bce62b64cf3bf7abb0ca6409a8',
+            'reference' => '719912d3094f5d914fca0603eeabb2d4219bbaff',
             'type' => 'yii2-extension',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
