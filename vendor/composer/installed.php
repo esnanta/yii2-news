@@ -3,7 +3,7 @@
         'name' => 'esnanta/yii2-news',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '81183339e468cd3b518198a4c162f56f8ccb1727',
+        'reference' => '3b6bada90e601a2975db7eb77cc760df4b282430',
         'type' => 'yii2-extension',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -47,10 +47,13 @@
             'dev_requirement' => true,
         ),
         'bower-asset/bootstrap' => array(
+            'pretty_version' => 'v3.4.1',
+            'version' => '3.4.1.0',
+            'reference' => '68b0d231a13201eb14acd3dc84e51543d16e5f7e',
+            'type' => 'bower-asset',
+            'install_path' => __DIR__ . '/../bower-asset/bootstrap',
+            'aliases' => array(),
             'dev_requirement' => false,
-            'provided' => array(
-                0 => '*',
-            ),
         ),
         'bower-asset/chartjs' => array(
             'pretty_version' => 'v2.9.4',
@@ -62,10 +65,13 @@
             'dev_requirement' => false,
         ),
         'bower-asset/inputmask' => array(
+            'pretty_version' => '3.3.11',
+            'version' => '3.3.11.0',
+            'reference' => '5e670ad62f50c738388d4dcec78d2888505ad77b',
+            'type' => 'bower-asset',
+            'install_path' => __DIR__ . '/../bower-asset/inputmask',
+            'aliases' => array(),
             'dev_requirement' => false,
-            'provided' => array(
-                0 => '*',
-            ),
         ),
         'bower-asset/jcrop' => array(
             'pretty_version' => 'v0.9.12',
@@ -77,10 +83,13 @@
             'dev_requirement' => false,
         ),
         'bower-asset/jquery' => array(
+            'pretty_version' => '3.6.4',
+            'version' => '3.6.4.0',
+            'reference' => '91ef2d8836342875f2519b5815197ea0f23613cf',
+            'type' => 'bower-asset',
+            'install_path' => __DIR__ . '/../bower-asset/jquery',
+            'aliases' => array(),
             'dev_requirement' => false,
-            'provided' => array(
-                0 => '*',
-            ),
         ),
         'bower-asset/jquery-ui' => array(
             'pretty_version' => '1.12.1',
@@ -92,10 +101,13 @@
             'dev_requirement' => true,
         ),
         'bower-asset/punycode' => array(
+            'pretty_version' => 'v1.3.2',
+            'version' => '1.3.2.0',
+            'reference' => '38c8d3131a82567bfef18da09f7f4db68c84f8a3',
+            'type' => 'bower-asset',
+            'install_path' => __DIR__ . '/../bower-asset/punycode',
+            'aliases' => array(),
             'dev_requirement' => false,
-            'provided' => array(
-                0 => '*',
-            ),
         ),
         'bower-asset/simple-ajax-uploader' => array(
             'pretty_version' => '2.6.1',
@@ -105,12 +117,6 @@
             'install_path' => __DIR__ . '/../bower-asset/simple-ajax-uploader',
             'aliases' => array(),
             'dev_requirement' => false,
-        ),
-        'bower-asset/typeahead.js' => array(
-            'dev_requirement' => false,
-            'provided' => array(
-                0 => '*',
-            ),
         ),
         'bower-asset/viewerjs' => array(
             'pretty_version' => 'v0.5.9',
@@ -122,10 +128,13 @@
             'dev_requirement' => false,
         ),
         'bower-asset/yii2-pjax' => array(
+            'pretty_version' => '2.0.8',
+            'version' => '2.0.8.0',
+            'reference' => 'a9298d57da63d14a950f1b94366a864bc62264fb',
+            'type' => 'bower-asset',
+            'install_path' => __DIR__ . '/../bower-asset/yii2-pjax',
+            'aliases' => array(),
             'dev_requirement' => false,
-            'provided' => array(
-                0 => '*',
-            ),
         ),
         'budyaga/yii2-cropper' => array(
             'pretty_version' => '2.0.22',
@@ -341,7 +350,7 @@
         'esnanta/yii2-news' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '81183339e468cd3b518198a4c162f56f8ccb1727',
+            'reference' => '3b6bada90e601a2975db7eb77cc760df4b282430',
             'type' => 'yii2-extension',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -1545,15 +1554,6 @@
                 0 => '9999999-dev',
             ),
             'dev_requirement' => true,
-        ),
-        'yidas/yii2-composer-bower-skip' => array(
-            'pretty_version' => '2.0.13',
-            'version' => '2.0.13.0',
-            'reference' => '1156ed4dc2ddca811bd2582d09e8885585fbd0cb',
-            'type' => 'yii2-extension',
-            'install_path' => __DIR__ . '/../yidas/yii2-composer-bower-skip',
-            'aliases' => array(),
-            'dev_requirement' => false,
         ),
         'yii2tech/ar-softdelete' => array(
             'pretty_version' => '1.0.4',

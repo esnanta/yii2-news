@@ -22,8 +22,7 @@
         "yiisoft/yii2-bootstrap4": "~2.0.6",
         "yiisoft/yii2-authclient": "~2.1.7",
         
-        "yidas/yii2-composer-bower-skip": "~2.0.5",
-        "bower-asset/bootstrap": "3.3.* | 3.2.* | 3.1.*",
+        "bower-asset/bootstrap": "^3.3",
         "dmstr/yii2-adminlte-asset":"2.*",
         
         "2amigos/yii2-chartjs-widget" : "~2.0",

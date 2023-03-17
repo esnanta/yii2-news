@@ -609,9 +609,4 @@ return array (
       '@yii/gii' => $vendorDir . '/yiisoft/yii2-gii/src',
     ),
   ),
-  'yidas/yii2-composer-bower-skip' => 
-  array (
-    'name' => 'yidas/yii2-composer-bower-skip',
-    'version' => '2.0.13.0',
-  ),
 );
