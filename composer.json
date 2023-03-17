@@ -3,7 +3,7 @@
     "description": "Yii2 News",
     "keywords": ["yii2", "news", "blog", "esnanta"],
     "homepage": "https://www.yiiframework.com/",
-    "type": "yii2-extension",
+    "type": "project",
     "license": "BSD-3-Clause",
     "support": {
         "issues": "https://github.com/yiisoft/yii2/issues?state=open",

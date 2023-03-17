@@ -1,4 +1,5 @@
-
+Easy to  install, easy to use, until you find it difficult :p <br>
+SEO and Keyword ready.
 
 REQUIREMENT
 -------------------
@@ -7,8 +8,16 @@ Composer 2.x <br>
 
 INSTALLATION
 -------------------
-composer require esnanta/yii2-news
+for localhost: <br>
+composer create-project esnanta/yii2-news
 
+environment:<br>
+in command do "php init" and choose development or production.<br>
+1. if you choose development, update composer package:<br>
+composer update<br>
+<br>
+or 2. if production:<br>
+composer update --no-dev<br>
 
 
 LICENCE
