@@ -52,14 +52,18 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
-        'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
+                    
+        'view' => [
+            'theme' => [
+                'pathMap' =>
+                [
+                    '@app/views' => '@app/web/themes-admin/views',
+                    
+                ],
+                'basePath' => '@app/web/themes-admin',
+                'baseUrl' => '@web/web/themes-admin',
             ],
         ],
-        */
     ],
     'params' => $params,
 ];
