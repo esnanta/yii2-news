@@ -11,22 +11,26 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
-    
-    'modules' => [
-        'user' => [
-            // following line will restrict access to admin controller from frontend application
-            'as frontend' => 'dektrium\user\filters\FrontendFilter',
-        ],
-    ],
-    
     'components' => [
-
+        
         'request' => [
             'csrfParam' => '_csrf-frontend',
-            'class' => 'common\components\Request',
-            'web' => '/frontend/web',
         ],
-
+        
+//        'user' => [
+//            'identityClass' => 'common\models\User',
+//            'enableAutoLogin' => true,
+//            'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
+//            'on afterLogin' => function ($event) {
+//                $event->identity->updateLastLogin();
+//            },
+//        ],
+        
+        'session' => [
+            // this is the name of the session cookie used for login on the frontend
+            'name' => 'advanced-frontend',
+        ],
+                    
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
@@ -40,18 +44,22 @@ return [
             'errorAction' => 'site/error',
         ],
         
-        'view' => [
-            'theme' => [
+        'urlManager' => [
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'enableStrictParsing' => false,
+            'rules' => [
+                '<controller:\w+>/<id:\d+>' => '<controller>/view',
+                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
+                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',  
 
-                 'pathMap' => [
-                                     '@app/views' => '@app/web/themes/unify263blog/views',
-                                     '@dektrium/user/views' => '@app/web/themes/unify263blog/views/user'
-                                 ],
-                                 'basePath' => '@app/web/themes/unify263blog',
-                                 'baseUrl' => '@web/web/themes/unify263blog',                
-                
+                //PENGATURAN DI SITE CONTROLLER HARUS DIPINDAH KESINI
+                //'login'=>'<module>/<controller>/<action>',
+                //https://github.com/yii2mod/yii2-user
+                //'site/login' => ['class' => 'yii2mod\user\actions\LoginAction' ],
             ],
-        ],
+                       
+        ],  
         
     ],
     'params' => $params,

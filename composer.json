@@ -1,7 +1,7 @@
 {
-    "name": "esnanta/yii2-news",
-    "description": "Yii2 News",
-    "keywords": ["yii2", "news", "blog", "esnanta"],
+    "name": "esnanta/yii2-retread",
+    "description": "Retread Management System",
+    "keywords": ["yii2", "esnanta", "retread"],
     "homepage": "https://www.yiiframework.com/",
     "type": "project",
     "license": "BSD-3-Clause",
@@ -16,40 +16,11 @@
     "require": {
         "php": ">=7.4.0",
         "yiisoft/yii2": "~2.0.45",
+        "yiisoft/yii2-bootstrap5": "~2.0.2",
         "yiisoft/yii2-symfonymailer": "~2.0.3",
         
-        "yiisoft/yii2-bootstrap": "~2.0.0",
-        "yiisoft/yii2-bootstrap4": "~2.0.6",
-        "yiisoft/yii2-authclient": "~2.1.7",
-        
-        "bower-asset/bootstrap": "^3.3",
-        "dmstr/yii2-adminlte-asset":"2.*",
-        
-        "2amigos/yii2-chartjs-widget" : "~2.0",
-        
-        "kartik-v/yii2-widgets": "*",
-        "kartik-v/yii2-grid": "*",
-        "kartik-v/yii2-krajee-base": "*",
-        "kartik-v/yii2-detail-view": "*",
-        "kartik-v/yii2-widget-datepicker": "*",
-        "kartik-v/yii2-datecontrol": "*",
-        "kartik-v/yii2-editable": "*",
-        "kartik-v/yii2-widget-select2": "*",
-        "kartik-v/yii2-export": "*",
-        "kartik-v/yii2-mpdf": "*",
-        "kartik-v/yii2-tree-manager": "*",
-        "kartik-v/yii2-date-range": "*",
-        "kartik-v/yii2-slider": "*",
-        "kartik-v/yii2-social": "dev-master", 
-        "kartik-v/yii2-bootstrap4-dropdown": "dev-master",
-        "ercling/yii2-pace": "dev-master",
-        "lesha724/yii2-document-viewer": "*",
-        "bajadev/yii2-ckeditor": "*",
-        "budyaga/yii2-cropper": "*",  
-        "dektrium/yii2-user": "*",
-        "dektrium/yii2-rbac": "1.0.0-alpha@dev",
-        "mootensai/yii2-enhanced-gii": "dev-master",
-        "yii2tech/ar-softdelete": "*"
+        "yii2mod/yii2-user": "*",
+        "yii2mod/yii2-rbac": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
@@ -62,10 +33,7 @@
         "codeception/module-yii2": "^1.1",
         "codeception/module-filesystem": "^2.0 || ^1.1",
         "codeception/verify": "^2.2",
-        "symfony/browser-kit": "^6.0 || >=2.7 <=4.2.4",
-        
-        "warrence/yii2-kartikgii": "dev-master",
-        "buttflattery/yii2-formwizard":"@dev" 
+        "symfony/browser-kit": "^6.0 || >=2.7 <=4.2.4"
     },
     "autoload-dev": {
         "psr-4": {
@@ -76,14 +44,11 @@
     },
     "config": {
         "allow-plugins": {
-            "yiisoft/yii2-composer": true
+            "yiisoft/yii2-composer" : true
         },
         "process-timeout": 1800,
         "fxp-asset": {
             "enabled": false
-        },
-        "github-oauth": {
-
         }
     },
     "repositories": [
