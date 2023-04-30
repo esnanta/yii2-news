@@ -31,6 +31,23 @@ return [
             'class' => \yii\caching\FileCache::class,
         ],
 
+        'urlManager' => [
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'enableStrictParsing' => false,
+            'rules' => [
+                '<controller:\w+>/<id:\d+>' => '<controller>/view',
+                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
+                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',  
+
+                //PENGATURAN DI SITE CONTROLLER HARUS DIPINDAH KESINI
+                //'login'=>'<module>/<controller>/<action>',
+                //https://github.com/yii2mod/yii2-user
+                //'site/login' => ['class' => 'yii2mod\user\actions\LoginAction' ],
+            ],
+                       
+        ],  
+        
         //https://github.com/yii2mod/yii2-user
         'i18n' => [
             'translations' => [
