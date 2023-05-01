@@ -14,22 +14,39 @@ use yii\widgets\Menu;
 
 class LeftMenu extends Menu
 {
-    public $linkTemplate = '<a href="{url}" class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden g-px-15 g-py-12">{label}</a>';
-    public $submenuTemplate = "\n<ul class='my-custom-submenu'>\n{items}\n</ul>\n";
-    public $activateParents = true;
-    public $options = ['id'=>'sideNavMenu', 'class' => 'u-sidebar-navigation-v1-menu u-side-nav--top-level-menu g-min-height-100vh mb-0'];
-    public $itemOptions = ['class' => 'u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item'];
+    private $id=0;
     
+    public $options = ['id' => 'sideNavMenu', 'class' => 'u-sidebar-navigation-v1-menu u-side-nav--top-level-menu  mb-0']; //g-min-height-100vh
+    public $itemOptions = ['class' => 'u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item'];
+    public $linkTemplate = '<a href="{url}" class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden g-px-15 g-py-12"> <span class="d-flex align-self-center g-pos-rel g-font-size-18 g-mr-18">{icon}</span> {label} </a>';
+    public $submenuTemplate = "\n<ul id='sub-menu-{id}' class='u-sidebar-navigation-v1-menu u-side-nav--second-level-menu mb-0'>\n{items}\n</ul>\n";
+    public $activateParents = false;
+    private $_idCounter = 1;
+
+    protected function getUniqueId()
+    {
+        return $this->id . '-sub-' . $this->_idCounter++;
+    }
+
     protected function renderItem($item)
     {
         $label = $this->encodeLabels ? Html::encode($item['label']) : $item['label'];
-        $url = isset($item['url']) ? Url::to($item['url']) : null;
+        $url = isset($item['url']) ? Url::to($item['url']) : '#';
+        $icon = isset($item['icon']) ? Html::tag('span', '', ['class' => $item['icon']]) : '';
         $template = isset($item['template']) ? $item['template'] : $this->linkTemplate;
+        $hasSubmenu = isset($item['items']) && !empty($item['items']);
+        
 
-        if (isset($item['items']) && !empty($item['items'])) {
-            $template = $this->submenuTemplate;
-            $label .= ' <span class="caret"></span>';
-            $submenu = parent::renderItems($item['items']);
+        if ($hasSubmenu) {
+            
+            $this->itemOptions['class'] = ['u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item'];
+            $this->linkTemplate = '<a href="{url}" class="media u-side-nav--second-level-menu-link g-px-15 g-py-12" data-hssm-target="#sub-menu-{id}">  <span class="d-flex align-self-center g-mr-15 g-mt-minus-1">{icon}</span> {label} </a>';
+            $template = isset($item['template']) ? $item['template'] : $this->linkTemplate;
+            
+            $submenuId = $this->getUniqueId();
+            $submenuTemplate = strtr($this->submenuTemplate, ['{id}' => $submenuId]);
+            $submenu = parent::renderItems($item['items'], ['submenuTemplate' => $submenuTemplate],['itemOptions'=>$this->itemOptions]);
+
         } else {
             $submenu = '';
         }
@@ -37,6 +54,7 @@ class LeftMenu extends Menu
         return strtr($template, [
             '{url}' => Html::encode($url),
             '{label}' => $label,
+            '{icon}' => $icon,
             '{items}' => $submenu,
         ]);
     }

@@ -1,5 +1,6 @@
 <?php
-namespace dmstr\widgets;
+namespace backend\widgets;
+
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
@@ -8,22 +9,23 @@ use yii\helpers\Html;
  * Class Menu
  * Theme menu widget.
  */
-class Menu extends \yii\widgets\Menu
+class DmstrMenu extends \yii\widgets\Menu
 {
     /**
      * @inheritdoc
      */
-    public $linkTemplate = '<a href="{url}">{icon} {label}</a>';
+    public $linkTemplate = '<a href="{url}" class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden g-px-15 g-py-12"> <span class="d-flex align-self-center g-pos-rel g-font-size-18 g-mr-18">{icon}</span> {label} </a>';
     /**
      * @inheritdoc
      * Styles all labels of items on sidebar by AdminLTE
      */
     public $labelTemplate = '<span>{label}</span>';
-    public $submenuTemplate = "\n<ul class='treeview-menu' {show}>\n{items}\n</ul>\n";
+    public $submenuTemplate = "\n<ul class='u-sidebar-navigation-v1-menu-item u-side-nav--has-sub-menu u-side-nav--top-level-menu-item u-side-nav-opened has-active' {show}>\n{items}\n</ul>\n";
     public $activateParents = true;
     public $defaultIconHtml = '<i class="fa fa-circle-o"></i> ';
-    public $options = ['class' => 'sidebar-menu', 'data-widget' => 'tree'];
+    public $options = ['id'=>'sideNavMenu', 'class' => 'u-sidebar-navigation-v1-menu u-side-nav--top-level-menu g-min-height-100vh mb-0'];
 
+    
     /**
      * @var string is prefix that will be added to $item['icon'] if it exist.
      * By default uses for Font Awesome (http://fontawesome.io/)
@@ -72,7 +74,7 @@ class Menu extends \yii\widgets\Menu
     {
         if (isset($item['items'])) {
             $labelTemplate = '<a href="{url}">{icon} {label} <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>';
-            $linkTemplate = '<a href="{url}">{icon} {label} <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>';
+            $linkTemplate = '<a href="{url}" class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden g-px-15 g-py-12"> <span class="d-flex align-self-center g-pos-rel g-font-size-18 g-mr-18">{icon}</span> {label} </a>';
         } else {
             $labelTemplate = $this->labelTemplate;
             $linkTemplate = $this->linkTemplate;
