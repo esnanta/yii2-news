@@ -7,33 +7,8 @@ use backend\widgets\DmstrMenu;
 
 ?>
 <div id="sideNav" class="col-auto u-sidebar-navigation-v1 u-sidebar-navigation--dark">
-    
-    
-    
-    
-    <?php
-    
-    echo CustomMenu::widget([
-        'items' => [
-            ['label' => 'Home', 'url' => ['/site/index'], 'icon' => 'hs-admin-server'],
-            [
-                'label' => 'TEST',
-                'itemOptions'=>['class'=>'test'],
-                'items' => [
-                    ['label' => 'Item 1', 'url' => ['/site/index']],
-                    ['label' => 'Item 2', 'url' => ['/site/index']],
-                ],
-            ],
-        ],
-    ]);
-
-    
-
-?>
-    
-
     <ul id="sideNavMenu" class="u-sidebar-navigation-v1-menu u-side-nav--top-level-menu g-min-height-100vh mb-0">
-        
+
         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--has-sub-menu u-side-nav--top-level-menu-item u-side-nav-opened has-active">
             <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden g-px-15 g-py-12" href="#" data-hssm-target="#subMenu1">
                 <span class="d-flex align-self-center g-pos-rel g-font-size-18 g-mr-18">
@@ -57,7 +32,7 @@ use backend\widgets\DmstrMenu;
                         <span class="media-body align-self-center">Index</span>
                     </a>
                 </li>
-                
+
             </ul>
             <!-- End Dashboards: Submenu-1 -->
         </li>
@@ -65,3 +40,22 @@ use backend\widgets\DmstrMenu;
 
     </ul>
 </div>
+
+
+
+
+    <?php
+//    echo CustomMenu::widget([
+//        'items' => [
+//            ['label' => 'Home', 'url' => ['/site/index'], 'icon' => 'hs-admin-server'],
+//            [
+//                'label' => 'TEST',
+//                'itemOptions'=>['class'=>'test'],
+//                'items' => [
+//                    ['label' => 'Item 1', 'url' => ['/site/index']],
+//                    ['label' => 'Item 2', 'url' => ['/site/index']],
+//                ],
+//            ],
+//        ],
+//    ]);
+?>

@@ -17,7 +17,7 @@ return [
         
         'db' => [
             'class' => \yii\db\Connection::class,
-            'dsn' => 'mysql:host=localhost;dbname=yii2-retread',
+            'dsn' => 'mysql:host=localhost;dbname=yii2-news-update',
             'username' => 'root',
             'password' => '',
             'charset' => 'utf8',
