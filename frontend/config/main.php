@@ -51,7 +51,28 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-
+        
+//        'view' => [
+//            'theme' => [
+//                'pathMap' => [
+//                    '@app/views' => '@app/web/themes/unify263blog/views',
+//                    '@dektrium/user/views' => '@app/web/themes/unify263blog/views/user'
+//                ],
+//                'basePath' => '@app/web/themes/unify263blog',
+//                'baseUrl' => '@web/web/themes/unify263blog',
+//            ],
+//        ],
+        
+        'view' => [
+            'theme' => [
+                'pathMap' => [
+                    '@yii2mod/user/views' => '@app/views/user'
+                ],
+//                'basePath' => '@app/web/themes/unify263blog',
+//                'baseUrl' => '@web/web/themes/unify263blog',
+            ],
+        ],
+        
     ],
     'params' => $params,
 ];
