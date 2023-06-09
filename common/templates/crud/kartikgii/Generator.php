@@ -5,7 +5,7 @@
  * @license http://www.yiiframework.com/license/
  */
 
-namespace backend\templates\crud\kartikgii;
+namespace common\templates\crud\kartikgii;
 
 use Yii;
 use yii\db\ActiveRecord;

@@ -40,7 +40,8 @@
         "codeception/verify": "^2.2",
         "symfony/browser-kit": "^6.0 || >=2.7 <=4.2.4",
         
-        "mootensai/yii2-enhanced-gii": "dev-master"
+        "mootensai/yii2-enhanced-gii": "dev-master",
+        "warrence/yii2-kartikgii": "dev-master"
     },
     "autoload-dev": {
         "psr-4": {

@@ -2,38 +2,44 @@
 
 namespace backend\controllers;
 
-use Yii;
-use backend\models\ArchiveCategory;
-use backend\models\ArchiveCategorySearch;
+use backend\models\Archive;
+use backend\models\ArchiveSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * ArchiveCategoryController implements the CRUD actions for ArchiveCategory model.
+ * ArchiveCategoryController implements the CRUD actions for Archive model.
  */
 class ArchiveCategoryController extends Controller
 {
+    /**
+     * @inheritDoc
+     */
     public function behaviors()
     {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['post'],
+        return array_merge(
+            parent::behaviors(),
+            [
+                'verbs' => [
+                    'class' => VerbFilter::className(),
+                    'actions' => [
+                        'delete' => ['POST'],
+                    ],
                 ],
-            ],
-        ];
+            ]
+        );
     }
 
     /**
-     * Lists all ArchiveCategory models.
-     * @return mixed
+     * Lists all Archive models.
+     *
+     * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new ArchiveCategorySearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $searchModel = new ArchiveSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -42,109 +48,87 @@ class ArchiveCategoryController extends Controller
     }
 
     /**
-     * Displays a single ArchiveCategory model.
-     * @param integer $id
-     * @return mixed
+     * Displays a single Archive model.
+     * @param int $id ID
+     * @return string
+     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
     {
-        $model = $this->findModel($id);
-        $providerArchive = new \yii\data\ArrayDataProvider([
-            'allModels' => $model->archives,
-        ]);
         return $this->render('view', [
             'model' => $this->findModel($id),
-            'providerArchive' => $providerArchive,
         ]);
     }
 
     /**
-     * Creates a new ArchiveCategory model.
+     * Creates a new Archive model.
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
+     * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new ArchiveCategory();
+        $model = new Archive();
 
-        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+            $model->loadDefaultValues();
         }
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
     }
 
     /**
-     * Updates an existing ArchiveCategory model.
+     * Updates an existing Archive model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
+     * @param int $id ID
+     * @return string|\yii\web\Response
+     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
-        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
         }
+
+        return $this->render('update', [
+            'model' => $model,
+        ]);
     }
 
     /**
-     * Deletes an existing ArchiveCategory model.
+     * Deletes an existing Archive model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
+     * @param int $id ID
+     * @return \yii\web\Response
+     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->deleteWithRelated();
+        $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
 
-    
     /**
-     * Finds the ArchiveCategory model based on its primary key value.
+     * Finds the Archive model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return ArchiveCategory the loaded model
+     * @param int $id ID
+     * @return Archive the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = ArchiveCategory::findOne($id)) !== null) {
+        if (($model = Archive::findOne(['id' => $id])) !== null) {
             return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
         }
-    }
-    
-    /**
-    * Action to load a tabular form grid
-    * for Archive
-    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
-    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
-    *
-    * @return mixed
-    */
-    public function actionAddArchive()
-    {
-        if (Yii::$app->request->isAjax) {
-            $row = Yii::$app->request->post('Archive');
-            if (!empty($row)) {
-                $row = array_values($row);
-            }
-            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('_action') == 'load' && empty($row)) || Yii::$app->request->post('_action') == 'add')
-                $row[] = [];
-            return $this->renderAjax('_formArchive', ['row' => $row]);
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }

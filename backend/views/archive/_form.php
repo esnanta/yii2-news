@@ -1,70 +1,73 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use kartik\widgets\ActiveForm;
+use kartik\builder\Form;
+use kartik\datecontrol\DateControl;
 
-/* @var $this yii\web\View */
-/* @var $model backend\models\Archive */
-/* @var $form yii\widgets\ActiveForm */
-
+/**
+ * @var yii\web\View $this
+ * @var backend\models\Archive $model
+ * @var yii\widgets\ActiveForm $form
+ */
 ?>
 
 <div class="archive-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['type' => ActiveForm::TYPE_HORIZONTAL]); echo Form::widget([
 
-    <?= $form->errorSummary($model); ?>
+        'model' => $model,
+        'form' => $form,
+        'columns' => 1,
+        'attributes' => [
 
-    <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+            'is_visible' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Is Visible...']],
 
-    <?= $form->field($model, 'is_visible')->textInput(['placeholder' => 'Is Visible']) ?>
+            'archive_type' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Archive Type...']],
 
-    <?= $form->field($model, 'archive_type')->textInput(['placeholder' => 'Archive Type']) ?>
+            'archive_category_id' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Archive Category ID...']],
 
-    <?= $form->field($model, 'archive_category_id')->widget(\kartik\widgets\Select2::classname(), [
-        'data' => \yii\helpers\ArrayHelper::map(\backend\models\ArchiveCategory::find()->orderBy('id')->asArray()->all(), 'id', 'title'),
-        'options' => ['placeholder' => 'Choose Tx archive category'],
-        'pluginOptions' => [
-            'allowClear' => true
-        ],
-    ]); ?>
+            'size' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Size...']],
 
-    <?= $form->field($model, 'title')->textInput(['maxlength' => true, 'placeholder' => 'Title']) ?>
+            'view_counter' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter View Counter...']],
 
-    <?= $form->field($model, 'date_issued')->widget(\kartik\datecontrol\DateControl::classname(), [
-        'type' => \kartik\datecontrol\DateControl::FORMAT_DATE,
-        'saveFormat' => 'php:Y-m-d',
-        'ajaxConversion' => true,
-        'options' => [
-            'pluginOptions' => [
-                'placeholder' => 'Choose Date Issued',
-                'autoclose' => true
-            ]
-        ],
-    ]); ?>
+            'download_counter' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Download Counter...']],
 
-    <?= $form->field($model, 'file_name')->textInput(['maxlength' => true, 'placeholder' => 'File Name']) ?>
+            'created_by' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter created_by...']],
 
-    <?= $form->field($model, 'archive_url')->textInput(['maxlength' => true, 'placeholder' => 'Archive Url']) ?>
+            'updated_by' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter updated_by...']],
 
-    <?= $form->field($model, 'size')->textInput(['placeholder' => 'Size']) ?>
+            'is_deleted' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Is Deleted...']],
 
-    <?= $form->field($model, 'mime_type')->textInput(['maxlength' => true, 'placeholder' => 'Mime Type']) ?>
+            'deleted_by' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter deleted_by...']],
 
-    <?= $form->field($model, 'view_counter')->textInput(['placeholder' => 'View Counter']) ?>
+            'verlock' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Verlock...']],
 
-    <?= $form->field($model, 'download_counter')->textInput(['placeholder' => 'Download Counter']) ?>
+            'date_issued' => ['type' => Form::INPUT_WIDGET, 'widgetClass' => DateControl::classname(),'options' => ['type' => DateControl::FORMAT_DATE]],
 
-    <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
+            'created_at' => ['type' => Form::INPUT_WIDGET, 'widgetClass' => DateControl::classname(),'options' => ['type' => DateControl::FORMAT_DATETIME]],
 
-    <?= $form->field($model, 'is_deleted')->textInput(['placeholder' => 'Is Deleted']) ?>
+            'updated_at' => ['type' => Form::INPUT_WIDGET, 'widgetClass' => DateControl::classname(),'options' => ['type' => DateControl::FORMAT_DATETIME]],
 
-    <?= $form->field($model, 'verlock', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+            'deleted_at' => ['type' => Form::INPUT_WIDGET, 'widgetClass' => DateControl::classname(),'options' => ['type' => DateControl::FORMAT_DATETIME]],
 
-    <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-    </div>
+            'description' => ['type' => Form::INPUT_TEXTAREA, 'options' => ['placeholder' => 'Enter Description...','rows' => 6]],
 
-    <?php ActiveForm::end(); ?>
+            'title' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Title...', 'maxlength' => 200]],
+
+            'file_name' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter File Name...', 'maxlength' => 200]],
+
+            'archive_url' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Archive Url...', 'maxlength' => 500]],
+
+            'mime_type' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Mime Type...', 'maxlength' => 100]],
+
+        ]
+
+    ]);
+
+    echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'),
+        ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']
+    );
+    ActiveForm::end(); ?>
 
 </div>

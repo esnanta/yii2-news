@@ -73,7 +73,7 @@ if (!YII_ENV_TEST) {
             'mootensai-crud' => [ // generator name
                 'class' => 'mootensai\enhancedgii\crud\Generator', // generator class
                 'templates' => [ //setting for out templates
-                    'mootensai' => '@backend/templates/crud/mootensai', // template name => path to template
+                    'mootensai' => '@common/templates/crud/mootensai', // template name => path to template
                 ]
             ]               
             

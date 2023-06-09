@@ -41,6 +41,15 @@ use backend\widgets\DmstrMenu;
                     ?>
                     <?= Html::a($user, ['/archive-category/index'], ['class'=>'media u-side-nav--second-level-menu-link g-px-15 g-py-12']) ?>
 
+                    <?php 
+                        $user = '<span class="d-flex align-self-center g-mr-15 g-mt-minus-1">' .
+                                    '<i class="hs-admin-blackboard"></i>'.
+                                '</span>' .
+                                '<span class="media-body align-self-center">Archive</span>'
+                    ?>
+                    <?= Html::a($user, ['/archive/index'], ['class'=>'media u-side-nav--second-level-menu-link g-px-15 g-py-12']) ?>
+
+                    
 <!--                    <a class="media u-side-nav--second-level-menu-link g-px-15 g-py-12" href="dashboards/dashboard-v2.html">
                         <span class="d-flex align-self-center g-mr-15 g-mt-minus-1">
                             <i class="hs-admin-blackboard"></i>

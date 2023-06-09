@@ -1,78 +1,104 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\DetailView;
-use kartik\grid\GridView;
+use kartik\detail\DetailView;
+use kartik\datecontrol\DateControl;
 
-/* @var $this yii\web\View */
-/* @var $model backend\models\Archive */
+/**
+ * @var yii\web\View $this
+ * @var backend\models\Archive $model
+ */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Archive', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Archives'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="archive-view">
 
-    <div class="row">
-        <div class="col-sm-9">
-            <h2><?= 'Archive'.' '. Html::encode($this->title) ?></h2>
-        </div>
-        <div class="col-sm-3" style="margin-top: 15px">
-            
-            <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-            <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-                'class' => 'btn btn-danger',
-                'data' => [
-                    'confirm' => 'Are you sure you want to delete this item?',
-                    'method' => 'post',
-                ],
-            ])
-            ?>
-        </div>
-    </div>
-
-    <div class="row">
-<?php 
-    $gridColumn = [
-        ['attribute' => 'id', 'visible' => false],
-        'is_visible',
-        'archive_type',
-        [
-            'attribute' => 'archiveCategory.title',
-            'label' => 'Archive Category',
-        ],
-        'title',
-        'date_issued',
-        'file_name',
-        'archive_url:url',
-        'size',
-        'mime_type',
-        'view_counter',
-        'download_counter',
-        'description:ntext',
-        'is_deleted',
-        ['attribute' => 'verlock', 'visible' => false],
-    ];
-    echo DetailView::widget([
+    <?= DetailView::widget([
         'model' => $model,
-        'attributes' => $gridColumn
-    ]);
-?>
-    </div>
-    <div class="row">
-        <h4>ArchiveCategory<?= ' '. Html::encode($this->title) ?></h4>
-    </div>
-    <?php 
-    $gridColumnArchiveCategory = [
-        ['attribute' => 'id', 'visible' => false],
-        'title',
-        'sequence',
-        'description:ntext',
-        'is_deleted',
-        ['attribute' => 'verlock', 'visible' => false],
-    ];
-    echo DetailView::widget([
-        'model' => $model->archiveCategory,
-        'attributes' => $gridColumnArchiveCategory    ]);
-    ?>
+        'condensed' => false,
+        'hover' => true,
+        'mode' => Yii::$app->request->get('edit') == 't' ? DetailView::MODE_EDIT : DetailView::MODE_VIEW,
+        'panel' => [
+            'heading' => $this->title,
+            'type' => DetailView::TYPE_INFO,
+        ],
+        'attributes' => [
+            'id',
+            'is_visible',
+            'archive_type',
+            'archive_category_id',
+            'title',
+            [
+                'attribute' => 'date_issued',
+                'format' => [
+                    'date', (isset(Yii::$app->modules['datecontrol']['displaySettings']['date']))
+                        ? Yii::$app->modules['datecontrol']['displaySettings']['date']
+                        : 'd-m-Y'
+                ],
+                'type' => DetailView::INPUT_WIDGET,
+                'widgetOptions' => [
+                    'class' => DateControl::classname(),
+                    'type' => DateControl::FORMAT_DATE
+                ]
+            ],
+            'file_name',
+            'archive_url:url',
+            'size',
+            'mime_type',
+            'view_counter',
+            'download_counter',
+            'description:ntext',
+            [
+                'attribute' => 'created_at',
+                'format' => [
+                    'datetime', (isset(Yii::$app->modules['datecontrol']['displaySettings']['datetime']))
+                        ? Yii::$app->modules['datecontrol']['displaySettings']['datetime']
+                        : 'd-m-Y H:i:s A'
+                ],
+                'type' => DetailView::INPUT_WIDGET,
+                'widgetOptions' => [
+                    'class' => DateControl::classname(),
+                    'type' => DateControl::FORMAT_DATETIME
+                ]
+            ],
+            [
+                'attribute' => 'updated_at',
+                'format' => [
+                    'datetime', (isset(Yii::$app->modules['datecontrol']['displaySettings']['datetime']))
+                        ? Yii::$app->modules['datecontrol']['displaySettings']['datetime']
+                        : 'd-m-Y H:i:s A'
+                ],
+                'type' => DetailView::INPUT_WIDGET,
+                'widgetOptions' => [
+                    'class' => DateControl::classname(),
+                    'type' => DateControl::FORMAT_DATETIME
+                ]
+            ],
+            'created_by',
+            'updated_by',
+            'is_deleted',
+            [
+                'attribute' => 'deleted_at',
+                'format' => [
+                    'datetime', (isset(Yii::$app->modules['datecontrol']['displaySettings']['datetime']))
+                        ? Yii::$app->modules['datecontrol']['displaySettings']['datetime']
+                        : 'd-m-Y H:i:s A'
+                ],
+                'type' => DetailView::INPUT_WIDGET,
+                'widgetOptions' => [
+                    'class' => DateControl::classname(),
+                    'type' => DateControl::FORMAT_DATETIME
+                ]
+            ],
+            'deleted_by',
+            'verlock',
+        ],
+        'deleteOptions' => [
+            'url' => ['delete', 'id' => $model->id],
+        ],
+        'enableEditMode' => true,
+    ]) ?>
+
 </div>

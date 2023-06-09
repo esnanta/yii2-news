@@ -11,8 +11,8 @@ class ComposerStaticInit3fce1343cc5c6e318fc3df223938b40c
         '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
-        'ec07570ca5a812141189b1fa81503674' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
         '2cffec82183ee1cea088009cef9a6fc3' => __DIR__ . '/..' . '/ezyang/htmlpurifier/library/HTMLPurifier.composer.php',
+        'ec07570ca5a812141189b1fa81503674' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
         'e69f7f6ee287b969198c3c9d6777bd38' => __DIR__ . '/..' . '/symfony/polyfill-intl-normalizer/bootstrap.php',
         '25072dd6e2470089de65ae7bf11d3109' => __DIR__ . '/..' . '/symfony/polyfill-php72/bootstrap.php',
@@ -101,6 +101,10 @@ class ComposerStaticInit3fce1343cc5c6e318fc3df223938b40c
             'yii2mod\\rbac\\' => 13,
             'yii2mod\\enum\\' => 13,
         ),
+        'w' => 
+        array (
+            'warrence\\kartikgii\\' => 19,
+        ),
         's' => 
         array (
             'setasign\\Fpdi\\' => 14,
@@ -131,6 +135,7 @@ class ComposerStaticInit3fce1343cc5c6e318fc3df223938b40c
             'kartik\\plugins\\depdrop\\' => 23,
             'kartik\\plugins\\dateformatter\\' => 29,
             'kartik\\mpdf\\' => 12,
+            'kartik\\icons\\' => 13,
             'kartik\\helpers\\' => 15,
             'kartik\\growl\\' => 13,
             'kartik\\grid\\' => 12,
@@ -139,6 +144,7 @@ class ComposerStaticInit3fce1343cc5c6e318fc3df223938b40c
             'kartik\\export\\' => 14,
             'kartik\\dynagrid\\' => 16,
             'kartik\\dialog\\' => 14,
+            'kartik\\detail\\' => 14,
             'kartik\\depdrop\\' => 15,
             'kartik\\datetime\\' => 16,
             'kartik\\datecontrol\\' => 19,
@@ -283,6 +289,10 @@ class ComposerStaticInit3fce1343cc5c6e318fc3df223938b40c
         array (
             0 => __DIR__ . '/..' . '/yii2mod/yii2-enum',
         ),
+        'warrence\\kartikgii\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/warrence/yii2-kartikgii',
+        ),
         'setasign\\Fpdi\\' => 
         array (
             0 => __DIR__ . '/..' . '/setasign/fpdi/src',
@@ -297,8 +307,8 @@ class ComposerStaticInit3fce1343cc5c6e318fc3df223938b40c
         ),
         'mootensai\\components\\' => 
         array (
-            0 => __DIR__ . '/..' . '/mootensai/yii2-optimistic-lock-validator',
-            1 => __DIR__ . '/..' . '/mootensai/yii2-jsblock',
+            0 => __DIR__ . '/..' . '/mootensai/yii2-jsblock',
+            1 => __DIR__ . '/..' . '/mootensai/yii2-optimistic-lock-validator',
         ),
         'mootensai\\behaviors\\' => 
         array (
@@ -372,6 +382,10 @@ class ComposerStaticInit3fce1343cc5c6e318fc3df223938b40c
         array (
             0 => __DIR__ . '/..' . '/kartik-v/yii2-mpdf/src',
         ),
+        'kartik\\icons\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kartik-v/yii2-icons/src',
+        ),
         'kartik\\helpers\\' => 
         array (
             0 => __DIR__ . '/..' . '/kartik-v/yii2-helpers/src',
@@ -403,6 +417,10 @@ class ComposerStaticInit3fce1343cc5c6e318fc3df223938b40c
         'kartik\\dialog\\' => 
         array (
             0 => __DIR__ . '/..' . '/kartik-v/yii2-dialog/src',
+        ),
+        'kartik\\detail\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kartik-v/yii2-detail-view/src',
         ),
         'kartik\\depdrop\\' => 
         array (
@@ -561,8 +579,8 @@ class ComposerStaticInit3fce1343cc5c6e318fc3df223938b40c
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\EventDispatcher\\' => 
         array (
@@ -630,8 +648,8 @@ class ComposerStaticInit3fce1343cc5c6e318fc3df223938b40c
         ),
         'Codeception\\' => 
         array (
-            0 => __DIR__ . '/..' . '/codeception/stub/src',
-            1 => __DIR__ . '/..' . '/codeception/codeception/src/Codeception',
+            0 => __DIR__ . '/..' . '/codeception/codeception/src/Codeception',
+            1 => __DIR__ . '/..' . '/codeception/stub/src',
             2 => __DIR__ . '/..' . '/codeception/verify/src/Codeception',
         ),
     );

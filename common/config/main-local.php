@@ -1,19 +1,14 @@
 <?php
 
-return [
+$config = [
     'components' => [
         'db' => [
             'class' => \yii\db\Connection::class,
-            'dsn' => 'mysql:host=localhost;dbname=yii2-news-update',
+            'dsn' => 'mysql:host=localhost;dbname=news_update',
             'username' => 'root',
             'password' => '',
             'charset' => 'utf8',
-            'tablePrefix' => 'tx_',
-            'enableSchemaCache' => false,
-            'schemaCacheDuration' => 3600,// Duration of schema cache.
-            'schemaCache' => 'cache',// Name of the cache component used to store schema information
         ],
-        
         'mailer' => [
             'class' => \yii\symfonymailer\Mailer::class,
             'viewPath' => '@common/mail',
@@ -45,4 +40,37 @@ return [
             // https://symfony.com/doc/current/mailer.html#using-a-3rd-party-transport
         ],
     ],
+    
 ];
+
+
+if (!YII_ENV_TEST) {
+    // configuration adjustments for 'dev' environment
+    $config['bootstrap'][] = 'debug';
+    $config['modules']['debug'] = [
+        'class' => \yii\debug\Module::class,
+    ];
+
+    $config['bootstrap'][] = 'gii';
+    $config['modules']['gii']['class'] = 'yii\gii\Module';
+    $config['modules']['gii']['generators'] = [
+
+            'kartikgii-crud' => [ // generator name
+                'class' => 'common\templates\crud\kartikgii\Generator', // generator class
+                'templates' => [ //setting for out templates
+                    'kartikgii' => '@common/templates/crud/kartikgii', // template name => path to template
+                ]
+            ],    
+            
+            'mootensai-crud' => [ // generator name
+                'class' => 'mootensai\enhancedgii\crud\Generator', // generator class
+                'templates' => [ //setting for out templates
+                    'mootensai' => '@common/templates/crud/mootensai', // template name => path to template
+                ]
+            ]               
+            
+        
+    ];
+}
+
+return $config;

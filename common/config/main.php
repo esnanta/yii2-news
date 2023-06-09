@@ -1,5 +1,5 @@
 <?php
-
+use \kartik\datecontrol\Module;
 return [
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
@@ -20,6 +20,18 @@ return [
             'class' => '\kartik\grid\Module',
         // see settings on http://demos.krajee.com/grid#module
         ],
+        
+        'datecontrol' =>  [
+            'class' => '\kartik\datecontrol\Module',
+            
+            // format settings for displaying each date attribute (ICU format example)
+            'displaySettings' => [
+                Module::FORMAT_DATE => 'dd-MM-yyyy',
+                Module::FORMAT_TIME => 'hh:mm:ss a',
+                Module::FORMAT_DATETIME => 'dd-MM-yyyy hh:mm:ss a', 
+            ],
+        ]
+        
     ],
     'components' => [
         'db' => [
