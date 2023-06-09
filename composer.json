@@ -20,7 +20,12 @@
         "yiisoft/yii2-symfonymailer": "~2.0.3",
         
         "yii2mod/yii2-user": "*",
-        "yii2mod/yii2-rbac": "*"
+        "yii2mod/yii2-rbac": "*",
+        
+        "kartik-v/yii2-bootstrap5-dropdown" : "*",
+        "kartik-v/yii2-grid": "dev-master",
+        "kartik-v/yii2-datecontrol": "dev-master"
+        
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
@@ -33,7 +38,9 @@
         "codeception/module-yii2": "^1.1",
         "codeception/module-filesystem": "^2.0 || ^1.1",
         "codeception/verify": "^2.2",
-        "symfony/browser-kit": "^6.0 || >=2.7 <=4.2.4"
+        "symfony/browser-kit": "^6.0 || >=2.7 <=4.2.4",
+        
+        "mootensai/yii2-enhanced-gii": "dev-master"
     },
     "autoload-dev": {
         "psr-4": {

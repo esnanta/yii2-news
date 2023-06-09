@@ -19,6 +19,15 @@ if (!YII_ENV_TEST) {
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [
         'class' => \yii\gii\Module::class,
+        'generators' => [ //here
+            'mootensai-crud' => [ // generator name
+                'class' => 'mootensai\enhancedgii\crud\Generator', // generator class
+                'templates' => [ //setting for out templates
+                    'mootensai' => '@backend/templates/crud/mootensai', // template name => path to template
+                ]
+            ]               
+            
+        ]
     ];
 }
 

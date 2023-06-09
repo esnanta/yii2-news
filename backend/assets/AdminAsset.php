@@ -12,6 +12,9 @@ class AdminAsset extends AssetBundle
     public $basePath = '@webroot/themes-admin';
     public $baseUrl = '@web/themes-admin';
     public $css = [
+
+        "https://use.fontawesome.com/releases/v5.3.1/css/all.css",
+        
         //CSS Global Compulsory
         'assets-main/vendor/bootstrap/bootstrap.min.css',
         

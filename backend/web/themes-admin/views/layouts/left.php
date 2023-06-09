@@ -25,12 +25,28 @@ use backend\widgets\DmstrMenu;
             <ul id="subMenu1" class="u-sidebar-navigation-v1-menu u-side-nav--second-level-menu mb-0" style="display: block;">
 
                 <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                    <a class="media u-side-nav--second-level-menu-link g-px-15 g-py-12" href="dashboards/dashboard-v2.html">
+                    <?php 
+                        $user = '<span class="d-flex align-self-center g-mr-15 g-mt-minus-1">' .
+                                    '<i class="hs-admin-blackboard"></i>'.
+                                '</span>' .
+                                '<span class="media-body align-self-center">User</span>'
+                    ?>
+                    <?= Html::a($user, ['/user/index'], ['class'=>'media u-side-nav--second-level-menu-link g-px-15 g-py-12']) ?>
+
+                    <?php 
+                        $user = '<span class="d-flex align-self-center g-mr-15 g-mt-minus-1">' .
+                                    '<i class="hs-admin-blackboard"></i>'.
+                                '</span>' .
+                                '<span class="media-body align-self-center">Archive Category</span>'
+                    ?>
+                    <?= Html::a($user, ['/archive-category/index'], ['class'=>'media u-side-nav--second-level-menu-link g-px-15 g-py-12']) ?>
+
+<!--                    <a class="media u-side-nav--second-level-menu-link g-px-15 g-py-12" href="dashboards/dashboard-v2.html">
                         <span class="d-flex align-self-center g-mr-15 g-mt-minus-1">
                             <i class="hs-admin-blackboard"></i>
                         </span>
                         <span class="media-body align-self-center">Index</span>
-                    </a>
+                    </a>-->
                 </li>
 
             </ul>

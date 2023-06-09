@@ -23,6 +23,18 @@ return [
         ],
     ],
     'components' => [
+        
+        /*
+         * HARUS PASANG USER CLASS DI SINI SUPAYA BISA
+         * EKSEKUSI PERINTAH BERIKUT.
+         * TIDAK TERTERA DI : https://github.com/yii2mod/yii2-user
+         *      ./yii user/create <EMAIL> <USER> <PASS>
+         *      
+         */
+        'user' => [
+            'class' => 'yii2mod\user\models\UserModel',
+        ],
+
         'log' => [
             'targets' => [
                 [
