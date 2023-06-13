@@ -1,0 +1,7 @@
+IMPLEMENT DATE TIME
+
+https://github.com/omnilight/yii2-datetime
+
+- perbaikan di template mootensai
+- pengaturan date harus pakai php class
+- coba save

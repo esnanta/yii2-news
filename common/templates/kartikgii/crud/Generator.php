@@ -5,7 +5,7 @@
  * @license http://www.yiiframework.com/license/
  */
 
-namespace common\templates\crud\kartikgii;
+namespace common\templates\kartikgii\crud;
 
 use Yii;
 use yii\db\ActiveRecord;
@@ -42,7 +42,7 @@ class Generator extends \yii\gii\generators\crud\Generator
      */
     public function getName()
     {
-        return 'Kartik CRUD Generator';
+        return 'Ext - Kartik CRUD Generator';
     }
 
     /**

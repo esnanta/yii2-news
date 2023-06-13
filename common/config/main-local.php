@@ -56,18 +56,25 @@ if (!YII_ENV_TEST) {
     $config['modules']['gii']['generators'] = [
 
             'kartikgii-crud' => [ // generator name
-                'class' => 'common\templates\crud\kartikgii\Generator', // generator class
+                'class' => 'common\templates\kartikgii\crud\Generator', // generator class
                 'templates' => [ //setting for out templates
-                    'kartikgii' => '@common/templates/crud/kartikgii', // template name => path to template
+                    'kartikgii' => '@common/templates/kartikgii/crud/default', // template name => path to template
                 ]
             ],    
             
             'mootensai-crud' => [ // generator name
-                'class' => 'mootensai\enhancedgii\crud\Generator', // generator class
+                'class' => 'common\templates\mootensai\crud\Generator', // generator class
                 'templates' => [ //setting for out templates
-                    'mootensai' => '@common/templates/crud/mootensai', // template name => path to template
+                    'mootensai-crud' => '@common/templates/mootensai/crud/default', // template name => path to template
                 ]
-            ]               
+            ],
+        
+            'mootensai-model' => [ // generator name
+                'class' => 'common\templates\mootensai\model\Generator', // generator class
+                'templates' => [ //setting for out templates
+                    'mootensai-model' => '@common/templates/mootensai/model/default', // template name => path to template
+                ]
+            ] 
             
         
     ];
