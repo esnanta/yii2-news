@@ -15,7 +15,12 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
-    'modules' => [],
+    'modules' => [
+        'user' => [
+            // following line will restrict access to profile, recovery, registration and settings controllers from backend
+            'as backend' => 'dektrium\user\filters\BackendFilter',
+        ],
+    ],
     'components' => [
         
         'request' => [
@@ -26,20 +31,6 @@ return [
             'baseUrl' => $baseUrl,
         ],
         
-        //https://github.com/yii2mod/yii2-user
-        'user' => [
-            'identityClass' => 'common\models\User',
-            'enableAutoLogin' => true,
-            'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
-            'on afterLogin' => function ($event) {
-                $event->identity->updateLastLogin();
-            },
-        ],
-        
-        'session' => [
-            // this is the name of the session cookie used for login on the backend
-            'name' => 'advanced-backend',
-        ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
@@ -56,14 +47,14 @@ return [
         'view' => [
             'theme' => [
                 'pathMap' =>
-                [
+               [
                     '@app/views' => '@app/web/themes-admin/views',
-                    
+                    '@dektrium/user/views' => '@app/views/user'
                 ],
                 'basePath' => '@app/web/themes-admin',
                 'baseUrl' => '@web/web/themes-admin',
             ],
         ],
-    ],
+    ],              
     'params' => $params,
 ];

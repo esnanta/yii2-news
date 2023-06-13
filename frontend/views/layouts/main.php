@@ -47,8 +47,32 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav me-auto mb-2 mb-md-0'],
         'items' => $menuItems,
     ]);
+    
+                                    
+//                                    if (Yii::$app->user->getIsGuest()) {
+//                                        echo Yii::$app->user->identity;
+//                                        echo '<li>';
+//                                        echo str_replace('user/user/', '', Html::a('Login', ['admin/user/login'], ['class' => 'd-block g-color-secondary-dark-v1 g-color-primary--hover g-text-underline--none--hover g-py-5 g-px-20']));
+//                                        echo '</li>';
+//                                    } else {
+//
+//                                        if (Yii::$app->user->identity->isAdmin == true) {
+//                                            echo '<li>';
+//                                            echo Html::a('Admin', ['/backend/web/site/index'], ['class' => 'd-block g-color-secondary-dark-v1 g-color-primary--hover g-text-underline--none--hover g-py-5 g-px-20']);
+//                                            echo '</li>';
+//                                        }
+//
+//                                        echo '<li>';
+//                                        echo Html::a('Sign Out ', ['user/security/logout'], ['data-method' => 'POST', 'class' => 'd-block g-color-secondary-dark-v1 g-color-primary--hover g-text-underline--none--hover g-py-5 g-px-20']);
+//                                        echo '</li>';
+//                                    }
+                                   
+    
+    
+    
     if (Yii::$app->user->isGuest) {
-        echo Html::tag('div',Html::a('Login',['/site/login'],['class' => ['btn btn-link login text-decoration-none']]),['class' => ['d-flex']]);
+        //$loginText = str_replace('user/user/', '', Html::a('Login', ['admin/user/login'], ['class' => '']));
+        echo Html::tag('div',Html::a('Login',['admin/user/login'],['class' => ['btn btn-link login text-decoration-none']]),['class' => ['d-flex']]);
     } else {
 
         echo Html::tag('div',Html::a('Admin', (['/admin/site/index']), ['class' => ['btn btn-link login text-decoration-none']]),['class' => ['d-flex']]);

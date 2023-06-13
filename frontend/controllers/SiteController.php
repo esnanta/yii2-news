@@ -2,18 +2,11 @@
 
 namespace frontend\controllers;
 
-use frontend\models\ResendVerificationEmailForm;
-use frontend\models\VerifyEmailForm;
 use Yii;
-use yii\base\InvalidArgumentException;
-use yii\web\BadRequestHttpException;
+
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use common\models\LoginForm;
-use frontend\models\PasswordResetRequestForm;
-use frontend\models\ResetPasswordForm;
-use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 
 /**
@@ -28,7 +21,7 @@ class SiteController extends Controller
     {
         return [
             'access' => [
-                'class' => AccessControl::class,
+                'class' => AccessControl::className(),
                 'only' => ['logout', 'signup'],
                 'rules' => [
                     [
@@ -44,7 +37,7 @@ class SiteController extends Controller
                 ],
             ],
             'verbs' => [
-                'class' => VerbFilter::class,
+                'class' => VerbFilter::className(),
                 'actions' => [
                     'logout' => ['post'],
                 ],
@@ -65,24 +58,10 @@ class SiteController extends Controller
                 'class' => \yii\captcha\CaptchaAction::class,
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
-            
-            //https://github.com/yii2mod/yii2-user
-            'login' => [
-                'class' => 'yii2mod\user\actions\LoginAction'
-            ],
-            'logout' => [
-                'class' => 'yii2mod\user\actions\LogoutAction'
-            ],
-            'signup' => [
-                'class' => 'yii2mod\user\actions\SignupAction'
-            ],
-            'request-password-reset' => [
-                'class' => 'yii2mod\user\actions\RequestPasswordResetAction'
-            ],
-            'password-reset' => [
-                'class' => 'yii2mod\user\actions\PasswordResetAction'
-            ],
-            
+//            'auth' => [
+//                'class' => 'yii\authclient\AuthAction',
+//                'successCallback' => [$this, 'onAuthSuccess'],
+//            ],            
         ];
     }
 

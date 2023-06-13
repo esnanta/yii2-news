@@ -5,38 +5,13 @@ return [
         '@bower' => '@vendor/bower-asset',
         '@npm' => '@vendor/npm-asset',
     ],
+
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
-    //https://github.com/yii2mod/yii2-rbac
-    'modules' => [
-        'rbac' => [
-            'class' => 'yii2mod\rbac\Module',
-        ],
-        'user' => [
-            'class' => 'yii2mod\user\models\UserModel',
-        ],
-        
-        //https://github.com/mootensai/yii2-enhanced-gii
-        'gridview' => [
-            'class' => '\kartik\grid\Module',
-        // see settings on http://demos.krajee.com/grid#module
-        ],
-        
-        'datecontrol' =>  [
-            'class' => '\kartik\datecontrol\Module',
-            
-            // format settings for displaying each date attribute (ICU format example)
-            'displaySettings' => [
-                Module::FORMAT_DATE => 'dd-MM-yyyy',
-                Module::FORMAT_TIME => 'hh:mm:ss a',
-                Module::FORMAT_DATETIME => 'dd-MM-yyyy hh:mm:ss a', 
-            ],
-        ]
-        
-    ],
+
     'components' => [
         'db' => [
             'class' => \yii\db\Connection::class,
-            'dsn' => 'mysql:host=localhost;dbname=yii2-news-update',
+            'dsn' => 'mysql:host=localhost;dbname=news_update',
             'username' => 'root',
             'password' => '',
             'charset' => 'utf8',
@@ -45,10 +20,18 @@ return [
             'schemaCacheDuration' => 3600, // Duration of schema cache.
             'schemaCache' => 'cache', // Name of the cache component used to store schema information
         ],
+
+        'authManager' => [
+            'class' => 'dektrium\rbac\components\DbManager',
+            'defaultRoles' => ['guest'],
+        ],
+
         'cache' => [
             'class' => \yii\caching\FileCache::class,
         ],
+
         'urlManager' => [
+            'class' => 'yii\web\UrlManager',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'enableStrictParsing' => false,
@@ -56,35 +39,101 @@ return [
                 '<controller:\w+>/<id:\d+>' => '<controller>/view',
                 '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
                 '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
-            //PENGATURAN DI SITE CONTROLLER HARUS DIPINDAH KESINI
-            //'login'=>'<module>/<controller>/<action>',
-            //https://github.com/yii2mod/yii2-user
-            //'site/login' => ['class' => 'yii2mod\user\actions\LoginAction' ],
             ],
         ],
+
         //https://github.com/yii2mod/yii2-user
         'i18n' => [
             'translations' => [
-                'yii2mod.user' => [
-                    'class' => 'yii\i18n\PhpMessageSource',
-                    'basePath' => '@yii2mod/user/messages',
-                ],
+//                'yii2mod.user' => [
+//                    'class' => 'yii\i18n\PhpMessageSource',
+//
+//                ],
             // ...
             ],
         ],
-        //https://github.com/yii2mod/yii2-user
+
         'user' => [
-            'identityClass' => 'common\models\User',
-            'enableAutoLogin' => true,
-            'identityCookie' => ['name' => '_identity-ALLPAGE', 'httpOnly' => true],
-            'on afterLogin' => function ($event) {
-                $event->identity->updateLastLogin();
-            },
+            'identityCookie' => [
+                'name'     => '_allIdentityhere',
+                'path'     => '/',
+                'httpOnly' => true,
+            ],
         ],
-        //https://github.com/yii2mod/yii2-rbac        
-        'authManager' => [
-            'class' => 'yii\rbac\DbManager',
-            'defaultRoles' => ['guest', 'user'],
-        ],
+        'session' => [
+            'name' => 'my-ALL-SESSID',
+            'cookieParams' => [
+                'httpOnly' => true,
+                'path'     => '/',
+            ],
+        ], 
     ],
+
+    'modules' => [
+
+        'user' => [
+            'class' => 'dektrium\user\Module',
+            'enableUnconfirmedLogin' => false,
+            'enablePasswordRecovery' => false,
+            'enableRegistration' => false,
+            'enableConfirmation' => false,
+            'confirmWithin' => 21600,
+            'cost' => 12,
+            'admins' => ['admin'],
+            // you will configure your module inside this file
+            // or if need different configuration for frontend and backend you may
+            // configure in needed configs
+            'modelMap' => [
+                'User' => 'common\models\User',
+            ],
+
+            'controllerMap' => [
+                'registration' => [
+                    'class' => \dektrium\user\controllers\RegistrationController::className(),
+                    'on ' . \dektrium\user\controllers\RegistrationController::EVENT_AFTER_REGISTER => function ($e) {
+                        Yii::$app->response->redirect(array('/user/security/login'))->send();
+                        Yii::$app->end();
+                    },
+                    'class' => \dektrium\user\controllers\RegistrationController::className(),
+                    'on ' . \dektrium\user\controllers\RegistrationController::EVENT_AFTER_CONFIRM => function ($e) {
+                        Yii::$app->response->redirect(array('/user/security/login'))->send();
+                        Yii::$app->end();
+                    },
+                    'class' => \dektrium\user\controllers\RegistrationController::className(),
+                    'on ' . \dektrium\user\controllers\RegistrationController::EVENT_AFTER_RESEND => function ($e) {
+                        Yii::$app->response->redirect(array('/user/security/login'))->send();
+                        Yii::$app->end();
+                    }
+
+                ],
+            ],
+
+            //CHECK MAILER IN MAIN-LOCAL.PHP
+            'mailer' => [
+                'viewPath' => '@common/mail',
+                'sender' => ['no-reply@smanmba.sch.id' => 'PSB SMAN Modal Bangsa Arun']
+            ]
+        ],
+
+        'rbac' => 'dektrium\rbac\RbacWebModule',
+
+        //https://github.com/mootensai/yii2-enhanced-gii
+        'gridview' => [
+            'class' => '\kartik\grid\Module',
+        // see settings on http://demos.krajee.com/grid#module
+        ],
+
+        'datecontrol' =>  [
+            'class' => '\kartik\datecontrol\Module',
+
+            // format settings for displaying each date attribute (ICU format example)
+            'displaySettings' => [
+                Module::FORMAT_DATE => 'dd-MM-yyyy',
+                Module::FORMAT_TIME => 'hh:mm:ss a',
+                Module::FORMAT_DATETIME => 'dd-MM-yyyy hh:mm:ss a',
+            ],
+        ]
+
+    ],
+
 ];

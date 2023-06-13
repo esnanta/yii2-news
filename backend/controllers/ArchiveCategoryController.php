@@ -2,14 +2,14 @@
 
 namespace backend\controllers;
 
-use backend\models\Archive;
-use backend\models\ArchiveSearch;
+use backend\models\ArchiveCategory;
+use backend\models\ArchiveCategorySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * ArchiveCategoryController implements the CRUD actions for Archive model.
+ * ArchiveCategoryController implements the CRUD actions for ArchiveCategory model.
  */
 class ArchiveCategoryController extends Controller
 {
@@ -32,13 +32,13 @@ class ArchiveCategoryController extends Controller
     }
 
     /**
-     * Lists all Archive models.
+     * Lists all ArchiveCategory models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new ArchiveSearch();
+        $searchModel = new ArchiveCategorySearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -48,7 +48,7 @@ class ArchiveCategoryController extends Controller
     }
 
     /**
-     * Displays a single Archive model.
+     * Displays a single ArchiveCategory model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -61,13 +61,13 @@ class ArchiveCategoryController extends Controller
     }
 
     /**
-     * Creates a new Archive model.
+     * Creates a new ArchiveCategory model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Archive();
+        $model = new ArchiveCategory();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -83,7 +83,7 @@ class ArchiveCategoryController extends Controller
     }
 
     /**
-     * Updates an existing Archive model.
+     * Updates an existing ArchiveCategory model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -103,7 +103,7 @@ class ArchiveCategoryController extends Controller
     }
 
     /**
-     * Deletes an existing Archive model.
+     * Deletes an existing ArchiveCategory model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -117,15 +117,15 @@ class ArchiveCategoryController extends Controller
     }
 
     /**
-     * Finds the Archive model based on its primary key value.
+     * Finds the ArchiveCategory model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return Archive the loaded model
+     * @return ArchiveCategory the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Archive::findOne(['id' => $id])) !== null) {
+        if (($model = ArchiveCategory::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

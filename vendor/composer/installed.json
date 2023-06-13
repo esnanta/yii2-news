@@ -1,71 +1,6 @@
 {
     "packages": [
         {
-            "name": "2amigos/yii2-arrayquery-component",
-            "version": "1.0.3",
-            "version_normalized": "1.0.3.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/2amigos/yii2-arrayquery-component.git",
-                "reference": "7f621370e1e954237741aa6d23eb5a5f21c985f3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/2amigos/yii2-arrayquery-component/zipball/7f621370e1e954237741aa6d23eb5a5f21c985f3",
-                "reference": "7f621370e1e954237741aa6d23eb5a5f21c985f3",
-                "shasum": ""
-            },
-            "require": {
-                "yiisoft/yii2": "~2.0.11"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.0",
-                "phpunit/phpunit": "~5.6",
-                "scrutinizer/ocular": "~1.1"
-            },
-            "time": "2017-07-05T10:05:39+00:00",
-            "type": "yii2-extension",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                }
-            },
-            "installation-source": "dist",
-            "autoload": {
-                "psr-4": {
-                    "dosamigos\\arrayquery\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "2amigOS! Consulting Group",
-                    "email": "hola@2amigos.us",
-                    "homepage": "http://2amigos.us",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Yii2 component that allows for searching/filtering the elements of an array.",
-            "homepage": "http://yiiwheels.com/extension/arrayquery-component",
-            "keywords": [
-                "2amigos",
-                "arrayquery",
-                "component",
-                "extension",
-                "yii",
-                "yii 2",
-                "yii2"
-            ],
-            "support": {
-                "issues": "https://github.com/dosamigos/yii2-arrayquery-component/issues",
-                "source": "https://github.com/dosamigos/yii2-arrayquery-component"
-            },
-            "install-path": "../2amigos/yii2-arrayquery-component"
-        },
-        {
             "name": "behat/gherkin",
             "version": "v4.9.0",
             "version_normalized": "4.9.0.0",
@@ -917,6 +852,135 @@
             "install-path": "../components/flag-icon-css"
         },
         {
+            "name": "dektrium/yii2-rbac",
+            "version": "1.0.0-alpha",
+            "version_normalized": "1.0.0.0-alpha",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dektrium/yii2-rbac.git",
+                "reference": "0943e66c450132b306584a37caefc2aa04258372"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dektrium/yii2-rbac/zipball/0943e66c450132b306584a37caefc2aa04258372",
+                "reference": "0943e66c450132b306584a37caefc2aa04258372",
+                "shasum": ""
+            },
+            "require": {
+                "kartik-v/yii2-widget-select2": "^2.0",
+                "yiisoft/yii2": "^2.0.8"
+            },
+            "time": "2016-08-15T15:49:54+00:00",
+            "type": "yii2-extension",
+            "extra": {
+                "bootstrap": "dektrium\\rbac\\Bootstrap",
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "dektrium\\rbac\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dmitry Erofeev",
+                    "email": "dmeroff@gmail.com",
+                    "homepage": "http://dmeroff.ru"
+                }
+            ],
+            "description": "RBAC management module for Yii2",
+            "keywords": [
+                "dektrium",
+                "rbac gui",
+                "rbac management",
+                "rbac module",
+                "yii rbac",
+                "yii2",
+                "yii2-rbac"
+            ],
+            "support": {
+                "issues": "https://github.com/dektrium/yii2-rbac/issues?state=open",
+                "source": "https://github.com/dektrium/yii2-rbac"
+            },
+            "install-path": "../dektrium/yii2-rbac"
+        },
+        {
+            "name": "dektrium/yii2-user",
+            "version": "v0.9.3",
+            "version_normalized": "0.9.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dektrium/yii2-user.git",
+                "reference": "df25484cc999a58490293df4fdd4209817f6ed86"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dektrium/yii2-user/zipball/df25484cc999a58490293df4fdd4209817f6ed86",
+                "reference": "df25484cc999a58490293df4fdd4209817f6ed86",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "~2.0",
+                "yiisoft/yii2-authclient": "~2.0",
+                "yiisoft/yii2-swiftmailer": "~2.0"
+            },
+            "require-dev": {
+                "codeception/specify": "*",
+                "codeception/verify": "*",
+                "yiisoft/yii2-codeception": "~2.0"
+            },
+            "time": "2015-02-09T11:35:49+00:00",
+            "type": "yii2-extension",
+            "extra": {
+                "bootstrap": "dektrium\\user\\Bootstrap",
+                "branch-alias": {
+                    "dev-master": "0.9.x-dev",
+                    "dev-develop": "1.0.x-dev"
+                },
+                "asset-installer-paths": {
+                    "npm-asset-library": "vendor/npm",
+                    "bower-asset-library": "vendor/bower"
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "dektrium\\user\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dmitry Erofeev",
+                    "email": "dmeroff@gmail.com",
+                    "homepage": "http://dmeroff.ru"
+                }
+            ],
+            "description": "Flexible user registration and authentication module for Yii2",
+            "keywords": [
+                "User management",
+                "dektrium",
+                "yii2",
+                "yii2-user"
+            ],
+            "support": {
+                "forum": "https://gitter.im/dektrium/yii2-user",
+                "issues": "https://github.com/dektrium/yii2-user/issues?state=open",
+                "source": "https://github.com/dektrium/yii2-user"
+            },
+            "install-path": "../dektrium/yii2-user"
+        },
+        {
             "name": "doctrine/deprecations",
             "version": "v1.1.1",
             "version_normalized": "1.1.1.0",
@@ -1256,17 +1320,17 @@
         },
         {
             "name": "fakerphp/faker",
-            "version": "v1.22.0",
-            "version_normalized": "1.22.0.0",
+            "version": "v1.23.0",
+            "version_normalized": "1.23.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FakerPHP/Faker.git",
-                "reference": "f85772abd508bd04e20bb4b1bbe260a68d0066d2"
+                "reference": "e3daa170d00fde61ea7719ef47bb09bb8f1d9b01"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FakerPHP/Faker/zipball/f85772abd508bd04e20bb4b1bbe260a68d0066d2",
-                "reference": "f85772abd508bd04e20bb4b1bbe260a68d0066d2",
+                "url": "https://api.github.com/repos/FakerPHP/Faker/zipball/e3daa170d00fde61ea7719ef47bb09bb8f1d9b01",
+                "reference": "e3daa170d00fde61ea7719ef47bb09bb8f1d9b01",
                 "shasum": ""
             },
             "require": {
@@ -1291,7 +1355,7 @@
                 "ext-iconv": "Required by Faker\\Provider\\ru_RU\\Text::realText() for generating real Russian text.",
                 "ext-mbstring": "Required for multibyte Unicode string functionality."
             },
-            "time": "2023-05-14T12:31:37+00:00",
+            "time": "2023-06-12T08:44:38+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -1321,7 +1385,7 @@
             ],
             "support": {
                 "issues": "https://github.com/FakerPHP/Faker/issues",
-                "source": "https://github.com/FakerPHP/Faker/tree/v1.22.0"
+                "source": "https://github.com/FakerPHP/Faker/tree/v1.23.0"
             },
             "install-path": "../fakerphp/faker"
         },
@@ -8695,183 +8759,6 @@
             "install-path": "../warrence/yii2-kartikgii"
         },
         {
-            "name": "yii2mod/yii2-enum",
-            "version": "1.7.1",
-            "version_normalized": "1.7.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/yii2mod/yii2-enum.git",
-                "reference": "7af030e19636ece5fd0adb5d6012d2b03fa63895"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/yii2mod/yii2-enum/zipball/7af030e19636ece5fd0adb5d6012d2b03fa63895",
-                "reference": "7af030e19636ece5fd0adb5d6012d2b03fa63895",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.6",
-                "yiisoft/yii2": "*"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "~2.0"
-            },
-            "time": "2017-04-19T22:06:46+00:00",
-            "type": "yii2-extension",
-            "installation-source": "dist",
-            "autoload": {
-                "psr-4": {
-                    "yii2mod\\enum\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Dmitry Semenov",
-                    "email": "disemx@gmail.com"
-                },
-                {
-                    "name": "Igor Chepurnoi",
-                    "email": "igorzfort@gmail.com"
-                }
-            ],
-            "description": "Yii2 Enumerable helpers",
-            "keywords": [
-                "enumerable helper",
-                "yii2",
-                "yii2 enum"
-            ],
-            "support": {
-                "issues": "https://github.com/yii2mod/yii2-enum/issues",
-                "source": "https://github.com/yii2mod/yii2-enum/tree/master"
-            },
-            "install-path": "../yii2mod/yii2-enum"
-        },
-        {
-            "name": "yii2mod/yii2-rbac",
-            "version": "2.3",
-            "version_normalized": "2.3.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/yii2mod/yii2-rbac.git",
-                "reference": "d6d236ff45910726081061c49b91f54642371283"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/yii2mod/yii2-rbac/zipball/d6d236ff45910726081061c49b91f54642371283",
-                "reference": "d6d236ff45910726081061c49b91f54642371283",
-                "shasum": ""
-            },
-            "require": {
-                "2amigos/yii2-arrayquery-component": "~1.0",
-                "php": ">=7.0.0",
-                "yiisoft/yii2": "~2.0.13",
-                "yiisoft/yii2-jui": "~2.0"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "~2.0",
-                "phpunit/phpunit": "~6.0"
-            },
-            "time": "2018-01-15T15:53:16+00:00",
-            "type": "yii2-extension",
-            "installation-source": "dist",
-            "autoload": {
-                "psr-4": {
-                    "yii2mod\\rbac\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Dmitry Semenov",
-                    "email": "disemx@gmail.com"
-                },
-                {
-                    "name": "Igor Chepurnoi",
-                    "email": "chepurnoi.igor@gmail.com"
-                }
-            ],
-            "description": "RBAC management module for Yii2",
-            "keywords": [
-                "rbac gui",
-                "rbac management",
-                "rbac module",
-                "yii2",
-                "yii2 rbac",
-                "yii2-rbac"
-            ],
-            "support": {
-                "issues": "https://github.com/yii2mod/yii2-rbac/issues",
-                "source": "https://github.com/yii2mod/yii2-rbac/tree/master"
-            },
-            "install-path": "../yii2mod/yii2-rbac"
-        },
-        {
-            "name": "yii2mod/yii2-user",
-            "version": "2.1",
-            "version_normalized": "2.1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/yii2mod/yii2-user.git",
-                "reference": "357fb3f1ce1ba1c4c09c81cbec7a5390ae0f7b2c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/yii2mod/yii2-user/zipball/357fb3f1ce1ba1c4c09c81cbec7a5390ae0f7b2c",
-                "reference": "357fb3f1ce1ba1c4c09c81cbec7a5390ae0f7b2c",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.6",
-                "yii2mod/yii2-enum": "*",
-                "yiisoft/yii2": ">=2.0.8",
-                "yiisoft/yii2-swiftmailer": "*"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "~2.0"
-            },
-            "time": "2017-06-08T14:56:54+00:00",
-            "type": "yii2-extension",
-            "installation-source": "dist",
-            "autoload": {
-                "psr-4": {
-                    "yii2mod\\user\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Dmitry Semenov",
-                    "email": "disemx@gmail.com"
-                },
-                {
-                    "name": "Igor Chepurnoy",
-                    "email": "igorzfort@gmail.com"
-                }
-            ],
-            "description": "User module",
-            "keywords": [
-                "User management",
-                "user module",
-                "yii2",
-                "yii2-user"
-            ],
-            "support": {
-                "issues": "https://github.com/yii2mod/yii2-user/issues",
-                "source": "https://github.com/yii2mod/yii2-user/tree/master"
-            },
-            "install-path": "../yii2mod/yii2-user"
-        },
-        {
             "name": "yiisoft/yii2",
             "version": "2.0.48.1",
             "version_normalized": "2.0.48.1",
@@ -8995,6 +8882,102 @@
                 }
             ],
             "install-path": "../yiisoft/yii2"
+        },
+        {
+            "name": "yiisoft/yii2-authclient",
+            "version": "2.2.14",
+            "version_normalized": "2.2.14.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yiisoft/yii2-authclient.git",
+                "reference": "6bd4b4efc60db2b31bb957a473442900c704857e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yiisoft/yii2-authclient/zipball/6bd4b4efc60db2b31bb957a473442900c704857e",
+                "reference": "6bd4b4efc60db2b31bb957a473442900c704857e",
+                "shasum": ""
+            },
+            "require": {
+                "paragonie/random_compat": ">=1",
+                "yiisoft/yii2": "~2.0.13",
+                "yiisoft/yii2-httpclient": "~2.0.5"
+            },
+            "require-dev": {
+                "cweagans/composer-patches": "^1.7",
+                "phpunit/phpunit": "4.8.34"
+            },
+            "suggest": {
+                "web-token/jwt-checker": "required for JWS, JWT or JWK related flows like OpenIDConnect",
+                "web-token/jwt-key-mgmt": "required for JWS, JWT or JWK related flows like OpenIDConnect",
+                "web-token/jwt-signature": "required for JWS, JWT or JWK related flows like OpenIDConnect",
+                "web-token/jwt-signature-algorithm-ecdsa": "required for JWS, JWT or JWK related flows like OpenIDConnect",
+                "web-token/jwt-signature-algorithm-hmac": "required for JWS, JWT or JWK related flows like OpenIDConnect",
+                "web-token/jwt-signature-algorithm-rsa": "required for JWS, JWT or JWK related flows like OpenIDConnect"
+            },
+            "time": "2022-11-18T17:23:56+00:00",
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                },
+                "patches": {
+                    "phpunit/phpunit-mock-objects": {
+                        "Fix PHP 7 and 8 compatibility": "https://yiisoft.github.io/phpunit-patches/phpunit_mock_objects.patch"
+                    },
+                    "phpunit/phpunit": {
+                        "Fix PHP 7 compatibility": "https://yiisoft.github.io/phpunit-patches/phpunit_php7.patch",
+                        "Fix PHP 8 compatibility": "https://yiisoft.github.io/phpunit-patches/phpunit_php8.patch"
+                    }
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "yii\\authclient\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Paul Klimov",
+                    "email": "klimov.paul@gmail.com"
+                }
+            ],
+            "description": "External authentication via OAuth and OpenID for the Yii framework",
+            "keywords": [
+                "OpenID Connect",
+                "OpenId",
+                "api",
+                "auth",
+                "oauth",
+                "yii2"
+            ],
+            "support": {
+                "forum": "http://www.yiiframework.com/forum/",
+                "irc": "irc://irc.freenode.net/yii",
+                "issues": "https://github.com/yiisoft/yii2-authclient/issues",
+                "source": "https://github.com/yiisoft/yii2-authclient",
+                "wiki": "http://www.yiiframework.com/wiki/"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/yiisoft",
+                    "type": "github"
+                },
+                {
+                    "url": "https://opencollective.com/yiisoft",
+                    "type": "open_collective"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/yiisoft/yii2-authclient",
+                    "type": "tidelift"
+                }
+            ],
+            "install-path": "../yiisoft/yii2-authclient"
         },
         {
             "name": "yiisoft/yii2-bootstrap5",
@@ -9428,6 +9411,92 @@
             "install-path": "../yiisoft/yii2-gii"
         },
         {
+            "name": "yiisoft/yii2-httpclient",
+            "version": "2.0.15",
+            "version_normalized": "2.0.15.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yiisoft/yii2-httpclient.git",
+                "reference": "5a8350e15f2db3555ba52830c9c701587c136e87"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yiisoft/yii2-httpclient/zipball/5a8350e15f2db3555ba52830c9c701587c136e87",
+                "reference": "5a8350e15f2db3555ba52830c9c701587c136e87",
+                "shasum": ""
+            },
+            "require": {
+                "paragonie/random_compat": ">=1",
+                "yiisoft/yii2": "~2.0.13"
+            },
+            "require-dev": {
+                "cweagans/composer-patches": "^1.7",
+                "phpunit/phpunit": "4.8.34"
+            },
+            "time": "2023-05-22T18:32:24+00:00",
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                },
+                "composer-exit-on-patch-failure": true,
+                "patches": {
+                    "phpunit/phpunit-mock-objects": {
+                        "Fix PHP 7 and 8 compatibility": "https://yiisoft.github.io/phpunit-patches/phpunit_mock_objects.patch"
+                    },
+                    "phpunit/phpunit": {
+                        "Fix PHP 7 compatibility": "https://yiisoft.github.io/phpunit-patches/phpunit_php7.patch",
+                        "Fix PHP 8 compatibility": "https://yiisoft.github.io/phpunit-patches/phpunit_php8.patch"
+                    }
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "yii\\httpclient\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Paul Klimov",
+                    "email": "klimov.paul@gmail.com"
+                }
+            ],
+            "description": "HTTP client extension for the Yii framework",
+            "keywords": [
+                "curl",
+                "http",
+                "httpclient",
+                "yii2"
+            ],
+            "support": {
+                "forum": "http://www.yiiframework.com/forum/",
+                "irc": "irc://irc.freenode.net/yii",
+                "issues": "https://github.com/yiisoft/yii2-httpclient/issues",
+                "source": "https://github.com/yiisoft/yii2-httpclient",
+                "wiki": "http://www.yiiframework.com/wiki/"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/yiisoft",
+                    "type": "github"
+                },
+                {
+                    "url": "https://opencollective.com/yiisoft",
+                    "type": "open_collective"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/yiisoft/yii2-httpclient",
+                    "type": "tidelift"
+                }
+            ],
+            "install-path": "../yiisoft/yii2-httpclient"
+        },
+        {
             "name": "yiisoft/yii2-jui",
             "version": "2.0.7",
             "version_normalized": "2.0.7.0",
@@ -9653,6 +9722,7 @@
     "dev": true,
     "dev-package-names": [
         "behat/gherkin",
+        "bower-asset/jquery-ui",
         "codeception/codeception",
         "codeception/lib-asserts",
         "codeception/lib-innerbrowser",
@@ -9690,7 +9760,6 @@
         "kartik-v/yii2-widget-growl",
         "kartik-v/yii2-widget-rangeinput",
         "kartik-v/yii2-widget-rating",
-        "kartik-v/yii2-widget-select2",
         "kartik-v/yii2-widget-sidenav",
         "kartik-v/yii2-widget-spinner",
         "kartik-v/yii2-widget-switchinput",
@@ -9738,7 +9807,6 @@
         "sebastian/resource-operations",
         "sebastian/type",
         "sebastian/version",
-        "select2/select2",
         "setasign/fpdi",
         "symfony/browser-kit",
         "symfony/console",
@@ -9754,6 +9822,7 @@
         "warrence/yii2-kartikgii",
         "yiisoft/yii2-debug",
         "yiisoft/yii2-faker",
-        "yiisoft/yii2-gii"
+        "yiisoft/yii2-gii",
+        "yiisoft/yii2-jui"
     ]
 }

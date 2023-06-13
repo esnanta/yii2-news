@@ -31,24 +31,6 @@ return array (
       '@yii/jui' => $vendorDir . '/yiisoft/yii2-jui',
     ),
   ),
-  '2amigos/yii2-arrayquery-component' => 
-  array (
-    'name' => '2amigos/yii2-arrayquery-component',
-    'version' => '1.0.3.0',
-    'alias' => 
-    array (
-      '@dosamigos/arrayquery' => $vendorDir . '/2amigos/yii2-arrayquery-component/src',
-    ),
-  ),
-  'yii2mod/yii2-rbac' => 
-  array (
-    'name' => 'yii2mod/yii2-rbac',
-    'version' => '2.3.0.0',
-    'alias' => 
-    array (
-      '@yii2mod/rbac' => $vendorDir . '/yii2mod/yii2-rbac',
-    ),
-  ),
   'yiisoft/yii2-swiftmailer' => 
   array (
     'name' => 'yiisoft/yii2-swiftmailer',
@@ -56,24 +38,6 @@ return array (
     'alias' => 
     array (
       '@yii/swiftmailer' => $vendorDir . '/yiisoft/yii2-swiftmailer/src',
-    ),
-  ),
-  'yii2mod/yii2-enum' => 
-  array (
-    'name' => 'yii2mod/yii2-enum',
-    'version' => '1.7.1.0',
-    'alias' => 
-    array (
-      '@yii2mod/enum' => $vendorDir . '/yii2mod/yii2-enum',
-    ),
-  ),
-  'yii2mod/yii2-user' => 
-  array (
-    'name' => 'yii2mod/yii2-user',
-    'version' => '2.1.0.0',
-    'alias' => 
-    array (
-      '@yii2mod/user' => $vendorDir . '/yii2mod/yii2-user',
     ),
   ),
   'kartik-v/yii2-krajee-base' => 
@@ -436,5 +400,43 @@ return array (
     array (
       '@kartik/icons' => $vendorDir . '/kartik-v/yii2-icons/src',
     ),
+  ),
+  'yiisoft/yii2-httpclient' => 
+  array (
+    'name' => 'yiisoft/yii2-httpclient',
+    'version' => '2.0.15.0',
+    'alias' => 
+    array (
+      '@yii/httpclient' => $vendorDir . '/yiisoft/yii2-httpclient/src',
+    ),
+  ),
+  'yiisoft/yii2-authclient' => 
+  array (
+    'name' => 'yiisoft/yii2-authclient',
+    'version' => '2.2.14.0',
+    'alias' => 
+    array (
+      '@yii/authclient' => $vendorDir . '/yiisoft/yii2-authclient/src',
+    ),
+  ),
+  'dektrium/yii2-rbac' => 
+  array (
+    'name' => 'dektrium/yii2-rbac',
+    'version' => '1.0.0.0-alpha',
+    'alias' => 
+    array (
+      '@dektrium/rbac' => $vendorDir . '/dektrium/yii2-rbac',
+    ),
+    'bootstrap' => 'dektrium\\rbac\\Bootstrap',
+  ),
+  'dektrium/yii2-user' => 
+  array (
+    'name' => 'dektrium/yii2-user',
+    'version' => '0.9.3.0',
+    'alias' => 
+    array (
+      '@dektrium/user' => $vendorDir . '/dektrium/yii2-user',
+    ),
+    'bootstrap' => 'dektrium\\user\\Bootstrap',
   ),
 );

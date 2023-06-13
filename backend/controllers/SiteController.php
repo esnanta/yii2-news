@@ -2,12 +2,10 @@
 
 namespace backend\controllers;
 
-use common\models\LoginForm;
 use Yii;
+use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use yii\web\Controller;
-use yii\web\Response;
 
 /**
  * Site controller
@@ -21,23 +19,24 @@ class SiteController extends Controller
     {
         return [
             'access' => [
-                'class' => AccessControl::class,
+                'class' => AccessControl::className(),
                 'rules' => [
                     [
                         'actions' => ['login', 'error'],
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index'],
+                        'actions' => ['logout', 'index','chart','message','flush','summary'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
                 ],
             ],
             'verbs' => [
-                'class' => VerbFilter::class,
+                'class' => VerbFilter::className(),
                 'actions' => [
                     'logout' => ['post'],
+                    'flush' => ['post'],
                 ],
             ],
         ];
@@ -50,26 +49,8 @@ class SiteController extends Controller
     {
         return [
             'error' => [
-                'class' => \yii\web\ErrorAction::class,
+                'class' => 'yii\web\ErrorAction',
             ],
-            
-            //https://github.com/yii2mod/yii2-user
-            'login' => [
-                'class' => 'yii2mod\user\actions\LoginAction'
-            ],
-            'logout' => [
-                'class' => 'yii2mod\user\actions\LogoutAction'
-            ],
-            'signup' => [
-                'class' => 'yii2mod\user\actions\SignupAction'
-            ],
-            'request-password-reset' => [
-                'class' => 'yii2mod\user\actions\RequestPasswordResetAction'
-            ],
-            'password-reset' => [
-                'class' => 'yii2mod\user\actions\PasswordResetAction'
-            ],
-            
         ];
     }
 

@@ -15,6 +15,14 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
+    
+    'modules' => [
+        'user' => [
+            // following line will restrict access to admin controller from frontend application
+            'as frontend' => 'dektrium\user\filters\FrontendFilter',
+        ],
+    ],
+    
     'components' => [
         
         'request' => [
@@ -23,21 +31,7 @@ return [
             'web' => '/frontend/web',
             'baseUrl' => $baseUrl,
         ],
-        
-//        //https://github.com/yii2mod/yii2-user
-//        'user' => [
-//            'identityClass' => 'common\models\User',
-//            'enableAutoLogin' => true,
-//            'identityCookie' => ['name' => '_identity-ALLPAGE', 'httpOnly' => true],
-//            'on afterLogin' => function ($event) {
-//                $event->identity->updateLastLogin();
-//            },
-//        ],
                     
-        'session' => [
-            // this is the name of the session cookie used for login on the frontend
-            'name' => 'advanced-frontend',
-        ],
                     
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -66,13 +60,14 @@ return [
         'view' => [
             'theme' => [
                 'pathMap' => [
-                    '@yii2mod/user/views' => '@app/views/user'
+                    //'@app/views' => '@app/web/themes/unify263blog/views',
+                    '@dektrium/user/views' => '@app/views/user'
                 ],
-//                'basePath' => '@app/web/themes/unify263blog',
-//                'baseUrl' => '@web/web/themes/unify263blog',
+            //'basePath' => '@app/web/themes/unify263blog',
+            //'baseUrl' => '@web/web/themes/unify263blog',                
             ],
         ],
-        
     ],
+
     'params' => $params,
 ];

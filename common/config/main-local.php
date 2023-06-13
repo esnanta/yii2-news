@@ -2,13 +2,13 @@
 
 $config = [
     'components' => [
-        'db' => [
-            'class' => \yii\db\Connection::class,
-            'dsn' => 'mysql:host=localhost;dbname=news_update',
-            'username' => 'root',
-            'password' => '',
-            'charset' => 'utf8',
-        ],
+//        'db' => [
+//            'class' => \yii\db\Connection::class,
+//            'dsn' => 'mysql:host=localhost;dbname=news_update',
+//            'username' => 'root',
+//            'password' => '',
+//            'charset' => 'utf8',
+//        ],
         'mailer' => [
             'class' => \yii\symfonymailer\Mailer::class,
             'viewPath' => '@common/mail',

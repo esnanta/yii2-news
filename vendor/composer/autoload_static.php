@@ -91,15 +91,14 @@ class ComposerStaticInit3fce1343cc5c6e318fc3df223938b40c
             'yii\\symfonymailer\\' => 18,
             'yii\\swiftmailer\\' => 16,
             'yii\\jui\\' => 8,
+            'yii\\httpclient\\' => 15,
             'yii\\gii\\' => 8,
             'yii\\faker\\' => 10,
             'yii\\debug\\' => 10,
             'yii\\composer\\' => 13,
             'yii\\bootstrap5\\' => 15,
+            'yii\\authclient\\' => 15,
             'yii\\' => 4,
-            'yii2mod\\user\\' => 13,
-            'yii2mod\\rbac\\' => 13,
-            'yii2mod\\enum\\' => 13,
         ),
         'w' => 
         array (
@@ -162,7 +161,8 @@ class ComposerStaticInit3fce1343cc5c6e318fc3df223938b40c
         ),
         'd' => 
         array (
-            'dosamigos\\arrayquery\\' => 21,
+            'dektrium\\user\\' => 14,
+            'dektrium\\rbac\\' => 14,
         ),
         'c' => 
         array (
@@ -253,6 +253,10 @@ class ComposerStaticInit3fce1343cc5c6e318fc3df223938b40c
         array (
             0 => __DIR__ . '/..' . '/yiisoft/yii2-jui',
         ),
+        'yii\\httpclient\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/yiisoft/yii2-httpclient/src',
+        ),
         'yii\\gii\\' => 
         array (
             0 => __DIR__ . '/..' . '/yiisoft/yii2-gii/src',
@@ -273,21 +277,13 @@ class ComposerStaticInit3fce1343cc5c6e318fc3df223938b40c
         array (
             0 => __DIR__ . '/..' . '/yiisoft/yii2-bootstrap5/src',
         ),
+        'yii\\authclient\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/yiisoft/yii2-authclient/src',
+        ),
         'yii\\' => 
         array (
             0 => __DIR__ . '/..' . '/yiisoft/yii2',
-        ),
-        'yii2mod\\user\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/yii2mod/yii2-user',
-        ),
-        'yii2mod\\rbac\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/yii2mod/yii2-rbac',
-        ),
-        'yii2mod\\enum\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/yii2mod/yii2-enum',
         ),
         'warrence\\kartikgii\\' => 
         array (
@@ -467,9 +463,13 @@ class ComposerStaticInit3fce1343cc5c6e318fc3df223938b40c
             0 => __DIR__ . '/../..' . '/frontend/tests',
             1 => __DIR__ . '/../..' . '/frontend/tests/_support',
         ),
-        'dosamigos\\arrayquery\\' => 
+        'dektrium\\user\\' => 
         array (
-            0 => __DIR__ . '/..' . '/2amigos/yii2-arrayquery-component/src',
+            0 => __DIR__ . '/..' . '/dektrium/yii2-user',
+        ),
+        'dektrium\\rbac\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/dektrium/yii2-rbac',
         ),
         'common\\tests\\' => 
         array (
