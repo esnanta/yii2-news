@@ -1,43 +1,55 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use kartik\widgets\ActiveForm;
+use kartik\builder\Form;
+use kartik\datecontrol\DateControl;
 
-/** @var yii\web\View $this */
-/** @var backend\models\ArchiveCategory $model */
-/** @var yii\widgets\ActiveForm $form */
+/**
+ * @var yii\web\View $this
+ * @var backend\models\ArchiveCategory $model
+ * @var yii\widgets\ActiveForm $form
+ */
 ?>
 
 <div class="archive-category-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['type' => ActiveForm::TYPE_HORIZONTAL]); echo Form::widget([
 
-    <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+        'model' => $model,
+        'form' => $form,
+        'columns' => 1,
+        'attributes' => [
 
-    <?= $form->field($model, 'sequence')->textInput() ?>
+            'sequence' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Sequence...']],
 
-    <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
+            'created_by' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter created_by...']],
 
-    <?= $form->field($model, 'created_at')->textInput() ?>
+            'updated_by' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter updated_by...']],
 
-    <?= $form->field($model, 'updated_at')->textInput() ?>
+            'is_deleted' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Is Deleted...']],
 
-    <?= $form->field($model, 'created_by')->textInput() ?>
+            'deleted_by' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter deleted_by...']],
 
-    <?= $form->field($model, 'updated_by')->textInput() ?>
+            'verlock' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Verlock...']],
 
-    <?= $form->field($model, 'is_deleted')->textInput() ?>
+            'description' => ['type' => Form::INPUT_TEXTAREA, 'options' => ['placeholder' => 'Enter Description...','rows' => 6]],
 
-    <?= $form->field($model, 'deleted_at')->textInput() ?>
+            'created_at' => ['type' => Form::INPUT_WIDGET, 'widgetClass' => DateControl::classname(),'options' => ['type' => DateControl::FORMAT_DATETIME]],
 
-    <?= $form->field($model, 'deleted_by')->textInput() ?>
+            'updated_at' => ['type' => Form::INPUT_WIDGET, 'widgetClass' => DateControl::classname(),'options' => ['type' => DateControl::FORMAT_DATETIME]],
 
-    <?= $form->field($model, 'verlock')->textInput() ?>
+            'deleted_at' => ['type' => Form::INPUT_WIDGET, 'widgetClass' => DateControl::classname(),'options' => ['type' => DateControl::FORMAT_DATETIME]],
 
-    <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
-    </div>
+            'title' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Title...', 'maxlength' => 200]],
 
-    <?php ActiveForm::end(); ?>
+        ]
+
+    ]);
+
+    echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'),
+        ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']
+    );
+    ActiveForm::end(); ?>
 
 </div>

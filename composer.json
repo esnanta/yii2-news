@@ -25,6 +25,8 @@
         "kartik-v/yii2-bootstrap5-dropdown" : "*",
         "kartik-v/yii2-grid": "dev-master",
         "kartik-v/yii2-datecontrol": "dev-master",
+        "kartik-v/yii2-widget-select2": "dev-master",
+        
         
         "hail812/yii2-adminlte3": "~1.1"
         

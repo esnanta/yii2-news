@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e05a79fb1d4ae2734e07e39d3622409f",
+    "content-hash": "e42fa06ca817e728f486c6fed9ef4bb0",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -1021,22 +1021,23 @@
         },
         {
             "name": "kartik-v/yii2-widget-select2",
-            "version": "v2.2.4",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-widget-select2.git",
-                "reference": "f74f2cfbd5b4628ea578735890c39f9a8e4ed062"
+                "reference": "f554b1c5cadb36f00949a9df7aa79395754cb667"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-widget-select2/zipball/f74f2cfbd5b4628ea578735890c39f9a8e4ed062",
-                "reference": "f74f2cfbd5b4628ea578735890c39f9a8e4ed062",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-select2/zipball/f554b1c5cadb36f00949a9df7aa79395754cb667",
+                "reference": "f554b1c5cadb36f00949a9df7aa79395754cb667",
                 "shasum": ""
             },
             "require": {
                 "kartik-v/yii2-krajee-base": ">=3.0.4",
                 "select2/select2": ">=4.0"
             },
+            "default-branch": true,
             "type": "yii2-extension",
             "extra": {
                 "branch-alias": {
@@ -1073,7 +1074,7 @@
             ],
             "support": {
                 "issues": "https://github.com/kartik-v/yii2-widget-select2/issues",
-                "source": "https://github.com/kartik-v/yii2-widget-select2/tree/v2.2.4"
+                "source": "https://github.com/kartik-v/yii2-widget-select2/tree/master"
             },
             "funding": [
                 {
@@ -1081,7 +1082,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2022-08-29T12:24:10+00:00"
+            "time": "2023-03-30T13:17:08+00:00"
         },
         {
             "name": "npm-asset/bootstrap",
@@ -9541,6 +9542,7 @@
         "dektrium/yii2-rbac": 20,
         "kartik-v/yii2-grid": 20,
         "kartik-v/yii2-datecontrol": 20,
+        "kartik-v/yii2-widget-select2": 20,
         "mootensai/yii2-enhanced-gii": 20,
         "warrence/yii2-kartikgii": 20
     },

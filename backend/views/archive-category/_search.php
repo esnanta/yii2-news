@@ -3,9 +3,11 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-/** @var yii\web\View $this */
-/** @var backend\models\ArchiveCategorySearch $model */
-/** @var yii\widgets\ActiveForm $form */
+/**
+ * @var yii\web\View $this
+ * @var backend\models\ArchiveCategorySearch $model
+ * @var yii\widgets\ActiveForm $form
+ */
 ?>
 
 <div class="archive-category-search">
@@ -13,9 +15,6 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
-        'options' => [
-            'data-pjax' => 1
-        ],
     ]); ?>
 
     <?= $form->field($model, 'id') ?>
@@ -43,8 +42,8 @@ use yii\widgets\ActiveForm;
     <?php // echo $form->field($model, 'verlock') ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-outline-secondary']) ?>
+        <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-default']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

@@ -43,6 +43,19 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php if ($generator->indexWidgetType === 'grid'): ?>
     <?= "<?php Pjax::begin(); echo " ?>GridView::widget([
         'dataProvider' => $dataProvider,
+        
+        'toolbar' => [
+            [
+                'content'=>
+                    Html::a('<i class="fas fa-plus"></i> Add New', ['create'], ['class' => 'btn btn-success'])
+                     . ' '.
+                    Html::a('<i class="fas fa-redo"></i> Reset List', ['index'], ['class' => 'btn btn-info']),
+                'options' => ['class' => 'btn-group-sm']
+            ],
+            //'{export}',
+            //'{toggleData}'
+        ],
+        
         <?= !empty($generator->searchModelClass) ? "'filterModel' => \$searchModel,\n        'columns' => [\n" : "'columns' => [\n"; ?>
             ['class' => 'yii\grid\SerialColumn'],
 
@@ -93,16 +106,21 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
         'responsive' => true,
         'hover' => true,
         'condensed' => true,
-        'floatHeader' => true,
+        'floatHeader' => false,
+                        
+        'bordered' => true,
+        'striped' => false,
+        'responsiveWrap' => false,
 
         'panel' => [
             'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-th-list"></i> '.Html::encode($this->title).' </h3>',
-            'type' => 'info',
-            'before' => Html::a('<i class="glyphicon glyphicon-plus"></i> Add', ['create'], ['class' => 'btn btn-success']),
-            'after' => Html::a('<i class="glyphicon glyphicon-repeat"></i> Reset List', ['index'], ['class' => 'btn btn-info']),
+            'type' => 'default',
+            //'before' => Html::a('<i class="glyphicon glyphicon-plus"></i> Add', ['create'], ['class' => 'btn btn-success']),
+            //'after' => Html::a('<i class="glyphicon glyphicon-repeat"></i> Reset List', ['index'], ['class' => 'btn btn-info']),
             'showFooter' => false
         ],
     ]); Pjax::end(); ?>
+    
 <?php else: ?>
     <?= "<?= " ?>ListView::widget([
         'dataProvider' => $dataProvider,

@@ -47,7 +47,7 @@ class AdminAsset extends AssetBundle
   
     public $js = [
         //Global Compulsory
-        'assets/vendor/jquery/jquery.min.js',
+        //'assets/vendor/jquery/jquery.min.js', //DISABLE SUPAYA BISA KARTIK SELECT2
         'assets/vendor/jquery-migrate/jquery-migrate.min.js',
         
         'assets-main/vendor/popper.js/popper.min.js',
