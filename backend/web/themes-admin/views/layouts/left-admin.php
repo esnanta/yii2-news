@@ -21,7 +21,7 @@
 
         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
 
-            <?= Html::a(getMenu('User'), ['/user/index'], ['class' => 'media u-side-nav--second-level-menu-link g-px-15 g-py-12']) ?>
+            <?= Html::a(getMenu('User'), ['/user/admin/index'], ['class' => 'media u-side-nav--second-level-menu-link g-px-15 g-py-12']) ?>
             <?= Html::a(getMenu('Gii'), ['/gii'], ['class' => 'media u-side-nav--second-level-menu-link g-px-15 g-py-12']) ?>
 
         </li>

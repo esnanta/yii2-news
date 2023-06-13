@@ -419,6 +419,16 @@ return array (
       '@yii/authclient' => $vendorDir . '/yiisoft/yii2-authclient/src',
     ),
   ),
+  'dektrium/yii2-user' => 
+  array (
+    'name' => 'dektrium/yii2-user',
+    'version' => '0.9.3.0',
+    'alias' => 
+    array (
+      '@dektrium/user' => $vendorDir . '/dektrium/yii2-user',
+    ),
+    'bootstrap' => 'dektrium\\user\\Bootstrap',
+  ),
   'dektrium/yii2-rbac' => 
   array (
     'name' => 'dektrium/yii2-rbac',
@@ -429,14 +439,31 @@ return array (
     ),
     'bootstrap' => 'dektrium\\rbac\\Bootstrap',
   ),
-  'dektrium/yii2-user' => 
+  'hail812/yii2-adminlte-widgets' => 
   array (
-    'name' => 'dektrium/yii2-user',
-    'version' => '0.9.3.0',
+    'name' => 'hail812/yii2-adminlte-widgets',
+    'version' => '1.0.5.0',
     'alias' => 
     array (
-      '@dektrium/user' => $vendorDir . '/dektrium/yii2-user',
+      '@hail812/adminlte/widgets' => $vendorDir . '/hail812/yii2-adminlte-widgets/src',
     ),
-    'bootstrap' => 'dektrium\\user\\Bootstrap',
+  ),
+  'yiisoft/yii2-bootstrap4' => 
+  array (
+    'name' => 'yiisoft/yii2-bootstrap4',
+    'version' => '2.0.11.0',
+    'alias' => 
+    array (
+      '@yii/bootstrap4' => $vendorDir . '/yiisoft/yii2-bootstrap4/src',
+    ),
+  ),
+  'hail812/yii2-adminlte3' => 
+  array (
+    'name' => 'hail812/yii2-adminlte3',
+    'version' => '1.1.8.0',
+    'alias' => 
+    array (
+      '@hail812/adminlte3' => $vendorDir . '/hail812/yii2-adminlte3/src',
+    ),
   ),
 );
