@@ -77,7 +77,7 @@ return [
             'class' => 'dektrium\user\Module',
             'enableUnconfirmedLogin' => false,
             'enablePasswordRecovery' => false,
-            'enableRegistration' => false,
+            'enableRegistration' => true,
             'enableConfirmation' => false,
             'confirmWithin' => 21600,
             'cost' => 12,

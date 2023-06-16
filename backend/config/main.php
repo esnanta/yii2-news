@@ -56,12 +56,12 @@ return [
 //                'baseUrl' => '@web/web/themes-admin',
                 
                 [
-                    '@dektrium/user/views' => '@app/views/dektrium/user',
-                    '@dektrium/rbac/views' => '@app/views/dektrium/rbac',
-                    '@app/views' => '@app/web/themes-b5-modernize/views',
+                    '@dektrium/user/views' => '@app/web/themes-modernize/views/dektrium/user',
+                    '@dektrium/rbac/views' => '@app/web/themes-modernize/views/dektrium/rbac',
+                    '@app/views' => '@app/web/themes-modernize/views',
                 ],
-                'basePath' => '@app/web/themes-b5-modernize',
-                'baseUrl' => '@web/web/themes-b5-modernize',
+                'basePath' => '@app/web/themes-modernize',
+                'baseUrl' => '@web/web/themes-modernize',
                 
             ],
         ],
