@@ -3,11 +3,11 @@
 
 /** @var string $content */
 use backend\assets\AdminAsset;
-use common\widgets\Alert;
-use yii\bootstrap5\Breadcrumbs;
-use yii\bootstrap5\Html;
-use yii\bootstrap5\Nav;
-use yii\bootstrap5\NavBar;
+use common\widgets\AlertBootstrap4;
+use yii\bootstrap4\Breadcrumbs;
+use yii\bootstrap4\Html;
+use yii\bootstrap4\Nav;
+use yii\bootstrap4\NavBar;
 
 AdminAsset::register($this);
 ?>
@@ -44,13 +44,13 @@ AdminAsset::register($this);
                 <div class="col g-ml-45 g-ml-0--lg g-pb-65--md">
                     <div class="g-pa-20">
                         
-                            <?=
-                            Breadcrumbs::widget([
-                                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-                            ])
-                            ?>
-                            <?= Alert::widget() ?>
-                            <?= $content ?>
+                        <?=
+                        Breadcrumbs::widget([
+                            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                        ])
+                        ?>
+                        <?= AlertBootstrap4::widget() ?>
+                        <?= $content ?>
 
                     </div>
 

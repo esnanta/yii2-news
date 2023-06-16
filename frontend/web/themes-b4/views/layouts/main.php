@@ -3,14 +3,14 @@
 /** @var \yii\web\View $this */
 /** @var string $content */
 
-use common\widgets\AlertBootstrap5;
-use frontend\assets\AppBootstrap5Asset;
-use yii\bootstrap5\Breadcrumbs;
-use yii\bootstrap5\Html;
-use yii\bootstrap5\Nav;
-use yii\bootstrap5\NavBar;
+use common\widgets\AlertBootstrap4;
+use frontend\assets\AppBootstrap4Asset;
+use yii\bootstrap4\Breadcrumbs;
+use yii\bootstrap4\Html;
+use yii\bootstrap4\Nav;
+use yii\bootstrap4\NavBar;
 
-AppBootstrap5Asset::register($this);
+AppBootstrap4Asset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -93,7 +93,7 @@ AppBootstrap5Asset::register($this);
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
-        <?= AlertBootstrap5::widget() ?>
+        <?= AlertBootstrap4::widget() ?>
         <?= $content ?>
     </div>
 </main>

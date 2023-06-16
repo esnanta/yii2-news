@@ -8,7 +8,7 @@ return [
     'user.passwordMinLength' => 8,
     
     'bsDependencyEnabled' => false,
-    'bsVersion' => '5.x', 
+    'bsVersion' => '4.x', 
     
 ];
 

@@ -19,7 +19,7 @@ use dektrium\rbac\widgets\Assignments;
 
 <?php $this->beginContent('@dektrium/user/views/admin/update.php', ['user' => $user]) ?>
 
-<?= yii\bootstrap5\Alert::widget([
+<?= yii\bootstrap4\Alert::widget([
     'options' => [
         'class' => 'alert-info alert-dismissible',
     ],
