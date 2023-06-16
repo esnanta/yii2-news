@@ -202,15 +202,6 @@ return array (
       '@kartik/rating' => $vendorDir . '/kartik-v/yii2-widget-rating/src',
     ),
   ),
-  'kartik-v/yii2-widget-sidenav' => 
-  array (
-    'name' => 'kartik-v/yii2-widget-sidenav',
-    'version' => '1.0.1.0',
-    'alias' => 
-    array (
-      '@kartik/sidenav' => $vendorDir . '/kartik-v/yii2-widget-sidenav',
-    ),
-  ),
   'kartik-v/yii2-widget-datetimepicker' => 
   array (
     'name' => 'kartik-v/yii2-widget-datetimepicker',
@@ -473,6 +464,15 @@ return array (
     'alias' => 
     array (
       '@yii2tech/ar/softdelete' => $vendorDir . '/yii2tech/ar-softdelete/src',
+    ),
+  ),
+  'kartik-v/yii2-widget-sidenav' => 
+  array (
+    'name' => 'kartik-v/yii2-widget-sidenav',
+    'version' => 'dev-master',
+    'alias' => 
+    array (
+      '@kartik/sidenav' => $vendorDir . '/kartik-v/yii2-widget-sidenav',
     ),
   ),
 );

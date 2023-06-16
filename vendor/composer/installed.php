@@ -3,7 +3,7 @@
         'name' => 'esnanta/yii2-retread',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '9b0405a9adeeb019d3ba024bdaa2b70fd3d6d0f3',
+        'reference' => '91b05966fdc4f3696cbca056869ecec17a65aeb5',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -238,7 +238,7 @@
         'esnanta/yii2-retread' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '9b0405a9adeeb019d3ba024bdaa2b70fd3d6d0f3',
+            'reference' => '91b05966fdc4f3696cbca056869ecec17a65aeb5',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -575,13 +575,15 @@
             'dev_requirement' => false,
         ),
         'kartik-v/yii2-widget-sidenav' => array(
-            'pretty_version' => 'v1.0.1',
-            'version' => '1.0.1.0',
-            'reference' => '87e9c815624aa966d70bb4507b3d53c158db0d43',
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => '5d3276503d224f73c34f1010d6bc6dd4e936c50f',
             'type' => 'yii2-extension',
             'install_path' => __DIR__ . '/../kartik-v/yii2-widget-sidenav',
-            'aliases' => array(),
-            'dev_requirement' => true,
+            'aliases' => array(
+                0 => '1.0.x-dev',
+            ),
+            'dev_requirement' => false,
         ),
         'kartik-v/yii2-widget-spinner' => array(
             'pretty_version' => 'v1.0.1',

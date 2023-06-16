@@ -3569,23 +3569,24 @@
         },
         {
             "name": "kartik-v/yii2-widget-sidenav",
-            "version": "v1.0.1",
-            "version_normalized": "1.0.1.0",
+            "version": "dev-master",
+            "version_normalized": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-widget-sidenav.git",
-                "reference": "87e9c815624aa966d70bb4507b3d53c158db0d43"
+                "reference": "5d3276503d224f73c34f1010d6bc6dd4e936c50f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-widget-sidenav/zipball/87e9c815624aa966d70bb4507b3d53c158db0d43",
-                "reference": "87e9c815624aa966d70bb4507b3d53c158db0d43",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-sidenav/zipball/5d3276503d224f73c34f1010d6bc6dd4e936c50f",
+                "reference": "5d3276503d224f73c34f1010d6bc6dd4e936c50f",
                 "shasum": ""
             },
             "require": {
-                "kartik-v/yii2-krajee-base": "*"
+                "kartik-v/yii2-krajee-base": ">=3.0.0"
             },
-            "time": "2021-04-08T17:49:26+00:00",
+            "time": "2021-09-07T07:35:25+00:00",
+            "default-branch": true,
             "type": "yii2-extension",
             "extra": {
                 "branch-alias": {
@@ -3624,7 +3625,7 @@
             ],
             "support": {
                 "issues": "https://github.com/kartik-v/yii2-widget-sidenav/issues",
-                "source": "https://github.com/kartik-v/yii2-widget-sidenav/tree/v1.0.1"
+                "source": "https://github.com/kartik-v/yii2-widget-sidenav/tree/master"
             },
             "funding": [
                 {
@@ -10088,7 +10089,6 @@
         "kartik-v/yii2-widget-growl",
         "kartik-v/yii2-widget-rangeinput",
         "kartik-v/yii2-widget-rating",
-        "kartik-v/yii2-widget-sidenav",
         "kartik-v/yii2-widget-spinner",
         "kartik-v/yii2-widget-switchinput",
         "kartik-v/yii2-widget-timepicker",

@@ -16,7 +16,7 @@ class AdminModernizeAsset extends AssetBundle
         //icon here
         //http://thetheme.io/theadmin/content/icons-themify.html
         
-        //"https://use.fontawesome.com/releases/v5.3.1/css/all.css",
+        'https://use.fontawesome.com/releases/v5.3.1/css/all.css',
         'assets/vendor/icon-awesome/css/font-awesome.min.css',
         
         //CSS Global Compulsory
