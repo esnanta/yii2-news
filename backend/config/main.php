@@ -48,12 +48,12 @@ return [
             'theme' => [
                 'pathMap' =>
                 [
-                    '@dektrium/user/views' => '@app/views/dektrium/user',
-                    '@dektrium/rbac/views' => '@app/views/dektrium/rbac',
-                    '@app/views' => '@app/web/themes-admin/views',
+                    '@dektrium/user/views' => '@app/web/themes-admin-unify/views/dektrium/user',
+                    '@dektrium/rbac/views' => '@app/web/themes-admin-unify/views/dektrium/rbac',
+                    '@app/views' => '@app/web/themes-admin-unify/views',
                 ],
-                'basePath' => '@app/web/themes-admin',
-                'baseUrl' => '@web/web/themes-admin',
+                'basePath' => '@app/web/themes-admin-unify',
+                'baseUrl' => '@web/web/themes-admin-unify',
                 
 //                [
 //                    '@dektrium/user/views' => '@app/web/themes-modernize/views/dektrium/user',

@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'mode' => Yii::$app->request->get('edit') == 't' ? DetailView::MODE_EDIT : DetailView::MODE_VIEW,
         'panel' => [
             'heading' => $this->title,
-            'type' => DetailView::TYPE_INFO,
+            'type' => DetailView::TYPE_DEFAULT,
         ],
         'attributes' => [
             'id',

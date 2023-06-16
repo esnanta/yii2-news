@@ -15,24 +15,17 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 
-<div class="panel panel-info">
-    <div class="panel-heading">
-        <div class="panel-title">
-            Please fill out the form below
-            <div class="pull-right">
-                ArchiveCategory            </div>            
-        </div>
-    </div>
-    <div class="panel-body">
-
+<div class="card border-primary mb-3">
+    <div class="card-header">Please fill out the form below <span class="pull-right">ArchiveCategory</span></div>
+    <div class="card-body text-primary">
+        <!--<h5 class="card-title">Please fill out the form below</h5>-->
         <div class="archive-category-create">
 
             <?= $this->render('_form', [
                 'model' => $model,
             ]) 
             ?>
-
         </div>
-        
+
     </div>
 </div>

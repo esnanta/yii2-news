@@ -24,25 +24,16 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 
-<div class="panel panel-info">
-    <div class="panel-heading">
-        <div class="panel-title">
-            Please fill out the form below
-            <div class="pull-right">
-                <?php echo StringHelper::basename($generator->modelClass) ?>
-            </div>            
-        </div>
-    </div>
-    <div class="panel-body">
-
+<div class="card border-primary mb-3">
+    <div class="card-header">Please fill out the form below <span class="pull-right"><?php echo StringHelper::basename($generator->modelClass) ?></span></div>
+    <div class="card-body text-primary">
         <div class="<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-create">
 
             <?= "<?= " ?>$this->render('_form', [
                 'model' => $model,
             ]) 
             ?>
-
         </div>
-        
+
     </div>
 </div>
