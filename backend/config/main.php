@@ -47,13 +47,22 @@ return [
         'view' => [
             'theme' => [
                 'pathMap' =>
+//                [
+//                    '@dektrium/user/views' => '@app/views/dektrium/user',
+//                    '@dektrium/rbac/views' => '@app/views/dektrium/rbac',
+//                    '@app/views' => '@app/web/themes-admin/views',
+//                ],
+//                'basePath' => '@app/web/themes-admin',
+//                'baseUrl' => '@web/web/themes-admin',
+                
                 [
-                    '@app/views' => '@app/web/themes-admin/views',
-                    '@dektrium/user/views' => '@app/web/themes-admin/views/dektrium/user',
-                    '@dektrium/rbac/views' => '@app/web/themes-admin/views/dektrium/rbac',
+                    '@dektrium/user/views' => '@app/views/dektrium/user',
+                    '@dektrium/rbac/views' => '@app/views/dektrium/rbac',
+                    '@app/views' => '@app/web/themes-b5-modernize/views',
                 ],
-                'basePath' => '@app/web/themes-admin',
-                'baseUrl' => '@web/web/themes-admin',
+                'basePath' => '@app/web/themes-b5-modernize',
+                'baseUrl' => '@web/web/themes-b5-modernize',
+                
             ],
         ],
     ],              
