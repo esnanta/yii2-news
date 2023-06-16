@@ -31,54 +31,10 @@ function getMenu($_menuName, $_classIcon) {
                 <i class="ti ti-x fs-8"></i>
             </div>
         </div>
-        
-        
-        
-        
+
         <!-- Sidebar navigation-->
         <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
             <ul id="sidebarnav">
-
-            
-<?php
-                echo SideNav::widget([
-                'type' => SideNav::TYPE_SUCCESS,
-                'encodeLabels' => false,
-                'heading' => '<i class = "fas fa-cog"></i> Operations',
-                
-                'items' => [
-                    'headingOptions' => ['class'=>'sidebar-nav scroll-sidebar'],
-                // Important: you need to specify url as 'controller/action',
-                // not just as 'controller' even if default action is used.
-                //
-                // NOTE: The variable `$item` is specific to this demo page that determines
-                // which menu item will be activated. You need to accordingly define and pass
-                // such variables to your view object to handle such logic in your application
-                // (to determine the active status).
-                //
-                ['label' => 'Home', 'icon' => 'fa fa-home', 'url' => ['/site/index'], 'active' => false],
-                ['label' => 'Books', 'icon' => 'book', 'items' => [
-                ['label' => '<span class="pull-right float-right float-end badge">10</span> New Arrivals', 'url' => ['/site/new-arrivals'], 'active' => false],
-                ['label' => '<span class="pull-right float-right float-end badge">5</span> Most Popular', 'url' => ['/site/most-popular'], 'active' => false],
-                ['label' => 'Read Online', 'icon' => 'cloud', 'items' => [
-                    ['label' => 'Online 1', 'url' => ['/site/online-1'], 'active' => false],
-                    ['label' => 'Online 2', 'url' => ['/site/online-2'], 'active' => false]
-                ]],
-                ]],
-                ['label' => '<span class="pull-right float-right float-end badge">3</span> Categories', 'icon' => 'tags', 'items' => [
-                ['label' => 'Fiction', 'url' => ['/site/fiction'], 'active' => false],
-                ['label' => 'Historical', 'url' => ['/site/historical'], 'active' => false],
-                ['label' => '<span class="pull-right float-right float-end badge">2</span> Announcements', 'icon' => 'bullhorn', 'items' => [
-                ['label' => 'Event 1', 'url' => ['/site/event-1'], 'active' => false],
-                ['label' => 'Event 2', 'url' => ['/site/event-2'], 'active' => false]
-                ]],
-                ]],
-                ['label' => 'Profile', 'icon' => 'user', 'url' => ['/site/profile'], 'active' => true],
-                ],
-                ]);
-            ?>
-
-
 
                 <?php if (!Yii::$app->user->isGuest) { ?>
 
@@ -96,7 +52,9 @@ function getMenu($_menuName, $_classIcon) {
                     <li class="sidebar-item">
                         <?= Html::a(getMenu('Archive Category', 'fa fa-angle-right'), ['/archive-category/index'], ['class' => 'sidebar-link']) ?>
                     </li>
-
+                    <li class="sidebar-item">
+                        <?= Html::a(getMenu('Archive', 'fa fa-angle-right'), ['/archive/index'], ['class' => 'sidebar-link']) ?>
+                    </li>
 
                     <li class="nav-small-cap">
                         <i class="ti ti-dots nav-small-cap-icon fs-4"></i>

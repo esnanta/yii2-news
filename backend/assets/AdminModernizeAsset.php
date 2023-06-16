@@ -13,9 +13,6 @@ class AdminModernizeAsset extends AssetBundle
     public $baseUrl = '@web/themes-modernize';
     public $css = [
 
-        //icon here
-        //http://thetheme.io/theadmin/content/icons-themify.html
-        
         'https://use.fontawesome.com/releases/v5.3.1/css/all.css',
         'assets/vendor/icon-awesome/css/font-awesome.min.css',
         
