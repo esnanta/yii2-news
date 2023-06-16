@@ -109,13 +109,31 @@ function getMenu($_menuName, $_classIcon) {
                             <span class="hide-menu">Sample Page</span>
                         </a>
                     </li>
+                    
+                    
+
+                    
+                    <?php if (Yii::$app->user->identity->isAdmin): ?>
+                        <li class="nav-small-cap">
+                            <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                            <span class="hide-menu">ADMIN</span>
+                        </li>
+                        
+                        <li class="sidebar-item">
+                            <?= Html::a(getMenu('User', 'fa fa-angle-right'), ['/user/admin/index'], ['class' => 'sidebar-link']) ?>
+                        </li>
+                        <li class="sidebar-item">
+                            <?= Html::a(getMenu('Gii', 'fa fa-angle-right'), ['/gii'], ['class' => 'sidebar-link']) ?>
+                        </li>
+                    <?php endif ?>
+                        
                     <li class="nav-small-cap">
                         <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                         <span class="hide-menu">AUTH</span>
                     </li>
                     <li class="sidebar-item">
                         
-                        <?= Html::a(getMenu('Logout', 'ti ti-user-plus'), 
+                        <?= Html::a(getMenu('Logout', 'fa fa-sign-out'), 
                                 ['/user/logout'], 
                                 ['data-method' => 'POST', 'data-confirm' => "Logout?", 'class' => 'sidebar-link']) ?>
                     </li>
@@ -125,7 +143,7 @@ function getMenu($_menuName, $_classIcon) {
                             <span class="hide-menu">AUTH</span>
                         </li>
                         <li class="sidebar-item">
-                            <?= Html::a(getMenu('Login', 'ti ti-user-plus'), ['/user/login'], ['class' => 'sidebar-link']) ?>
+                            <?= Html::a(getMenu('Login', 'fa fa-sign-in'), ['/user/login'], ['class' => 'sidebar-link']) ?>
                         </li>
 
                 <?php } ?>

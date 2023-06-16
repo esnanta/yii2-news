@@ -13,7 +13,11 @@ class AdminModernizeAsset extends AssetBundle
     public $baseUrl = '@web/themes-modernize';
     public $css = [
 
-        "https://use.fontawesome.com/releases/v5.3.1/css/all.css",
+        //icon here
+        //http://thetheme.io/theadmin/content/icons-themify.html
+        
+        //"https://use.fontawesome.com/releases/v5.3.1/css/all.css",
+        'assets/vendor/icon-awesome/css/font-awesome.min.css',
         
         //CSS Global Compulsory
         'assets/css/styles.min.css',
@@ -21,7 +25,7 @@ class AdminModernizeAsset extends AssetBundle
   
     public $js = [
         //Global Compulsory
-        'assets/libs/jquery/dist/jquery.min.js',
+        //'assets/libs/jquery/dist/jquery.min.js',
         'assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js',
         'assets/js/sidebarmenu.js',
         'assets/js/app.min.js',
