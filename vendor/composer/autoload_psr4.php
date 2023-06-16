@@ -18,6 +18,7 @@ return array(
     'yii\\bootstrap4\\' => array($vendorDir . '/yiisoft/yii2-bootstrap4/src'),
     'yii\\authclient\\' => array($vendorDir . '/yiisoft/yii2-authclient/src'),
     'yii\\' => array($vendorDir . '/yiisoft/yii2'),
+    'yii2tech\\ar\\softdelete\\' => array($vendorDir . '/yii2tech/ar-softdelete/src'),
     'warrence\\kartikgii\\' => array($vendorDir . '/warrence/yii2-kartikgii'),
     'setasign\\Fpdi\\' => array($vendorDir . '/setasign/fpdi/src'),
     'mootensai\\relation\\' => array($vendorDir . '/mootensai/yii2-relation-trait'),

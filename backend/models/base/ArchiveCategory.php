@@ -94,12 +94,12 @@ class ArchiveCategory extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'title' => 'Title',
-            'sequence' => 'Sequence',
-            'description' => 'Description',
-            'is_deleted' => 'Is Deleted',
-            'verlock' => 'Verlock',
+            'id' => Yii::t('app', 'ID'),
+            'title' => Yii::t('app', 'Title'),
+            'sequence' => Yii::t('app', 'Sequence'),
+            'description' => Yii::t('app', 'Description'),
+            'is_deleted' => Yii::t('app', 'Is Deleted'),
+            'verlock' => Yii::t('app', 'Verlock'),
         ];
     }
     
@@ -122,7 +122,7 @@ class ArchiveCategory extends \yii\db\ActiveRecord
                 'class' => TimestampBehavior::className(),
                 'createdAtAttribute' => 'created_at',
                 'updatedAtAttribute' => 'updated_at',
-                'value' => new \yii\db\Expression('NOW()'),
+                'value' => date('Y-m-d H:i:s'),
             ],
             'blameable' => [
                 'class' => BlameableBehavior::className(),

@@ -100,6 +100,7 @@ class ComposerStaticInit3fce1343cc5c6e318fc3df223938b40c
             'yii\\bootstrap4\\' => 15,
             'yii\\authclient\\' => 15,
             'yii\\' => 4,
+            'yii2tech\\ar\\softdelete\\' => 23,
         ),
         'w' => 
         array (
@@ -294,6 +295,10 @@ class ComposerStaticInit3fce1343cc5c6e318fc3df223938b40c
         'yii\\' => 
         array (
             0 => __DIR__ . '/..' . '/yiisoft/yii2',
+        ),
+        'yii2tech\\ar\\softdelete\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/yii2tech/ar-softdelete/src',
         ),
         'warrence\\kartikgii\\' => 
         array (

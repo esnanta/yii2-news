@@ -252,7 +252,7 @@ class Generator extends \yii\gii\generators\crud\Generator
         } elseif ($column->type === 'time') {
             return "'$attribute' => ['type' => Form::INPUT_WIDGET, 'widgetClass' => DateControl::classname(),'options' => ['type' => DateControl::FORMAT_TIME]],";
         } elseif ($column->type === 'datetime' || $column->type === 'timestamp') {
-            return "'$attribute' => ['type' => Form::INPUT_WIDGET, 'widgetClass' => DateControl::classname(),'options' => ['type' => DateControl::FORMAT_DATETIME]],";
+            return "'$attribute' => ['type' => Form::INPUT_WIDGET, 'widgetClass' => DateControl::classname(),'options' => ['type' => DateControl::FORMAT_DATE]],";
         } else {
             if (preg_match('/^(password|pass|passwd|passcode)$/i', $column->name)) {
                 $input = 'INPUT_PASSWORD';

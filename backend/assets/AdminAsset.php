@@ -51,7 +51,7 @@ class AdminAsset extends AssetBundle
         'assets/vendor/jquery-migrate/jquery-migrate.min.js',
         
         'assets-main/vendor/popper.js/popper.min.js',
-        'assets-main/vendor/bootstrap/bootstrap.min.js',
+        'assets-main/vendor/bootstrap/bootstrap.min.js', //DISABLE SUPAYA BISA SEARCH DI GRID
         'assets-main/vendor/cookiejs/jquery.cookie.js',
         
         //jQuery UI Core
@@ -107,6 +107,6 @@ class AdminAsset extends AssetBundle
     ];
     public $depends = [
         'yii\web\YiiAsset',
-        'yii\bootstrap5\BootstrapAsset',
+        //'yii\bootstrap5\BootstrapAsset',
     ];
 }

@@ -3,7 +3,7 @@
         'name' => 'esnanta/yii2-retread',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '6dcf30ac868bcb818de53e18a96b314bc00ec871',
+        'reference' => '9b0405a9adeeb019d3ba024bdaa2b70fd3d6d0f3',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -238,7 +238,7 @@
         'esnanta/yii2-retread' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '6dcf30ac868bcb818de53e18a96b314bc00ec871',
+            'reference' => '9b0405a9adeeb019d3ba024bdaa2b70fd3d6d0f3',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -1318,6 +1318,15 @@
                 0 => '9999999-dev',
             ),
             'dev_requirement' => true,
+        ),
+        'yii2tech/ar-softdelete' => array(
+            'pretty_version' => '1.0.4',
+            'version' => '1.0.4.0',
+            'reference' => '498ed03f89ded835f0ca156ec50d432191c58769',
+            'type' => 'yii2-extension',
+            'install_path' => __DIR__ . '/../yii2tech/ar-softdelete',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
         'yiisoft/yii2' => array(
             'pretty_version' => '2.0.48.1',
