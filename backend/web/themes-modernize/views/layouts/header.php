@@ -1,4 +1,6 @@
-
+<?php
+use yii\helpers\Html;
+?>
 <header class="app-header">
     <nav class="navbar navbar-expand-lg navbar-light">
         <ul class="navbar-nav">
@@ -36,7 +38,12 @@
                                 <i class="ti ti-list-check fs-6"></i>
                                 <p class="mb-0 fs-3">My Task</p>
                             </a>
-                            <a href="./authentication-login.html" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
+                            
+                            <?php if (!Yii::$app->user->isGuest): ?>
+                                <?= Html::a('Logout', 
+                                        ['/user/logout'], 
+                                        ['data-method' => 'POST', 'data-confirm' => "Logout?", 'class' => 'btn btn-outline-primary mx-3 mt-2 d-block']) ?>
+                            <?php endif ?>  
                         </div>
                     </div>
                 </li>
