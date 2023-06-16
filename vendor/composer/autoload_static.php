@@ -96,7 +96,7 @@ class ComposerStaticInit3fce1343cc5c6e318fc3df223938b40c
             'yii\\faker\\' => 10,
             'yii\\debug\\' => 10,
             'yii\\composer\\' => 13,
-            'yii\\bootstrap5\\' => 15,
+            'yii\\bootstrap\\' => 14,
             'yii\\bootstrap4\\' => 15,
             'yii\\authclient\\' => 15,
             'yii\\' => 4,
@@ -152,7 +152,7 @@ class ComposerStaticInit3fce1343cc5c6e318fc3df223938b40c
             'kartik\\date\\' => 12,
             'kartik\\color\\' => 13,
             'kartik\\builder\\' => 15,
-            'kartik\\bs5dropdown\\' => 19,
+            'kartik\\bs4dropdown\\' => 19,
             'kartik\\base\\' => 12,
             'kartik\\alert\\' => 13,
             'kartik\\affix\\' => 13,
@@ -280,9 +280,9 @@ class ComposerStaticInit3fce1343cc5c6e318fc3df223938b40c
         array (
             0 => __DIR__ . '/..' . '/yiisoft/yii2-composer',
         ),
-        'yii\\bootstrap5\\' => 
+        'yii\\bootstrap\\' => 
         array (
-            0 => __DIR__ . '/..' . '/yiisoft/yii2-bootstrap5/src',
+            0 => __DIR__ . '/..' . '/yiisoft/yii2-bootstrap/src',
         ),
         'yii\\bootstrap4\\' => 
         array (
@@ -457,9 +457,9 @@ class ComposerStaticInit3fce1343cc5c6e318fc3df223938b40c
         array (
             0 => __DIR__ . '/..' . '/kartik-v/yii2-builder/src',
         ),
-        'kartik\\bs5dropdown\\' => 
+        'kartik\\bs4dropdown\\' => 
         array (
-            0 => __DIR__ . '/..' . '/kartik-v/yii2-bootstrap5-dropdown/src',
+            0 => __DIR__ . '/..' . '/kartik-v/yii2-bootstrap4-dropdown/src',
         ),
         'kartik\\base\\' => 
         array (

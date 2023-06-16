@@ -57,14 +57,15 @@ return [
 //            ],
 //        ],
         
+        //BOOSTRAP 4
         'view' => [
             'theme' => [
                 'pathMap' => [
-                    //'@app/views' => '@app/web/themes/unify263blog/views',
-                    '@dektrium/user/views' => '@app/views/user'
+                    '@app/views' => '@app/web/themes-b4/views',
+                    '@dektrium/user/views' => '@app/web/themes-b4/views/user'
                 ],
-            //'basePath' => '@app/web/themes/unify263blog',
-            //'baseUrl' => '@web/web/themes/unify263blog',                
+                'basePath' => '@app/web/themes-b4',
+                'baseUrl' => '@web/web/themes-b4',
             ],
         ],
     ],
