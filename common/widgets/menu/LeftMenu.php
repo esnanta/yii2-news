@@ -9,7 +9,7 @@
  * @author Cassiopeia
  */
 
-namespace backend\widgets;
+namespace common\widgets\menu;
 
 use yii\helpers\Html;
 use yii\helpers\Url;

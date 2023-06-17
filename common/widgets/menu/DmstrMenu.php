@@ -1,5 +1,5 @@
 <?php
-namespace backend\widgets;
+namespace common\widgets\menu;
 
 use Yii;
 use yii\helpers\ArrayHelper;
