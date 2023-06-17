@@ -48,8 +48,8 @@ return [
             'theme' => [
                 'pathMap' =>
                 [
-                    '@dektrium/user/views' => '@app/web/themes-admin-unify/views/dektrium/user',
-                    '@dektrium/rbac/views' => '@app/web/themes-admin-unify/views/dektrium/rbac',
+                    '@dektrium/user/views' => '@app/web/themes-admin-unify/dektrium/user',
+                    '@dektrium/rbac/views' => '@app/web/themes-admin-unify/dektrium/rbac',
                     '@app/views' => '@app/web/themes-admin-unify/views',
                 ],
                 'basePath' => '@app/web/themes-admin-unify',

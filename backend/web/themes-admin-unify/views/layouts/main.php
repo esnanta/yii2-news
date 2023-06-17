@@ -2,14 +2,14 @@
 /** @var \yii\web\View $this */
 
 /** @var string $content */
-use backend\assets\AdminAsset;
+use backend\assets\AdminUnifyAsset;
 use common\widgets\AlertBootstrap4;
 use yii\bootstrap4\Breadcrumbs;
 use yii\bootstrap4\Html;
 use yii\bootstrap4\Nav;
 use yii\bootstrap4\NavBar;
 
-AdminAsset::register($this);
+AdminUnifyAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
