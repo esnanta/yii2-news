@@ -31,7 +31,7 @@ class AdminUnifyAsset extends AssetBundle
         'assets-main/vendor/malihu-scrollbar/jquery.mCustomScrollbar.min.css',
         
         'assets/vendor/flatpickr/dist/css/flatpickr.min.css',
-        'assets/vendor/bootstrap-select/css/bootstrap-select.min.css',
+        //'assets/vendor/bootstrap-select/css/bootstrap-select.min.css',
         'assets/vendor/chartist-js/chartist.min.css',
         'assets/vendor/chartist-js-tooltip/chartist-plugin-tooltip.css',
         
@@ -51,7 +51,7 @@ class AdminUnifyAsset extends AssetBundle
         'assets/vendor/jquery-migrate/jquery-migrate.min.js',
         
         'assets-main/vendor/popper.js/popper.min.js',
-        'assets-main/vendor/bootstrap/bootstrap.min.js', 
+        //'assets-main/vendor/bootstrap/bootstrap.min.js', 
         'assets-main/vendor/cookiejs/jquery.cookie.js',
         
         //jQuery UI Core

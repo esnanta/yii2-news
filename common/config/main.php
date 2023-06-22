@@ -13,7 +13,7 @@ return [
     'components' => [
         'db' => [
             'class' => \yii\db\Connection::class,
-            'dsn' => 'mysql:host=localhost;dbname=news_update',
+            'dsn' => 'mysql:host=localhost;dbname=yii2_news_update',
             'username' => 'root',
             'password' => '',
             'charset' => 'utf8',

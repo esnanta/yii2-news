@@ -7,7 +7,7 @@
         <span class="d-flex align-self-center g-pos-rel g-font-size-18 g-mr-18">
             <i class="hs-admin-layout-media-center-alt"></i>
         </span>
-        <span class="media-body align-self-center">Administrator</span>
+        <span class="media-body align-self-center">Master</span>
         <span class="d-flex align-self-center u-side-nav--control-icon">
             <i class="hs-admin-angle-right"></i>
         </span>
@@ -17,10 +17,10 @@
 
     <ul id="<?= $subMenuSidebar ?>" class="u-sidebar-navigation-v1-menu u-side-nav--second-level-menu mb-0">
         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-            <?= Html::a(getMenu('User'), ['/user/admin/index'], ['class' => 'media u-side-nav--second-level-menu-link g-px-15 g-py-12']) ?>
+            <?= Html::a(getMenu('Archive Category'), ['/archive-category/index'], ['class' => 'media u-side-nav--second-level-menu-link g-px-15 g-py-12']) ?>
         </li>
         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-            <?= Html::a(getMenu('Gii'), ['/gii'], ['class' => 'media u-side-nav--second-level-menu-link g-px-15 g-py-12']) ?>
+            <?= Html::a(getMenu('Archive Category'), ['/archive-category/index'], ['class' => 'media u-side-nav--second-level-menu-link g-px-15 g-py-12']) ?>
         </li>
     </ul>
 </li>
