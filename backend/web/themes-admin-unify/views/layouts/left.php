@@ -1,42 +1,50 @@
 <?php
 
-use yii\widgets\Menu;
-use yii\helpers\Html;
-use backend\widgets\LeftMenu as CustomMenu;
-use backend\widgets\DmstrMenu;
+use kartik\widgets\SideNav;
+// OR if this package is installed separately, you can use
+// use kartik\sidenav\SideNav;
+
 ?>
+<?php $this->registerCsrfMetaTags() ?>
 
-<?php
-
-function getMenu($_menuName, $_menuIcon='hs-admin-shift-right-alt') {
-    $menuLinks = '<span class="d-flex align-self-center g-mr-15 g-mt-minus-1">' .
-            '<i class="'.$_menuIcon.'"></i>' .
-            '</span>' .
-            '<span class="media-body align-self-center">' . $_menuName . '</span>';
-
-    return $menuLinks;
-}
-?>
 
 <div id="sideNav" class="col-auto u-sidebar-navigation-v1 u-sidebar-navigation--dark">
-    <ul id="sideNavMenu" class="u-sidebar-navigation-v1-menu u-side-nav--top-level-menu g-min-height-100vh mb-0">
 
-        <?php if (!Yii::$app->user->isGuest) { ?>
+<?php
+if (!Yii::$app->user->isGuest) {
+    echo SideNav::widget([
+        'type' => SideNav::TYPE_DEFAULT,
+        'encodeLabels' => false,
         
-        <!-- Dashboard -->
-        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item">
-            <?= Html::a(getMenu('Dashboard'), ['/site/index'], ['class' => 'media u-side-nav--second-level-menu-link g-px-15 g-py-12']) ?>
-        </li>
-        <!-- End Dashboard -->
-
-        <?= $this->render('left-master',['subMenuSidebar'=>'subMenuMaster']) ?>
-        <?= $this->render('left-admin',['subMenuSidebar'=>'subMenuAdmin']) ?>
-        <?php } else { ?>
-        <!-- Login -->
-        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item">
-            <?= Html::a(getMenu('Login','hs-admin-key'), ['/user/login'], ['class' => 'media u-side-nav--second-level-menu-link g-px-15 g-py-12']) ?>
-        </li>
-        <!-- End Login -->
-        <?php } ?>
-    </ul>
+        'items' => [
+            ['label' => 'Home', 'icon' => 'home', 'url' => ['/site/index']],
+            ['label' => 'Archive', 'icon' => 'book', 'items' => [
+                ['label' => 'Archive Category', 'url' => ['/archive-category/index']],
+                ['label' => 'Archive', 'url' => ['/archive/index']],
+            ]],
+            
+            ['label' => 'Logout', 'icon' => 'sign-out-alt', 
+                'url' => ['/user/logout'],
+                'template'=>'<a href="{url}" data-method="post" data-confirm="Logout now?" class="nav-link text-secondary nav-link">{icon}{label}</a>',
+            ],
+            
+            ['label' => 'Admin', 'icon' => 'wrench', 'items' => [
+                ['label' => 'Users', 'url' => ['/user/admin/index']],
+                ['label' => 'Gii', 'url' => ['/gii']],
+            ], 'visible' => Yii::$app->user->identity->isAdmin],
+            
+        ],
+    ]);  
+}
+else{
+    echo SideNav::widget([
+        'type' => SideNav::TYPE_SECONDARY,
+        'encodeLabels' => false,
+        'heading' => '<i class="fas fa-user-shield"></i> Credentials',
+        'items' => [
+            ['label' => 'Login', 'icon' => 'lock', 'url' => ['/user/login']],
+        ],
+    ]);  
+}
+?>
 </div>

@@ -1,9 +1,13 @@
 {
   "ExpandedNodes": [
     "",
-    "\\common",
+    "\\backend",
+    "\\backend\\web",
+    "\\backend\\web\\themes-admin-unify",
+    "\\backend\\web\\themes-admin-unify\\views",
+    "\\backend\\web\\themes-admin-unify\\views\\layouts",
     "\\common\\config"
   ],
-  "SelectedNode": "\\common\\config\\main.php",
+  "SelectedNode": "\\backend\\web\\themes-admin-unify\\views\\layouts\\main.php",
   "PreviewInSolutionExplorer": false
 }

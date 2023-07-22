@@ -1,11 +1,14 @@
+<?php
+use yii\helpers\Url;
+?>
 
 <header id="js-header" class="u-header u-header--sticky-top">
     <div class="u-header__section u-header__section--admin-dark g-min-height-65">
         <nav class="navbar no-gutters g-pa-0">
             <div class="col-auto d-flex flex-nowrap u-header-logo-toggler g-py-12">
+                
                 <!-- Logo -->
-                <a href="index.html" class="navbar-brand d-flex align-self-center g-hidden-xs-down g-line-height-1 py-0 g-mt-5">
-
+                <a href="<?= str_replace('admin/', '', Url::to(['/site/index']))  ?>" class="navbar-brand d-flex align-self-center g-hidden-xs-down g-line-height-1 py-0 g-mt-5">
                     <svg class="u-header-logo" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                             <g transform="translate(-78.000000, -19.000000)">
@@ -17,9 +20,6 @@
                             </g>
                         </g>
                     </svg>
-
-
-
                 </a>
                 <!-- End Logo -->
 
