@@ -10,6 +10,13 @@ return [
     'bsDependencyEnabled' => false,
     'bsVersion' => '4.x', 
     
+    'dateDisplayFormat'       => 'dd-MM-yyyy',
+    'timeDisplayFormat'       => 'hh:mm:ss a',
+    'datetimeDisplayFormat'   => 'dd-MM-yyyy hh:mm:ss a',
+    
+    'dateSaveFormat'          => 'Y-m-d',
+    'timeSaveFormat'          => 'H:i:s',
+    'datetimeSaveFormat'      => 'Y-m-d H:i:s',
 ];
 
 

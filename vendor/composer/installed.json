@@ -2074,6 +2074,68 @@
             "install-path": "../kartik-v/yii2-builder"
         },
         {
+            "name": "kartik-v/yii2-date-range",
+            "version": "dev-master",
+            "version_normalized": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kartik-v/yii2-date-range.git",
+                "reference": "7a0da87f2f8c8e415b78c7c6285c52c6d4d3b08e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kartik-v/yii2-date-range/zipball/7a0da87f2f8c8e415b78c7c6285c52c6d4d3b08e",
+                "reference": "7a0da87f2f8c8e415b78c7c6285c52c6d4d3b08e",
+                "shasum": ""
+            },
+            "require": {
+                "kartik-v/yii2-krajee-base": ">=3.0.0"
+            },
+            "time": "2023-03-03T15:26:35+00:00",
+            "default-branch": true,
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.7.x-dev"
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "kartik\\daterange\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Kartik Visweswaran",
+                    "email": "kartikv2@gmail.com",
+                    "homepage": "http://www.krajee.com/"
+                }
+            ],
+            "description": "An advanced Yii 2 date range picker input for based on bootstrap-daterangepicker plugin.",
+            "homepage": "https://github.com/kartik-v/yii2-date-range",
+            "keywords": [
+                "bootstrap",
+                "bootstrap 3",
+                "date",
+                "date-range",
+                "extension",
+                "range",
+                "time",
+                "widget",
+                "yii2"
+            ],
+            "support": {
+                "issues": "https://github.com/kartik-v/yii2-date-range/issues",
+                "source": "https://github.com/kartik-v/yii2-date-range/tree/master"
+            },
+            "install-path": "../kartik-v/yii2-date-range"
+        },
+        {
             "name": "kartik-v/yii2-datecontrol",
             "version": "dev-master",
             "version_normalized": "dev-master",
@@ -3510,19 +3572,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-widget-select2.git",
-                "reference": "f554b1c5cadb36f00949a9df7aa79395754cb667"
+                "reference": "4b8ef7dd9780531fc997fa23a53a38a1f7674bec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-widget-select2/zipball/f554b1c5cadb36f00949a9df7aa79395754cb667",
-                "reference": "f554b1c5cadb36f00949a9df7aa79395754cb667",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-select2/zipball/4b8ef7dd9780531fc997fa23a53a38a1f7674bec",
+                "reference": "4b8ef7dd9780531fc997fa23a53a38a1f7674bec",
                 "shasum": ""
             },
             "require": {
                 "kartik-v/yii2-krajee-base": ">=3.0.4",
-                "select2/select2": ">=4.0"
+                "select2/select2": ">=4.0.0"
             },
-            "time": "2023-03-30T13:17:08+00:00",
+            "time": "2023-06-22T07:43:31+00:00",
             "default-branch": true,
             "type": "yii2-extension",
             "extra": {
@@ -3561,7 +3623,7 @@
             ],
             "support": {
                 "issues": "https://github.com/kartik-v/yii2-widget-select2/issues",
-                "source": "https://github.com/kartik-v/yii2-widget-select2/tree/master"
+                "source": "https://github.com/kartik-v/yii2-widget-select2/tree/v2.2.5"
             },
             "funding": [
                 {
@@ -4616,17 +4678,17 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v4.15.5",
-            "version_normalized": "4.15.5.0",
+            "version": "v4.16.0",
+            "version_normalized": "4.16.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "11e2663a5bc9db5d714eedb4277ee300403b4a9e"
+                "reference": "19526a33fb561ef417e822e85f08a00db4059c17"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/11e2663a5bc9db5d714eedb4277ee300403b4a9e",
-                "reference": "11e2663a5bc9db5d714eedb4277ee300403b4a9e",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/19526a33fb561ef417e822e85f08a00db4059c17",
+                "reference": "19526a33fb561ef417e822e85f08a00db4059c17",
                 "shasum": ""
             },
             "require": {
@@ -4637,7 +4699,7 @@
                 "ircmaxell/php-yacc": "^0.0.7",
                 "phpunit/phpunit": "^6.5 || ^7.0 || ^8.0 || ^9.0"
             },
-            "time": "2023-05-19T20:20:00+00:00",
+            "time": "2023-06-25T14:52:30+00:00",
             "bin": [
                 "bin/php-parse"
             ],
@@ -4669,7 +4731,7 @@
             ],
             "support": {
                 "issues": "https://github.com/nikic/PHP-Parser/issues",
-                "source": "https://github.com/nikic/PHP-Parser/tree/v4.15.5"
+                "source": "https://github.com/nikic/PHP-Parser/tree/v4.16.0"
             },
             "install-path": "../nikic/php-parser"
         },
@@ -9490,17 +9552,17 @@
         },
         {
             "name": "yiisoft/yii2-debug",
-            "version": "2.1.23",
-            "version_normalized": "2.1.23.0",
+            "version": "2.1.24",
+            "version_normalized": "2.1.24.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-debug.git",
-                "reference": "73af53bd1b99d40f983ba57386ac6c374d9ef177"
+                "reference": "e15e954d0beb82b0b532f998f55e7275083de592"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/73af53bd1b99d40f983ba57386ac6c374d9ef177",
-                "reference": "73af53bd1b99d40f983ba57386ac6c374d9ef177",
+                "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/e15e954d0beb82b0b532f998f55e7275083de592",
+                "reference": "e15e954d0beb82b0b532f998f55e7275083de592",
                 "shasum": ""
             },
             "require": {
@@ -9514,7 +9576,7 @@
                 "yiisoft/yii2-coding-standards": "~2.0",
                 "yiisoft/yii2-swiftmailer": "*"
             },
-            "time": "2023-05-22T19:44:57+00:00",
+            "time": "2023-07-10T06:07:43+00:00",
             "type": "yii2-extension",
             "extra": {
                 "branch-alias": {

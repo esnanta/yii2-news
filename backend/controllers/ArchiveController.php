@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use Yii;
 use backend\models\Archive;
 use backend\models\ArchiveSearch;
 use yii\web\Controller;
@@ -13,101 +14,91 @@ use yii\filters\VerbFilter;
  */
 class ArchiveController extends Controller
 {
-    /**
-     * @inheritDoc
-     */
     public function behaviors()
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
-                    ],
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['post'],
                 ],
-            ]
-        );
+            ],
+        ];
     }
 
     /**
      * Lists all Archive models.
-     *
-     * @return string
+     * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new ArchiveSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        $searchModel = new ArchiveSearch;
+        $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
         ]);
     }
 
     /**
      * Displays a single Archive model.
-     * @param int $id ID
-     * @return string
-     * @throws NotFoundHttpException if the model cannot be found
+     * @param integer $id
+     * @return mixed
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        $model = $this->findModel($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('view', ['model' => $model]);
+        }
     }
 
     /**
      * Creates a new Archive model.
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
+     * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Archive();
+        $model = new Archive;
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            $model->loadDefaultValues();
+            return $this->render('create', [
+                'model' => $model,
+            ]);
         }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
     }
 
     /**
      * Updates an existing Archive model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id ID
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
+     * @param integer $id
+     * @return mixed
      */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('update', [
+                'model' => $model,
+            ]);
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
     }
 
     /**
      * Deletes an existing Archive model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id ID
-     * @return \yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
+     * @param integer $id
+     * @return mixed
      */
     public function actionDelete($id)
     {
@@ -119,16 +110,16 @@ class ArchiveController extends Controller
     /**
      * Finds the Archive model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id ID
+     * @param integer $id
      * @return Archive the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Archive::findOne(['id' => $id])) !== null) {
+        if (($model = Archive::findOne($id)) !== null) {
             return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
         }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }

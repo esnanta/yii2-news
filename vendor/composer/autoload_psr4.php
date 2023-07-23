@@ -54,6 +54,7 @@ return array(
     'kartik\\detail\\' => array($vendorDir . '/kartik-v/yii2-detail-view/src'),
     'kartik\\depdrop\\' => array($vendorDir . '/kartik-v/yii2-widget-depdrop/src'),
     'kartik\\datetime\\' => array($vendorDir . '/kartik-v/yii2-widget-datetimepicker/src'),
+    'kartik\\daterange\\' => array($vendorDir . '/kartik-v/yii2-date-range/src'),
     'kartik\\datecontrol\\' => array($vendorDir . '/kartik-v/yii2-datecontrol/src'),
     'kartik\\date\\' => array($vendorDir . '/kartik-v/yii2-widget-datepicker/src'),
     'kartik\\color\\' => array($vendorDir . '/kartik-v/yii2-widget-colorinput/src'),

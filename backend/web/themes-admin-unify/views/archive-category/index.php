@@ -44,15 +44,26 @@ $this->params['breadcrumbs'][] = $this->title;
             'title',
             'sequence',
             'description:ntext',
-            ['attribute' => 'created_at','format' => ['datetime',(isset(Yii::$app->modules['datecontrol']['displaySettings']['datetime'])) ? Yii::$app->modules['datecontrol']['displaySettings']['datetime'] : 'd-m-Y H:i:s A']],
-//            ['attribute' => 'updated_at','format' => ['datetime',(isset(Yii::$app->modules['datecontrol']['displaySettings']['datetime'])) ? Yii::$app->modules['datecontrol']['displaySettings']['datetime'] : 'd-m-Y H:i:s A']], 
-//            'created_by', 
-//            'updated_by', 
-//            'is_deleted', 
-//            ['attribute' => 'deleted_at','format' => ['datetime',(isset(Yii::$app->modules['datecontrol']['displaySettings']['datetime'])) ? Yii::$app->modules['datecontrol']['displaySettings']['datetime'] : 'd-m-Y H:i:s A']], 
-//            'deleted_by', 
-//            'verlock', 
-
+            [
+                'attribute' => 'created_at',
+                'value'=>'created_at',
+                'enableSorting' => true,
+                'format'=>'date',
+                'options' => [
+                    'format' => 'd-m-Y',
+                ],
+                'filterType' => GridView::FILTER_DATE_RANGE,
+                'filterWidgetOptions' => ([
+                    'attribute' => 'date_range',
+                    'presetDropdown' => false,
+                    'convertFormat' => true,
+                    'pluginOptions'=>[
+                        'locale'=>['format' => 'd-m-Y'],
+                    ]                
+                ])
+            ], 
+            
+            
             [
                 'class' => 'yii\grid\ActionColumn',
                 'buttons' => [

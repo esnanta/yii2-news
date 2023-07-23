@@ -28,5 +28,15 @@ class User extends BaseUser
             [['verlock'], 'mootensai\components\OptimisticLockValidator']
         ]);
     }
-	
+    public static function getName($_id){ 
+        //https://www.yiiframework.com/doc/guide/2.0/en/caching-data
+        //$db = Yii::$app->db;// or Category::getDb()
+        $value = User::getDb()->cache(function () use ($_id) {
+            $model = User::find()->where(['id' => $_id])->one();
+            return $model->username;
+        });       
+
+       return $value;           
+        
+    } 
 }

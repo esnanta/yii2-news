@@ -3,7 +3,7 @@
         'name' => 'esnanta/yii2-retread',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '8c1b30821900f2508522262488679602ad5e9233',
+        'reference' => 'ee4556c8de391a82e8f046619ecbc3e3eabf0f2a',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -238,7 +238,7 @@
         'esnanta/yii2-retread' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '8c1b30821900f2508522262488679602ad5e9233',
+            'reference' => 'ee4556c8de391a82e8f046619ecbc3e3eabf0f2a',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -351,6 +351,17 @@
             'install_path' => __DIR__ . '/../kartik-v/yii2-builder',
             'aliases' => array(),
             'dev_requirement' => true,
+        ),
+        'kartik-v/yii2-date-range' => array(
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => '7a0da87f2f8c8e415b78c7c6285c52c6d4d3b08e',
+            'type' => 'yii2-extension',
+            'install_path' => __DIR__ . '/../kartik-v/yii2-date-range',
+            'aliases' => array(
+                0 => '1.7.x-dev',
+            ),
+            'dev_requirement' => false,
         ),
         'kartik-v/yii2-datecontrol' => array(
             'pretty_version' => 'dev-master',
@@ -566,7 +577,7 @@
         'kartik-v/yii2-widget-select2' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'f554b1c5cadb36f00949a9df7aa79395754cb667',
+            'reference' => '4b8ef7dd9780531fc997fa23a53a38a1f7674bec',
             'type' => 'yii2-extension',
             'install_path' => __DIR__ . '/../kartik-v/yii2-widget-select2',
             'aliases' => array(
@@ -723,9 +734,9 @@
             'dev_requirement' => true,
         ),
         'nikic/php-parser' => array(
-            'pretty_version' => 'v4.15.5',
-            'version' => '4.15.5.0',
-            'reference' => '11e2663a5bc9db5d714eedb4277ee300403b4a9e',
+            'pretty_version' => 'v4.16.0',
+            'version' => '4.16.0.0',
+            'reference' => '19526a33fb561ef417e822e85f08a00db4059c17',
             'type' => 'library',
             'install_path' => __DIR__ . '/../nikic/php-parser',
             'aliases' => array(),
@@ -1376,9 +1387,9 @@
             'dev_requirement' => false,
         ),
         'yiisoft/yii2-debug' => array(
-            'pretty_version' => '2.1.23',
-            'version' => '2.1.23.0',
-            'reference' => '73af53bd1b99d40f983ba57386ac6c374d9ef177',
+            'pretty_version' => '2.1.24',
+            'version' => '2.1.24.0',
+            'reference' => 'e15e954d0beb82b0b532f998f55e7275083de592',
             'type' => 'yii2-extension',
             'install_path' => __DIR__ . '/../yiisoft/yii2-debug',
             'aliases' => array(),

@@ -25,54 +25,62 @@ $this->params['breadcrumbs'][] = $this->title;
             'type' => DetailView::TYPE_DEFAULT,
         ],
         'attributes' => [
-            'id',
+
             'title',
             'sequence',
             'description:ntext',
+            
             [
-                'attribute' => 'created_at',
-                'format' => [
-                    'datetime', (isset(Yii::$app->modules['datecontrol']['displaySettings']['datetime']))
-                        ? Yii::$app->modules['datecontrol']['displaySettings']['datetime']
-                        : 'd-m-Y H:i:s A'
+                'group'=>true,
+                'rowOptions'=>['class'=>'default']
+            ],
+
+            [
+                'columns' => [
+                    [
+                        'attribute' => 'created_at',
+                        'format' => [
+                            'datetime', (isset(Yii::$app->modules['datecontrol']['displaySettings']['datetime']))
+                                ? Yii::$app->modules['datecontrol']['displaySettings']['datetime']
+                                : 'd-m-Y H:i:s A'
+                        ],
+                        'type'=>DetailView::INPUT_HIDDEN,
+                        'widgetOptions' => [
+                            'class' => DateControl::classname(),
+                            'type' => DateControl::FORMAT_DATETIME
+                        ]
+                    ],
+                    [
+                        'attribute' => 'updated_at',
+                        'format' => [
+                            'datetime', (isset(Yii::$app->modules['datecontrol']['displaySettings']['datetime']))
+                                ? Yii::$app->modules['datecontrol']['displaySettings']['datetime']
+                                : 'd-m-Y H:i:s A'
+                        ],
+                        'type'=>DetailView::INPUT_HIDDEN,
+                        'widgetOptions' => [
+                            'class' => DateControl::classname(),
+                            'type' => DateControl::FORMAT_DATETIME
+                        ]
+                    ],
                 ],
-                'type' => DetailView::INPUT_WIDGET,
-                'widgetOptions' => [
-                    'class' => DateControl::classname(),
-                    'type' => DateControl::FORMAT_DATETIME
-                ]
             ],
             [
-                'attribute' => 'updated_at',
-                'format' => [
-                    'datetime', (isset(Yii::$app->modules['datecontrol']['displaySettings']['datetime']))
-                        ? Yii::$app->modules['datecontrol']['displaySettings']['datetime']
-                        : 'd-m-Y H:i:s A'
+                'columns' => [
+                    [
+                        'attribute'=>'created_by',
+                        'value'=>($model->created_by!=null) ? \backend\models\User::getName($model->created_by):'',
+                        'type'=>DetailView::INPUT_HIDDEN,
+                        'valueColOptions'=>['style'=>'width:30%']
+                    ],
+                    [
+                        'attribute'=>'updated_by',
+                        'value'=>($model->updated_by!=null) ? \backend\models\User::getName($model->updated_by):'',
+                        'type'=>DetailView::INPUT_HIDDEN,
+                        'valueColOptions'=>['style'=>'width:30%']
+                    ],
                 ],
-                'type' => DetailView::INPUT_WIDGET,
-                'widgetOptions' => [
-                    'class' => DateControl::classname(),
-                    'type' => DateControl::FORMAT_DATETIME
-                ]
             ],
-            'created_by',
-            'updated_by',
-            'is_deleted',
-            [
-                'attribute' => 'deleted_at',
-                'format' => [
-                    'datetime', (isset(Yii::$app->modules['datecontrol']['displaySettings']['datetime']))
-                        ? Yii::$app->modules['datecontrol']['displaySettings']['datetime']
-                        : 'd-m-Y H:i:s A'
-                ],
-                'type' => DetailView::INPUT_WIDGET,
-                'widgetOptions' => [
-                    'class' => DateControl::classname(),
-                    'type' => DateControl::FORMAT_DATETIME
-                ]
-            ],
-            'deleted_by',
-            'verlock',
         ],
         'deleteOptions' => [
             'url' => ['delete', 'id' => $model->id],

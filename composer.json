@@ -28,6 +28,7 @@
         "kartik-v/yii2-datecontrol": "dev-master",
         "kartik-v/yii2-widget-select2": "dev-master",
         "kartik-v/yii2-widget-sidenav": "dev-master",
+        "kartik-v/yii2-date-range": "dev-master",
         
         
         "hail812/yii2-adminlte3": "~1.1"

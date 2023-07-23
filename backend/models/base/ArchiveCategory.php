@@ -131,36 +131,4 @@ class ArchiveCategory extends \yii\db\ActiveRecord
             ],
         ];
     }
-
-    /**
-     * The following code shows how to apply a default condition for all queries:
-     *
-     * ```php
-     * class Customer extends ActiveRecord
-     * {
-     *     public static function find()
-     *     {
-     *         return parent::find()->where(['deleted' => false]);
-     *     }
-     * }
-     *
-     * // Use andWhere()/orWhere() to apply the default condition
-     * // SELECT FROM customer WHERE `deleted`=:deleted AND age>30
-     * $customers = Customer::find()->andWhere('age>30')->all();
-     *
-     * // Use where() to ignore the default condition
-     * // SELECT FROM customer WHERE age>30
-     * $customers = Customer::find()->where('age>30')->all();
-     * ```
-     */
-
-    /**
-     * @inheritdoc
-     * @return \backend\models\ArchiveCategoryQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        $query = new \backend\models\ArchiveCategoryQuery(get_called_class());
-        return $query->where(['tx_archive_category.deleted_by' => 0]);
-    }
 }

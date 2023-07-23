@@ -15,7 +15,8 @@ if (!Yii::$app->user->isGuest) {
     echo SideNav::widget([
         'type' => SideNav::TYPE_DEFAULT,
         'encodeLabels' => false,
-        
+        //'options' => array( 'class' => 'u-sidebar-navigation-v1-menu u-side-nav--top-level-menu g-min-height-100vh mb-0', 'id'=>'sideNavMenu' ),
+
         'items' => [
             ['label' => 'Home', 'icon' => 'home', 'url' => ['/site/index']],
             ['label' => 'Archive', 'icon' => 'book', 'items' => [

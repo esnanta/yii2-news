@@ -6,17 +6,36 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use backend\models\ArchiveCategory;
+use kartik\daterange\DateRangeBehavior;
 
 /**
  * ArchiveCategorySearch represents the model behind the search form about `backend\models\ArchiveCategory`.
  */
 class ArchiveCategorySearch extends ArchiveCategory
 {
+    public $date_first;
+    public $date_last;    
+    
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => DateRangeBehavior::className(),
+                'attribute' => 'created_at',
+                'dateStartAttribute' => 'date_first',
+                'dateEndAttribute' => 'date_last',
+            ],          
+        ];
+    }   
+    
     public function rules()
     {
         return [
             [['id', 'sequence', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
-            [['title', 'description', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
+            [['title', 'description', 'created_at', 'updated_at', 'deleted_at' ], 'safe'],
+            
+            //TAMBAHAN
+            [['date_range'], 'match', 'pattern' => '/^.+\s\-\s.+$/'],
         ];
     }
 
@@ -41,8 +60,6 @@ class ArchiveCategorySearch extends ArchiveCategory
         $query->andFilterWhere([
             'id' => $this->id,
             'sequence' => $this->sequence,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
             'is_deleted' => $this->is_deleted,
@@ -54,6 +71,9 @@ class ArchiveCategorySearch extends ArchiveCategory
         $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'description', $this->description]);
 
+        $query->andFilterWhere(['>=', 'tx_archive_category.created_at', date(Yii::$app->params['dateSaveFormat'].' 00:00:00', $this->date_first)])
+              ->andFilterWhere(['<', 'tx_archive_category.created_at', date(Yii::$app->params['dateSaveFormat'].' 23:59:59', $this->date_last)]);  
+        
         return $dataProvider;
     }
 }
