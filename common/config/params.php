@@ -10,7 +10,7 @@ return [
     'bsDependencyEnabled' => false,
     'bsVersion' => '4.x', 
     
-    'dateDisplayFormat'       => 'dd-MM-yyyy',
+    'dateDisplayFormat'       => 'd-m-Y',
     'timeDisplayFormat'       => 'hh:mm:ss a',
     'datetimeDisplayFormat'   => 'dd-MM-yyyy hh:mm:ss a',
     

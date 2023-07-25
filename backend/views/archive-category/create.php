@@ -15,9 +15,9 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 
-<div class="card border-primary mb-3">
+<div class="card border-default mb-3">
     <div class="card-header">Please fill out the form below <span class="pull-right">ArchiveCategory</span></div>
-    <div class="card-body text-primary">
+    <div class="card-body text-default">
         <!--<h5 class="card-title">Please fill out the form below</h5>-->
         <div class="archive-category-create">
 

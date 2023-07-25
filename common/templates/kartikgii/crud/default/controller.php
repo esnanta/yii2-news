@@ -37,9 +37,12 @@ use <?= ltrim($generator->searchModelClass, '\\') . (isset($searchModelAlias) ? 
 use yii\data\ActiveDataProvider;
 <?php endif; ?>
 use <?= ltrim($generator->baseControllerClass, '\\') ?>;
+use yii\db\StaleObjectException;
 use yii\web\NotFoundHttpException;
+use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
 
+use common\helper\MessageHelper;
 /**
  * <?= $controllerClass ?> implements the CRUD actions for <?= $modelClass ?> model.
  */
@@ -63,23 +66,29 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
      */
     public function actionIndex()
     {
-<?php if (!empty($generator->searchModelClass)): ?>
+        if(Yii::$app->user->can('index-<?= strtolower($modelClass) ?>')){
+    <?php if (!empty($generator->searchModelClass)): ?>
         $searchModel = new <?= isset($searchModelAlias) ? $searchModelAlias : $searchModelClass ?>;
-        $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
+            $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 
-        return $this->render('index', [
-            'dataProvider' => $dataProvider,
-            'searchModel' => $searchModel,
-        ]);
-<?php else: ?>
-        $dataProvider = new ActiveDataProvider([
-            'query' => <?= $modelClass ?>::find(),
-        ]);
+            return $this->render('index', [
+                'dataProvider' => $dataProvider,
+                'searchModel' => $searchModel,
+            ]);
+    <?php else: ?>
+            $dataProvider = new ActiveDataProvider([
+                'query' => <?= $modelClass ?>::find(),
+            ]);
 
-        return $this->render('index', [
-            'dataProvider' => $dataProvider,
-        ]);
-<?php endif; ?>
+            return $this->render('index', [
+                'dataProvider' => $dataProvider,
+            ]);
+    <?php endif; ?>
+    }
+        else{
+            MessageHelper::getFlashAccessDenied();
+            throw new ForbiddenHttpException;
+        }
     }
 
     /**
@@ -89,12 +98,18 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
      */
     public function actionView(<?= $actionParams ?>)
     {
-        $model = $this->findModel(<?= $actionParams ?>);
+        if(Yii::$app->user->can('view-<?= strtolower($modelClass) ?>')){
+            $model = $this->findModel(<?= $actionParams ?>);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model-><?=$generator->getTableSchema()->primaryKey[0]?>]);
-        } else {
-            return $this->render('view', ['model' => $model]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model-><?=$generator->getTableSchema()->primaryKey[0]?>]);
+            } else {
+                return $this->render('view', ['model' => $model]);
+            }
+        }
+        else{
+            MessageHelper::getFlashAccessDenied();
+            throw new ForbiddenHttpException;
         }
     }
 
@@ -105,14 +120,26 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
      */
     public function actionCreate()
     {
-        $model = new <?= $modelClass ?>;
+        if(Yii::$app->user->can('create-<?= strtolower($modelClass) ?>')){
+            $model = new <?= $modelClass ?>;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', <?= $urlParams ?>]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+            try {
+                if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                    return $this->redirect(['view', <?= $urlParams ?>]);
+                } 
+                else {
+                    return $this->render('create', [
+                        'model' => $model,
+                    ]);
+                }
+            }
+            catch (StaleObjectException $e) {
+                throw new StaleObjectException('The object being updated is outdated.');
+            }
+        }
+        else{
+            MessageHelper::getFlashAccessDenied();
+            throw new ForbiddenHttpException;
         }
     }
 
@@ -124,14 +151,25 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
      */
     public function actionUpdate(<?= $actionParams ?>)
     {
-        $model = $this->findModel(<?= $actionParams ?>);
+        if(Yii::$app->user->can('update-<?= strtolower($modelClass) ?>')){
+            try {
+                $model = $this->findModel(<?= $actionParams ?>);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', <?= $urlParams ?>]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+                if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                    return $this->redirect(['view', <?= $urlParams ?>]);
+                } else {
+                    return $this->render('update', [
+                        'model' => $model,
+                    ]);
+                }
+            }
+            catch (StaleObjectException $e) {
+                throw new StaleObjectException('The object being updated is outdated.');
+            }
+        }
+        else{
+            MessageHelper::getFlashAccessDenied();
+            throw new ForbiddenHttpException;
         }
     }
 
@@ -143,9 +181,15 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
      */
     public function actionDelete(<?= $actionParams ?>)
     {
-        $this->findModel(<?= $actionParams ?>)->delete();
+        if(Yii::$app->user->can('delete-<?= strtolower($modelClass) ?>')){
+            $this->findModel(<?= $actionParams ?>)->delete();
 
-        return $this->redirect(['index']);
+            return $this->redirect(['index']);
+        }
+        else{
+            MessageHelper::getFlashLoginInfo();
+            throw new ForbiddenHttpException;
+        }
     }
 
     /**

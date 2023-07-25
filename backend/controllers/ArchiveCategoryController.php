@@ -6,9 +6,12 @@ use Yii;
 use backend\models\ArchiveCategory;
 use backend\models\ArchiveCategorySearch;
 use yii\web\Controller;
+use yii\db\StaleObjectException;
 use yii\web\NotFoundHttpException;
+use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
 
+use common\helper\MessageHelper;
 /**
  * ArchiveCategoryController implements the CRUD actions for ArchiveCategory model.
  */
@@ -32,13 +35,19 @@ class ArchiveCategoryController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new ArchiveCategorySearch;
-        $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
+        if(Yii::$app->user->can('index-archivecategory')){
+            $searchModel = new ArchiveCategorySearch;
+            $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 
-        return $this->render('index', [
-            'dataProvider' => $dataProvider,
-            'searchModel' => $searchModel,
-        ]);
+            return $this->render('index', [
+                'dataProvider' => $dataProvider,
+                'searchModel' => $searchModel,
+            ]);
+        }
+        else{
+            MessageHelper::getFlashAccessDenied();
+            throw new ForbiddenHttpException;
+        }
     }
 
     /**
@@ -48,12 +57,18 @@ class ArchiveCategoryController extends Controller
      */
     public function actionView($id)
     {
-        $model = $this->findModel($id);
+        if(Yii::$app->user->can('view-archivecategory')){
+            $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('view', ['model' => $model]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('view', ['model' => $model]);
+            }
+        }
+        else{
+            MessageHelper::getFlashAccessDenied();
+            throw new ForbiddenHttpException;
         }
     }
 
@@ -64,14 +79,26 @@ class ArchiveCategoryController extends Controller
      */
     public function actionCreate()
     {
-        $model = new ArchiveCategory;
+        if(Yii::$app->user->can('create-archivecategory')){
+            $model = new ArchiveCategory;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+            try {
+                if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                } 
+                else {
+                    return $this->render('create', [
+                        'model' => $model,
+                    ]);
+                }
+            }
+            catch (StaleObjectException $e) {
+                throw new StaleObjectException('The object being updated is outdated.');
+            }
+        }
+        else{
+            MessageHelper::getFlashAccessDenied();
+            throw new ForbiddenHttpException;
         }
     }
 
@@ -83,14 +110,25 @@ class ArchiveCategoryController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if(Yii::$app->user->can('update-archivecategory')){
+            try {
+                $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+                if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                } else {
+                    return $this->render('update', [
+                        'model' => $model,
+                    ]);
+                }
+            }
+            catch (StaleObjectException $e) {
+                throw new StaleObjectException('The object being updated is outdated.');
+            }
+        }
+        else{
+            MessageHelper::getFlashAccessDenied();
+            throw new ForbiddenHttpException;
         }
     }
 
@@ -102,9 +140,15 @@ class ArchiveCategoryController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if(Yii::$app->user->can('delete-archivecategory')){
+            $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+            return $this->redirect(['index']);
+        }
+        else{
+            MessageHelper::getFlashLoginInfo();
+            throw new ForbiddenHttpException;
+        }
     }
 
     /**

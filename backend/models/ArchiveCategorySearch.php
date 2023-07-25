@@ -13,6 +13,7 @@ use kartik\daterange\DateRangeBehavior;
  */
 class ArchiveCategorySearch extends ArchiveCategory
 {
+    public $date_range;
     public $date_first;
     public $date_last;    
     

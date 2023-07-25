@@ -6,17 +6,35 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use backend\models\Archive;
-
+use kartik\daterange\DateRangeBehavior;
 /**
  * ArchiveSearch represents the model behind the search form about `backend\models\Archive`.
  */
 class ArchiveSearch extends Archive
 {
+    public $date_range;
+    public $date_first;
+    public $date_last;    
+    
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => DateRangeBehavior::className(),
+                'attribute' => 'created_at',
+                'dateStartAttribute' => 'date_first',
+                'dateEndAttribute' => 'date_last',
+            ],          
+        ];
+    }  
+    
     public function rules()
     {
         return [
             [['id', 'is_visible', 'archive_type', 'archive_category_id', 'size', 'view_counter', 'download_counter', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['title', 'date_issued', 'file_name', 'archive_url', 'mime_type', 'description', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
+            //TAMBAHAN
+            [['date_range'], 'match', 'pattern' => '/^.+\s\-\s.+$/'],
         ];
     }
 
@@ -47,8 +65,6 @@ class ArchiveSearch extends Archive
             'size' => $this->size,
             'view_counter' => $this->view_counter,
             'download_counter' => $this->download_counter,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
             'is_deleted' => $this->is_deleted,
@@ -63,6 +79,10 @@ class ArchiveSearch extends Archive
             ->andFilterWhere(['like', 'mime_type', $this->mime_type])
             ->andFilterWhere(['like', 'description', $this->description]);
 
+        $query->andFilterWhere(['>=', 'tx_archive.created_at', date(Yii::$app->params['dateSaveFormat'].' 00:00:00', $this->date_first)])
+              ->andFilterWhere(['<', 'tx_archive.created_at', date(Yii::$app->params['dateSaveFormat'].' 23:59:59', $this->date_last)]);  
+        
+        
         return $dataProvider;
     }
 }

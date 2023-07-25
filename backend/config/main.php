@@ -50,9 +50,9 @@ return [
                 [
                     '@dektrium/user/views' => '@app/web/themes-admin-unify/dektrium/user',
                     '@dektrium/rbac/views' => '@app/web/themes-admin-unify/dektrium/rbac',
-                    '@app/views' => '@app/web/themes-admin-unify/views',
+                    '@backend/views' => '@backend/web/themes-admin-unify/views',
                 ],
-                'basePath' => '@app/web/themes-admin-unify',
+                'basePath' => '@backend/web/themes-admin-unify',
                 'baseUrl' => '@web/web/themes-admin-unify',
                 
 //                [
