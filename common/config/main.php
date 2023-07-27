@@ -142,7 +142,7 @@ return [
                 Module::FORMAT_DATETIME => 'php:Y-m-d H:i:s',
             ],
             
-            'ajaxConversion'=>true,
+            'ajaxConversion'=>false,
             
             // automatically use kartik\widgets for each of the above formats
             'autoWidget' => true,

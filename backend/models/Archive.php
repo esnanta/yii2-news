@@ -31,12 +31,12 @@ class Archive extends BaseArchive
     public function rules()
     {
         return [
-
             //TAMBAHAN
             [['is_visible','archive_category_id'], 'required'],
             [['asset'], 'file', 'maxSize' => (1024 * 1024 * 5), 'tooBig' => 'Limit is 5MB'],
-
-            [['is_visible', 'archive_category_id', 'date_issued', 'size', 'view_counter', 'download_counter', 'created_at', 'updated_at', 'created_by', 'updated_by', 'is_deleted', 'deleted_at', 'deleted_by', 'verlock'], 'integer'],
+            
+            [['is_visible', 'archive_type', 'archive_category_id', 'size', 'view_counter', 'download_counter', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['date_issued', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['description'], 'string'],
             [['title', 'file_name'], 'string', 'max' => 200],
             [['archive_url'], 'string', 'max' => 500],
@@ -45,6 +45,9 @@ class Archive extends BaseArchive
             [['verlock'], 'mootensai\components\OptimisticLockValidator']
         ];
     }
+    
+    
+    
     public function beforeSave($insert) {
 
 

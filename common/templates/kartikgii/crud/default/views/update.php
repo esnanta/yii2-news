@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = <?= $generator->generateString('Update') ?>;
 ?>
 
 
-<div class="panel panel-info">
+<div class="panel panel-default">
     <div class="panel-heading">
         <div class="panel-title">
             Please fill out the form below

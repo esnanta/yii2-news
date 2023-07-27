@@ -48,15 +48,6 @@ return array (
       '@kartik/datecontrol' => $vendorDir . '/kartik-v/yii2-datecontrol/src',
     ),
   ),
-  'kartik-v/yii2-grid' => 
-  array (
-    'name' => 'kartik-v/yii2-grid',
-    'version' => 'dev-master',
-    'alias' => 
-    array (
-      '@kartik/grid' => $vendorDir . '/kartik-v/yii2-grid/src',
-    ),
-  ),
   'kartik-v/yii2-widget-activeform' => 
   array (
     'name' => 'kartik-v/yii2-widget-activeform',
@@ -73,15 +64,6 @@ return array (
     'alias' => 
     array (
       '@kartik/sortable' => $vendorDir . '/kartik-v/yii2-sortable/src',
-    ),
-  ),
-  'kartik-v/yii2-dynagrid' => 
-  array (
-    'name' => 'kartik-v/yii2-dynagrid',
-    'version' => '1.5.4.0',
-    'alias' => 
-    array (
-      '@kartik/dynagrid' => $vendorDir . '/kartik-v/yii2-dynagrid/src',
     ),
   ),
   'kartik-v/yii2-helpers' => 
@@ -282,15 +264,6 @@ return array (
       '@kartik/tabs' => $vendorDir . '/kartik-v/yii2-tabs-x/src',
     ),
   ),
-  'kartik-v/yii2-export' => 
-  array (
-    'name' => 'kartik-v/yii2-export',
-    'version' => '1.4.2.0',
-    'alias' => 
-    array (
-      '@kartik/export' => $vendorDir . '/kartik-v/yii2-export/src',
-    ),
-  ),
   'kartik-v/yii2-builder' => 
   array (
     'name' => 'kartik-v/yii2-builder',
@@ -356,15 +329,6 @@ return array (
     ),
     'bootstrap' => 'dektrium\\rbac\\Bootstrap',
   ),
-  'hail812/yii2-adminlte-widgets' => 
-  array (
-    'name' => 'hail812/yii2-adminlte-widgets',
-    'version' => '1.0.5.0',
-    'alias' => 
-    array (
-      '@hail812/adminlte/widgets' => $vendorDir . '/hail812/yii2-adminlte-widgets/src',
-    ),
-  ),
   'yiisoft/yii2-bootstrap4' => 
   array (
     'name' => 'yiisoft/yii2-bootstrap4',
@@ -372,15 +336,6 @@ return array (
     'alias' => 
     array (
       '@yii/bootstrap4' => $vendorDir . '/yiisoft/yii2-bootstrap4/src',
-    ),
-  ),
-  'hail812/yii2-adminlte3' => 
-  array (
-    'name' => 'hail812/yii2-adminlte3',
-    'version' => '1.1.8.0',
-    'alias' => 
-    array (
-      '@hail812/adminlte3' => $vendorDir . '/hail812/yii2-adminlte3/src',
     ),
   ),
   'yiisoft/yii2-swiftmailer' => 
@@ -481,6 +436,69 @@ return array (
     'alias' => 
     array (
       '@yii/debug' => $vendorDir . '/yiisoft/yii2-debug/src',
+    ),
+  ),
+  'kartik-v/yii2-grid' => 
+  array (
+    'name' => 'kartik-v/yii2-grid',
+    'version' => 'dev-master',
+    'alias' => 
+    array (
+      '@kartik/grid' => $vendorDir . '/kartik-v/yii2-grid/src',
+    ),
+  ),
+  'kartik-v/yii2-dynagrid' => 
+  array (
+    'name' => 'kartik-v/yii2-dynagrid',
+    'version' => '1.5.5.0',
+    'alias' => 
+    array (
+      '@kartik/dynagrid' => $vendorDir . '/kartik-v/yii2-dynagrid/src',
+    ),
+  ),
+  'yiisoft/yii2-imagine' => 
+  array (
+    'name' => 'yiisoft/yii2-imagine',
+    'version' => '2.3.1.0',
+    'alias' => 
+    array (
+      '@yii/imagine' => $vendorDir . '/yiisoft/yii2-imagine/src',
+    ),
+  ),
+  'budyaga/yii2-cropper' => 
+  array (
+    'name' => 'budyaga/yii2-cropper',
+    'version' => '2.0.22.0',
+    'alias' => 
+    array (
+      '@budyaga/cropper' => $vendorDir . '/budyaga/yii2-cropper',
+    ),
+  ),
+  'kartik-v/yii2-export' => 
+  array (
+    'name' => 'kartik-v/yii2-export',
+    'version' => '1.4.3.0',
+    'alias' => 
+    array (
+      '@kartik/export' => $vendorDir . '/kartik-v/yii2-export/src',
+    ),
+  ),
+  'bajadev/yii2-ckeditor' => 
+  array (
+    'name' => 'bajadev/yii2-ckeditor',
+    'version' => '1.3.3.0',
+    'alias' => 
+    array (
+      '@bajadev/ckeditor' => $vendorDir . '/bajadev/yii2-ckeditor',
+    ),
+  ),
+  'lesha724/yii2-document-viewer' => 
+  array (
+    'name' => 'lesha724/yii2-document-viewer',
+    'version' => '0.1.0.0',
+    'alias' => 
+    array (
+      '@lesha724/documentviewer' => $vendorDir . '/lesha724/yii2-document-viewer',
     ),
   ),
 );

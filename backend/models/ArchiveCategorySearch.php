@@ -33,7 +33,7 @@ class ArchiveCategorySearch extends ArchiveCategory
     {
         return [
             [['id', 'sequence', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
-            [['title', 'description', 'created_at', 'updated_at', 'deleted_at' ], 'safe'],
+            [['title', 'description', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
             
             //TAMBAHAN
             [['date_range'], 'match', 'pattern' => '/^.+\s\-\s.+$/'],
@@ -72,8 +72,10 @@ class ArchiveCategorySearch extends ArchiveCategory
         $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'description', $this->description]);
 
-        $query->andFilterWhere(['>=', 'tx_archive_category.created_at', date(Yii::$app->params['dateSaveFormat'].' 00:00:00', $this->date_first)])
-              ->andFilterWhere(['<', 'tx_archive_category.created_at', date(Yii::$app->params['dateSaveFormat'].' 23:59:59', $this->date_last)]);  
+        if($this->date_first!=null && $this->date_last!=null):
+            $query->andFilterWhere(['>=', 'created_at', date(Yii::$app->params['dateSaveFormat'].' 00:00:00', $this->date_first)])
+                  ->andFilterWhere(['<', 'created_at', date(Yii::$app->params['dateSaveFormat'].' 23:59:59', $this->date_last)]);  
+        endif;
         
         return $dataProvider;
     }

@@ -105,21 +105,21 @@ class Archive extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'is_visible' => 'Is Visible',
-            'archive_type' => 'Archive Type',
-            'archive_category_id' => 'Archive Category ID',
-            'title' => 'Title',
-            'date_issued' => 'Date Issued',
-            'file_name' => 'File Name',
-            'archive_url' => 'Archive Url',
-            'size' => 'Size',
-            'mime_type' => 'Mime Type',
-            'view_counter' => 'View Counter',
-            'download_counter' => 'Download Counter',
-            'description' => 'Description',
-            'is_deleted' => 'Is Deleted',
-            'verlock' => 'Verlock',
+            'id' => Yii::t('app', 'ID'),
+            'is_visible' => Yii::t('app', 'Is Visible'),
+            'archive_type' => Yii::t('app', 'Archive Type'),
+            'archive_category_id' => Yii::t('app', 'Archive Category ID'),
+            'title' => Yii::t('app', 'Title'),
+            'date_issued' => Yii::t('app', 'Date Issued'),
+            'file_name' => Yii::t('app', 'File Name'),
+            'archive_url' => Yii::t('app', 'Archive Url'),
+            'size' => Yii::t('app', 'Size'),
+            'mime_type' => Yii::t('app', 'Mime Type'),
+            'view_counter' => Yii::t('app', 'View Counter'),
+            'download_counter' => Yii::t('app', 'Download Counter'),
+            'description' => Yii::t('app', 'Description'),
+            'is_deleted' => Yii::t('app', 'Is Deleted'),
+            'verlock' => Yii::t('app', 'Verlock'),
         ];
     }
     
@@ -142,7 +142,7 @@ class Archive extends \yii\db\ActiveRecord
                 'class' => TimestampBehavior::className(),
                 'createdAtAttribute' => 'created_at',
                 'updatedAtAttribute' => 'updated_at',
-                'value' => new \yii\db\Expression('NOW()'),
+                'value' => date('Y-m-d H:i:s'),
             ],
             'blameable' => [
                 'class' => BlameableBehavior::className(),
@@ -150,37 +150,5 @@ class Archive extends \yii\db\ActiveRecord
                 'updatedByAttribute' => 'updated_by',
             ],
         ];
-    }
-
-    /**
-     * The following code shows how to apply a default condition for all queries:
-     *
-     * ```php
-     * class Customer extends ActiveRecord
-     * {
-     *     public static function find()
-     *     {
-     *         return parent::find()->where(['deleted' => false]);
-     *     }
-     * }
-     *
-     * // Use andWhere()/orWhere() to apply the default condition
-     * // SELECT FROM customer WHERE `deleted`=:deleted AND age>30
-     * $customers = Customer::find()->andWhere('age>30')->all();
-     *
-     * // Use where() to ignore the default condition
-     * // SELECT FROM customer WHERE age>30
-     * $customers = Customer::find()->where('age>30')->all();
-     * ```
-     */
-
-    /**
-     * @inheritdoc
-     * @return \backend\models\ArchiveQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        $query = new \backend\models\ArchiveQuery(get_called_class());
-        return $query->where(['tx_archive.deleted_by' => 0]);
     }
 }

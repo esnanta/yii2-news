@@ -91,6 +91,7 @@ class ComposerStaticInit3fce1343cc5c6e318fc3df223938b40c
             'yii\\symfonymailer\\' => 18,
             'yii\\swiftmailer\\' => 16,
             'yii\\jui\\' => 8,
+            'yii\\imagine\\' => 12,
             'yii\\httpclient\\' => 15,
             'yii\\gii\\' => 8,
             'yii\\faker\\' => 10,
@@ -116,6 +117,10 @@ class ComposerStaticInit3fce1343cc5c6e318fc3df223938b40c
             'mootensai\\enhancedgii\\' => 22,
             'mootensai\\components\\' => 21,
             'mootensai\\behaviors\\' => 20,
+        ),
+        'l' => 
+        array (
+            'lesha724\\documentviewer\\' => 24,
         ),
         'k' => 
         array (
@@ -158,11 +163,6 @@ class ComposerStaticInit3fce1343cc5c6e318fc3df223938b40c
             'kartik\\alert\\' => 13,
             'kartik\\affix\\' => 13,
         ),
-        'h' => 
-        array (
-            'hail812\\adminlte\\widgets\\' => 25,
-            'hail812\\adminlte3\\' => 18,
-        ),
         'f' => 
         array (
             'frontend\\tests\\' => 15,
@@ -179,6 +179,8 @@ class ComposerStaticInit3fce1343cc5c6e318fc3df223938b40c
         ),
         'b' => 
         array (
+            'budyaga\\cropper\\' => 16,
+            'bajadev\\ckeditor\\' => 17,
             'backend\\tests\\' => 14,
         ),
         'S' => 
@@ -220,6 +222,10 @@ class ComposerStaticInit3fce1343cc5c6e318fc3df223938b40c
             'Mpdf\\' => 5,
             'Matrix\\' => 7,
         ),
+        'I' => 
+        array (
+            'Imagine\\' => 8,
+        ),
         'G' => 
         array (
             'GuzzleHttp\\Psr7\\' => 16,
@@ -260,6 +266,10 @@ class ComposerStaticInit3fce1343cc5c6e318fc3df223938b40c
         'yii\\jui\\' => 
         array (
             0 => __DIR__ . '/..' . '/yiisoft/yii2-jui',
+        ),
+        'yii\\imagine\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/yiisoft/yii2-imagine/src',
         ),
         'yii\\httpclient\\' => 
         array (
@@ -325,6 +335,10 @@ class ComposerStaticInit3fce1343cc5c6e318fc3df223938b40c
         'mootensai\\behaviors\\' => 
         array (
             0 => __DIR__ . '/..' . '/mootensai/yii2-uuid-behavior',
+        ),
+        'lesha724\\documentviewer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/lesha724/yii2-document-viewer',
         ),
         'kartik\\widgets\\' => 
         array (
@@ -478,14 +492,6 @@ class ComposerStaticInit3fce1343cc5c6e318fc3df223938b40c
         array (
             0 => __DIR__ . '/..' . '/kartik-v/yii2-widget-affix',
         ),
-        'hail812\\adminlte\\widgets\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/hail812/yii2-adminlte-widgets/src',
-        ),
-        'hail812\\adminlte3\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/hail812/yii2-adminlte3/src',
-        ),
         'frontend\\tests\\' => 
         array (
             0 => __DIR__ . '/../..' . '/frontend/tests',
@@ -507,6 +513,14 @@ class ComposerStaticInit3fce1343cc5c6e318fc3df223938b40c
         'cebe\\markdown\\' => 
         array (
             0 => __DIR__ . '/..' . '/cebe/markdown',
+        ),
+        'budyaga\\cropper\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/budyaga/yii2-cropper',
+        ),
+        'bajadev\\ckeditor\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/bajadev/yii2-ckeditor',
         ),
         'backend\\tests\\' => 
         array (
@@ -633,6 +647,10 @@ class ComposerStaticInit3fce1343cc5c6e318fc3df223938b40c
         'Matrix\\' => 
         array (
             0 => __DIR__ . '/..' . '/markbaker/matrix/classes/src',
+        ),
+        'Imagine\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/imagine/imagine/src',
         ),
         'GuzzleHttp\\Psr7\\' => 
         array (

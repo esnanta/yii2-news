@@ -79,9 +79,10 @@ class ArchiveSearch extends Archive
             ->andFilterWhere(['like', 'mime_type', $this->mime_type])
             ->andFilterWhere(['like', 'description', $this->description]);
 
-        $query->andFilterWhere(['>=', 'tx_archive.created_at', date(Yii::$app->params['dateSaveFormat'].' 00:00:00', $this->date_first)])
-              ->andFilterWhere(['<', 'tx_archive.created_at', date(Yii::$app->params['dateSaveFormat'].' 23:59:59', $this->date_last)]);  
-        
+        if($this->date_first!=null && $this->date_last!=null):
+            $query->andFilterWhere(['>=', 'created_at', date(Yii::$app->params['dateSaveFormat'].' 00:00:00', $this->date_first)])
+                  ->andFilterWhere(['<', 'created_at', date(Yii::$app->params['dateSaveFormat'].' 23:59:59', $this->date_last)]);  
+        endif;
         
         return $dataProvider;
     }

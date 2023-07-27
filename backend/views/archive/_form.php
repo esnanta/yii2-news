@@ -4,6 +4,8 @@ use yii\helpers\Html;
 use kartik\widgets\ActiveForm;
 use kartik\builder\Form;
 use kartik\datecontrol\DateControl;
+use kartik\select2\Select2;
+use kartik\widgets\FileInput;
 
 /**
  * @var yii\web\View $this
@@ -14,60 +16,69 @@ use kartik\datecontrol\DateControl;
 
 <div class="archive-form">
 
-    <?php $form = ActiveForm::begin(['type' => ActiveForm::TYPE_HORIZONTAL]); echo Form::widget([
+    <?php $form = ActiveForm::begin(['type' => ActiveForm::TYPE_VERTICAL]); ?>
+    <div class="row">
+        <div class="col-md-4">
+            <?php
+                echo $form->field($model, 'asset')->widget(FileInput::classname(), [
+                    'pluginOptions' => ['previewFileType' => 'any','showUpload' => false,]
+                ]);
+            ?>
+        </div>
+        <div class="col-md-8">
+            <?php 
+                echo Form::widget([
+                    'model' => $model,
+                    'form' => $form,
+                    'columns' => 1,
+                    'attributes' => [
+                        'title' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Title...', 'maxlength' => 200]],
+                        'date_issued' => [
+                            'type' => Form::INPUT_WIDGET,
+                            'widgetClass'=> DateControl::className(),
+                            //'format'=>'date',
+                        ],
+                        'is_visible' => [
+                            'type' => Form::INPUT_WIDGET,
+                            'widgetClass' => Select2::className(),
+                            'options' => [
+                                'data' => $isVisibleList,
+                                'options' => ['placeholder' => '', 'disabled' => false],
+                            ],
+                            'pluginOptions' => [
+                                'allowClear' => true
+                            ],
+                        ],
+                        'archive_category_id' => [
+                            'type' => Form::INPUT_WIDGET,
+                            'widgetClass' => Select2::className(),
+                            'options' => [
+                                'data' => $archiveCategoryList,
+                                'options' => ['placeholder' => 'Choose Category', 'disabled' => false],
+                            ],
+                            'pluginOptions' => [
+                                'allowClear' => true
+                            ],
+                        ],
+                    ]
+                ]);
 
-        'model' => $model,
-        'form' => $form,
-        'columns' => 1,
-        'attributes' => [
+//                echo $form->field($model, 'description')->widget(CKEditor::className(), [
+//                    'editorOptions' => [
+//                        'preset' => 'basic', // basic, standard, full
+//                        'inline' => false,
+//                    ],
+//                ]);
+            ?>
+        </div>
+    </div>
 
-            'is_visible' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Is Visible...']],
+    <?php
+        echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'),
+            ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']
+        );
+    ?>
 
-            'archive_type' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Archive Type...']],
-
-            'archive_category_id' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Archive Category ID...']],
-
-            'size' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Size...']],
-
-            'view_counter' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter View Counter...']],
-
-            'download_counter' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Download Counter...']],
-
-            'created_by' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter created_by...']],
-
-            'updated_by' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter updated_by...']],
-
-            'is_deleted' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Is Deleted...']],
-
-            'deleted_by' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter deleted_by...']],
-
-            'verlock' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Verlock...']],
-
-            'date_issued' => ['type' => Form::INPUT_WIDGET, 'widgetClass' => DateControl::classname(),'options' => ['type' => DateControl::FORMAT_DATE]],
-
-            'created_at' => ['type' => Form::INPUT_WIDGET, 'widgetClass' => DateControl::classname(),'options' => ['type' => DateControl::FORMAT_DATE]],
-
-            'updated_at' => ['type' => Form::INPUT_WIDGET, 'widgetClass' => DateControl::classname(),'options' => ['type' => DateControl::FORMAT_DATE]],
-
-            'deleted_at' => ['type' => Form::INPUT_WIDGET, 'widgetClass' => DateControl::classname(),'options' => ['type' => DateControl::FORMAT_DATE]],
-
-            'description' => ['type' => Form::INPUT_TEXTAREA, 'options' => ['placeholder' => 'Enter Description...','rows' => 6]],
-
-            'title' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Title...', 'maxlength' => 200]],
-
-            'file_name' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter File Name...', 'maxlength' => 200]],
-
-            'archive_url' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Archive Url...', 'maxlength' => 500]],
-
-            'mime_type' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Mime Type...', 'maxlength' => 100]],
-
-        ]
-
-    ]);
-
-    echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'),
-        ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']
-    );
-    ActiveForm::end(); ?>
+    <?php ActiveForm::end(); ?>  
 
 </div>
