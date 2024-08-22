@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 22, 2024 at 04:22 PM
+-- Generation Time: Aug 22, 2024 at 04:30 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.10
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `yii2_news`
+-- Database: `yii2-news-local`
 --
 
 -- --------------------------------------------------------
@@ -526,7 +526,7 @@ CREATE TABLE `tx_employment` (
 --
 
 INSERT INTO `tx_employment` (`id`, `office_id`, `title`, `description`, `sequence`, `created_at`, `updated_at`, `created_by`, `updated_by`, `is_deleted`, `deleted_at`, `deleted_by`, `verlock`, `uuid`) VALUES
-    (2, 1, 'Developer', '', 1, '2015-09-01 20:38:25', '2020-08-14 14:46:07', 1, 1, NULL, NULL, NULL, 4, '');
+    (1, 1, 'Developer', '', 1, '2015-09-01 20:38:25', '2020-08-14 14:46:07', 1, 1, NULL, NULL, NULL, 4, '');
 
 -- --------------------------------------------------------
 
@@ -640,14 +640,6 @@ CREATE TABLE `tx_office_media` (
                                    `uuid` varchar(36) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `tx_office_media`
---
-
-INSERT INTO `tx_office_media` (`id`, `office_id`, `media_type`, `title`, `description`, `created_at`, `updated_at`, `created_by`, `updated_by`, `is_deleted`, `deleted_at`, `deleted_by`, `verlock`, `uuid`) VALUES
-                                                                                                                                                                                                                 (2, 1, 12, 'Kubernate', 'https://kubernetes.io/docs/concepts/overview/', '2024-07-22 21:41:05', '2024-07-22 21:41:05', 1, 1, NULL, NULL, NULL, 0, '6bf3b00e483811efbe97c858c0b7f92f'),
-                                                                                                                                                                                                                 (3, 1, 11, 'fa-brands fa-facebook', '', '2024-07-22 21:43:38', '2024-07-22 21:43:38', 1, 1, NULL, NULL, NULL, 0, 'c6e6bbca483811efbe97c858c0b7f92f');
-
 -- --------------------------------------------------------
 
 --
@@ -756,7 +748,7 @@ INSERT INTO `tx_session` (`id`, `expire`, `data`) VALUES
                                                       ('cr4nm3fap25lutl3rjuoqdko9d', 1724051742, 0x5f5f666c6173687c613a303a7b7d5f5f69647c693a313b5f5f617574684b65797c733a33323a226530656538647744706c4c5661476c4b475a74654d5371507031696b4a46516d223b),
                                                       ('et40u8ui35oc136spej8od45as', 1723369406, 0x5f5f666c6173687c613a303a7b7d),
                                                       ('lq9fhof7mbjrnvcefcep1rob1b', 1723994741, 0x5f5f666c6173687c613a303a7b7d5f5f72657475726e55726c7c733a34323a22687474703a2f2f6c6f63616c686f73742f6170702f796969322d6573637962657231332f61646d696e2f223b5f5f69647c693a313b5f5f617574684b65797c733a33323a226530656538647744706c4c5661476c4b475a74654d5371507031696b4a46516d223b),
-                                                      ('qterljtbj60pp5j8hih5voegje', 1724337615, 0x5f5f666c6173687c613a303a7b7d);
+                                                      ('qterljtbj60pp5j8hih5voegje', 1724338235, 0x5f5f666c6173687c613a303a7b7d);
 
 -- --------------------------------------------------------
 
@@ -817,7 +809,7 @@ CREATE TABLE `tx_staff` (
 --
 
 INSERT INTO `tx_staff` (`id`, `office_id`, `user_id`, `employment_id`, `title`, `initial`, `identity_number`, `phone_number`, `gender_status`, `active_status`, `address`, `file_name`, `email`, `google_plus`, `instagram`, `facebook`, `twitter`, `description`, `created_at`, `updated_at`, `created_by`, `updated_by`, `is_deleted`, `deleted_at`, `deleted_by`, `verlock`, `uuid`) VALUES
-    (1, 1, 1, 2, 'Randhi Satria, S.IP., M.A', 'R.S', '', '324234', 1, 1, '', '66a3df381d8ab.jpg', 'ransatriastaff.uns.ac.id', '', '', '', '', 'Dosen Hubungan Internasional Fakultas Ilmu Sosial dan Ilmu Politik Universitas Sebelas Maret Surakarta', '2020-08-14 14:43:54', '2024-07-27 00:39:07', 1, 1, 0, NULL, NULL, 14, '');
+    (1, 1, 1, 1, 'Randhi Satria, S.IP., M.A', 'R.S', '', '324234', 1, 1, '', '66a3df381d8ab.jpg', 'ransatriastaff.uns.ac.id', '', '', '', '', 'Dosen Hubungan Internasional Fakultas Ilmu Sosial dan Ilmu Politik Universitas Sebelas Maret Surakarta', '2020-08-14 14:43:54', '2024-07-27 00:39:07', 1, 1, 0, NULL, NULL, 14, '');
 
 -- --------------------------------------------------------
 
@@ -1156,7 +1148,7 @@ ALTER TABLE `tx_dashblock`
 -- AUTO_INCREMENT for table `tx_employment`
 --
 ALTER TABLE `tx_employment`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tx_event`
@@ -1174,7 +1166,7 @@ ALTER TABLE `tx_office`
 -- AUTO_INCREMENT for table `tx_office_media`
 --
 ALTER TABLE `tx_office_media`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tx_profile`
