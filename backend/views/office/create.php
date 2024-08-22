@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
- * @var backend\models\Office $model
+ * @var common\models\Office $model
  */
 
 $this->title = 'Create Office';
@@ -16,9 +16,10 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="panel panel-info">
     <div class="panel-heading">
         <div class="panel-title">
-            Please fill out the form below
+            <?=Yii::t('app', 'Please fill out the form below')?>
             <div class="pull-right">
-                <?= Html::encode($this->title) ?>              </div>            
+                <?= Html::encode($this->title) ?>
+            </div>
         </div>
     </div>
     <div class="panel-body">

@@ -1,14 +1,17 @@
 <?php
+
+use common\helper\MetaHelper;
 use yii\widgets\ListView;
 
 /**
  * @var yii\web\View $this
  * @var yii\data\ActiveDataProvider $dataProvider
- * @var backend\models\AuthorSearch $searchModel
+ * @var common\models\AuthorSearch $searchModel
  */
 
 $this->title = 'Author';
 $this->params['breadcrumbs'][] = $this->title;
+MetaHelper::setMetaTags();
 ?>
 
 <?=

@@ -3,9 +3,9 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\models\Event;
-use backend\models\EventSearch;
-use common\helper\Helper;
+use common\models\Event;
+use common\models\EventSearch;
+use common\domain\Helper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
@@ -16,11 +16,11 @@ use yii\filters\VerbFilter;
  */
 class EventController extends Controller
 {
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['post'],
                 ],
@@ -68,7 +68,7 @@ class EventController extends Controller
             ]);           
         }
         else{
-            Yii::$app->getSession()->setFlash('danger', ['message' => Yii::t('app', Helper::getAccessDenied())]);
+            MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
         }        
     }
@@ -99,7 +99,7 @@ class EventController extends Controller
             }           
         }
         else{
-            Yii::$app->getSession()->setFlash('danger', ['message' => Yii::t('app', Helper::getAccessDenied())]);
+            MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
         }          
             
@@ -124,7 +124,7 @@ class EventController extends Controller
             }          
         }
         else{
-            Yii::$app->getSession()->setFlash('danger', ['message' => Yii::t('app', Helper::getAccessDenied())]);
+            MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
         }         
 
@@ -150,7 +150,7 @@ class EventController extends Controller
             }            
         }
         else{
-            Yii::$app->getSession()->setFlash('danger', ['message' => Yii::t('app', Helper::getAccessDenied())]);
+            MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
         }         
             
@@ -170,7 +170,7 @@ class EventController extends Controller
             return $this->redirect(['index']);            
         }
         else{
-            Yii::$app->getSession()->setFlash('danger', ['message' => Yii::t('app', Helper::getAccessDenied())]);
+            MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
         }         
 

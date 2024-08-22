@@ -7,8 +7,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
-use backend\models\Event;
-use backend\models\EventSearch;
+use common\models\Event;
+use common\models\EventSearch;
 
 
 /**
@@ -20,7 +20,7 @@ class EventController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['post'],
                 ],

@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
- * @var backend\models\Staff $model
+ * @var common\models\Staff $model
  */
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Staff', 'url' => ['index']];
@@ -12,9 +12,8 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <?php
-$img = Html::img(str_replace('frontend', 'backend', $model->getImageUrl()),
-                ['class' => 'img-fluid w-100'],
-                ['alt' => 'alt image']);
+$img = Html::img(str_replace('frontend', 'backend', $model->getAssetUrl()),
+                ['class' => 'img-fluid rounded-circle w-100']);
 ?>
 
 <div class="row">
@@ -36,33 +35,22 @@ $img = Html::img(str_replace('frontend', 'backend', $model->getImageUrl()),
     </div>
     <div class="col-lg-8">
         <!-- User Details -->
+
         <div class="d-flex align-items-center justify-content-sm-between g-mb-5">
             <h2 class="g-font-weight-300 g-mr-10"><?= $model->title; ?></h2>
             <ul class="list-inline mb-0">
-                
-                <?php if(!empty($model->twitter)) { ?>
+                <?php $staffMedias = $dataProviderSocial->models; ?>
+
+                <?php foreach ($staffMedias as $staffMediaItem) : ?>
                     <li class="list-inline-item g-mx-2">
-                        <?= Html::a('<i class="g-font-size-default g-line-height-1 u-icon__elem-regular fa fa-twitter"></i>'.
-                                '<i class="g-font-size-default g-line-height-0_8 u-icon__elem-hover fa fa-twitter"></i>', 
-                                'https://twitter.com/'.$model->twitter, ['class' => 'u-icon-v1 u-icon-size--sm u-icon-slide-up--hover g-color-gray-light-v1 g-bg-gray-light-v5 g-color-gray-light-v1--hover rounded-circle']) ?>
+                        <?= Html::a(
+                            '<i class="g-font-size-default g-line-height-1 u-icon__elem-regular fa fa-twitter"></i>' .
+                            '<i class="g-font-size-default g-line-height-0_8 u-icon__elem-hover ' . $staffMediaItem->title . '"></i>',
+                            $staffMediaItem->description,
+                            ['class' => 'u-icon-v1 u-icon-size--sm u-icon-slide-up--hover g-color-gray-light-v1 g-bg-gray-light-v5 g-color-gray-light-v1--hover rounded-circle']
+                        ) ?>
                     </li>
-                <?php } ?>
-                
-                <?php if(!empty($model->instagram)) { ?>
-                    <li class="list-inline-item g-mx-2">
-                        <?= Html::a('<i class="g-font-size-default g-line-height-1 u-icon__elem-regular fa fa-instagram"></i>'.
-                                '<i class="g-font-size-default g-line-height-0_8 u-icon__elem-hover fa fa-instagram"></i>', 
-                                'https://instagram.com/'.$model->instagram, ['class' => 'u-icon-v1 u-icon-size--sm u-icon-slide-up--hover g-color-gray-light-v1 g-bg-gray-light-v5 g-color-gray-light-v1--hover rounded-circle']) ?>
-                    </li>
-                <?php } ?>
-                    
-                <?php if(!empty($model->facebook)) { ?>
-                    <li class="list-inline-item g-mx-2">
-                        <?= Html::a('<i class="g-font-size-default g-line-height-1 u-icon__elem-regular fa fa-facebook"></i>'.
-                                '<i class="g-font-size-default g-line-height-0_8 u-icon__elem-hover fa fa-facebook"></i>', 
-                                'https://facebook.com/'.$model->facebook, ['class' => 'u-icon-v1 u-icon-size--sm u-icon-slide-up--hover g-color-gray-light-v1 g-bg-gray-light-v5 g-color-gray-light-v1--hover rounded-circle']) ?>
-                    </li>
-                <?php } ?>
+                <?php endforeach; ?>
 
             </ul>
         </div>
@@ -70,7 +58,7 @@ $img = Html::img(str_replace('frontend', 'backend', $model->getImageUrl()),
 
         <!-- User Position -->
         <h4 class="h6 g-font-weight-300 g-mb-10">
-            <i class="icon-badge g-pos-rel g-top-1 g-mr-5 g-color-gray-dark-v5"></i> 
+            <i class="icon-user g-pos-rel g-top-1 g-mr-5 g-color-gray-dark-v5"></i>
             <?= (!empty($model->employment_id)) ? $model->employment->title:'Not Set';?>
         </h4>
         <!-- End User Position -->

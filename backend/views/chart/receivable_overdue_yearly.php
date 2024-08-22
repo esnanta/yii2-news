@@ -1,6 +1,6 @@
 <?php
 use yii\helpers\Html;
-use common\helper\CacheCloud;
+use common\helper\CacheUseCase;
 use dosamigos\chartjs\ChartJs;
 /* @var $this yii\web\View */
 
@@ -30,7 +30,7 @@ $this->title = 'Charts';
 
         <?php
         
-            $cacheCloud     = new CacheCloud();
+            $cacheCloud     = new CacheUseCase();
             $lookupOverdue  = $cacheCloud->getLookupToken(Yii::$app->params['LookupToken_Overdue']);  
             $lookupOnTime   = $cacheCloud->getLookupToken(Yii::$app->params['LookupToken_OnTime']);  
             

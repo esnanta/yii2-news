@@ -1,15 +1,24 @@
 <?php
 namespace backend\controllers;
 
+use common\helper\MessageHelper;
+use common\models\app\ChartYearly;
+use common\models\app\LoginForm;
+use common\models\Article;
+use common\models\Employment;
+use common\models\Office;
+use common\models\Profile;
+use common\models\Staff;
+use common\models\UserDektrium;
+use common\service\CacheService;
 use Yii;
-use yii\web\Controller;
-use yii\filters\VerbFilter;
+use yii\db\Exception;
 use yii\filters\AccessControl;
-use common\models\LoginForm;
-use common\models\ChartYearly;
-
-use backend\models\Profile;
-use backend\models\Blog;
+use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
+use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
+use yii\web\Response;
 
 /**
  * Site controller
@@ -32,25 +41,26 @@ class SiteController extends Controller
     /**
      * @inheritdoc
      */
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => AccessControl::class,
                 'rules' => [
                     [
                         'actions' => ['login', 'error'],
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index','chart','message','flush','summary'],
+                        'actions' => ['logout', 'index','chart','message','flush','summary',
+                                        'create-owner','create-regular'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
                 ],
             ],
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'logout' => ['post'],
                     'flush' => ['post'],
@@ -78,15 +88,22 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        $profile = Profile::find()->where(['user_id' => Yii::$app->user->id])->one();
+
+        $officeId       = CacheService::getInstance()->getOfficeId();
+        $staffId        = CacheService::getInstance()->getStaffId();
+
+        $profile        = Profile::find()->where(['user_id' => Yii::$app->user->id])->one();
+        $office         = Office::find()->where(['id' => $officeId])->one();
+        $staff          = Staff::find()->where(['id' => $staffId])->one();
+
 
         $model      = new ChartYearly;
         $currYear   = date('Y',time());
 
         $model->option_year = $currYear;
 
-        $blogs   = Blog::find()->where([
-            'month_period'      => null
+        $blogs   = Article::find()->where([
+            //'month_period'      => null
         ])
         ->limit(20);
 
@@ -98,20 +115,21 @@ class SiteController extends Controller
         $datasetCounter = [];
         if ($model->load(Yii::$app->request->post())) {
             for($i=1;$i<=12;$i++){
-                $dataset[] = Blog::countByMonthPeriod($model->option_year, $i);
-                $datasetCounter[] = Blog::getCounterByMonthPeriod($model->option_year, $i);
+                $dataset[] = 0;//Article::countByMonthPeriod($model->option_year, $i);
+                $datasetCounter[] = 0;//Article::getCounterByMonthPeriod($model->option_year, $i);
             }
         }
         else{
 
             for($i=1;$i<=12;$i++){
-                $dataset[] = Blog::countByMonthPeriod($currYear, $i);
-                $datasetCounter[] = Blog::getCounterByMonthPeriod($currYear, $i);
+                $dataset[] = 0;//Article::countByMonthPeriod($currYear, $i);
+                $datasetCounter[] = 0;//Article::getCounterByMonthPeriod($currYear, $i);
             }
         }
         return $this->render('index',[
             'model'=>$model,
             'profile'=>$profile,
+            'staff' => $staff,
             'monthList'=>$this->monthList,
             'yearList'=>$this->yearList,
             'dataset'=>$dataset,
@@ -119,60 +137,7 @@ class SiteController extends Controller
 
         ]);
     }
-
-    public function actionSummary(){
-        $profile = Profile::find()->where(['user_id' => Yii::$app->user->id])->one();
-
-        $model      = new ChartYearly;
-        $currYear   = date('Y',time());
-
-        $model->option_year = $currYear;
-
-
-
-        $dataset1 = [];
-        $dataset2 = [];
-        $dataset3 = [];
-        $datasetCounter1 = [];
-        $datasetCounter2 = [];
-        $datasetCounter3 = [];
-
-        if ($model->load(Yii::$app->request->post())) {
-            for($i=1;$i<=12;$i++){
-                $dataset1[] = \backend\models\MailIncoming::countByMonthPeriod($model->option_year, $i);
-                $dataset2[] = \backend\models\MailDisposition::countByMonthPeriod($model->option_year, $i);
-                $dataset3[] = \backend\models\MailOutgoing::countByMonthPeriod($model->option_year, $i);
-                $datasetCounter1[] = \backend\models\MailIncoming::getCounterByMonthPeriod($model->option_year, $i);
-                $datasetCounter2[] = \backend\models\MailDisposition::getCounterByMonthPeriod($model->option_year, $i);
-                $datasetCounter3[] = \backend\models\MailOutgoing::getCounterByMonthPeriod($model->option_year, $i);
-            }
-        }
-        else{
-
-            for($i=1;$i<=12;$i++){
-                $dataset1[] = \backend\models\MailIncoming::countByMonthPeriod($currYear, $i);
-                $dataset2[] = \backend\models\MailDisposition::countByMonthPeriod($currYear, $i);
-                $dataset3[] = \backend\models\MailOutgoing::countByMonthPeriod($currYear, $i);
-                $datasetCounter1[] = \backend\models\MailIncoming::getCounterByMonthPeriod($currYear, $i);
-                $datasetCounter2[] = \backend\models\MailDisposition::getCounterByMonthPeriod($currYear, $i);
-                $datasetCounter3[] = \backend\models\MailOutgoing::getCounterByMonthPeriod($currYear, $i);
-            }
-        }
-        return $this->render('summary',[
-            'model'=>$model,
-            'profile'=>$profile,
-            'monthList'=>$this->monthList,
-            'yearList'=>$this->yearList,
-            'dataset1'=>$dataset1,
-            'dataset2'=>$dataset2,
-            'dataset3'=>$dataset3,
-            'datasetCounter1'=>$datasetCounter1,
-            'datasetCounter2'=>$datasetCounter2,
-            'datasetCounter3'=>$datasetCounter3,
-        ]);
-    }
-
-
+    
     public function actionChart()
     {
         return $this->render('chart');
@@ -209,5 +174,130 @@ class SiteController extends Controller
         ]);
 
         $this->redirect('index');
+    }
+
+    //NOT AVAILABLE
+    public function actionCreateOwner(): Response|string
+    {
+        if (Yii::$app->user->can('create-user-owner')) {
+            $model          = new UserDektrium();
+            $userTypeList[] = [Yii::$app->params['userRoleOwner'] => 'Owner'];
+
+            $transaction    = Yii::$app->db->beginTransaction();
+            try {
+                if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                    Yii::$app->db->createCommand()->insert('tx_auth_assignment', [
+                        'item_name'         => $model->user_type,
+                        'user_id'           => $model->id,
+                        'created_at'        => time(),
+                    ])->execute();
+
+                    $office = new Office;
+                    $office->user_id        = $model->id;
+                    $office->title          = $model->office_title;
+                    $office->email          = $model->email;
+                    $office->save();
+
+                    $employment = new Employment;
+                    $employment->office_id  = $office->id; //OFFICE
+                    $employment->title      = 'Manager';
+                    $employment->sequence   = '1';
+                    $employment->save();
+
+                    $staff = new Staff;
+                    $staff->office_id       = $office->id; //OFFICE
+                    $staff->user_id         = $model->id; //USER
+                    $staff->employment_id   = $employment->id; //EMPLOYMENT
+                    $staff->title           = $model->staff_title;
+                    $staff->save();
+
+                    $transaction->commit();
+
+                    return $this->redirect(['/user/admin/index']);
+                } else {
+                    return $this->render('create_user_owner', [
+                        'model' => $model,
+                        'userTypeList'=>$userTypeList
+                    ]);
+                }
+            } catch (\Exception $e) {
+                $transaction->rollBack();
+                throw $e;
+            } catch (\Throwable $e) {
+                $transaction->rollBack();
+                throw $e;
+            }
+        } else {
+            MessageHelper::getFlashAccessDenied();
+            throw new ForbiddenHttpException;
+        }
+    }
+
+
+    /**
+     * @throws Exception
+     * @throws \Throwable
+     * @throws ForbiddenHttpException
+     */
+    public function actionCreateRegular(): Response|string
+    {
+        if (Yii::$app->user->can('create-user-regular')) {
+            $officeId   = CacheService::getInstance()->getOfficeId();
+            $authItemName   = CacheService::getInstance()->getAuthItemName();
+
+            $canCreateRegular = false;
+            if ($authItemName == Yii::$app->params['userRoleAdmin'] ||
+                $authItemName == Yii::$app->params['userRoleOwner']) {
+                $canCreateRegular = true;
+            }
+
+            if ($canCreateRegular) {
+                $model          = new UserDektrium;
+                $userTypeList[] = [Yii::$app->params['userRoleRegular'] => 'Staff'];
+
+                $employmentList = ArrayHelper::map(Employment::find()
+                    ->where(['office_id' => $officeId])
+                    ->asArray()->all(), 'id', 'title');
+
+                $transaction    = Yii::$app->db->beginTransaction();
+                try {
+                    if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                        Yii::$app->db->createCommand()->insert('tx_auth_assignment', [
+                            'item_name'         => $model->user_type,
+                            'user_id'           => $model->id,
+                            'created_at'        => time(),
+                        ])->execute();
+
+                        $staff = new Staff;
+                        $staff->office_id       = $officeId; //OFFICE
+                        $staff->user_id         = $model->id; //USER
+                        $staff->employment_id   = $model->employment_id; //EMPLOYMENT
+                        $staff->title           = $model->staff_title;
+                        $staff->save();
+
+                        $transaction->commit();
+
+                        return $this->redirect(['/staff/index']);
+                    } else {
+                        return $this->render('create_user_regular', [
+                            'model' => $model,
+                            'employmentList' => $employmentList,
+                            'userTypeList' => $userTypeList,
+                        ]);
+                    }
+                } catch (\Exception|\Throwable $e) {
+                    $transaction->rollBack();
+                    throw $e;
+                }
+            } else {
+                MessageHelper::getFlashAccessDenied();
+                throw new ForbiddenHttpException;
+            }
+        } else {
+            MessageHelper::getFlashAccessDenied();
+            throw new ForbiddenHttpException;
+        }
+
+
     }
 }

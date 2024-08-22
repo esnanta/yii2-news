@@ -7,7 +7,7 @@ use yii\widgets\Pjax;
 /**
  * @var yii\web\View $this
  * @var yii\data\ActiveDataProvider $dataProvider
- * @var backend\models\StaffSearch $searchModel
+ * @var common\models\StaffSearch $searchModel
  */
 
 $this->title = 'Staff';
@@ -23,9 +23,37 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php Pjax::begin(); echo GridView::widget([
         'dataProvider' => $dataProvider,
+        
+        'toolbar' => [
+            [
+                'content'=>
+                    Html::a('<i class="fas fa-plus"></i> Add New', ['site/create-regular'], ['class' => 'btn btn-success'])
+                     . ' '.
+                    Html::a('<i class="fas fa-redo"></i> Reset List', ['index'], ['class' => 'btn btn-info']),
+                'options' => ['class' => 'btn-group-md']
+            ],
+            //'{export}',
+            //'{toggleData}'
+        ],
+        
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
+//            [
+//                'attribute'=>'office_id', 
+//                'vAlign'=>'middle',
+//                'width'=>'180px',
+//                'value'=>function ($model, $key, $index, $widget) { 
+//                    return ($model->office_id!=null) ? $model->office->title:'';
+//                },
+//                'filterType'=>GridView::FILTER_SELECT2,
+//                'filter'=>$officeList, 
+//                'filterWidgetOptions'=>[
+//                    'pluginOptions'=>['allowClear'=>true],
+//                ],
+//                'filterInputOptions'=>['placeholder'=>''],
+//                'format'=>'raw'
+//            ], 
             [
                 'attribute'=>'employment_id', 
                 'vAlign'=>'middle',
@@ -42,12 +70,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format'=>'raw'
             ], 
             'title',
-            'identity_number',
+            //'identity_number',
             'phone_number',
-            'address:ntext', 
+            //'address:ntext', 
             [
                 'attribute'=>'active_status', 
-                'label'=>'Status',
+                'label'=>'Active',
                 'vAlign'=>'middle',
                 'width'=>'180px',
                 'value'=>function ($model, $key, $index, $widget) { 
@@ -64,20 +92,30 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'class' => 'common\widgets\ActionColumn',
                 'contentOptions' => ['style' => 'white-space:nowrap;'],
-                'template'=>'{update} {view}',                
+                'template'=>'{update} {view}',
                 'buttons' => [
                     'update' => function ($url, $model) {
-                        return Html::a('<span class="glyphicon glyphicon-pencil"></span>',
+                        return Html::a('<i class="fas fa-pencil-alt"></i>',
                             Yii::$app->urlManager->createUrl(['staff/view', 'id' => $model->id, 'edit' => 't']),
                             [
                                 'title' => Yii::t('yii', 'Edit'),
                                 'class'=>'btn btn-sm btn-info',
                             ]
                         );
-                    }
+                    },
+                    'view' => function ($url, $model) {
+                        return Html::a('<i class="fas fa-eye"></i>',
+                            Yii::$app->urlManager->createUrl(['staff/view', 'id' => $model->id]),
+                            [
+                                'title' => Yii::t('yii', 'View'),
+                                'class'=>'btn btn-sm btn-info',
+                            ]
+                        );
+                    },
                 ],
             ],
         ],
+
         'responsive' => true,
         'hover' => true,
         'condensed' => true,
@@ -89,9 +127,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
         'panel' => [
             'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-th-list"></i> '.Html::encode($this->title).' </h3>',
-            'type' => 'info',
-            'before' => Html::a('<i class="glyphicon glyphicon-plus"></i> Add', ['create'], ['class' => 'btn btn-success']),
-            'after' => Html::a('<i class="glyphicon glyphicon-repeat"></i> Reset List', ['index'], ['class' => 'btn btn-info']),
+            'type' => 'default',
+            //'before' => Html::a('<i class="glyphicon glyphicon-plus"></i> Add', ['create'], ['class' => 'btn btn-success']),
+            //'after' => Html::a('<i class="glyphicon glyphicon-repeat"></i> Reset List', ['index'], ['class' => 'btn btn-info']),
             'showFooter' => false
         ],
     ]); Pjax::end(); ?>

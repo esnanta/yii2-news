@@ -8,7 +8,7 @@ use kartik\widgets\Select2;
 
 /**
  * @var yii\web\View $this
- * @var backend\models\Network $model
+ * @var common\models\Network $model
  */
 
 $this->title = 'Export Data';
@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 'data_first' => [
                     'type' => Form::INPUT_WIDGET, 
-                    'widgetClass'=> Select2::className(),
+                    'widgetClass'=> Select2::class,
                     'options' => [
                         'data' => $dataListAsc,
                         'options' => ['placeholder' => 'Choose Data', 'disabled'=>false],
@@ -53,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 'data_last' => [
                     'type' => Form::INPUT_WIDGET, 
-                    'widgetClass'=> Select2::className(),
+                    'widgetClass'=> Select2::class,
                     'options' => [
                         'data' => $dataListDesc,
                         'options' => ['placeholder' => 'Choose Data', 'disabled'=>false],
@@ -78,7 +78,7 @@ $this->params['breadcrumbs'][] = $this->title;
     
                 'final_status' => [
                     'type' => Form::INPUT_WIDGET, 
-                    'widgetClass'=> Select2::className(),
+                    'widgetClass'=> Select2::class,
                     'options' => [
                         'data' => $finalStatusList,
                         'options' => ['placeholder' => 'Finalisasi', 'disabled'=>false],
@@ -89,7 +89,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],              
                 'approval_status' => [
                     'type' => Form::INPUT_WIDGET, 
-                    'widgetClass'=> Select2::className(),
+                    'widgetClass'=> Select2::class,
                     'options' => [
                         'data' => $approvalStatusList,
                         'options' => ['placeholder' => 'Approval', 'disabled'=>false],
@@ -100,7 +100,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],    
                 'gender_status' => [
                     'type' => Form::INPUT_WIDGET, 
-                    'widgetClass'=> Select2::className(),
+                    'widgetClass'=> Select2::class,
                     'options' => [
                         'data' => $genderStatusList,
                         'options' => ['placeholder' => 'Jenis Kelamin', 'disabled'=>false],

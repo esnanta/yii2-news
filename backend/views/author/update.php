@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
- * @var backend\models\Author $model
+ * @var common\models\Author $model
  */
 
 $this->title = 'Update Author: ' . ' ' . $model->title;
@@ -13,25 +13,19 @@ $this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'i
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 
-<div class="panel panel-info">
-    <div class="panel-heading">
-        <div class="panel-title">
-            Please fill out the form below
-            <div class="pull-right">
-                <?= Html::encode($this->title) ?>
-            </div>
-        </div>
+<div class="card border-default mb-3">
+    <div class="card-header"><?=Yii::t('app', 'Please fill out the form below')?>
+        <span class="pull-right">
+            <?= Html::encode($this->title) ?>
+        </span>
     </div>
-    <div class="panel-body">
-
+    <div class="card-body text-default">
         <div class="author-update">
-
-            <?= $this->render('_form_avatar', [
+            <?= $this->render('_form', [
                 'model' => $model,
+                'officeList' => $officeList,
             ]) ?>
-
         </div>
-
     </div>
 </div>
 

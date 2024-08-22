@@ -9,10 +9,10 @@ use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\FileHelper;
 
-use backend\models\Quote;
-use backend\models\QuoteSearch;
+use common\models\Quote;
+use common\models\QuoteSearch;
 
-use common\helper\Helper;
+use common\helper\MessageHelper;
 
 /**
  * QuoteController implements the CRUD actions for Quote model.
@@ -21,11 +21,11 @@ class QuoteController extends Controller
 {
     public static $pathTmpCrop='/uploads/tmp';
     
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['post'],
                 ],
@@ -70,7 +70,7 @@ class QuoteController extends Controller
             ]);           
         }
         else{
-            Yii::$app->getSession()->setFlash('danger', ['message' => Yii::t('app', Helper::getAccessDenied())]);
+            MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
         }  
         
@@ -93,7 +93,7 @@ class QuoteController extends Controller
             }          
         }
         else{
-            Yii::$app->getSession()->setFlash('danger', ['message' => Yii::t('app', Helper::getAccessDenied())]);
+            MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
         } 
         
@@ -118,7 +118,7 @@ class QuoteController extends Controller
             }           
         }
         else{
-            Yii::$app->getSession()->setFlash('danger', ['message' => Yii::t('app', Helper::getAccessDenied())]);
+            MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
         }   
         
@@ -160,7 +160,7 @@ class QuoteController extends Controller
             ]);        
         }
         else{
-            Yii::$app->getSession()->setFlash('danger', ['message' => Yii::t('app', Helper::getAccessDenied())]);
+            MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
         }   
         
@@ -180,7 +180,7 @@ class QuoteController extends Controller
             return $this->redirect(['index']);            
         }
         else{
-            Yii::$app->getSession()->setFlash('danger', ['message' => Yii::t('app', Helper::getAccessDenied())]);
+            MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
         } 
     }

@@ -1,20 +1,23 @@
 <?php
+
+use common\helper\ContentHelper;
 use yii\helpers\Html;
 
-$src    = str_replace('frontend', 'backend', $model->getCover($model->content));    
-$image  = Html::img($src, ['class' => 'g-width-80 g-height-60']);
+$articleCover   = str_replace('frontend', 'backend',
+    ContentHelper::getCover($model->content));
+$image  = Html::img($articleCover, ['class' => 'g-width-80 g-height-60']);
 ?>
 
 <article class="media">
     
-    <?php if(substr($src, 0, 2)=='//'){ ?>
+    <?php if(substr($articleCover, 0, 2)=='//'){ ?>
             <iframe 
                 class ="mr-3"
                 allowfullscreen="" 
                 frameborder="0" 
                 width="80"
                 height="80" 
-                src="<?=$src;?>?controls=0" 
+                src="<?=$articleCover;?>?controls=0" 
             >
             </iframe>
     

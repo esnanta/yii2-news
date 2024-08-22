@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
- * @var backend\models\Event $model
+ * @var common\models\Event $model
  */
 
 $this->title = 'Update Event: ' . ' ' . $model->title;

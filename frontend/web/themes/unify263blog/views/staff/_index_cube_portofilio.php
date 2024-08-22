@@ -4,7 +4,7 @@ use yii\helpers\Html;
 ?>
 
 <?php
-    $img = Html::img(str_replace('frontend', 'backend', $model->getImageUrl()), ['class'=>'img-responsive','style'=>'width:300px;height:300px'],['alt' => 'alt image']);
+    $img = Html::img(str_replace('frontend', 'backend', $model->getAssetUrl()), ['class'=>'img-responsive','style'=>'width:300px;height:300px'],['alt' => 'alt image']);
 ?>
 
 
@@ -21,7 +21,7 @@ use yii\helpers\Html;
                             <?= Html::a('<i class="rounded-x fa fa-link"></i>', ['staff/view','id'=>$model->id], ['class' => '']) ?>                                                              
                         </li>
                         <li>
-                            <?= Html::a('<i class="rounded-x fa fa-search"></i>', str_replace('frontend', 'backend', $model->getImageUrl()), [
+                            <?= Html::a('<i class="rounded-x fa fa-search"></i>', str_replace('frontend', 'backend', $model->getAssetUrl()), [
                                 'class' => 'cbp-lightbox',
                                 'data-title' => $model->title
                             ]) ?>  

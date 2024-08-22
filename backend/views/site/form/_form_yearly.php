@@ -19,7 +19,7 @@ use kartik\widgets\Select2;
 
                     'option_year' => [
                         'type' => Form::INPUT_WIDGET, 
-                        'widgetClass'=> Select2::className(),
+                        'widgetClass'=> Select2::class,
                         'options' => [
                             'data' => $yearList,
                             'options' => ['placeholder' => 'Choose option', 'disabled'=>false],

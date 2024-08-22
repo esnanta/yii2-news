@@ -1,26 +1,20 @@
 <?php
 namespace frontend\controllers;
 
-use Yii;
-use yii\base\InvalidParamException;
-use yii\web\BadRequestHttpException;
-use yii\web\Controller;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
-use yii\data\ActiveDataProvider;
-
-use app\components\AuthHandler;
-
-use common\models\LoginForm;
-
+use common\models\Article as Article;
+use common\models\Office as Office;
+use common\models\app\LoginForm;
+use frontend\models\ContactForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
-use frontend\models\ContactForm;
-
-use backend\models\Blog as Blog;
-use backend\models\Office as Office;
-use backend\models\Subscriber as Subscriber;
+use Yii;
+use yii\base\InvalidParamException;
+use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
+use yii\web\BadRequestHttpException;
+use yii\web\Controller;
 
 /**
  * Site controller
@@ -34,7 +28,7 @@ class SiteController extends Controller
     {
         return [
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => AccessControl::class,
                 'only' => ['logout', 'signup'],
                 'rules' => [
                     [
@@ -50,7 +44,7 @@ class SiteController extends Controller
                 ],
             ],
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'logout' => ['post'],
                 ],
@@ -101,7 +95,7 @@ class SiteController extends Controller
             $tmpKeyword = strtr(Yii::$app->request->get('keyword'), array('%'=>'\%', '_'=>'\_', '\\'=>'\\\\'));
             $keyword = Yii::$app->formatter->asText($tmpKeyword);
 
-            $searchQuery = Blog::find()->where(['publish_status' => Blog::PUBLISH_STATUS_YES])->all();
+            $searchQuery = Article::find()->where(['publish_status' => Article::PUBLISH_STATUS_YES])->all();
             $searchQuery->andFilterWhere([
                 'or', ['like', 'title', $keyword], ['like', 'content', $keyword]
             ]);

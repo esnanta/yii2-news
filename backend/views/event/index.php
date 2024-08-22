@@ -7,7 +7,7 @@ use yii\widgets\Pjax;
 /**
  * @var yii\web\View $this
  * @var yii\data\ActiveDataProvider $dataProvider
- * @var backend\models\EventSearch $searchModel
+ * @var common\models\EventSearch $searchModel
  */
 
 $this->title = 'Events';

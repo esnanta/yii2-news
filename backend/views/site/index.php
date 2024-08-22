@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 
-use backend\models\Blog as Blog;
+use backend\models\Article as Blog;
 
 use dosamigos\chartjs\ChartJs;
 
@@ -16,7 +16,7 @@ $this->title = 'Dashboard';
         <!-- small box -->
         <div class="small-box bg-aqua">
             <div class="inner">
-                <h3><?=Blog::find()->count();?></h3>
+                <h3><?=Article::find()->count();?></h3>
 
                 <p>Jumlah Blog</p>
             </div>
@@ -31,7 +31,7 @@ $this->title = 'Dashboard';
         <!-- small box -->
         <div class="small-box bg-green">
             <div class="inner">
-                <h3><?=Blog::find()->where(['publish_status'=>Blog::PUBLISH_STATUS_YES])->count();?></h3>
+                <h3><?=Article::find()->where(['publish_status'=>Article::PUBLISH_STATUS_YES])->count();?></h3>
 
                 <p>Jumlah Dipublish</p>
             </div>
@@ -46,7 +46,7 @@ $this->title = 'Dashboard';
         <!-- small box -->
         <div class="small-box bg-yellow">
             <div class="inner">
-                <h3><?=Blog::find()->where(['pinned_status'=>Blog::PINNED_STATUS_YES])->count();?></h3>
+                <h3><?=Article::find()->where(['pinned_status'=>Article::PINNED_STATUS_YES])->count();?></h3>
 
                 <p>Blog Dipin</p>
             </div>
@@ -61,7 +61,7 @@ $this->title = 'Dashboard';
         <!-- small box -->
         <div class="small-box bg-red">
             <div class="inner">
-                <h3><?=Blog::find()->where(['publish_status'=>Blog::PUBLISH_STATUS_NO])->count();?></h3>
+                <h3><?=Article::find()->where(['publish_status'=>Article::PUBLISH_STATUS_NO])->count();?></h3>
 
                 <p>Blog Draft</p>
             </div>

@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
- * @var backend\models\Album $model
+ * @var common\models\Album $model
  */
 
 $this->title = 'Update Password ' . ' ' . $user->username;

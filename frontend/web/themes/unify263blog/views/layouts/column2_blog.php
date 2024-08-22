@@ -6,9 +6,10 @@
  * and open the template in the editor.
  */
 
-$this->beginContent('@app/views/layouts/main.php'); 
+$this->beginContent('@app/views/layouts/main.php');
 
-use backend\models\SiteLink;
+use common\helper\MediaTypeHelper;
+use common\models\OfficeMedia;
 
 use common\widgets\blogunify236\RecentBlogs;
 use common\widgets\blogunify236\TagCloud;
@@ -18,8 +19,8 @@ use common\widgets\blogunify236\TagCloud;
  * /////////////////////////////////////////////////////////////////////////////
  */    
 
- $siteLinks = SiteLink::find()->limit(6)
- ->orderBy(['sequence'=>SORT_ASC])->all();
+ $siteLinks = OfficeMedia::find()->where(['media_type'=>MediaTypeHelper::getLink()])->limit(6)
+ ->orderBy(['id'=>SORT_ASC])->all();
 ?>
 
 <div class="container g-pt-50 g-pb-20">
@@ -75,7 +76,7 @@ use common\widgets\blogunify236\TagCloud;
                         <h4 class="h6">
                             <i class="fa fa-angle-right g-color-gray-dark-v5 g-mr-5"></i>
                             <a class="u-link-v5 g-color-gray-dark-v1 g-color-primary--hover"
-                                href="<?=$siteLinkItemData->url?>" target="_blank">
+                                href="<?=$siteLinkItemData->description?>" target="_blank">
                                 <?=$siteLinkItemData->title?>
                             </a>
                         </h4>

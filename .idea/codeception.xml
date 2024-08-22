@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Codeception">
+    <option name="configurations">
+      <list>
+        <Configuration>
+          <option name="path" value="$PROJECT_DIR$/tests" />
+        </Configuration>
+        <Configuration>
+          <option name="namespace" value="common\tests" />
+          <option name="path" value="$PROJECT_DIR$/common/tests" />
+          <option name="mySuiteNamespaces">
+            <map>
+              <entry key="unit" value="common\tests\unit" />
+            </map>
+          </option>
+        </Configuration>
+      </list>
+    </option>
+  </component>
+</project>

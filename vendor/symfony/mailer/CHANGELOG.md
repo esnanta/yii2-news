@@ -1,11 +1,10 @@
 CHANGELOG
 =========
 
-5.4.21
-------
+6.0
+---
 
- * [BC BREAK] The following data providers for `TransportFactoryTestCase` are now static:
-  `supportsProvider()`, `createProvider()`, `unsupportedSchemeProvider()`and `incompleteDsnProvider()`
+ * The `HttpTransportException` class takes a string at first argument
 
 5.4
 ---

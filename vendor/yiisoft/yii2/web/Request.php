@@ -963,7 +963,8 @@ class Request extends \yii\base\Request
 
         // try to encode in UTF8 if not so
         // https://www.w3.org/International/questions/qa-forms-utf-8.en.html
-        if (!preg_match('%^(?:
+        if (
+            !preg_match('%^(?:
             [\x09\x0A\x0D\x20-\x7E]              # ASCII
             | [\xC2-\xDF][\x80-\xBF]             # non-overlong 2-byte
             | \xE0[\xA0-\xBF][\x80-\xBF]         # excluding overlongs
@@ -1001,6 +1002,8 @@ class Request extends \yii\base\Request
      * @param string $s
      * @return string the UTF-8 translation of `s`.
      * @see https://github.com/symfony/polyfill-php72/blob/master/Php72.php#L24
+     * @phpcs:disable Generic.Formatting.DisallowMultipleStatements.SameLine
+     * @phpcs:disable Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore
      */
     private function utf8Encode($s)
     {
@@ -1197,11 +1200,13 @@ class Request extends \yii\base\Request
     protected function getUserIpFromIpHeaders()
     {
         $ip = $this->getSecureForwardedHeaderTrustedPart('for');
-        if ($ip !== null && preg_match(
-            '/^\[?(?P<ip>(?:(?:(?:[0-9a-f]{1,4}:){1,6}(?:[0-9a-f]{1,4})?(?:(?::[0-9a-f]{1,4}){1,6}))|(?:\d{1,3}\.){3}\d{1,3}))\]?(?::(?P<port>\d+))?$/',
-            $ip,
-            $matches
-        )) {
+        if (
+            $ip !== null && preg_match(
+                '/^\[?(?P<ip>(?:(?:(?:[0-9a-f]{1,4}:){1,6}(?:[0-9a-f]{1,4})?(?:(?::[0-9a-f]{1,4}){1,6}))|(?:\d{1,3}\.){3}\d{1,3}))\]?(?::(?P<port>\d+))?$/',
+                $ip,
+                $matches
+            )
+        ) {
             $ip = $this->getUserIpFromIpHeader($matches['ip']);
             if ($ip !== null) {
                 return $ip;
@@ -1220,6 +1225,8 @@ class Request extends \yii\base\Request
         return null;
     }
 
+    private $_ip = null;
+
     /**
      * Returns the user IP address.
      * The IP is determined using headers and / or `$_SERVER` variables.
@@ -1227,8 +1234,14 @@ class Request extends \yii\base\Request
      */
     public function getUserIP()
     {
-        $ip = $this->getUserIpFromIpHeaders();
-        return $ip === null ? $this->getRemoteIP() : $ip;
+        if ($this->_ip === null) {
+            $this->_ip = $this->getUserIpFromIpHeaders();
+            if ($this->_ip === null) {
+                $this->_ip = $this->getRemoteIP();
+            }
+        }
+
+        return $this->_ip;
     }
 
     /**
@@ -1283,7 +1296,7 @@ class Request extends \yii\base\Request
     public function getUserHost()
     {
         $userIp = $this->getUserIpFromIpHeaders();
-        if($userIp === null) {
+        if ($userIp === null) {
             return $this->getRemoteHost();
         }
         return gethostbyaddr($userIp);
@@ -1902,6 +1915,8 @@ class Request extends \yii\base\Request
         return null;
     }
 
+    private $_secureForwardedHeaderTrustedParts;
+
     /**
      * Gets only trusted `Forwarded` header parts
      *
@@ -1911,6 +1926,10 @@ class Request extends \yii\base\Request
      */
     protected function getSecureForwardedHeaderTrustedParts()
     {
+        if ($this->_secureForwardedHeaderTrustedParts !== null) {
+            return $this->_secureForwardedHeaderTrustedParts;
+        }
+
         $validator = $this->getIpValidator();
         $trustedHosts = [];
         foreach ($this->trustedHosts as $trustedCidr => $trustedCidrOrHeaders) {
@@ -1921,9 +1940,14 @@ class Request extends \yii\base\Request
         }
         $validator->setRanges($trustedHosts);
 
-        return array_filter($this->getSecureForwardedHeaderParts(), function ($headerPart) use ($validator) {
-            return isset($headerPart['for']) ? !$validator->validate($headerPart['for']) : true;
-        });
+        $this->_secureForwardedHeaderTrustedParts = array_filter(
+            $this->getSecureForwardedHeaderParts(),
+            function ($headerPart) use ($validator) {
+                return isset($headerPart['for']) ? !$validator->validate($headerPart['for']) : true;
+            }
+        );
+
+        return $this->_secureForwardedHeaderTrustedParts;
     }
 
     private $_secureForwardedHeaderParts;
@@ -1961,8 +1985,7 @@ class Request extends \yii\base\Request
         preg_match_all('/(?:[^",]++|"[^"]++")+/', $forwarded, $forwardedElements);
 
         foreach ($forwardedElements[0] as $forwardedPairs) {
-            preg_match_all('/(?P<key>\w+)\s*=\s*(?:(?P<value>[^",;]*[^",;\s])|"(?P<value2>[^"]+)")/', $forwardedPairs,
-                $matches, PREG_SET_ORDER);
+            preg_match_all('/(?P<key>\w+)\s*=\s*(?:(?P<value>[^",;]*[^",;\s])|"(?P<value2>[^"]+)")/', $forwardedPairs, $matches, PREG_SET_ORDER);
             $this->_secureForwardedHeaderParts[] = array_reduce($matches, function ($carry, $item) {
                 $value = $item['value'];
                 if (isset($item['value2']) && $item['value2'] !== '') {

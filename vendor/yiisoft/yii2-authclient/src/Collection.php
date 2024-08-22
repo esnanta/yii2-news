@@ -1,14 +1,14 @@
 <?php
 /**
- * @link http://www.yiiframework.com/
+ * @link https://www.yiiframework.com/
  * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
+ * @license https://www.yiiframework.com/license/
  */
 
 namespace yii\authclient;
 
 use yii\base\Component;
-use yii\base\InvalidParamException;
+use yii\base\InvalidArgumentException;
 use Yii;
 
 /**
@@ -37,7 +37,7 @@ use Yii;
  * ]
  * ```
  *
- * @property ClientInterface[] $clients List of auth clients. This property is read-only.
+ * @property-read ClientInterface[] $clients List of auth clients.
  *
  * @author Paul Klimov <klimov.paul@gmail.com>
  * @since 2.0
@@ -81,12 +81,12 @@ class Collection extends Component
     /**
      * @param string $id service id.
      * @return ClientInterface auth client instance.
-     * @throws InvalidParamException on non existing client request.
+     * @throws InvalidArgumentException on non existing client request.
      */
     public function getClient($id)
     {
         if (!array_key_exists($id, $this->_clients)) {
-            throw new InvalidParamException("Unknown auth client '{$id}'.");
+            throw new InvalidArgumentException("Unknown auth client '{$id}'.");
         }
         if (!is_object($this->_clients[$id])) {
             $this->_clients[$id] = $this->createClient($id, $this->_clients[$id]);

@@ -1,9 +1,12 @@
 <?php
+
+use common\helper\ContentHelper;
 use yii\helpers\Html;
 
-$src    = str_replace('frontend', 'backend', $model->getCover($model->content));   
-$image  = Html::img($src, ['class' => 'g-width-140 g-height-80']);
-$label  = ($model->category->label) ? $model->category->label:'darkpurple';    
+$articleCover   = str_replace('frontend', 'backend',
+    ContentHelper::getCover($model->content));
+$image  = Html::img($articleCover, ['class' => 'g-width-140 g-height-80']);
+$label  = ($model->articleCategory->label) ? $model->articleCategory->label:'darkpurple';    
 ?>
 
 <div class="col-lg-6 g-mb-50 g-mb-0--lg">
@@ -12,14 +15,14 @@ $label  = ($model->category->label) ? $model->category->label:'darkpurple';
     <!-- Other Articles -->
     <article class="media">
         
-        <?php if(substr($src, 0, 2)=='//'){ ?>
+        <?php if(substr($articleCover, 0, 2)=='//'){ ?>
                 <iframe 
                     class ="mr-3"
                     allowfullscreen="" 
                     frameborder="0" 
                     width="140"
                     height="80" 
-                    src="<?=$src;?>?controls=0" 
+                    src="<?=$articleCover;?>?controls=0" 
                 >
                 </iframe>
         <?php } else{ ?>

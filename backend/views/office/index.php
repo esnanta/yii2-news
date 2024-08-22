@@ -7,7 +7,7 @@ use yii\widgets\Pjax;
 /**
  * @var yii\web\View $this
  * @var yii\data\ActiveDataProvider $dataProvider
- * @var backend\models\OfficeSearch $searchModel
+ * @var common\models\OfficeSearch $searchModel
  */
 
 $this->title = 'Offices';
@@ -27,21 +27,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'token',
             'title',
             'phone_number',
-            'fax_number',
-//            'email:email', 
-//            'web', 
-//            'address', 
-//            'latitude', 
-//            'longitude', 
-//            'description:ntext', 
-//            'created_at:datetime', 
-//            'updated_at:datetime', 
-//            'created_by', 
-//            'updated_by', 
+            'email:email',
+            'address',
             [
                 'class' => 'common\widgets\ActionColumn',
                 'contentOptions' => ['style' => 'white-space:nowrap;'],

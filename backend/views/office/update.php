@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
- * @var backend\models\Office $model
+ * @var common\models\Office $model
  */
 
 $this->title = 'Update Office: ' . ' ' . $model->title;

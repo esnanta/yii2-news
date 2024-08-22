@@ -1,22 +1,22 @@
 <?php
-/* @var $this \yii\web\View */
+/* @var $this View */
 /* @var $content string */
 
-use yii\helpers\Html;
-use yii\data\ActiveDataProvider;
-use frontend\assets\Unify263BlogAsset;
 
+use common\helper\ContentHelper;
+use common\helper\IconHelper;
+use common\helper\MediaTypeHelper;
+use common\models\Article;
+use common\models\ArticleCategory;
+use common\models\Office;
+use common\models\OfficeMedia;
+use common\service\CacheService;
+use common\service\PageService;
 use common\widgets\Alert;
-
-use backend\models\Office;
-use backend\models\Blog;
-use backend\models\ThemeDetail;
-use backend\models\Category;
-use backend\models\SiteLink;
-use backend\models\SocialMedia;
-
-use kartik\social\TwitterPlugin;
-use kartik\social\FacebookPlugin;
+use frontend\assets\Unify263BlogAsset;
+use yii\data\ActiveDataProvider;
+use yii\helpers\Html;
+use yii\web\View;
 
 $this->registerMetaTag(Yii::$app->params['meta_author'], 'meta_author');
 $this->registerMetaTag(Yii::$app->params['meta_description'], 'meta_description');
@@ -43,22 +43,29 @@ $this->registerMetaTag(Yii::$app->params['googleplus_description'], 'googleplus_
 $this->registerMetaTag(Yii::$app->params['googleplus_image'], 'googleplus_image');
 
 $office = Office::findOne(1);
-$siteLinks = SiteLink::find()->limit(5)->orderBy(['sequence' => SORT_ASC])->all();
-$socialMedias = SocialMedia::find()->limit(5)->orderBy(['title' => SORT_ASC])->all();
-$categories = Category::find()->orderBy(['sequence' => SORT_ASC])->all();
-$timeLine = Category::find()->where(['time_line' => Category::TIME_LINE_YES])->orderBy(['sequence' => SORT_ASC])->one();
+$officeId = CacheService::getInstance()->getOfficeId();
 
-$footerLinks = ThemeDetail::getByToken(Yii::$app->params['ContentToken_Links']);
-$description = ThemeDetail::getByToken(Yii::$app->params['ContentToken_Description']);
-$keyword = ThemeDetail::getByToken(Yii::$app->params['ContentToken_Keyword']);
+$siteLinks = OfficeMedia::find()->limit(8)
+    ->where(['media_type'=>MediaTypeHelper::getLink()])
+    ->orderBy(['id' => SORT_ASC])
+    ->all();
 
-$logo1 = ThemeDetail::getByToken(Yii::$app->params['ContentToken_Logo1']);
-$logo1Url = str_replace('frontend', 'backend', $logo1->getImageUrl());
-$logo1Image = Html::img($logo1Url, ['class' => 'g-width-150 g-height-40'], ['alt' => 'Logo']);
+$categories = ArticleCategory::find()
+    ->where(['office_id'=>$officeId])
+    ->orderBy(['sequence' => SORT_ASC])
+    ->all();
 
-$logo2 = ThemeDetail::getByToken(Yii::$app->params['ContentToken_Logo2']);
-$logo2Url = str_replace('frontend', 'backend', $logo2->getImageUrl());
-$logo2Image = Html::img($logo2Url, ['class' => 'g-width-150 g-height-40'], ['alt' => 'Logo']);
+$timeLine = ArticleCategory::find()
+    ->where(['office_id'=>$officeId,'time_line' => ArticleCategory::TIME_LINE_YES])
+    ->orderBy(['sequence' => SORT_ASC])
+    ->one();
+
+$officeMedias   = OfficeMedia::find()
+    ->where(['office_id'=>$officeId, 'media_type' => MediaTypeHelper::getSocial()])
+    ->all();
+
+$logo1Image     = PageService::getLogo1Url();
+$logo2Image     = PageService::getLogo2Url();
 
 Unify263BlogAsset::register($this);
 ?>
@@ -71,15 +78,7 @@ Unify263BlogAsset::register($this);
         <meta name="robots" content="follow" />
         <meta charset="<?= Yii::$app->charset ?>">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <?php
-            Yii::$app->params['meta_author']['content']         = Yii::$app->params['Copyright'].' '.Yii::$app->params['Website'];
-            Yii::$app->params['meta_description']['content']    = strip_tags($description->content);
-            Yii::$app->params['meta_keywords']['content']       = strip_tags($keyword->content);
-            
-            Yii::$app->params['og_site_name']['content']        = Yii::$app->name;
-        ?>
-        
-        
+
         <?= Html::csrfMetaTags() ?>
         <title><?= Html::encode($this->title) ?></title>
         <?php $this->head() ?>
@@ -104,9 +103,9 @@ Unify263BlogAsset::register($this);
                             <!-- Subscribe Form -->
                             <div class="col-6 col-md-5">
                                 
-                                <!-- SMAN MBA SEARCH BOX -->
-                                <div class="gcse-search" style="padding:0px"></div>
-                                <!-- END SMAN MBA SEARCH BOX -->
+                                <!-- SEARCH BOX -->
+                                <div class="gcse-search" style="padding:0"></div>
+                                <!-- END SEARCH BOX -->
                                 
 <!--                                <form class="input-group rounded">
                                     <input
@@ -178,7 +177,8 @@ Unify263BlogAsset::register($this);
                                 </a>
 
                                 <ul id="account-dropdown"
-                                    class="list-unstyled text-right g-width-160 g-brd-around g-brd-secondary-light-v2 g-bg-white rounded g-pos-abs g-right-0 g-py-5 g-mt-57"
+                                    class="list-unstyled text-right g-width-160 g-brd-around g-brd-secondary-light-v2
+                                        g-bg-white rounded g-pos-abs g-right-0 g-py-5 g-mt-57"
                                     aria-labelledby="account-dropdown-invoker">
 
 
@@ -215,7 +215,7 @@ Unify263BlogAsset::register($this);
                     <nav class="js-mega-menu navbar navbar-expand-lg g-px-0">
                         <div class="container g-px-15">
                             <?php 
-                                $transitionLogo = Html::img($logo1Url, ['alt' => 'Logo']);
+                                $transitionLogo = $logo1Image;
                                 echo str_replace('user/', '', Html::a($transitionLogo, 
                                         ['site/index'], 
                                         ['class' => 'navbar-brand g-hidden-lg-up']));
@@ -244,7 +244,7 @@ Unify263BlogAsset::register($this);
                                     </li>
 
                                     <li class="nav-item g-mr-10--lg g-mr-20--xl" style="padding-right:5px">
-                                        <?= str_replace('user/', '', Html::a('Artikel', ['blog/index'], ['id' => 'nav-link--pages', 'class' => 'nav-link text-uppercase g-color-primary--hover g-px-0'])) ?>
+                                        <?= str_replace('user/', '', Html::a('Artikel', ['article/index'], ['id' => 'nav-link--pages', 'class' => 'nav-link text-uppercase g-color-primary--hover g-px-0'])) ?>
                                     </li>
 
                                     <?php if ($timeLine != null) { ?>
@@ -254,7 +254,7 @@ Unify263BlogAsset::register($this);
                                     <?php } ?>
 
                                     <li class="nav-item g-mr-10--lg g-mr-20--xl" style="padding-right:5px">
-                                        <?= str_replace('user/', '', Html::a('Download', ['archive/index'], ['id' => 'nav-link--pages', 'class' => 'nav-link text-uppercase g-color-primary--hover g-px-0'])) ?>
+                                        <?= str_replace('user/', '', Html::a('Download', ['asset/index'], ['id' => 'nav-link--pages', 'class' => 'nav-link text-uppercase g-color-primary--hover g-px-0'])) ?>
                                     </li>
 
                                     <!--<li class="nav-item g-mr-10--lg g-mr-20--xl" style="padding-right:5px">-->
@@ -278,7 +278,7 @@ Unify263BlogAsset::register($this);
                                                 <li class="dropdown-item g-bg-secondary--hover">
                                                     <?php
                                                         echo Html::a($categoryModel->title, 
-                                                                ['/blog/index','cat'=>$categoryModel->id,'title'=>$categoryModel->title], 
+                                                                ['/article/index','cat'=>$categoryModel->id,'title'=>$categoryModel->title],
                                                                 ['class' => 'nav-link g-color-secondary-dark-v1']);
                                                     ?>
                                                 </li>
@@ -372,7 +372,7 @@ Unify263BlogAsset::register($this);
                                         <li class="g-px-0 g-my-8">
                                             <i class="fa fa-angle-right g-color-gray-dark-v5 g-mr-5"></i>
                                             <a class="u-link-v5 g-color-secondary-dark-v1 g-color-primary--hover g-font-size-13 g-pl-0 g-pl-7--hover g-transition-0_3 g-py-7"
-                                               href="<?= $siteLinkItemData->url ?>" target="_blank">
+                                               href="<?= $siteLinkItemData->description ?>" target="_blank">
                                                 <?= $siteLinkItemData->title ?>
                                             </a>
                                         </li>
@@ -414,7 +414,7 @@ Unify263BlogAsset::register($this);
 
 
                                 <?php
-                                    $footerQuery = Blog::find()->where(['publish_status' => Blog::PUBLISH_STATUS_YES]);
+                                    $footerQuery = Article::find()->where(['publish_status' => Article::PUBLISH_STATUS_YES]);
 
                                     $footerProvider = new ActiveDataProvider([
                                         'query' => $footerQuery,
@@ -432,8 +432,11 @@ Unify263BlogAsset::register($this);
                                     // returns an array of Blog objects
                                     $footerBlogs = $footerProvider->getModels();
                                 ?>
-                                        <?php foreach ($footerBlogs as $footerBlogItemData) { ?>
-                                            <?php $imgSource = str_replace('frontend', 'backend', $footerBlogItemData->getCover($footerBlogItemData->content)); ?>
+                                        <?php foreach ($footerBlogs as $footerArticleItemData) { ?>
+                                            <?php
+                                                $imgSource = str_replace('frontend', 'backend',
+                                                    ContentHelper::getCover($footerArticleItemData->content));
+                                            ?>
 
                                             <div class="js-slide g-px-10">
                                                 <article class="media g-bg-white g-pa-10">
@@ -458,15 +461,13 @@ Unify263BlogAsset::register($this);
 
                                                     <?php } ?>
                                                     
-                                                    
-
 
                                                     <div class="media-body">
                                                         <span class="d-block g-color-lightred g-font-weight-700 g-font-size-12 text-uppercase mb-1">
-                                                            <?= $footerBlogItemData->category->title; ?>
+                                                            <?= $footerArticleItemData->articleCategory->title; ?>
                                                         </span>
                                                         <h4 class="g-font-size-13 mb-0">
-                                                            <?= Html::a($footerBlogItemData->title, $footerBlogItemData->getUrl(), ['class' => 'u-link-v5 g-color-main g-color-primary--hover']) ?>
+                                                            <?= Html::a($footerArticleItemData->title, $footerArticleItemData->getUrl(), ['class' => 'u-link-v5 g-color-main g-color-primary--hover']) ?>
                                                         </h4>
                                                     </div>
                                                 </article>
@@ -511,57 +512,6 @@ Unify263BlogAsset::register($this);
                                                 <?= $office->address; ?>
                                             </span>
                                         </li>
-                                        <li class="dropdown-divider g-brd-secondary-light-v2 g-px-0 g-mt-8 g-my-15"></li>
-                                        <li class="row g-px-0 g-my-8 g-mx-minus-5">
-                                            <div class="col g-px-5 mb-2">
-                                                <!-- Button -->
-                                                <?php
-                                                    if(!empty($office->twitter)){
-                                                        echo TwitterPlugin::widget([
-                                                            'type' => TwitterPlugin::FOLLOW,
-                                                            'screenName' => $office->twitter,
-                                                            'settings' => [
-                                                                'size' => 'large',
-                                                                'data-show-count'=>'false',
-                                                                'class'=>'btn btn-block u-btn-black g-brd-primary--hover g-bg-primary--hover text-left g-px-12'
-                                                            ]
-                                                        ]);
-                                                    }
-                                                ?>
-<!--                                                <button
-                                                    class="btn btn-block u-btn-black g-brd-primary--hover g-bg-primary--hover text-left g-px-12"
-                                                    type="button">
-                                                    <div class="media align-items-center">
-                                                        <div class="d-flex mr-3">
-                                                            <i class="g-font-size-25 fa fa-android"></i>
-                                                        </div>
-                                                        <div class="media-body">
-                                                            <span class="d-block g-font-size-10">Get it for</span>
-                                                            <span class="d-block g-font-size-15">Android</span>
-                                                        </div>
-                                                    </div>
-                                                </button>-->
-                                                <!-- End Button -->
-                                            </div>
-
-                                            <div class="col g-px-5 mb-2">
-<!--                                                 Button 
-                                                <button
-                                                    class="btn btn-block u-btn-black g-brd-primary--hover g-bg-primary--hover text-left g-px-12"
-                                                    type="button">
-                                                    <div class="media align-items-center">
-                                                        <div class="d-flex mr-3">
-                                                            <i class="g-font-size-25 fa fa-apple"></i>
-                                                        </div>
-                                                        <div class="media-body">
-                                                            <span class="d-block g-font-size-10">Get it for</span>
-                                                            <span class="d-block g-font-size-15">iOS</span>
-                                                        </div>
-                                                    </div>
-                                                </button>
-                                                 End Button -->
-                                            </div>
-                                        </li>
                                     </ul>
                                     <!-- End Subscribe -->
                                 </div>
@@ -577,25 +527,22 @@ Unify263BlogAsset::register($this);
                         <div class="row align-items-center">
                             <div class="col-md-4 g-hidden-sm-down g-mb-30">
                                 <!-- Logo -->
-                                <?= str_replace('user/', '', Html::a($logo2Image, ['site/index'])); ?>
+                                <?= str_replace('user/', '', Html::a($logo2Image, ['site/index'], ['class' => 'g-width-150'])); ?>
                                 <!-- End Logo -->
                             </div>
 
                             <div class="col-md-4 ml-auto g-mb-30">
+
                                 <!-- Social Icons -->
                                 <ul class="list-inline mb-0">
-                                    <?php
-                                        foreach ($socialMedias as $socialMediaModel) {
-                                    ?>
+                                    <?php foreach ($officeMedias as $officeMediaItem) { ;?>
                                         <li class="list-inline-item g-mx-2">
                                             <a class="u-icon-v2 u-icon-size--sm g-brd-secondary-light-v2 g-color-secondary-dark-v2 g-color-white--hover g-bg-primary--hover g-font-size-default rounded"
-                                               href="<?=$socialMediaModel->url;?>" data-toggle="tooltip" data-placement="top" title="<?=$socialMediaModel->description;?>">
-                                                <?=$socialMediaModel->icon;?>
+                                               href="<?=$officeMediaItem->description;?>" data-toggle="tooltip" data-placement="top" title="<?=IconHelper::getOneFontAwesome($officeMediaItem->title);?>">
+                                                <i class="<?=$officeMediaItem->title;?>"></i>
                                             </a>
                                         </li>
-                                    <?php
-                                        }
-                                    ?>
+                                    <?php } ;?>
                                 </ul>
                                 <!-- End Social Icons -->
                             </div>
@@ -618,20 +565,13 @@ Unify263BlogAsset::register($this);
                     </div>
                     <!-- End Footer - Top Section -->
 
-<!-- 
-    COPYRIGHT SECTION 
-    DO NOT REMOVE COPYRIGHT PART
--->
+                    <!-- Footer - Bottom Section -->
                     <div class="row align-items-center">
 
                         <div class="col-md-4 g-brd-right--md g-brd-secondary-light-v2 g-mb-30">
                             <!-- Copyright -->
                             <p class="g-color-secondary-light-v1 g-font-size-12 mb-0"><?= date('Y') ?> ©
-                                <?php echo Yii::$app->params['Copyright']; ?> | 
-                                <a class="u-link-v5 g-color-secondary-light-v1 g-font-size-12"
-                                   href="<?php echo Yii::$app->params['Website']; ?>">
-                                    <?php echo Yii::$app->params['Website']; ?>
-                                </a>
+                                <?php echo Yii::$app->params['Copyright']; ?>
                             </p>
                             <!-- End Copyright -->
                         </div>
@@ -639,17 +579,20 @@ Unify263BlogAsset::register($this);
                         <div class="col-md-6 g-brd-right--md g-brd-secondary-light-v2 g-mb-30">
                             <!-- Links -->
                             <ul class="list-inline mb-0">
+                                <li class="list-inline-item g-pl-0 g-pr-10">
+                                    <a class="u-link-v5 g-color-secondary-light-v1 g-font-size-12"
+                                       href="<?php echo Yii::$app->params['Website']; ?>">
+                                        <?php echo Yii::$app->params['Website']; ?>
+                                    </a>
+                                </li>
                                 <li class="list-inline-item g-px-10">
-                                    <span class="u-link-v5 g-color-secondary-light-v1 g-font-size-12">
-                                        GNU General Public License v3.0
+                                    <span class="u-link-v5 g-color-secondary-light-v1 g-font-size-12">All rights
+                                        reserved
                                     </span>
                                 </li>
                                 <li class="list-inline-item g-px-10">
-                                    
-                                </li>
-                                <li class="list-inline-item g-px-10">
-                                    <span class="u-link-v5 g-color-secondary-light-v1 g-font-size-12">
-                                        All rights reserved
+                                    <span class="u-link-v5 g-color-secondary-light-v1 g-font-size-12">Version
+                                        <?php echo Yii::$app->params['App Version']; ?>
                                     </span>
                                 </li>
                             </ul>
@@ -657,19 +600,9 @@ Unify263BlogAsset::register($this);
                         </div>
 
                         <div class="col-md-2 g-mb-30">
-                            <ul class="list-inline mb-0">
-                                <li class="list-inline-item g-px-10">
-                                    <span class="u-link-v5 g-color-secondary-light-v1 g-font-size-12">Version
-                                        <?php echo Yii::$app->params['App Version']; ?>
-                                    </span>
-                                </li>
-                            </ul>
                         </div>
                     </div>
-<!-- 
-    DO NOT REMOVE COPYRIGHT PART
-    END COPYRIGHT SECTION 
--->
+                    <!-- End Footer - Bottom Section -->
                 </div>
             </footer>
             <!-- End Footer -->

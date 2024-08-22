@@ -8,7 +8,7 @@ use kartik\widgets\Select2;
 
 /**
  * @var yii\web\View $this
- * @var backend\models\Network $model
+ * @var common\models\Network $model
  */
 
 $this->title = 'Export Data';
@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 'option_date' => [
                     'type' => Form::INPUT_WIDGET, 
-                    'widgetClass'=> Select2::className(),
+                    'widgetClass'=> Select2::class,
                     'options' => [
                         'data' => $dateAttributeList,
                         'options' => ['placeholder' => 'Choose option', 'disabled'=>false],
@@ -51,12 +51,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 'date_first' => [
                     'type' => Form::INPUT_WIDGET, 
-                    'widgetClass'=> DateControl::className(),
+                    'widgetClass'=> DateControl::class,
                     'format'=>'date',                          
                 ],  
                 'date_last' => [
                     'type' => Form::INPUT_WIDGET, 
-                    'widgetClass'=> DateControl::className(),
+                    'widgetClass'=> DateControl::class,
                     'format'=>'date',                          
                 ],                
             ]
@@ -74,7 +74,7 @@ $this->params['breadcrumbs'][] = $this->title;
     
                 'customer_id' => [
                     'type' => Form::INPUT_WIDGET, 
-                    'widgetClass'=> Select2::className(),
+                    'widgetClass'=> Select2::class,
                     'options' => [
                         'data' => $customerList,
                         'options' => ['placeholder' => 'Choose Staff', 'disabled'=>false],
@@ -86,7 +86,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 
                 'staff_id' => [
                     'type' => Form::INPUT_WIDGET, 
-                    'widgetClass'=> Select2::className(),
+                    'widgetClass'=> Select2::class,
                     'options' => [
                         'data' => $staffList,
                         'options' => ['placeholder' => 'Choose Staff', 'disabled'=>false],

@@ -7,7 +7,7 @@ use budyaga\cropper\Widget;
 
 /**
  * @var yii\web\View $this
- * @var backend\models\Profile $model
+ * @var common\models\Profile $model
  * @var yii\widgets\ActiveForm $form
  */
 ?>
@@ -16,7 +16,7 @@ use budyaga\cropper\Widget;
 
     <?php $form = ActiveForm::begin(['type' => ActiveForm::TYPE_HORIZONTAL]); 
 
-    echo $form->field($model, 'file_name')->widget(Widget::className(), [
+    echo $form->field($model, 'file_name')->widget(Widget::class, [
         'uploadUrl' => Url::toRoute('/profile/avatar'),
         'width'=> '400',
         'height'=> '400',

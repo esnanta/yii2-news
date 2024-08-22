@@ -1,6 +1,5 @@
 <?php
-
-/*
+/**
  * This file is part of the Dektrium project.
  *
  * (c) Dektrium project <http://github.com/dektrium/>
@@ -11,13 +10,12 @@
 
 namespace backend\controllers;
 
+use common\helper\MessageHelper;
 use dektrium\user\controllers\AdminController as BaseAdminController;
 use dektrium\user\Module;
-
 use yii;
 use yii\helpers\Url;
-
-use backend\models\Profile;
+use yii\web\ForbiddenHttpException;
 
 /**
  * AdminController allows you to administrate users.
@@ -35,9 +33,9 @@ class AdminController extends BaseAdminController
      *
      * @return mixed
      */
-    public function actionUpdate($id,$title=null)
+    public function actionUpdate($id, $title = null)
     {
-        if(Yii::$app->user->can('update-profile')){
+        if (Yii::$app->user->can('update-profile')) {
             Url::remember('', 'actions-redirect');
             $user = $this->findModel($id);
             $user->scenario = 'update';
@@ -47,14 +45,12 @@ class AdminController extends BaseAdminController
 
             $this->trigger(self::EVENT_BEFORE_UPDATE, $event);
             if ($user->load(\Yii::$app->request->post()) && $user->save()) {
-
-                if(!empty($user->password)){
+                if (!empty($user->password)) {
                     $user->save();
                     Yii::$app->getSession()->setFlash('success', \Yii::t('user', 'User password has been updated'));
                     $this->trigger(self::EVENT_AFTER_UPDATE, $event);
-                    $this->refresh();                
-                }
-                else{
+                    $this->refresh();
+                } else {
                     Yii::$app->getSession()->setFlash('warning', \Yii::t('user', 'Can not updated blank password.'));
                 }
 
@@ -65,12 +61,9 @@ class AdminController extends BaseAdminController
             return $this->render('update', [
                 'user' => $user,
             ]);
-        }
-        else{
-            Yii::$app->getSession()->setFlash('danger', ['message' => Yii::t('app', Helper::getAccessDenied())]);
+        } else {
+            MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
-        }        
-            
+        }
     }
-
 }

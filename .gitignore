@@ -1,0 +1,7 @@
+/backend/runtime/
+/backend/web/uploads/
+/backend/web/assets/
+/frontend/runtime/
+/frontend/web/uploads/
+/frontend/web/assets/
+/vendor

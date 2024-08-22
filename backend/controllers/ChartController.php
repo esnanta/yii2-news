@@ -2,12 +2,11 @@
 
 namespace backend\controllers;
 
+use common\models\Applicant;
+use common\models\Article;
+use common\models\app\ChartYearly;
 use Yii;
 use yii\web\Controller;
-use yii\helpers\ArrayHelper; 
-use backend\models\Blog;
-use backend\models\Applicant;
-use common\models\ChartYearly;
 
 
 /**
@@ -83,7 +82,7 @@ class ChartController extends Controller
         
         $model->option_year = $currYear;
         
-        $blogs   = Blog::find()->where([
+        $blogs   = Article::find()->where([
             'month_period'      => null
         ])
         ->limit(20);        
@@ -96,13 +95,13 @@ class ChartController extends Controller
         
         if ($model->load(Yii::$app->request->post())) {
             for($i=1;$i<=12;$i++){
-                $dataset[] = Blog::countByMonthPeriod($model->option_year, $i);
+                $dataset[] = Article::countByMonthPeriod($model->option_year, $i);
             }            
         }
         else{
             
             for($i=1;$i<=12;$i++){
-                $dataset[] = Blog::countByMonthPeriod($currYear, $i);
+                $dataset[] = Article::countByMonthPeriod($currYear, $i);
             }              
         }
         

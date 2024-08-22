@@ -4,35 +4,29 @@ use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
- * @var backend\models\Employment $model
+ * @var common\models\Employment $model
  */
 
-$this->title = 'Update Employment: ' . ' ' . $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Employments', 'url' => ['index']];
+$this->title = Yii::t('app', 'Update {modelClass}: ', [
+    'modelClass' => 'Employment',
+]) . ' ' . $model->title;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Employments'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
 
-<div class="panel panel-info">
-    <div class="panel-heading">
-        <div class="panel-title">
-            Please fill out the form below
-            <div class="pull-right">
-                <?= Html::encode($this->title) ?>            
-            </div>            
-        </div>
+<div class="card border-default mb-3">
+    <div class="card-header"><?=Yii::t('app', 'Please fill out the form below')?>
+        <span class="pull-right">
+            <?= Html::encode($this->title) ?>
+        </span>
     </div>
-    <div class="panel-body">
-
-        <div class="employment-update">
-
+    <div class="card-body text-default">
+        <div class="page-update">
             <?= $this->render('_form', [
                 'model' => $model,
+                'officeList' => $officeList,
             ]) ?>
-
         </div>
-        
     </div>
 </div>
-
-

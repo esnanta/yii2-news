@@ -5,7 +5,7 @@ use yii\widgets\ActiveForm;
 
 /**
  * @var yii\web\View $this
- * @var backend\models\QuoteSearch $model
+ * @var common\models\QuoteSearch $model
  * @var yii\widgets\ActiveForm $form
  */
 ?>

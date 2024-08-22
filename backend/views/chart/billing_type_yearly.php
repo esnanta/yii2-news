@@ -1,6 +1,6 @@
 <?php
 use yii\helpers\Html;
-use common\helper\CacheCloud;
+use common\helper\CacheUseCase;
 use dosamigos\chartjs\ChartJs;
 /* @var $this yii\web\View */
 
@@ -27,7 +27,7 @@ $this->title = 'Charts';
         
         <?php 
         
-            $cacheCloud     = new CacheCloud();
+            $cacheCloud     = new CacheUseCase();
             $lookupNew      = $cacheCloud->getLookupToken(Yii::$app->params['LookupToken_BillingTypeNew']);  
             $lookupParalel  = $cacheCloud->getLookupToken(Yii::$app->params['LookupToken_BillingTypeParalel']);  
             $lookupMoving   = $cacheCloud->getLookupToken(Yii::$app->params['LookupToken_BillingTypeMoving']);  

@@ -1,249 +1,152 @@
 <?php
 
-use yii\helpers\Html;
-use yii\widgets\ListView;
 use kartik\detail\DetailView;
 use bajadev\ckeditor\CKEditor;
+use common\helper\UIHelper;
+use common\helper\MediaTypeHelper;
+use common\models\User;
+
 /**
  * @var yii\web\View $this
- * @var backend\models\Author $model
+ * @var common\models\Author $model
  */
 
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Authors', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-
-$create = Html::a('<i class="glyphicon glyphicon-plus"></i>', ['create'], ['class' => 'pull-right detail-button','style'=>'padding:0 5px']);
+$create = UIHelper::getCreateButton();
 ?>
 
+<ul class="nav justify-content-end u-nav-v1-1 u-nav-dark g-mb-20" role="tablist" data-target="nav-1-1-dark-hor-right"
+    data-tabs-mobile-type="slide-up-down"
+    data-btn-classes="btn btn-md btn-block rounded-0 u-btn-outline-darkgray g-mb-20">
+    <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="#nav-1-1-dark-hor-right--1" role="tab">
+            <?= Yii::t('app', 'Profile'); ?>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#nav-1-1-dark-hor-right--2" role="tab">
+            <?= Yii::t('app', 'Social'); ?>
+        </a>
+    </li>
+</ul>
 
-<!-- Info boxes -->
+
 <div class="row">
-    <div class="col-md-3 col-md-6">
-        <!-- Profile Image -->
-        <div class="box box-primary">
-            <div class="box-body box-profile">
-                <img src="<?= $model->getImageUrl() ?>" class="profile-user-img img-responsive img-circle" style="width:100px;height:100px" alt="<?= $model->title; ?>"/>
+    <div class="col-md-3 g-mb-30 g-mb-0--md">
+        <div class="h-100 g-brd-around g-brd-gray-light-v7 g-rounded-4 g-pa-15 g-pa-20--md">
+            <!-- User Information -->
+            <section class="text-center g-mb-30 g-mb-50--md">
+                <div class="d-inline-block g-pos-rel g-mb-20">
+                    <a class="u-badge-v2--lg u-badge--bottom-right g-width-32 g-height-32 g-bg-secondary g-bg-primary--hover g-transition-0_3 g-mb-20 g-mr-20"
+                       href="#">
+                        <i class="hs-admin-pencil g-absolute-centered g-font-size-16 g-color-white"></i>
+                    </a>
+                    <img class="img-fluid rounded-circle" src="<?= $model->getAssetUrl() ?>"
+                         alt="<?= $model->title ?>">
+                </div>
 
-                <h3 class="profile-username text-center">
-                    <?= Html::a($model->title, ['/author/update', 'id' => $model->id,]); ?>
-                </h3>
-
-                <p class="text-muted text-center"><?= $model->email; ?></p>
-
-
-                <strong><i class="fa fa-google-plus margin-r-5"></i> Google+</strong>
-
-                <p class="text-muted">
-                    <?= $model->google_plus; ?>
-                </p>
-
-                <strong><i class="fa fa-twitter margin-r-5"></i> Twitter</strong>
-
-                <p class="text-muted">
-                    <?= $model->twitter; ?>
-                </p>
-
-                <strong><i class="fa fa-instagram margin-r-5"></i> Instagram</strong>
-
-                <p class="text-muted">
-                    <?= $model->instagram; ?>
-                </p>
-
-                <strong><i class="fa fa-book margin-r-5"></i> Deskripsi</strong>
-
-                <p class="text-muted">
-                    <?= $model->description; ?>
-                </p>
-
-                <?= Html::a('Change Avatar', ['/author/update', 'id' => $model->id, 'edit' => 't'], ['class' => 'btn btn-primary btn-block']); ?>
-            </div>
-            <!-- /.box-body -->
+                <h3 class="g-font-weight-300 g-font-size-20 g-color-black mb-0"><?= $model->title ?></h3>
+            </section>
+            <!-- User Information -->
         </div>
-        <!-- /.box -->
     </div>
-
-
-
 
     <div class="col-md-9">
-        <div class="box box-default">
 
-
-            <div class="nav-tabs-custom">
-            <ul class="nav nav-tabs">
-                <li class="active"><a href="#profile" data-toggle="tab">Profile</a></li>
-                <li><a href="#blogs" data-toggle="tab">Blogs</a></li>
-            </ul>
-            <div class="tab-content">
-                <div class="active tab-pane" id="profile">
-                        <?= DetailView::widget([
-                            'model' => $model,
-                            'condensed' => false,
-                            'hover' => true,
-                            'mode' => Yii::$app->request->get('edit') == 't' ? DetailView::MODE_EDIT : DetailView::MODE_VIEW,
-                            'panel' => [
-                                'heading' => $this->title,
-                                'type' => DetailView::TYPE_INFO,
-                            ],
-                            'buttons1' => '{update}{delete}',
-                            'attributes' => [
+        <div id="nav-1-1-dark-hor-right" class="tab-content">
+            <div class="tab-pane fade show active" id="nav-1-1-dark-hor-right--1" role="tabpanel">
+                <?= DetailView::widget([
+                    'model' => $model,
+                    'condensed' => false,
+                    'hover' => true,
+                    'mode' => Yii::$app->request->get('edit') == 't' ? DetailView::MODE_EDIT : DetailView::MODE_VIEW,
+                    'panel' => [
+                        'heading' => $this->title,
+                        'type' => DetailView::TYPE_DEFAULT,
+                    ],
+                    'buttons1' => '{update}{delete}',
+                    'attributes' => [
+                        [
+                            'attribute' => 'title',
+                            //'valueColOptions'=>['style'=>'width:30%']
+                        ],
+                        [
+                            'columns' => [
                                 [
-                                    'attribute'=>'title',
-                                    //'valueColOptions'=>['style'=>'width:30%']
+                                    'attribute' => 'phone_number',
+                                    'valueColOptions' => ['style' => 'width:30%']
                                 ],
                                 [
-                                    'columns' => [
-                                        [
-                                            'attribute'=>'phone_number',
-                                            'valueColOptions'=>['style'=>'width:30%']
-                                        ],
-                                        [
-                                            'attribute'=>'email',
-                                            'valueColOptions'=>['style'=>'width:30%']
-                                        ],
-                                    ],
-                                ],
-                                [
-                                    'columns' => [
-                                        [
-                                            'attribute'=>'google_plus',
-                                            'valueColOptions'=>['style'=>'width:30%']
-                                        ],
-                                        [
-                                            'attribute'=>'instagram',
-                                            'valueColOptions'=>['style'=>'width:30%']
-                                        ],
-                                    ],
-                                ],
-
-                                [
-                                    'columns' => [
-                                        [
-                                            'attribute'=>'twitter',
-                                            'valueColOptions'=>['style'=>'width:30%']
-                                        ],
-                                        [
-                                            'attribute'=>'facebook',
-                                            'valueColOptions'=>['style'=>'width:30%']
-                                        ],
-                                    ],
-                                ],
-
-                                [
-                                    'attribute'=>'description',
-                                    'format'=>'html',
-                                    'value'=>$model->description,
-                                    'type'=>DetailView::INPUT_WIDGET,
-                                    'widgetOptions'=>[
-                                        'class'=> CKEditor::className(),
-                                        'editorOptions' => [
-                                            'preset' => 'basic', // basic, standard, full
-                                            'inline' => false,
-                    //                        'filebrowserBrowseUrl' => 'browse-images',
-                    //                        'filebrowserUploadUrl' => 'upload-images',
-                    //                        'extraPlugins' => 'imageuploader',
-                                        ],
-                                    ],
-                                ],
-
-                                [
-                                    'group'=>true,
-                                    'rowOptions'=>['class'=>'default']
-                                ],
-                                [
-                                    'columns' => [
-                                        [
-                                            'attribute'=>'created_at',
-                                            'format'=>'date',
-                                            'type'=>DetailView::INPUT_HIDDEN,
-                                            'valueColOptions'=>['style'=>'width:30%']
-                                        ],
-                                        [
-                                            'attribute'=>'updated_at',
-                                            'format'=>'date',
-                                            'type'=>DetailView::INPUT_HIDDEN,
-                                            'valueColOptions'=>['style'=>'width:30%']
-                                        ],
-                                    ],
-                                ],
-                                [
-                                    'columns' => [
-                                        [
-                                            'attribute'=>'created_by',
-                                            'value'=>($model->created_by!=null) ? \backend\models\User::getName($model->created_by):'',
-                                            'type'=>DetailView::INPUT_HIDDEN,
-                                            'valueColOptions'=>['style'=>'width:30%']
-                                        ],
-                                        [
-                                            'attribute'=>'updated_by',
-                                            'value'=>($model->updated_by!=null) ? \backend\models\User::getName($model->updated_by):'',
-                                            'type'=>DetailView::INPUT_HIDDEN,
-                                            'valueColOptions'=>['style'=>'width:30%']
-                                        ],
-                                    ],
+                                    'attribute' => 'email',
+                                    'valueColOptions' => ['style' => 'width:30%']
                                 ],
                             ],
-                            'deleteOptions' => [
-                                'url' => ['delete', 'id' => $model->id],
+                        ],
+
+                        [
+                            'attribute' => 'description',
+                            'format' => 'html',
+                            'value' => $model->description,
+                            'type' => DetailView::INPUT_TEXTAREA,
+                        ],
+
+                        [
+                            'group' => true,
+                            'rowOptions' => ['class' => 'default']
+                        ],
+                        [
+                            'columns' => [
+                                [
+                                    'attribute' => 'created_at',
+                                    'format' => 'date',
+                                    'type' => DetailView::INPUT_HIDDEN,
+                                    'valueColOptions' => ['style' => 'width:30%']
+                                ],
+                                [
+                                    'attribute' => 'updated_at',
+                                    'format' => 'date',
+                                    'type' => DetailView::INPUT_HIDDEN,
+                                    'valueColOptions' => ['style' => 'width:30%']
+                                ],
                             ],
-                            'enableEditMode' => Yii::$app->user->can('update-author'),
-                        ]) ?>
-                </div>
-                <div class="tab-pane" id="blogs">
-
-                    <?=
-                        ListView::widget([
-                            'dataProvider' => $dataProvider,
-                            'summary' => '',
-                    //        'options' => [
-                    //             'tag' => 'div',
-                    //             'class' => 'masonry-box margin-bottom-50', //Masonry Box
-                    //             'id' => '',//list-wrapper
-                    //         ],
-                            'itemOptions' => [
-                                'tag' => 'div',
-                                'class' => '', //Blog Grid
+                        ],
+                        [
+                            'columns' => [
+                                [
+                                    'attribute' => 'created_by',
+                                    'value' => ($model->created_by != null) ? User::getName($model->created_by) : '',
+                                    'type' => DetailView::INPUT_HIDDEN,
+                                    'valueColOptions' => ['style' => 'width:30%']
+                                ],
+                                [
+                                    'attribute' => 'updated_by',
+                                    'value' => ($model->updated_by != null) ? User::getName($model->updated_by) : '',
+                                    'type' => DetailView::INPUT_HIDDEN,
+                                    'valueColOptions' => ['style' => 'width:30%']
+                                ],
                             ],
-
-//                            'pager' => [
-//                                'firstPageLabel' => 'first',
-//                                'lastPageLabel' => 'last',
-//                                'prevPageLabel' => '<span class="glyphicon glyphicon-chevron-left"></span>',
-//                                'nextPageLabel' => '<span class="glyphicon glyphicon-chevron-right"></span>',
-//                                'maxButtonCount' => 3,
-//                                // Customzing options for pager container tag
-//                                'options' => [
-//                                    //'tag' => 'div',
-//                                    'class' => 'u-pagination-v1__item u-pagination-v1-4 u-pagination-v1-4--active g-rounded-50 g-pa-7-14',
-//                                    //'id' => 'pager-container',
-//                                ],
-//
-//                                // Customzing CSS class for pager link
-//                                'linkOptions' => ['class' => 'rounded-3x'],
-//                                'activePageCssClass' => 'active',
-//                                'disabledPageCssClass' => 'disabled',
-//
-//                                // Customzing CSS class for navigating link
-//                                'prevPageCssClass' => 'previous',
-//                                'nextPageCssClass' => 'next',
-//                                'firstPageCssClass' => 'first',
-//                                'lastPageCssClass' => 'last',
-//                            ],
-
-                            'itemView' => '_blog_grid',
-                        ]);
-                    ?>
-
-
-                </div>
-
-                <!-- /.tab-pane -->
+                        ],
+                    ],
+                    'deleteOptions' => [
+                        'url' => ['delete', 'id' => $model->id],
+                    ],
+                    'enableEditMode' => Yii::$app->user->can('update-author'),
+                ]) ?>
             </div>
-            <!-- /.tab-content -->
+            <div class="tab-pane fade" id="nav-1-1-dark-hor-right--2" role="tabpanel">
+                <?php
+                    echo $this->render('index_media',
+                        [
+                            'model'         => $model,
+                            'dataProvider'  => $dataProviderSocial,
+                            'mediaType'     => $mediaType
+                        ]
+                    );
+                ?>
+            </div>
         </div>
-        </div>
-        <!-- /.nav-tabs-custom -->
-    </div>
 
+    </div>
 </div>

@@ -7,7 +7,7 @@ use kartik\datecontrol\DateControl;
 
 /**
  * @var yii\web\View $this
- * @var backend\models\Office $model
+ * @var common\models\Office $model
  * @var yii\widgets\ActiveForm $form
  */
 ?>
@@ -20,10 +20,6 @@ use kartik\datecontrol\DateControl;
         'form' => $form,
         'columns' => 1,
         'attributes' => [
-
-            
-
-            'token' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Office Code...', 'maxlength' => 5]],
 
             'title' => ['type' => Form::INPUT_TEXT, 'options' => ['placeholder' => 'Enter Title...', 'maxlength' => 100]],
 

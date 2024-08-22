@@ -2,12 +2,13 @@
 
 /* @var $this yii\web\View */
 
-use backend\models\ThemeDetail as ThemeDetail;
+use common\helper\MetaHelper;
+use common\service\PageService;
+
 $this->title = 'About';
 
-
-$model = ThemeDetail::getByToken(Yii::$app->params['ContentToken_About']);
-//$modelImg = str_replace('frontend', 'backend', $model->getImageUrl());
+MetaHelper::setMetaTags();
+$model = PageService::getAbout();
 ?>
 
 

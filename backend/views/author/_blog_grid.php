@@ -1,7 +1,7 @@
 <?php
+
+use common\models\Tag;
 use yii\helpers\Html;
-use backend\models\Tag;
-use common\helper\Helper;
 $unset = '#NA';
 ?>
 
@@ -26,7 +26,7 @@ $unset = '#NA';
             <?= Html::a($model->title, $model->getUrl(),['class'=>'']); ?>
             <span class="link-black text-sm pull-right"><i class="fa fa-eye margin-r-5"></i> Views <?=$model->view_counter;?></span>
         </span>
-        <span class="description"><?= (empty($model->author_id)) ? $unset: Html::a('<i class="fa fa-user"></i> '.$model->author->title, $model->author->getUrl(), ['class' => '']);?> On - <?= Yii::$app->formatter->format($model->created_at, 'date');?> - <?= Helper::getTimeElapsedString($model->created_at) ;?></span>
+        <span class="description"><?= (empty($model->author_id)) ? $unset: Html::a('<i class="fa fa-user"></i> '.$model->author->title, $model->author->getUrl(), ['class' => '']);?> On - <?= Yii::$app->formatter->format($model->created_at, 'date');?> - <?= DateUseCase::getTimeElapsedString($model->created_at) ;?></span>
         
     </div>
     <!-- /.user-block -->

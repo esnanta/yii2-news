@@ -8,10 +8,10 @@ use yii\helpers\Html;
     <article class="media g-mb-30">
 
         <?php
-            $imageUrl       = (empty($model->author_id)) ? $model->getDefaultAuthorImage() : $model->author->getImageUrl();
+            $imageUrl       = (empty($model->author_id)) ? $model->getDefaultAuthorImage() : $model->author->getAssetUrl();
             $authorImage    = str_replace('frontend', 'backend', $imageUrl);  
-            $styledIamge    = Html::img($authorImage, ['class'=>'d-flex u-shadow-v25 g-width-60 g-height-60 rounded-circle g-mr-20'],['alt' => 'alt image']);
-            echo Html::a($styledIamge, $model->getUrl());
+            $styledImage    = Html::img($authorImage, ['class'=>'d-flex u-shadow-v25 g-width-60 g-height-60 rounded-circle g-mr-20'],['alt' => 'alt image']);
+            echo Html::a($styledImage, $model->getUrl());
         ?>              
 
         <div class="media-body">

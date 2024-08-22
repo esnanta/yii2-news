@@ -5,7 +5,7 @@ use kartik\datecontrol\DateControl;
 use bajadev\ckeditor\CKEditor;
 /**
  * @var yii\web\View $this
- * @var backend\models\Event $model
+ * @var common\models\Event $model
  */
 
 $this->title = $model->title;
@@ -56,7 +56,7 @@ $create = Html::a('<i class="glyphicon glyphicon-plus"></i>', ['create'], ['clas
                 'value'=>$model->content,
                 'type'=>DetailView::INPUT_WIDGET, 
                 'widgetOptions'=>[
-                    'class'=> CKEditor::className(),
+                    'class'=> CKEditor::class,
                     'editorOptions' => [
                         'preset' => 'full', // basic, standard, full
                         'inline' => false,
@@ -97,13 +97,13 @@ $create = Html::a('<i class="glyphicon glyphicon-plus"></i>', ['create'], ['clas
                 'columns' => [
                     [
                         'attribute'=>'created_by',
-                        'value'=>($model->created_by!=null) ? \backend\models\User::getName($model->created_by):'',
+                        'value'=>($model->created_by!=null) ? \common\models\User::getName($model->created_by):'',
                         'type'=>DetailView::INPUT_HIDDEN,
                         'valueColOptions'=>['style'=>'width:30%']
                     ],
                     [
                         'attribute'=>'updated_by',
-                        'value'=>($model->updated_by!=null) ? \backend\models\User::getName($model->updated_by):'',
+                        'value'=>($model->updated_by!=null) ? \common\models\User::getName($model->updated_by):'',
                         'type'=>DetailView::INPUT_HIDDEN,
                         'valueColOptions'=>['style'=>'width:30%']
                     ],                                

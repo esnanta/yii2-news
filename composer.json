@@ -1,8 +1,8 @@
 {
     "name": "esnanta/yii2-news",
     "description": "Yii2 News",
-    "keywords": ["yii2", "news", "blog", "esnanta"],
-    "homepage": "https://www.yiiframework.com/",
+    "keywords": ["daraspace", "yii2", "blog", "article", "news"],
+    "homepage": "https://www.daraspace.com/",
     "type": "project",
     "license": "BSD-3-Clause",
     "support": {
@@ -14,48 +14,54 @@
     },
     "minimum-stability": "stable",
     "require": {
-        "php": ">=7.4.0",
-        "yiisoft/yii2": "~2.0.45",
-        "yiisoft/yii2-symfonymailer": "~2.0.3",
-        
-        "yiisoft/yii2-bootstrap": "~2.0.0",
+        "php": ">=8.0.1",
+        "yiisoft/yii2": "~2.0.48",
         "yiisoft/yii2-bootstrap4": "~2.0.6",
-        "yiisoft/yii2-authclient": "~2.1.7",
-        
-        "bower-asset/bootstrap": "^3.3",
-        "dmstr/yii2-adminlte-asset":"2.*",
-        
-        "2amigos/yii2-chartjs-widget" : "~2.0",
-        
-        "kartik-v/yii2-widgets": "*",
-        "kartik-v/yii2-grid": "*",
-        "kartik-v/yii2-krajee-base": "*",
-        "kartik-v/yii2-detail-view": "*",
-        "kartik-v/yii2-widget-datepicker": "*",
-        "kartik-v/yii2-datecontrol": "*",
-        "kartik-v/yii2-editable": "*",
-        "kartik-v/yii2-widget-select2": "*",
-        "kartik-v/yii2-export": "*",
-        "kartik-v/yii2-mpdf": "*",
-        "kartik-v/yii2-tree-manager": "*",
-        "kartik-v/yii2-date-range": "*",
-        "kartik-v/yii2-slider": "*",
-        "kartik-v/yii2-social": "dev-master", 
-        "kartik-v/yii2-bootstrap4-dropdown": "dev-master",
-        "ercling/yii2-pace": "dev-master",
+        "yiisoft/yii2-bootstrap5": "*",
+        "yiisoft/yii2-symfonymailer": "~2.0.3",
+
+        "yii2tech/ar-softdelete": "*",
+        "yii2tech/spreadsheet": "*",
+
+        "esnanta/dektrium-user": "*",
+        "esnanta/dektrium-rbac": "*",
+
+        "kartik-v/yii2-bootstrap4-dropdown" : "*",
+        "kartik-v/yii2-bootstrap5-dropdown": "@dev",
+        "kartik-v/yii2-grid": "dev-master",
+        "kartik-v/yii2-datecontrol": "dev-master",
+        "kartik-v/yii2-widget-select2": "dev-master",
+        "kartik-v/yii2-widget-sidenav": "dev-master",
+        "kartik-v/yii2-widget-depdrop": "dev-master",
+        "kartik-v/yii2-date-range": "dev-master",
+        "kartik-v/yii2-number": "@dev",
+        "kartik-v/yii2-password": "dev-master",
+        "kartik-v/yii2-editors": "@dev",
+        "kartik-v/yii2-social": "@dev",
+
         "lesha724/yii2-document-viewer": "*",
-        "bajadev/yii2-ckeditor": "*",
-        "budyaga/yii2-cropper": "*",  
-        "dektrium/yii2-user": "*",
-        "dektrium/yii2-rbac": "1.0.0-alpha@dev",
+        "onmotion/yii2-widget-apexcharts": "*",
+
+        "budyaga/yii2-cropper": "*",
+        "aneeshikmat/yii2-time-down-counter": "v1.1.0-stable",
+
         "mootensai/yii2-enhanced-gii": "dev-master",
-        "yii2tech/ar-softdelete": "*"
+        "warrence/yii2-kartikgii": "dev-master",
+        "ext-dom": "*",
+        "ext-zip": "*",
+        "ext-libxml": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
         "yiisoft/yii2-gii": "~2.2.0",
         "yiisoft/yii2-faker": "~2.0.0",
+
         "phpunit/phpunit": "~9.5.0",
+        "squizlabs/php_codesniffer": "3.*",
+        "friendsofphp/php-cs-fixer": "*",
+        "phpstan/phpstan": "*",
+        "phpmd/phpmd" : "@stable",
+
         "codeception/codeception": "^5.0.0 || ^4.0",
         "codeception/lib-innerbrowser": "^3.0 || ^1.1",
         "codeception/module-asserts": "^3.0 || ^1.1",
@@ -63,9 +69,8 @@
         "codeception/module-filesystem": "^2.0 || ^1.1",
         "codeception/verify": "^2.2",
         "symfony/browser-kit": "^6.0 || >=2.7 <=4.2.4",
-        
-        "warrence/yii2-kartikgii": "dev-master",
-        "buttflattery/yii2-formwizard":"@dev" 
+
+        "thtmorais/yii2-test": "dev-main"
     },
     "autoload-dev": {
         "psr-4": {
@@ -76,14 +81,12 @@
     },
     "config": {
         "allow-plugins": {
-            "yiisoft/yii2-composer": true
+            "yiisoft/yii2-composer": true,
+            "kylekatarnls/update-helper": true
         },
         "process-timeout": 1800,
         "fxp-asset": {
             "enabled": false
-        },
-        "github-oauth": {
-
         }
     },
     "repositories": [

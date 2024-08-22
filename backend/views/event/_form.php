@@ -7,7 +7,7 @@ use kartik\datecontrol\DateControl;
 use bajadev\ckeditor\CKEditor;
 /**
  * @var yii\web\View $this
- * @var backend\models\Event $model
+ * @var common\models\Event $model
  * @var yii\widgets\ActiveForm $form
  */
 ?>
@@ -26,13 +26,13 @@ use bajadev\ckeditor\CKEditor;
             
             'date_start' => [
                 'type' => Form::INPUT_WIDGET, 
-                'widgetClass'=> DateControl::className(),
+                'widgetClass'=> DateControl::class,
                 'format'=>'date',
             ],
 
             'date_end' => [
                 'type' => Form::INPUT_WIDGET, 
-                'widgetClass'=> DateControl::className(),
+                'widgetClass'=> DateControl::class,
                 'format'=>'date',
             ],             
             
@@ -42,7 +42,7 @@ use bajadev\ckeditor\CKEditor;
 
     ]);   
     
-    echo $form->field($model, 'content')->widget(CKEditor::className(), [
+    echo $form->field($model, 'content')->widget(CKEditor::class, [
         'editorOptions' => [
             'preset' => 'full', // basic, standard, full
             'inline' => false,

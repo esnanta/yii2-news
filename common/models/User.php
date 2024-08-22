@@ -1,75 +1,57 @@
 <?php
+
 namespace common\models;
 
 use Yii;
-use dektrium\user\models\User as BaseUser;
+use \common\models\base\User as BaseUser;
 
 /**
- * User model
- *
- * @property integer $id
- * @property string $username
- * @property string $password_hash
- * @property string $password_reset_token
- * @property string $email
- * @property string $auth_key
- * @property integer $status
- * @property integer $created_at
- * @property integer $updated_at
- * @property string $password write-only password
+ * This is the model class for table "tx_user".
  */
 class User extends BaseUser
 {
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return array_replace_recursive(parent::rules(),
+	    [
+            [['username', 'email', 'password_hash', 'auth_key', 'updated_at', 'created_at'], 'required'],
+            [['flags', 'confirmed_at', 'blocked_at', 'updated_at', 'created_at', 'last_login_at'], 'integer'],
+            [['username', 'email', 'unconfirmed_email'], 'string', 'max' => 255],
+            [['password_hash'], 'string', 'max' => 60],
+            [['auth_key'], 'string', 'max' => 32],
+            [['registration_ip'], 'string', 'max' => 45],
+            [['auth_tf_key'], 'string', 'max' => 16],
+            [['auth_tf_enabled'], 'string', 'max' => 1],
+            [['username'], 'unique'],
+            [['email'], 'unique']
+        ]);
+    }
     
-    public function beforeSave($insert) {
-        if (!parent::beforeSave($insert)) {
+    public function beforeDelete() {
+        if (!parent::beforeDelete()) {
             return false;
         }
-
-        if ($this->isNewRecord) {
-            $this->username  = $this->email;
+        
+        $authAssignments = AuthAssignment::find()->where(['user_id'=>$this->id])->all();
+        foreach ($authAssignments as $authAssignmentModel) {
+            $authAssignmentModel->delete();
         }
         
         return true;
-    }     
+    }    
     
-    public function afterSave($insert, $changedAttributes)
-    {
-        parent::afterSave($insert, $changedAttributes);
+    public static function getName($_id){ 
+        //https://www.yiiframework.com/doc/guide/2.0/en/caching-data
+        //$db = Yii::$app->db;// or Category::getDb()
+        $value = User::getDb()->cache(function () use ($_id) {
+            $model = User::find()->where(['id' => $_id])->one();
+            return $model->username;
+        });       
 
-        if ($insert) {
-            $this->getDb()
-                ->createCommand()
-                ->insert('{{%auth_assignment}}', [
-                    'item_name' => 'reguler',
-                    'user_id' => $this->id,
-                    'created_at' => time(),
-                ])
-                ->execute();
-            
-            $this->saveApplicant();
-        }
-    }
-
-    private function saveApplicant(){
-        if(Yii::$app->params['Feat-Applicant']){
-
-            $applicant = new \backend\models\Applicant;
-            $applicant->user_id = $this->id;
-            $applicant->save();
-            
-            if(Yii::$app->params['Feat-Applicant-Academic']){
-                $model = new \backend\models\ApplicantAcademic;
-                $model->applicant_id = $applicant->id;
-                $model->save();
-            }   
-
-            if(Yii::$app->params['Feat-Applicant-Almamater']){
-                $model = new \backend\models\ApplicantAlmamater;
-                $model->applicant_id = $applicant->id;
-                $model->save();
-            }   
-
-        }                    
-    }
+       return $value;           
+        
+    }    
 }

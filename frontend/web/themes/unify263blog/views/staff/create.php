@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
- * @var backend\models\Staff $model
+ * @var common\models\Staff $model
  */
 
 $this->title = 'Create Staff';

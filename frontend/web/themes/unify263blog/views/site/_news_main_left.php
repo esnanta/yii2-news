@@ -1,19 +1,22 @@
 <?php
+
+use common\helper\ContentHelper;
 use yii\helpers\Html;
 
-$src    = str_replace('frontend', 'backend', $model->getCover($model->content));   
-$image  = Html::img($src, ['class' => 'img-fluid w-100']);
-$label  = ($model->category->label) ? $model->category->label:'darkpurple';    
+$articleCover   = str_replace('frontend', 'backend',
+    ContentHelper::getCover($model->content));
+$image  = Html::img($articleCover, ['class' => 'img-fluid w-100']);
+$label  = ($model->articleCategory->label) ? $model->articleCategory->label:'darkpurple';    
 ?>
 
 
 <article>
 
-    <?php if(substr($src, 0, 2)=='//'){ ?>
+    <?php if(substr($articleCover, 0, 2)=='//'){ ?>
         <div class="embed-responsive embed-responsive-16by9">
             <iframe 
                 class="embed-responsive-item" 
-                src="<?=$src;?>?controls=0" 
+                src="<?=$articleCover;?>?controls=0" 
                 allowfullscreen>     
             </iframe>
         </div>
@@ -25,10 +28,10 @@ $label  = ($model->category->label) ? $model->category->label:'darkpurple';
                 <figcaption class="g-pos-abs g-top-20 g-left-20"> 
                     <?php 
                         $linkClassLabel = "btn btn-xs u-btn-".$label." text-uppercase rounded-0";
-                        echo Html::a($model->category->title, 
+                        echo Html::a($model->articleCategory->title, 
                                 ['blog/index',
-                                    'cat'=>$model->category_id,
-                                    'title'=>$model->category->title], 
+                                    'cat'=>$model->article_category_id,
+                                    'title'=>$model->articleCategory->title], 
                                 ['class' => $linkClassLabel]) ;
                     ?>
                 </figcaption>
@@ -57,7 +60,7 @@ $label  = ($model->category->label) ? $model->category->label:'darkpurple';
         </li>
     </ul>
 
-    <span class="g-color-gray-dark-v2"><?= strip_tags($model->readMore()); ?></span>
+    <span class="g-color-gray-dark-v2"><?= strip_tags(ContentHelper::readMore($model->content)); ?></span>
     <br>
     <?= Html::a('Read More...', $model->getUrl(), ['class' => 'g-font-size-12']) ?>
 

@@ -8,7 +8,7 @@ use kartik\widgets\Select2;
 use kartik\widgets\TouchSpin;
 /**
  * @var yii\web\View $this
- * @var backend\models\Network $model
+ * @var common\models\Network $model
  */
 
 $this->title = 'Export Data';
@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 'option_date' => [
                     'type' => Form::INPUT_WIDGET, 
-                    'widgetClass'=> Select2::className(),
+                    'widgetClass'=> Select2::class,
                     'options' => [
                         'data' => $dateAttributeList,
                         'options' => ['placeholder' => 'Choose option', 'disabled'=>false],
@@ -51,12 +51,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 'date_first' => [
                     'type' => Form::INPUT_WIDGET, 
-                    'widgetClass'=> DateControl::className(),
+                    'widgetClass'=> DateControl::class,
                     'format'=>'date',                          
                 ],  
                 'date_last' => [
                     'type' => Form::INPUT_WIDGET, 
-                    'widgetClass'=> DateControl::className(),
+                    'widgetClass'=> DateControl::class,
                     'format'=>'date',                          
                 ],  
             ]
@@ -95,7 +95,7 @@ $this->params['breadcrumbs'][] = $this->title;
     
                 'billing_type' => [
                     'type' => Form::INPUT_WIDGET, 
-                    'widgetClass'=> Select2::className(),
+                    'widgetClass'=> Select2::class,
                     'options' => [
                         'data' => $billingTypeList,
                         'options' => ['placeholder' => 'Choose Type', 'disabled'=>false],
@@ -107,7 +107,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 
                 'payment_status' => [
                     'type' => Form::INPUT_WIDGET, 
-                    'widgetClass'=> Select2::className(),
+                    'widgetClass'=> Select2::class,
                     'options' => [
                         'data' => $paymentStatusList,
                         'options' => ['placeholder' => 'Choose Status', 'disabled'=>false],

@@ -184,7 +184,7 @@ class AttributeTypecastBehavior extends Behavior
      * @var array internal static cache for auto detected [[attributeTypes]] values
      * in format: ownerClassName => attributeTypes
      */
-    private static $autoDetectedAttributeTypes = [];
+    private static $_autoDetectedAttributeTypes = [];
 
 
     /**
@@ -193,7 +193,7 @@ class AttributeTypecastBehavior extends Behavior
      */
     public static function clearAutoDetectedAttributeTypes()
     {
-        self::$autoDetectedAttributeTypes = [];
+        self::$_autoDetectedAttributeTypes = [];
     }
 
     /**
@@ -205,10 +205,10 @@ class AttributeTypecastBehavior extends Behavior
 
         if ($this->attributeTypes === null) {
             $ownerClass = get_class($this->owner);
-            if (!isset(self::$autoDetectedAttributeTypes[$ownerClass])) {
-                self::$autoDetectedAttributeTypes[$ownerClass] = $this->detectAttributeTypes();
+            if (!isset(self::$_autoDetectedAttributeTypes[$ownerClass])) {
+                self::$_autoDetectedAttributeTypes[$ownerClass] = $this->detectAttributeTypes();
             }
-            $this->attributeTypes = self::$autoDetectedAttributeTypes[$ownerClass];
+            $this->attributeTypes = self::$_autoDetectedAttributeTypes[$ownerClass];
         }
     }
 
@@ -362,5 +362,25 @@ class AttributeTypecastBehavior extends Behavior
     public function afterFind($event)
     {
         $this->typecastAttributes();
+
+        $this->resetOldAttributes();
+    }
+
+    /**
+     * Resets the old values of the named attributes.
+     */
+    protected function resetOldAttributes()
+    {
+        if ($this->attributeTypes === null) {
+            return;
+        }
+
+        $attributes = array_keys($this->attributeTypes);
+
+        foreach ($attributes as $attribute) {
+            if ($this->owner->canSetOldAttribute($attribute)) {
+                $this->owner->setOldAttribute($attribute, $this->owner->{$attribute});
+            }
+        }
     }
 }

@@ -1,9 +1,12 @@
 <?php
+
+use common\helper\MetaHelper;
+use common\helper\MediaTypeHelper;
+use common\models\OfficeMedia;
 use yii\db\Expression;
 
-use backend\models\Blog;
-use backend\models\Author;
-use backend\models\SiteLink;
+use common\models\Article;
+use common\models\Author;
 
 use common\widgets\blogunify236\TagCloud;
 
@@ -12,14 +15,16 @@ use common\widgets\blogunify236\TagCloud;
 
 $this->title = Yii::$app->name;
 
+MetaHelper::setMetaTags();
+
 /**
  * /////////////////////////////////////////////////////////////////////////////
  * SECTION PROMO 5 ITEM
  * /////////////////////////////////////////////////////////////////////////////
  */
 
-$promoBlogs = Blog::find()->limit(5)
-    ->where(['publish_status' => Blog::PUBLISH_STATUS_YES])
+$promoBlogs = Article::find()->limit(5)
+    ->where(['publish_status' => Article::PUBLISH_STATUS_YES])
     ->orderBy(['date_issued'=>SORT_DESC])->all();
 
 
@@ -30,8 +35,8 @@ $promoBlogs = Blog::find()->limit(5)
  */
 
 //EXAMPLE : SELECT * FROM tbl_table LIMIT 5,10;  # Retrieve rows 6-15
-$newsBlogs = Blog::find()->limit(5)->offset(5)
-    ->where(['publish_status' => Blog::PUBLISH_STATUS_YES])
+$newsBlogs = Article::find()->limit(5)->offset(5)
+    ->where(['publish_status' => Article::PUBLISH_STATUS_YES])
     ->orderBy(['date_issued'=>SORT_DESC])->all();
 
 /**
@@ -39,10 +44,10 @@ $newsBlogs = Blog::find()->limit(5)->offset(5)
  * SECTION PINNED POST 3 ITEM
  * /////////////////////////////////////////////////////////////////////////////
  */
-$pinnedBlogs = Blog::find()->limit(3)
+$pinnedBlogs = Article::find()->limit(3)
 ->where([
-    'publish_status' => Blog::PUBLISH_STATUS_YES,
-    'pinned_status' => Blog::PINNED_STATUS_YES
+    'publish_status' => Article::PUBLISH_STATUS_YES,
+    'pinned_status' => Article::PINNED_STATUS_YES
 ])
 ->orderBy(['date_issued'=>SORT_DESC])->all();
 
@@ -52,8 +57,9 @@ $pinnedBlogs = Blog::find()->limit(3)
  * /////////////////////////////////////////////////////////////////////////////
  */
 
- $siteLinks = SiteLink::find()->limit(6)
- ->orderBy(['sequence'=>SORT_ASC])->all();
+ $siteLinks = OfficeMedia::find()->limit(6)
+     ->where(['media_type'=>MediaTypeHelper::getLink()])
+     ->orderBy(['id'=>SORT_ASC])->all();
 
 
 /**
@@ -64,14 +70,14 @@ $pinnedBlogs = Blog::find()->limit(3)
  * /////////////////////////////////////////////////////////////////////////////
  */
 
-$popularBlogsPrimary = Blog::find()->limit(2)
-        ->where(['publish_status' => Blog::PUBLISH_STATUS_YES])
+$popularBlogsPrimary = Article::find()->limit(2)
+        ->where(['publish_status' => Article::PUBLISH_STATUS_YES])
         ->andWhere(['>','view_counter','100'])
         //->andWhere(['between','view_counter','10','199'])
         ->orderBy(['date_issued'=>SORT_DESC])->all();
 
-$popularBlogSecondary = Blog::find()->limit(6)
-        ->where(['publish_status' => Blog::PUBLISH_STATUS_YES])
+$popularBlogSecondary = Article::find()->limit(6)
+        ->where(['publish_status' => Article::PUBLISH_STATUS_YES])
         ->andWhere(['>','view_counter','200'])
         //->andWhere(['between','view_counter','200','99999'])
         ->orderBy(['date_issued'=>SORT_DESC])->all();
@@ -91,9 +97,9 @@ $authors = Author::find()->limit(5)
  * SECTION OTHER POST 5 ITEM
  * /////////////////////////////////////////////////////////////////////////////
  */
-$otherBlogs = Blog::find()->limit(3)
+$otherBlogs = Article::find()->limit(3)
 ->where([
-    'publish_status' => Blog::PUBLISH_STATUS_YES,
+    'publish_status' => Article::PUBLISH_STATUS_YES,
 ])
 ->orderBy((new Expression('rand()')))->all();
 
@@ -249,7 +255,7 @@ $otherBlogs = Blog::find()->limit(3)
                             <h4 class="h6">
                                 <i class="fa fa-angle-right g-color-gray-dark-v5 g-mr-5"></i>
                                 <a class="u-link-v5 g-color-gray-dark-v1 g-color-primary--hover"
-                                    href="<?=$siteLinkItemData->url?>" target="_blank">
+                                    href="<?=$siteLinkItemData->description?>" target="_blank">
                                     <?=$siteLinkItemData->title?>
                                 </a>
                             </h4>

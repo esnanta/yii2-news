@@ -7,7 +7,7 @@ use yii\widgets\Pjax;
 /**
  * @var yii\web\View $this
  * @var yii\data\ActiveDataProvider $dataProvider
- * @var backend\models\StaffSearch $searchModel
+ * @var common\models\StaffSearch $searchModel
  */
 
 $this->title = 'Staff';

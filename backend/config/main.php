@@ -6,6 +6,10 @@ $params = array_merge(
     require __DIR__ . '/params-local.php'
 );
 
+//https://www.yiiframework.com/wiki/755/how-to-hide-frontendweb-in-url-addresses-on-apache
+use \yii\web\Request;
+$baseUrl = str_replace('/backend/web', '', (new Request)->getBaseUrl());
+
 return [
     'id' => 'app-backend',
     'basePath' => dirname(__DIR__),
@@ -18,14 +22,14 @@ return [
         ],
     ],
     'components' => [
-        
-        'request'=>[
+
+        'request' => [
             'csrfParam' => '_csrf-backend',
             'class' => 'common\components\Request',
             'web'=> '/backend/web',
-            'adminUrl' => '/admin'
+            'adminUrl' => '/admin',
+            'baseUrl' => $baseUrl,
         ],
-        
 
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -42,19 +46,17 @@ return [
 
         'view' => [
             'theme' => [
-
-                'pathMap' => [
-                    '@app/views' => '@app/web/themes/dmstr/views',
-                    '@dektrium/user/views' => '@app/views/user'
-                ],
-                'basePath' => '@app/web/themes/dmstr',
-                'baseUrl' => '@web/web/themes/dmstr',
-
-                //'pathMap' => ['@app/views' => '@vendor/dmstr/yii2-adminlte-asset/example-views/yiisoft/yii2-app'],
-                //'basePath' => '@app/web/themes/dmstr',
-                //'baseUrl' => '@web/web/themes/dmstr',                
+                'pathMap' =>
+                    [
+                        '@dektrium/user/views' => '@app/web/themes-admin-unify/dektrium/user',
+                        '@dektrium/rbac/views' => '@app/web/themes-admin-unify/dektrium/rbac',
+                        '@backend/views' => '@backend/web/themes-admin-unify/views',
+                    ],
+                'basePath' => '@backend/web/themes-admin-unify',
+                'baseUrl' => '@web/web/themes-admin-unify',
             ],
-        ], 
+
+        ],
     ],
     'params' => $params,
 ];

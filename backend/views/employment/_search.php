@@ -5,7 +5,7 @@ use yii\widgets\ActiveForm;
 
 /**
  * @var yii\web\View $this
- * @var backend\models\EmploymentSearch $model
+ * @var common\models\EmploymentSearch $model
  * @var yii\widgets\ActiveForm $form
  */
 ?>
@@ -19,13 +19,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id') ?>
 
+    <?= $form->field($model, 'office_id') ?>
+
     <?= $form->field($model, 'title') ?>
 
     <?= $form->field($model, 'description') ?>
 
     <?= $form->field($model, 'sequence') ?>
 
-    <?= $form->field($model, 'created_at') ?>
+    <?php // echo $form->field($model, 'created_at') ?>
 
     <?php // echo $form->field($model, 'updated_at') ?>
 
@@ -33,9 +35,19 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'updated_by') ?>
 
+    <?php // echo $form->field($model, 'is_deleted') ?>
+
+    <?php // echo $form->field($model, 'deleted_at') ?>
+
+    <?php // echo $form->field($model, 'deleted_by') ?>
+
+    <?php // echo $form->field($model, 'verlock') ?>
+
+    <?php // echo $form->field($model, 'uuid') ?>
+
     <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+        <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-default']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

@@ -1,11 +1,25 @@
 <?php
+
+use common\models\StaffMedia;
 use yii\helpers\Html;
 ?>
-
+<style>
+    .list-unstyled {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .list-unstyled li {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+</style>
 <?php
-    $img = Html::img(str_replace('frontend', 'backend', $model->getImageUrl()), [
+    $img = Html::img(str_replace('frontend', 'backend', $model->getAssetUrl()), [
         'class'=>'w-100 g-mb-30',
-    ],['alt' => $model->title]);
+    ]);
+    $linkClass = 'u-link-v5 g-color-black g-color-primary--hover g-cursor-pointer';
 ?>
 
 <!-- Figure -->
@@ -20,7 +34,7 @@ use yii\helpers\Html;
     </em>
 
     <h4 class="h5 g-color-black-light-v3 g-mb-5">
-        <?= Html::a($model->title, $model->getUrl(), ['class' => 'u-link-v5 g-color-black g-color-primary--hover g-cursor-pointer']) ?>
+        <?= Html::a($model->title, $model->getUrl(), ['class' => $linkClass]) ?>
     </h4>
 
     <p class="g-font-size-13 g-color-gray-dark-v4"><?= $model->description?></p>
@@ -29,34 +43,19 @@ use yii\helpers\Html;
     <hr class="g-brd-gray-light-v4 g-my-15">
 
     <!-- Contact Info -->
-    <ul class="list-unstyled g-font-size-13 g-color-gray-dark-v4">
-        <?php if(!empty($model->instagram)){?>
-            <li class="g-mb-5">
-                <i class="fa fa-instagram g-mr-10"></i>
-                <?= ($model->instagram==null) ? '': $model->instagram?>
-            </li>
-        <?php } ?>
+    <?php
+        $staffMedias = StaffMedia::find()->where(['staff_id' => $model->id])->all();
+    ?>
+    <ul class="list-unstyled g-font-size-13 g-color-gray-dark-v4 ">
+        <?php foreach ($staffMedias as $staffMediaItem): ?>
 
-        <?php if(!empty($model->twitter)){?>
             <li class="g-mb-5">
-                <i class="fa fa-twitter g-mr-10"></i>
-                <?= $model->twitter?>
+                <?php
+                    $title = '<i class="' . $staffMediaItem->title . ' g-mr-10"></i>';
+                ?>
+                <?= Html::a($title, $staffMediaItem->description, ['class' => $linkClass]) ?>
             </li>
-        <?php } ?>
-
-        <?php if(!empty($model->google_plus)){?>
-            <li class="g-mb-5">
-                <i class="fa fa-google-plus g-mr-10"></i>
-                <?= $model->google_plus?>
-            </li>
-        <?php } ?>
-
-        <?php if(!empty($model->facebook)){?>
-            <li class="g-mb-5">
-                <i class="fa fa-facebook g-mr-10"></i>
-                <?= $model->facebook?>
-            </li>
-        <?php } ?>
+        <?php endforeach;?>
     </ul>
     <!-- End Contact Info -->
 </figure>

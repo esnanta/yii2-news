@@ -10,11 +10,11 @@ use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper; // load classes
 use yii\helpers\FileHelper;
 
-use backend\models\User;
-use backend\models\Profile;
-use backend\models\AuthAssignment;
+use common\models\User;
+use common\models\Profile;
+use common\models\AuthAssignment;
 
-use common\helper\Helper;
+use common\helper\MessageHelper;
 
 /**
  * ProfileController implements the CRUD actions for Profile model.
@@ -24,11 +24,11 @@ class ProfileController extends Controller
     
     public static $pathTmpCrop='/uploads/tmp';
     
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['post'],
                 ],
@@ -66,7 +66,7 @@ class ProfileController extends Controller
             return $this->redirect(['view','id'=>Yii::$app->user->id,'name'=>Yii::$app->user->identity]);       
         }
         else{
-            Yii::$app->getSession()->setFlash('danger', ['message' => Yii::t('app', Helper::getAccessDenied())]);
+            MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
         } 
         
@@ -118,7 +118,7 @@ class ProfileController extends Controller
             }            
         }
         else{
-            Yii::$app->getSession()->setFlash('danger', ['message' => Yii::t('app', Helper::getAccessDenied())]);
+            MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
         }  
               
@@ -156,7 +156,7 @@ class ProfileController extends Controller
             ]);           
         }
         else{
-            Yii::$app->getSession()->setFlash('danger', ['message' => Yii::t('app', Helper::getAccessDenied())]);
+            MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
         }  
           
@@ -201,7 +201,7 @@ class ProfileController extends Controller
             ]);            
         }
         else{
-            Yii::$app->getSession()->setFlash('danger', ['message' => Yii::t('app', Helper::getAccessDenied())]);
+            MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
         } 
            
@@ -215,7 +215,7 @@ class ProfileController extends Controller
      */
     public function actionDelete($id)
     {
-        Yii::$app->getSession()->setFlash('danger', ['message' => Yii::t('app', Helper::getAccessDenied())]);
+        MessageHelper::getFlashAccessDenied();
         throw new ForbiddenHttpException;        
         
 //        if(Yii::$app->user->can('delete-profile')){
@@ -231,7 +231,7 @@ class ProfileController extends Controller
 //            return $this->redirect(['index']);          
 //        }
 //        else{
-//            Yii::$app->getSession()->setFlash('danger', ['message' => Yii::t('app', Helper::getAccessDenied())]);
+//            MessageHelper::getFlashAccessDenied();
 //            throw new ForbiddenHttpException;
 //        } 
     }

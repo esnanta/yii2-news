@@ -2,25 +2,27 @@
 
 namespace backend\controllers;
 
+use common\helper\MediaTypeHelper;
+use common\helper\MessageHelper;
+use common\models\Office;
+use common\models\OfficeMedia;
+use common\models\OfficeMediaSearch;
 use Yii;
-use backend\models\Office;
-use backend\models\OfficeSearch;
-use common\helper\Helper;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
+use yii\web\NotFoundHttpException;
 
 /**
  * OfficeController implements the CRUD actions for Office model.
  */
 class OfficeController extends Controller
 {
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['post'],
                 ],
@@ -38,7 +40,7 @@ class OfficeController extends Controller
             return $this->redirect(['view','id'=>1]);  
         }
         else{
-            Yii::$app->getSession()->setFlash('danger', ['message' => Yii::t('app', Helper::getAccessDenied())]);
+            MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
         }           
         
@@ -54,14 +56,26 @@ class OfficeController extends Controller
         if(Yii::$app->user->can('view-office')){
             $model = $this->findModel($id);
 
+            $searchModel        = new OfficeMediaSearch;
+            $dataProviderSocial = $searchModel->search(Yii::$app->request->getQueryParams());
+            $dataProviderSocial->query->andWhere(['media_type' => MediaTypeHelper::getSocial()]);
+
+            $dataProviderLinks  = $searchModel->search(Yii::$app->request->getQueryParams());
+            $dataProviderLinks->query->andWhere(['media_type' => MediaTypeHelper::getLink()]);
+
+
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
-                return $this->render('view', ['model' => $model]);
+                return $this->render('view', [
+                    'model' => $model,
+                    'dataProviderSocial' => $dataProviderSocial,
+                    'dataProviderLinks' => $dataProviderLinks,
+                ]);
             }            
         }
         else{
-            Yii::$app->getSession()->setFlash('danger', ['message' => Yii::t('app', Helper::getAccessDenied())]);
+            MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
         }
 
@@ -89,7 +103,7 @@ class OfficeController extends Controller
             }            
         }
         else{
-            Yii::$app->getSession()->setFlash('danger', ['message' => Yii::t('app', Helper::getAccessDenied())]);
+            MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
         }    
         
@@ -115,7 +129,7 @@ class OfficeController extends Controller
             }            
         }
         else{
-            Yii::$app->getSession()->setFlash('danger', ['message' => Yii::t('app', Helper::getAccessDenied())]);
+            MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
         }  
         
@@ -135,7 +149,7 @@ class OfficeController extends Controller
             return $this->redirect(['index']);            
         }
         else{
-            Yii::$app->getSession()->setFlash('danger', ['message' => Yii::t('app', Helper::getAccessDenied())]);
+            MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
         }        
     }

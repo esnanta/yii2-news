@@ -16,7 +16,7 @@ class Unify263BlogAsset extends AssetBundle
     public $css = [
         
         'https://fonts.googleapis.com/css?family=Roboto+Slab:300,400,700%7COpen+Sans:400,600,700',
-        
+        'https://use.fontawesome.com/releases/v5.3.1/css/all.css',
         //CSS Global Compulsory
         'vendor/bootstrap/bootstrap.min.css',
         

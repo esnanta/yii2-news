@@ -6,7 +6,7 @@ use kartik\builder\Form;
 
 /**
  * @var yii\web\View $this
- * @var backend\models\Quote $model
+ * @var common\models\Quote $model
  * @var yii\widgets\ActiveForm $form
  */
 ?>

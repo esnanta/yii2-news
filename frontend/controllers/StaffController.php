@@ -2,15 +2,19 @@
 
 namespace frontend\controllers;
 
+use common\helper\MediaTypeHelper;
+use common\models\Employment;
+use common\models\Staff;
+use common\models\StaffMediaSearch;
+use common\models\StaffSearch;
+use common\service\DataListService;
 use Yii;
+use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use yii\helpers\ArrayHelper; // load classes
 
-use backend\models\Staff;
-use backend\models\StaffSearch;
-use backend\models\Employment;
+// load classes
 
 /**
  * StaffController implements the CRUD actions for Staff model.
@@ -24,7 +28,7 @@ class StaffController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['post'],
                 ],
@@ -57,41 +61,48 @@ class StaffController extends Controller
      */
     public function actionView($id)
     {
-        $model = $this->findModel($id);
-        $employmentList=ArrayHelper::map(Employment::find()->asArray()->all(), 'id','title');
-        $genderList=Staff::getArrayGenderStatus();
+        $model          = $this->findModel($id);
+        $employmentList = DataListService::getEmployment();
+        $genderList     = Staff::getArrayGenderStatus();
         
-        $oldFile = $model->getImageFile();
+        $mediaType          = MediaTypeHelper::getSocial();
+        $searchModelMedia   = new StaffMediaSearch();
+        $dataProviderSocial = $searchModelMedia->search(Yii::$app->request->getQueryParams());
+        $dataProviderSocial->query->andWhere(['media_type' => $mediaType]);
+        
+        $oldFile = $model->getAssetFile();
         $oldAvatar = $model->file_name;
         $oldFileName = $model->title;
 
         if ($model->load(Yii::$app->request->post())) {
             // process uploaded image file instance
-            $image = $model->uploadImage();
+            $asset = $model->uploadAsset();
 
             // revert back if no valid file instance uploaded
-            if ($image === false) {
+            if ($asset === false) {
                 $model->file_name = $oldAvatar;
                 $model->title = $oldFileName;
             }
 
-            if ($model->save()) {
+            if ($model->save()) :
                 // upload only if valid uploaded file instance found
-                if ($image !== false) { // delete old and overwrite
-                    file_exists($oldFile) ? unlink($oldFile) : '' ;
-                    $path = $model->getImageFile();
-                    $image->saveAs($path);
+                if ($asset !== false) { // delete old and overwrite
+                    if(file_exists($oldFile)):
+                        unlink($oldFile);
+                    endif;
+                    $path = $model->getAssetFile();
+                    $asset->saveAs($path);
                 }
                 return $this->redirect(['view', 'id'=>$model->id]);
-            } else {
-                // error in saving model
-            }
+            endif;
         }        
         else {
             return $this->render('view', [
                 'model' => $model,
                 'employmentList'=>$employmentList,
-                'genderList'=>$genderList
+                'genderList'=>$genderList,
+                'mediaType'=>$mediaType,
+                'dataProviderSocial' => $dataProviderSocial,
             ]);
         }              
         
@@ -110,13 +121,13 @@ class StaffController extends Controller
         
         if ($model->load(Yii::$app->request->post())) {
             // process uploaded image file instance
-            $image = $model->uploadImage();    
+            $asset = $model->uploadAsset();    
             
             if ($model->save()) {
                 // upload only if valid uploaded file instance found
-                if ($image !== false) {
-                    $path = $model->getImageFile();
-                    $image->saveAs($path);
+                if ($asset !== false) {
+                    $path = $model->getAssetFile();
+                    $asset->saveAs($path);
                 }
                 return $this->redirect(['view', 'id'=>$model->id]);
             } else {
@@ -143,26 +154,26 @@ class StaffController extends Controller
         $employmentList=ArrayHelper::map(Employment::find()->asArray()->all(), 'id','title');
         $genderList=Staff::getArrayGenderStatus();
         
-        $oldFile = $model->getImageFile();
+        $oldFile = $model->getAssetFile();
         $oldAvatar = $model->file_name;
         $oldFileName = $model->title;
 
         if ($model->load(Yii::$app->request->post())) {
             // process uploaded image file instance
-            $image = $model->uploadImage();
+            $asset = $model->uploadAsset();
 
             // revert back if no valid file instance uploaded
-            if ($image === false) {
+            if ($asset === false) {
                 $model->file_name = $oldAvatar;
                 $model->title = $oldFileName;
             }
 
             if ($model->save()) {
                 // upload only if valid uploaded file instance found
-                if ($image !== false) { // delete old and overwrite
+                if ($asset !== false) { // delete old and overwrite
                     file_exists($oldFile) ? unlink($oldFile) : '' ;
-                    $path = $model->getImageFile();
-                    $image->saveAs($path);
+                    $path = $model->getAssetFile();
+                    $asset->saveAs($path);
                 }
                 return $this->redirect(['view', 'id'=>$model->id]);
             } else {

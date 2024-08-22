@@ -2,22 +2,21 @@
 
 namespace backend\controllers;
 
+use common\helper\MediaTypeHelper;
+use common\helper\MessageHelper;
+use common\models\Article;
+use common\models\ArticleSearch;
+use common\models\Author;
+use common\models\AuthorMediaSearch;
+use common\models\AuthorSearch;
+use common\service\CacheService;
+use common\service\DataListService;
 use Yii;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
-use yii\helpers\ArrayHelper;
 use yii\helpers\FileHelper;
-
-use backend\models\Author;
-use backend\models\AuthorSearch;
-
-use backend\models\Blog;
-use backend\models\Category;
-use backend\models\BlogSearch;
-
-use common\helper\Helper;
+use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
+use yii\web\NotFoundHttpException;
 
 /**
  * AuthorController implements the CRUD actions for Author model.
@@ -27,11 +26,11 @@ class AuthorController extends Controller
     
     public static $pathTmpCrop='/uploads/tmp';
     
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['post'],
                 ],
@@ -57,11 +56,12 @@ class AuthorController extends Controller
                 'maxSize'=> 4097152,  
             ]
         ];
-    }    
-    
+    }
+
     /**
      * Lists all Author models.
      * @return mixed
+     * @throws ForbiddenHttpException
      */
     public function actionIndex()
     {
@@ -76,7 +76,7 @@ class AuthorController extends Controller
             ]);         
         }
         else{
-            Yii::$app->getSession()->setFlash('danger', ['message' => Yii::t('app', Helper::getAccessDenied())]);
+            MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
         }           
         
@@ -90,38 +90,48 @@ class AuthorController extends Controller
     public function actionView($id,$title=null)
     {
         if(Yii::$app->user->can('view-author')){
-            $model = $this->findModel($id);
+            $model      = $this->findModel($id);
+            $mediaType  = MediaTypeHelper::getSocial();
 
-            $searchModel = new BlogSearch;
-            $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
+            $searchModelArticle = new ArticleSearch();
+            $dataProvider = $searchModelArticle->search(Yii::$app->request->getQueryParams());
             $dataProvider->query->andWhere(['author_id'=> $model->id]);
 
-            $categoryList   =ArrayHelper::map(Category::find()->asArray()->all(), 'id','title');
-            $publishList    =Blog::getArrayPublishStatus();
-            $pinnedList     =Blog::getArrayPinnedStatus();             
+            $searchModelMedia = new AuthorMediaSearch();
+            $dataProviderSocial = $searchModelMedia->search(Yii::$app->request->getQueryParams());
+            $dataProviderSocial->query->andWhere(['media_type' => $mediaType]);
+            
+            $officeList         = DataListService::getOffice();
+            $articleCategory    = DataListService::getArticleCategory();
+            $publishList        = Article::getArrayPublishStatus();
+            $pinnedList         = Article::getArrayPinnedStatus();
 
             if ($model->load(Yii::$app->request->post())) {
 
                 if ($model->save()) {
+                    MessageHelper::getFlashSaveSuccess();
                     return $this->redirect(['view', 'id'=>$model->id]);
                 } else {
-                    // error in saving model
+                    MessageHelper::getFlashSaveFailed();
                 }
             }        
             else {
                 return $this->render('view', [
                     'model' => $model,
                     'dataProvider'  => $dataProvider,
-                    'searchModel'   => $searchModel,
-                    'categoryList'  => $categoryList,
+                    'dataProviderSocial' => $dataProviderSocial,
+                    'searchModelArticle'   => $searchModelArticle,
+                    'officeList'    => $officeList,
+                    'categoryList'  => $articleCategory,
                     'publishList'   => $publishList,
-                    'pinnedList'    => $pinnedList,                 
+                    'pinnedList'    => $pinnedList,
+                    'mediaType'     => $mediaType
                     
                 ]);
             }           
         }
         else{
-            Yii::$app->getSession()->setFlash('danger', ['message' => Yii::t('app', Helper::getAccessDenied())]);
+            MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
         }         
     }
@@ -134,18 +144,22 @@ class AuthorController extends Controller
     public function actionCreate()
     {
         if(Yii::$app->user->can('create-author')){
-            $model          = new Author;
+            $model              = new Author;
+            $model->office_id   = CacheService::getInstance()->getOfficeId();
+            $officeList         = DataListService::getOffice();
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                MessageHelper::getFlashSaveSuccess();
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
                 return $this->render('create', [
                     'model' => $model,
+                    'officeList' => $officeList
                 ]);
             }          
         }
         else{
-            Yii::$app->getSession()->setFlash('danger', ['message' => Yii::t('app', Helper::getAccessDenied())]);
+            MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
         }              
     }
@@ -159,7 +173,8 @@ class AuthorController extends Controller
     public function actionUpdate($id)
     {
         if(Yii::$app->user->can('update-author')){
-            $model = $this->findModel($id);
+            $model      = $this->findModel($id);
+            $officeList = DataListService::getOffice();
 
             if ($model->load(Yii::$app->request->post())) {
 
@@ -171,20 +186,22 @@ class AuthorController extends Controller
                     //DELETE FILE LAMA
                     file_exists($urlTmpCrop.'/'.$model->file_name) ? unlink($urlTmpCrop.'/'.$model->file_name) : '' ;
                     //PINDAHIN DATA DARI TMP KE DIREKTORI MODEL
-                    rename(Yii::getAlias('@webroot').self::$pathTmpCrop.'/'.$model->file_name, $model->getImageFile());
+                    rename(Yii::getAlias('@webroot').self::$pathTmpCrop.'/'.$model->file_name, $model->getAssetFile());
+                    MessageHelper::getFlashUpdateSuccess();
                     return $this->redirect(['view', 'id'=>$model->id]);
                 }
                 
                 else {
-                    // error in saving model
+                    MessageHelper::getFlashUpdateFailed();
                 }
             }
             return $this->render('update', [
                 'model'=>$model,
+                'officeList' => $officeList
             ]);            
         }
         else{
-            Yii::$app->getSession()->setFlash('danger', ['message' => Yii::t('app', Helper::getAccessDenied())]);
+            MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
         }          
     }
@@ -204,14 +221,14 @@ class AuthorController extends Controller
             // e.g. display an error message 
             if ($model->delete()) {
                 if (!$model->deleteImage()) {
-                    Yii::$app->session->setFlash('error', 'Error deleting image');
+                    MessageHelper::getFlashDeleteAssetFailed();
                 }
             }
 
             return $this->redirect(['index']);        
         }
         else{
-            Yii::$app->getSession()->setFlash('danger', ['message' => Yii::t('app', Helper::getAccessDenied())]);
+            MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
         }           
 

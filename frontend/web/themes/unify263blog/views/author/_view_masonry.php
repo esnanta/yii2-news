@@ -1,5 +1,7 @@
 
 <?php
+
+use common\helper\ContentHelper;
 use yii\helpers\Html;
 ?>
 
@@ -26,6 +28,6 @@ use yii\helpers\Html;
 
 <h3><small><?= Html::a($model->title, $model->getUrl()); ?></small></h3>
 
-<p><?= $model->readMore();?></p>
+<p><?= strip_tags(ContentHelper::readMore($model->content)); ?></p>
 
 <?php Html::a('Read More', $model->getUrl(),['class'=>'r-more'])?>

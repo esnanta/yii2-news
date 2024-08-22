@@ -1,0 +1,89 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Sep 30, 2023, 11:10:22 PM
+    Author     : Cassiopeia
+*/
+
+@media print {
+    * {
+        -webkit-print-color-adjust: exact;
+    }
+    
+    no-print,
+    nav,
+    sideNav,
+    
+    .u-header,
+    .footer, footer,
+    breadcrumb,
+    .breadcrumbs,
+    .btn {
+        display: none !important;
+        visibility: hidden;
+    }
+
+    .row > [class*="col-"] {
+        float: left;
+    }
+
+    .col-md-3,
+    .col-md-6 {
+        width: 33%;
+    }
+
+    .col-lg-2 {
+        width: 24%;
+    }
+
+    .g-bg-primary {
+        color: #000 !important;
+    }
+
+    .g-font-size-default {
+        font-size: 11px !important;
+    }
+
+    .h4,
+    .h5 {
+        font-size: 14px !important;
+    }
+
+    .g-pa-15 {
+        padding: 10px !important;
+    }
+
+    .py-4 {
+        padding-top: 10px !important;
+        padding-bottom: 10px !important;
+    }
+
+    .g-py-15 {
+        padding-top: 5px !important;
+        padding-bottom: 5px !important;
+    }
+
+    .g-pt-100 {
+        padding-top: 30px !important;
+    }
+
+    .g-pb-30 {
+        padding-bottom: 0 !important;
+    }
+
+    .g-mb-30,
+    .g-mb-40 {
+        margin-bottom: 20px !important;
+    }
+
+    .my-2 {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    table tr th {
+        font-size: 13px !important;
+    }
+}

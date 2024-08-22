@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
- * @var backend\models\Quote $model
+ * @var common\models\Quote $model
  */
 
 $this->title = 'Update Quote: ' . ' ' . $model->title;

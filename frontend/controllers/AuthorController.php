@@ -8,10 +8,10 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\data\ActiveDataProvider;
 
-use backend\models\Author;
-use backend\models\AuthorSearch;
-use backend\models\Blog;
-use backend\models\Category;
+use common\models\Author;
+use common\models\AuthorSearch;
+use common\models\Article;
+use common\models\ArticleCategory;
 
 /**
  * AuthorController implements the CRUD actions for Author model.
@@ -24,7 +24,7 @@ class AuthorController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['post'],
                 ],
@@ -55,14 +55,14 @@ class AuthorController extends Controller
     public function actionView($id,$title=null,$cat=null)
     {
         $model          = $this->findModel($id);
-        $categories     = Category::find()->all();
+        $categories     = ArticleCategory::find()->all();
         $categoryTitle  = 'All';
         
         /**
          * B L O G S
          */
-        $blogQuery = Blog::find()->where([
-            'publish_status' => Blog::PUBLISH_STATUS_YES,
+        $blogQuery = Article::find()->where([
+            'publish_status' => Article::PUBLISH_STATUS_YES,
             'author_id' => $model->id
         ]);
 
@@ -76,15 +76,15 @@ class AuthorController extends Controller
         ]);        
         
         if(!empty($cat)){
-            $category = Category::find()->where(['id'=>$cat])->one();
+            $category = ArticleCategory::find()->where(['id'=>$cat])->one();
             $categoryTitle = $category->title;
-            $blogProvider->query->andWhere(['category_id'=> $cat]);
+            $blogProvider->query->andWhere(['article_category_id'=> $cat]);
         }
         
         $blogProvider->pagination->pageSize=6;        
                 
         
-        $oldFile = $model->getImageFile();
+        $oldFile = $model->getAssetFile();
         $oldAvatar = $model->file_name;
 
         if ($model->load(Yii::$app->request->post())) {
@@ -101,7 +101,7 @@ class AuthorController extends Controller
                 // upload only if valid uploaded file instance found
                 if ($image !== false) { // delete old and overwrite
                     file_exists($oldFile) ? unlink($oldFile) : '' ;
-                    $path = $model->getImageFile();
+                    $path = $model->getAssetFile();
                     $image->saveAs($path);
                 }
                 return $this->redirect([
@@ -139,7 +139,7 @@ class AuthorController extends Controller
             if ($model->save()) {
                 // upload only if valid uploaded file instance found
                 if ($image !== false) {
-                    $path = $model->getImageFile();
+                    $path = $model->getAssetFile();
                     $image->saveAs($path);
                 }
                 return $this->redirect(['view', 'id'=>$model->id]);
@@ -164,7 +164,7 @@ class AuthorController extends Controller
         $model = $this->findModel($id);
 
         
-        $oldFile = $model->getImageFile();
+        $oldFile = $model->getAssetFile();
         $oldAvatar = $model->file_name;
         $oldFileName = $model->title;
 
@@ -182,7 +182,7 @@ class AuthorController extends Controller
                 // upload only if valid uploaded file instance found
                 if ($image !== false) { // delete old and overwrite
                     file_exists($oldFile) ? unlink($oldFile) : '' ;
-                    $path = $model->getImageFile();
+                    $path = $model->getAssetFile();
                     $image->saveAs($path);
                 }
                 return $this->redirect(['view', 'id'=>$model->id]);

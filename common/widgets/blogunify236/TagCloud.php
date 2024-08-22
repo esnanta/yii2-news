@@ -2,7 +2,7 @@
 namespace common\widgets\blogunify236;
 
 use Yii;
-use backend\models\Tag as Tag;
+use common\models\Tag as Tag;
 use yii\base\Widget;
 use yii\helpers\Html;
 
@@ -27,7 +27,7 @@ class TagCloud extends Widget
         foreach($tags as $tag=>$weight)
         {
             $link = Html::a($tag, Yii::$app->getUrlManager()
-                        ->createUrl(['blog/index','tag'=>$tag]),['class'=>'u-tags-v1 g-brd-around g-brd-gray-light-v4 g-bg-primary--hover g-brd-primary--hover g-color-black-opacity-0_8 g-color-white--hover rounded g-py-6 g-px-15']);
+                        ->createUrl(['article/index','tag'=>$tag]),['class'=>'u-tags-v1 g-brd-around g-brd-gray-light-v4 g-bg-primary--hover g-brd-primary--hover g-color-black-opacity-0_8 g-color-white--hover rounded g-py-6 g-px-15']);
 
             $str .= Html::tag('li', $link, [
                     'class'=>'list-inline-item g-mb-10',

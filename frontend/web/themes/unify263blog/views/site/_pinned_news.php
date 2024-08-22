@@ -1,7 +1,10 @@
 <?php
+
+use common\helper\ContentHelper;
 use yii\helpers\Html;
 
-$src    = str_replace('frontend', 'backend', $model->getCover($model->content));    
+$articleCover   = str_replace('frontend', 'backend',
+    ContentHelper::getCover($model->content));
 ?>
 
 <!-- Article -->

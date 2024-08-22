@@ -3,7 +3,7 @@ namespace common\widgets;
 
 use Yii;
 use yii\base\Widget;
-use backend\models\Blog as Blog;
+use common\models\Article as Blog;
 
 class RecentBlogs extends Widget
 {
@@ -21,7 +21,7 @@ class RecentBlogs extends Widget
 
     public function run()
     {
-        $blogs = Blog::find()->where(['publish_status' => Blog::PUBLISH_STATUS_YES])->orderBy(['created_at' => SORT_DESC])->limit($this->maxData)->all();
+        $blogs = Article::find()->where(['publish_status' => Article::PUBLISH_STATUS_YES])->orderBy(['created_at' => SORT_DESC])->limit($this->maxData)->all();
         return $this->render('_recent_blog', [
             'title' => $this->title,
             'blogs' => $blogs,

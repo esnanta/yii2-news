@@ -5,7 +5,7 @@ use kartik\detail\DetailView;
 use bajadev\ckeditor\CKEditor;
 /**
  * @var yii\web\View $this
- * @var backend\models\Quote $model
+ * @var common\models\Quote $model
  */
 
 $this->title = $model->title;
@@ -81,7 +81,7 @@ $create = Html::a('<i class="glyphicon glyphicon-plus"></i>', ['create'], ['clas
                                 'value'=>$model->content,
                                 'type'=>DetailView::INPUT_WIDGET, 
                                 'widgetOptions'=>[
-                                    'class'=> CKEditor::className(),
+                                    'class'=> CKEditor::class,
                                     'editorOptions' => [
                                         'preset' => 'basic', // basic, standard, full
                                         'inline' => false,

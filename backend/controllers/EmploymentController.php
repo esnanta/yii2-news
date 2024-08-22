@@ -2,25 +2,27 @@
 
 namespace backend\controllers;
 
+use common\helper\MessageHelper;
+use common\models\Employment;
+use common\models\EmploymentSearch;
+use common\service\DataListService;
 use Yii;
-use backend\models\Employment;
-use backend\models\EmploymentSearch;
-use common\helper\Helper;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\web\ForbiddenHttpException;
+use yii\db\StaleObjectException;
 use yii\filters\VerbFilter;
+use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
+use yii\web\NotFoundHttpException;
 
 /**
  * EmploymentController implements the CRUD actions for Employment model.
  */
 class EmploymentController extends Controller
 {
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['post'],
                 ],
@@ -35,19 +37,20 @@ class EmploymentController extends Controller
     public function actionIndex()
     {
         if(Yii::$app->user->can('index-employment')){
-            $searchModel = new EmploymentSearch;
-            $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
+                $searchModel = new EmploymentSearch;
+                $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
+                $officeList = DataListService::getOffice();
 
-            return $this->render('index', [
-                'dataProvider' => $dataProvider,
-                'searchModel' => $searchModel,
-            ]);          
-        }
+                return $this->render('index', [
+                    'dataProvider' => $dataProvider,
+                    'searchModel' => $searchModel,
+                    'officeList' => $officeList,
+                ]);
+                    }
         else{
-            Yii::$app->getSession()->setFlash('danger', ['message' => Yii::t('app', Helper::getAccessDenied())]);
+            MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
-        }          
-
+        }
     }
 
     /**
@@ -58,19 +61,22 @@ class EmploymentController extends Controller
     public function actionView($id)
     {
         if(Yii::$app->user->can('view-employment')){
-            $model = $this->findModel($id);
+            $model      = $this->findModel($id);
+            $officeList = DataListService::getOffice();
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
-                return $this->render('view', ['model' => $model]);
-            }           
+                return $this->render('view', [
+                    'model' => $model,
+                    'officeList' => $officeList,
+                ]);
+            }
         }
         else{
-            Yii::$app->getSession()->setFlash('danger', ['message' => Yii::t('app', Helper::getAccessDenied())]);
+            MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
-        }         
-        
+        }
     }
 
     /**
@@ -81,21 +87,28 @@ class EmploymentController extends Controller
     public function actionCreate()
     {
         if(Yii::$app->user->can('create-employment')){
-            $model = new Employment;
+            $model      = new Employment;
+            $officeList = DataListService::getOffice();
 
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            } else {
-                return $this->render('create', [
-                    'model' => $model,
-                ]);
-            }           
+            try {
+                if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                } 
+                else {
+                    return $this->render('create', [
+                        'model' => $model,
+                        'officeList' => $officeList,
+                    ]);
+                }
+            }
+            catch (StaleObjectException $e) {
+                throw new StaleObjectException('The object being updated is outdated.');
+            }
         }
         else{
-            Yii::$app->getSession()->setFlash('danger', ['message' => Yii::t('app', Helper::getAccessDenied())]);
+            MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
-        }         
-
+        }
     }
 
     /**
@@ -107,21 +120,27 @@ class EmploymentController extends Controller
     public function actionUpdate($id)
     {
         if(Yii::$app->user->can('update-employment')){
-            $model = $this->findModel($id);
+            try {
+                $model      = $this->findModel($id);
+                $officeList = DataListService::getOffice();
 
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            } else {
-                return $this->render('update', [
-                    'model' => $model,
-                ]);
-            }          
+                if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                } else {
+                    return $this->render('update', [
+                        'model' => $model,
+                        'officeList' => $officeList,
+                    ]);
+                }
+            }
+            catch (StaleObjectException $e) {
+                throw new StaleObjectException('The object being updated is outdated.');
+            }
         }
         else{
-            Yii::$app->getSession()->setFlash('danger', ['message' => Yii::t('app', Helper::getAccessDenied())]);
+            MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
-        }         
-
+        }
     }
 
     /**
@@ -135,13 +154,12 @@ class EmploymentController extends Controller
         if(Yii::$app->user->can('delete-employment')){
             $this->findModel($id)->delete();
 
-            return $this->redirect(['index']);            
+            return $this->redirect(['index']);
         }
         else{
-            Yii::$app->getSession()->setFlash('danger', ['message' => Yii::t('app', Helper::getAccessDenied())]);
+            MessageHelper::getFlashLoginInfo();
             throw new ForbiddenHttpException;
-        }          
-
+        }
     }
 
     /**

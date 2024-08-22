@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
- * @var backend\models\Profile $model
+ * @var common\models\Profile $model
  */
 
 $this->title = 'Update Profile: ' . ' ' . $model->name;

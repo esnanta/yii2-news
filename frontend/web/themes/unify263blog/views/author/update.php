@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
- * @var backend\models\Author $model
+ * @var common\models\Author $model
  */
 
 $this->title = 'Update Author: ' . ' ' . $model->title;
