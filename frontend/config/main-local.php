@@ -1,10 +1,12 @@
 <?php
 
-return [
+$config = [
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => 'Z2hmB-IoOlyOpSsMZ_NyHlCxHVXSFmdK',
+            'cookieValidationKey' => 'Gb93WlEm3I-SOkR-P1_AVt2IEBg7s0n1',
         ],
     ],
 ];
+
+return $config;
