@@ -76,7 +76,7 @@ class ArticleCategory extends BaseArticleCategory
                     $returnValue = UIHelper::getPrimary($arrayModule[$_module]);
                     break;
                 default:
-                    $returnValue = UIHelper::getDefault($arrayModule[$_module]);
+                    $returnValue = UIHelper::getDefault();
             }
 
             return $returnValue;

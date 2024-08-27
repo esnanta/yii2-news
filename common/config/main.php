@@ -20,7 +20,7 @@ return [
     'components' => [
         'db' => [
             'class' => Connection::class,
-            'dsn' => 'mysql:host=localhost;dbname=yii2-escyber13',
+            'dsn' => 'mysql:host=localhost;dbname=zttrhcuc_smanmba',
             'username' => 'root',
             'password' => '',
             'charset' => 'utf8',

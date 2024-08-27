@@ -49,7 +49,7 @@ class UIHelper {
     {
         return '<span class="badge bg-danger text-white">'.$text.'</span>';
     }
-    public static function getDefault($text): string
+    public static function getDefault($text='-'): string
     {
         return '<span class="badge bg-secondary text-white">'.$text.'</span>';
     }

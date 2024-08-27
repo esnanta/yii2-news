@@ -79,7 +79,7 @@ class Staff extends BaseStaff
                     $returnValue = UIHelper::getSuccess($arrayModule[$_module]);
                     break;
                 default:
-                    $returnValue = UIHelper::getDefault($arrayModule[$_module]);
+                    $returnValue = UIHelper::getDefault('-');
             }
 
             return $returnValue;
@@ -111,7 +111,7 @@ class Staff extends BaseStaff
                     $returnValue = UIHelper::getNo($arrayModule[$_module]);
                     break;
                 default:
-                    $returnValue = UIHelper::getDefault($arrayModule[$_module]);
+                    $returnValue = UIHelper::getDefault('-');
             }            
 
             return $returnValue;

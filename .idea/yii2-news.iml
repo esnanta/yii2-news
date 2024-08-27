@@ -10,6 +10,7 @@
       <sourceFolder url="file://$MODULE_DIR$/frontend/tests/_support" isTestSource="true" packagePrefix="frontend\tests\" />
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/backend/web/assets/32c415de/" isTestSource="false" packagePrefix="kartik\plugins\dateformatter\" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/behat/gherkin" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/bower-asset/bootstrap" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/bower-asset/inputmask" />

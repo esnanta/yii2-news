@@ -14,20 +14,18 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="card border-default mb-3">
     <div class="card-header">
-        <?=Yii::t('app', 'Please fill out the form below')?>
+        <?= Yii::t('app', 'Please fill out the form below') ?>
         <span class="pull-right">
             <?= Html::encode($this->title) ?>
         </span>
     </div>
     <div class="card-body text-default">
-        <div class="article-category">
-            <?= $this->render('_form', [
-                'model' => $model,
-                'tagList'=>$tagList,
-                'authorList'=>$authorList,
-                'articleCategoryList' => $articleCategoryList,
-            ])
-            ?>
-        </div>
+        <?= $this->render('_form', [
+            'model' => $model,
+            'tagList' => $tagList,
+            'authorList' => $authorList,
+            'articleCategoryList' => $articleCategoryList,
+        ])
+        ?>
     </div>
 </div>

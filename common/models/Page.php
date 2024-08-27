@@ -65,7 +65,7 @@ class Page extends BaseThemeDetail
                     $returnValue = UIHelper::getSuccess($arrayModule[$_module]);
                     break;
                 default:
-                    $returnValue = UIHelper::getDefault($arrayModule[$_module]);
+                    $returnValue = UIHelper::getDefault();
             }
             return $returnValue;
         }

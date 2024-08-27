@@ -118,7 +118,7 @@ class Article extends BaseArticle
             return match ($_module) {
                 ($_module == self::PUBLISH_STATUS_NO) => UIHelper::getNo($arrayModule[$_module]),
                 ($_module == self::PUBLISH_STATUS_YES) => UIHelper::getYes($arrayModule[$_module]),
-                default => UIHelper::getDefault($arrayModule[$_module]),
+                default => UIHelper::getDefault('-'),
             };
 
         }
@@ -143,7 +143,7 @@ class Article extends BaseArticle
             return match ($_module) {
                 ($_module == self::PINNED_STATUS_NO) => UIHelper::getNo($arrayModule[$_module]),
                 ($_module == self::PINNED_STATUS_YES) => UIHelper::getYes($arrayModule[$_module]),
-                default => UIHelper::getDefault($arrayModule[$_module]),
+                default => UIHelper::getDefault(),
             };
 
         }
