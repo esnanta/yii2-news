@@ -1,6 +1,6 @@
 <?php
 use yii\helpers\Url;
-use yii\bootstrap4\Html;
+use yii\bootstrap5\Html;
 
 $signOut = '<span class="d-flex align-self-center g-mr-12">
                 <i class="hs-admin-shift-right"></i>

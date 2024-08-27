@@ -3,9 +3,9 @@
 
 /** @var string $content */
 use backend\assets\AdminUnifyAsset;
-use common\widgets\AlertBootstrap4 as Alert;
-use yii\bootstrap4\Breadcrumbs;
-use yii\bootstrap4\Html;
+use common\widgets\AlertBootstrap5 as Alert;
+use yii\bootstrap5\Breadcrumbs;
+use yii\bootstrap5\Html;
 
 AdminUnifyAsset::register($this);
 ?>

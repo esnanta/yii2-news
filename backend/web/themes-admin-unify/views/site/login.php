@@ -1,12 +1,12 @@
 <?php
 
 /** @var yii\web\View $this */
-/** @var yii\bootstrap4\ActiveForm $form */
+/** @var yii\bootstrap5\ActiveForm $form */
 /** @var LoginForm $model */
 
 use common\models\app\LoginForm;
-use yii\bootstrap4\ActiveForm;
-use yii\bootstrap4\Html;
+use yii\bootstrap5\ActiveForm;
+use yii\bootstrap5\Html;
 
 $this->title = 'Login';
 ?>
