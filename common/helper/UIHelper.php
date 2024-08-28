@@ -74,7 +74,7 @@ class UIHelper {
     {
         return Html::a('<i class="fas fa-plus"></i>',
             $route,
-            ['class' => 'button float-right','style'=>'color:#333;padding:0 5px']);
+            ['class' => 'button float-right float-end','style'=>'color:#333;padding:0 5px']);
     }
 
     public static function getPrintIcon(): string

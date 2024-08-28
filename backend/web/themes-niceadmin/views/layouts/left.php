@@ -86,7 +86,7 @@ use kartik\widgets\SideNav;
 
             // Sidebar items configuration
             'items' => [
-                ['label' => Yii::t('app', 'Home'), 'icon' => 'fab fa-google', 'url' => ['/site/index']],
+                ['label' => Yii::t('app', 'Home'), 'icon' => 'home', 'url' => ['/site/index']],
 
                 ['label' => Yii::t('app', 'Office'), 'icon' => 'fas fa-university', 'items' => [
                     ['label' => Yii::t('app', 'Staff'), 'icon' => '', 'items' => [

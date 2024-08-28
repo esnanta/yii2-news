@@ -1,13 +1,14 @@
 <?php
 
 use common\helper\UIHelper;
+use common\models\User;
 use kartik\select2\Select2;
-use yii\helpers\Html;
 use kartik\detail\DetailView;
 
 /**
  * @var yii\web\View $this
  * @var common\models\Employment $model
+ * @var common\models\Office $officeList
  */
 
 $this->title = $model->title;
@@ -15,6 +16,7 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Employments'), 'url'
 $this->params['breadcrumbs'][] = $this->title;
 $create = UIHelper::getCreateButton();
 ?>
+
 <div class="employment-view">
 
     <?= DetailView::widget([
@@ -61,13 +63,13 @@ $create = UIHelper::getCreateButton();
                 'columns' => [
                     [
                         'attribute' => 'created_by',
-                        'value' => ($model->created_by != null) ? \common\models\User::getName($model->created_by) : '',
+                        'value' => ($model->created_by != null) ? User::getName($model->created_by) : '',
                         'type' => DetailView::INPUT_HIDDEN,
                         'valueColOptions' => ['style' => 'width:30%']
                     ],
                     [
                         'attribute' => 'updated_by',
-                        'value' => ($model->updated_by != null) ? \common\models\User::getName($model->updated_by) : '',
+                        'value' => ($model->updated_by != null) ? User::getName($model->updated_by) : '',
                         'type' => DetailView::INPUT_HIDDEN,
                         'valueColOptions' => ['style' => 'width:30%']
                     ],
