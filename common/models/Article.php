@@ -115,12 +115,18 @@ class Article extends BaseArticle
         if($_module)
         {
             $arrayModule = self::getArrayPublishStatus();
-            return match ($_module) {
-                ($_module == self::PUBLISH_STATUS_NO) => UIHelper::getNo($arrayModule[$_module]),
-                ($_module == self::PUBLISH_STATUS_YES) => UIHelper::getYes($arrayModule[$_module]),
-                default => UIHelper::getDefault('-'),
-            };
+            switch ($_module) {
+                case ($_module == self::PUBLISH_STATUS_NO):
+                    $returnValue = UIHelper::getNo($arrayModule[$_module]);
+                    break;
+                case ($_module == self::PUBLISH_STATUS_YES):
+                    $returnValue = UIHelper::getYes($arrayModule[$_module]);
+                    break;
+                default:
+                    $returnValue = UIHelper::getDefault();
+            }
 
+            return $returnValue;
         }
         else
             return 'null';
@@ -140,12 +146,19 @@ class Article extends BaseArticle
         if($_module)
         {
             $arrayModule = self::getArrayPinnedStatus();
-            return match ($_module) {
-                ($_module == self::PINNED_STATUS_NO) => UIHelper::getNo($arrayModule[$_module]),
-                ($_module == self::PINNED_STATUS_YES) => UIHelper::getYes($arrayModule[$_module]),
-                default => UIHelper::getDefault(),
-            };
 
+            switch ($_module) {
+                case ($_module == self::PINNED_STATUS_NO):
+                    $returnValue = UIHelper::getNo($arrayModule[$_module]);
+                    break;
+                case ($_module == self::PINNED_STATUS_YES):
+                    $returnValue = UIHelper::getYes($arrayModule[$_module]);
+                    break;
+                default:
+                    $returnValue = UIHelper::getDefault();
+            }
+
+            return $returnValue;
         }
         else
             return 'null';

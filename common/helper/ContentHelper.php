@@ -16,7 +16,7 @@ class ContentHelper
      * @param integer $maxFileSize
      * @return bool|string
      */
-    public static function validateImageSize($content, $maxFileSize = 500 * 1024)
+    public static function validateImageSize($content, $maxFileSize = 300 * 1024)
     {
         $matches = [];
         preg_match_all('/<img[^>]+src="data:image\/[^;]+;base64,([^"]+)"/', $content, $matches);
@@ -24,7 +24,7 @@ class ContentHelper
         foreach ($matches[1] as $base64Str) {
             $fileSize = (strlen($base64Str) * (3 / 4)) - (str_contains($base64Str, '=') ? (strlen($base64Str) - strpos($base64Str, '=')) : 0);
             if ($fileSize > $maxFileSize) {
-                return 'One or more images exceed the maximum allowed size of 500 KB.';
+                return 'One or more images exceed the maximum allowed size of 300 KB.';
             }
         }
 
