@@ -38,14 +38,6 @@ NiceAdminAsset::register($this);
         <!-- End Sidebar Nav -->
 
         <main id="main" class="main">
-            <div class="pagetitle">
-                <?=
-                Breadcrumbs::widget([
-                    'links' => $this->params['breadcrumbs'] ?? [],
-                ])
-                ?>
-            </div>
-
             <section class="section dashboard">
                 <?= Alert::widget() ?>
                 <?= $content ?>
