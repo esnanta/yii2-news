@@ -1,6 +1,6 @@
 <?php
 
-use common\helper\UIHelper;
+use common\helper\LabelHelper;
 use common\models\User;
 use kartik\select2\Select2;
 use kartik\detail\DetailView;
@@ -14,7 +14,7 @@ use kartik\detail\DetailView;
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Employments'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-$create = UIHelper::getCreateButton();
+$create = LabelHelper::getCreateButton();
 ?>
 
 <div class="employment-view">

@@ -1,6 +1,6 @@
 <?php
 
-use common\helper\UIHelper;
+use common\helper\LabelHelper;
 use yii\helpers\Html;
 use kartik\grid\GridView;
 use yii\widgets\Pjax;
@@ -11,7 +11,7 @@ use yii\widgets\Pjax;
  * @var common\models\AuthorMediaSearch $searchModel
  */
 $route = ['author-media/create','author'=>$model->id,'type'=>$mediaType];
-$create = UIHelper::getCreateButton($route);
+$create = LabelHelper::getCreateButton($route);
 ?>
 <div class="author-media-index">
     <table class="table table-striped">

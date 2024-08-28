@@ -5,7 +5,7 @@ use Yii;
 use yii\helpers\Html;
 
 // TEMPLATE UNIFY V.2.6.3
-class UIHelper {
+class LabelHelper {
     public static function getButtonCssPlus(): string
     {
         return 'btn btn-sm btn-success';

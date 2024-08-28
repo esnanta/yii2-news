@@ -1,6 +1,6 @@
 <?php
 
-use common\helper\UIHelper;
+use common\helper\LabelHelper;
 use kartik\select2\Select2;
 use yii\helpers\Html;
 use kartik\detail\DetailView;
@@ -14,7 +14,7 @@ use kartik\datecontrol\DateControl;
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Asset Categories'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-$create = UIHelper::getCreateButton();
+$create = LabelHelper::getCreateButton();
 ?>
 <div class="asset-category-view">
 

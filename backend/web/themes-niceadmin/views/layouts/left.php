@@ -127,7 +127,7 @@ use kartik\widgets\SideNav;
         echo SideNav::widget([
             'type' => SideNav::TYPE_SECONDARY,
             'encodeLabels' => false,
-            'heading' => 'fas fa-user-shield"></i> Credentials',
+            'heading' => '<i class="fas fa-user-shield"></i> Credentials',
             'items' => [
                 ['label' => 'Login', 'icon' => 'fas fa-lock', 'url' => ['/user/login']],
             ],

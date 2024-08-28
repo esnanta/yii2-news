@@ -3,7 +3,7 @@
 namespace common\models;
 
 use common\helper\ContentHelper;
-use common\helper\UIHelper;
+use common\helper\LabelHelper;
 use common\models\base\Article as BaseArticle;
 use Yii;
 use yii\db\ActiveQuery;
@@ -117,13 +117,13 @@ class Article extends BaseArticle
             $arrayModule = self::getArrayPublishStatus();
             switch ($_module) {
                 case ($_module == self::PUBLISH_STATUS_NO):
-                    $returnValue = UIHelper::getNo($arrayModule[$_module]);
+                    $returnValue = LabelHelper::getNo($arrayModule[$_module]);
                     break;
                 case ($_module == self::PUBLISH_STATUS_YES):
-                    $returnValue = UIHelper::getYes($arrayModule[$_module]);
+                    $returnValue = LabelHelper::getYes($arrayModule[$_module]);
                     break;
                 default:
-                    $returnValue = UIHelper::getDefault();
+                    $returnValue = LabelHelper::getDefault();
             }
 
             return $returnValue;
@@ -149,13 +149,13 @@ class Article extends BaseArticle
 
             switch ($_module) {
                 case ($_module == self::PINNED_STATUS_NO):
-                    $returnValue = UIHelper::getNo($arrayModule[$_module]);
+                    $returnValue = LabelHelper::getNo($arrayModule[$_module]);
                     break;
                 case ($_module == self::PINNED_STATUS_YES):
-                    $returnValue = UIHelper::getYes($arrayModule[$_module]);
+                    $returnValue = LabelHelper::getYes($arrayModule[$_module]);
                     break;
                 default:
-                    $returnValue = UIHelper::getDefault();
+                    $returnValue = LabelHelper::getDefault();
             }
 
             return $returnValue;
@@ -187,16 +187,16 @@ class Article extends BaseArticle
     public function setPublishUrl(): string
     {
         $value = ($this->publish_status == self::PUBLISH_STATUS_NO) ?
-            UIHelper::getNo(UIHelper::getPrintIcon()) :
-            UIHelper::getYes(UIHelper::getPrintIcon());
+            LabelHelper::getNo(LabelHelper::getPrintIcon()) :
+            LabelHelper::getYes(LabelHelper::getPrintIcon());
         return Html::a($value, Yii::$app->getUrlManager()->createUrl(['article/publish','id'=>$this->id]));
     }
 
     public function setPinUrl(): string
     {
         $value = ($this->pinned_status == self::PINNED_STATUS_NO) ?
-            UIHelper::getNo(UIHelper::getPinIcon()) :
-            UIHelper::getYes(UIHelper::getPinIcon());
+            LabelHelper::getNo(LabelHelper::getPinIcon()) :
+            LabelHelper::getYes(LabelHelper::getPinIcon());
         return Html::a($value, Yii::$app->getUrlManager()->createUrl(['article/pinned','id'=>$this->id]));
     }
 

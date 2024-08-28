@@ -2,7 +2,7 @@
 
 namespace common\models;
 
-use common\helper\UIHelper;
+use common\helper\LabelHelper;
 use common\models\base\ArticleCategory as BaseArticleCategory;
 use common\models\Article as Article;
 
@@ -70,13 +70,13 @@ class ArticleCategory extends BaseArticleCategory
 
             switch ($_module) {
                 case ($_module == self::TIME_LINE_NO):
-                    $returnValue = UIHelper::getDanger($arrayModule[$_module]);
+                    $returnValue = LabelHelper::getDanger($arrayModule[$_module]);
                     break;
                 case ($_module == self::TIME_LINE_YES):
-                    $returnValue = UIHelper::getPrimary($arrayModule[$_module]);
+                    $returnValue = LabelHelper::getPrimary($arrayModule[$_module]);
                     break;
                 default:
-                    $returnValue = UIHelper::getDefault();
+                    $returnValue = LabelHelper::getDefault();
             }
 
             return $returnValue;

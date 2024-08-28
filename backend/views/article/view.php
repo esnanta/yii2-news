@@ -1,7 +1,7 @@
 <?php
 
 use common\helper\DateHelper;
-use common\helper\UIHelper;
+use common\helper\LabelHelper;
 use common\models\User;
 use kartik\editors\Summernote;
 use kartik\detail\DetailView;
@@ -19,8 +19,8 @@ $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Articles', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
-$create = UIHelper::getCreateButton();
-$counter = UIHelper::viewCounterIcon();
+$create = LabelHelper::getCreateButton();
+$counter = LabelHelper::viewCounterIcon();
 $pinned = '<span class=float-right>'.$model->setPinUrl().'</span>';
 $publish = '<span class=float-right>'.$model->setPublishUrl().'</span>';
 ?>

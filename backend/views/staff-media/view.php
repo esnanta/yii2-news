@@ -1,7 +1,7 @@
 <?php
 
 use common\helper\IconHelper;
-use common\helper\UIHelper;
+use common\helper\LabelHelper;
 use kartik\select2\Select2;
 use yii\helpers\Html;
 use kartik\detail\DetailView;
@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = ['label' => $model->staff->title,
 $this->params['breadcrumbs'][] = $this->title;
 
 $route = ['staff-media/create','staff'=>$model->id,'type'=>$model->media_type];
-$create = UIHelper::getCreateButton($route);
+$create = LabelHelper::getCreateButton($route);
 ?>
 <div class="author-media-view">
 

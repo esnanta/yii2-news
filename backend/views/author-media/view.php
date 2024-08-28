@@ -1,7 +1,7 @@
 <?php
 
 use common\helper\IconHelper;
-use common\helper\UIHelper;
+use common\helper\LabelHelper;
 use kartik\detail\DetailView;
 use kartik\datecontrol\DateControl;
 use kartik\select2\Select2;
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = ['label' => $model->author->title,
     'url' => ['author/view','id'=>$model->author_id]];$this->params['breadcrumbs'][] = $this->title;
 
 $route = ['author-media/create','author'=>$model->id,'type'=>$model->media_type];
-$create = UIHelper::getCreateButton($route);
+$create = LabelHelper::getCreateButton($route);
 ?>
 <div class="author-media-view">
 

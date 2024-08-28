@@ -4,7 +4,7 @@ namespace backend\controllers;
 
 
 use common\helper\MessageHelper;
-use common\helper\UIHelper;
+use common\helper\LabelHelper;
 use common\models\ArticleCategory;
 use common\models\ArticleCategorySearch;
 use common\service\CacheService;
@@ -68,7 +68,7 @@ class ArticleCategoryController extends Controller
             $model      = $this->findModel($id);
             $officeList = DataListService::getOffice();
             $dataList   = ArticleCategory::getArrayTimeLine();
-            $labelList  = UIHelper::getLabelList();
+            $labelList  = LabelHelper::getLabelList();
             
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 MessageHelper::getFlashSaveSuccess();
@@ -102,7 +102,7 @@ class ArticleCategoryController extends Controller
             $model->office_id   = CacheService::getInstance()->getOfficeId();
             $officeList         = DataListService::getOffice();
             $dataList           = ArticleCategory::getArrayTimeLine();
-            $labelList          = UIHelper::getLabelList();
+            $labelList          = LabelHelper::getLabelList();
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 MessageHelper::getFlashSaveSuccess();

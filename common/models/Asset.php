@@ -3,7 +3,7 @@
 namespace common\models;
 
 use common\domain\AssetUseCase;
-use common\helper\UIHelper;
+use common\helper\LabelHelper;
 use common\models\base\Asset as BaseAsset;
 use common\service\CacheService;
 use Yii;
@@ -84,13 +84,13 @@ class Asset extends BaseAsset
 
             switch ($_module) {
                 case ($_module == self::IS_VISIBLE_PRIVATE):
-                    $returnValue = UIHelper::getNo($arrayModule[$_module]);
+                    $returnValue = LabelHelper::getNo($arrayModule[$_module]);
                     break;
                 case ($_module == self::IS_VISIBLE_PUBLIC):
-                    $returnValue = UIHelper::getYes($arrayModule[$_module]);
+                    $returnValue = LabelHelper::getYes($arrayModule[$_module]);
                     break;
                 default:
-                    $returnValue = UIHelper::getDefault();
+                    $returnValue = LabelHelper::getDefault();
             }
 
             return $returnValue;
@@ -118,19 +118,19 @@ class Asset extends BaseAsset
 
             switch ($_module) {
                 case ($_module == self::ASSET_TYPE_DOCUMENT):
-                    $returnValue = UIHelper::getAssetTypeDocument($arrayModule[$_module]);
+                    $returnValue = LabelHelper::getAssetTypeDocument($arrayModule[$_module]);
                     break;
                 case ($_module == self::ASSET_TYPE_SPREADSHEET):
-                    $returnValue = UIHelper::getAssetTypeSpreadsheet($arrayModule[$_module]);
+                    $returnValue = LabelHelper::getAssetTypeSpreadsheet($arrayModule[$_module]);
                     break;
                 case ($_module == self::ASSET_TYPE_IMAGE):
-                    $returnValue = UIHelper::getAssetTypeImage($arrayModule[$_module]);
+                    $returnValue = LabelHelper::getAssetTypeImage($arrayModule[$_module]);
                     break;
                 case ($_module == self::ASSET_TYPE_COMPRESSION):
-                    $returnValue = UIHelper::getAssetTypeCompression($arrayModule[$_module]);
+                    $returnValue = LabelHelper::getAssetTypeCompression($arrayModule[$_module]);
                     break;
                 default:
-                    $returnValue = UIHelper::getDefault();
+                    $returnValue = LabelHelper::getDefault();
             }
 
             return $returnValue;

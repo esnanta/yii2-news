@@ -2,7 +2,7 @@
 
 use kartik\detail\DetailView;
 use bajadev\ckeditor\CKEditor;
-use common\helper\UIHelper;
+use common\helper\LabelHelper;
 use common\helper\MediaTypeHelper;
 use common\models\User;
 
@@ -14,7 +14,7 @@ use common\models\User;
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Authors', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-$create = UIHelper::getCreateButton();
+$create = LabelHelper::getCreateButton();
 ?>
 
 <ul class="nav justify-content-end u-nav-v1-1 u-nav-dark g-mb-20" role="tablist" data-target="nav-1-1-dark-hor-right"

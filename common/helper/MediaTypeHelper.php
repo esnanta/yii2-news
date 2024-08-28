@@ -42,19 +42,19 @@ class MediaTypeHelper
 
             switch ($_module) {
                 case ($_module == self::getLogoLeft()):
-                    $returnValue = UIHelper::getPrimary($arrayModule[$_module]);
+                    $returnValue = LabelHelper::getPrimary($arrayModule[$_module]);
                     break;
                 case ($_module == self::getLogoRight()):
-                    $returnValue = UIHelper::getSuccess($arrayModule[$_module]);
+                    $returnValue = LabelHelper::getSuccess($arrayModule[$_module]);
                     break;
                 case ($_module == self::getSocial()):
-                    $returnValue = UIHelper::getDanger($arrayModule[$_module]);
+                    $returnValue = LabelHelper::getDanger($arrayModule[$_module]);
                     break;
                 case ($_module == self::getLink()):
-                    $returnValue = UIHelper::getWarning($arrayModule[$_module]);
+                    $returnValue = LabelHelper::getWarning($arrayModule[$_module]);
                     break;
                 default:
-                    $returnValue = UIHelper::getDefault($arrayModule[$_module]);
+                    $returnValue = LabelHelper::getDefault($arrayModule[$_module]);
             }
 
             return $returnValue;

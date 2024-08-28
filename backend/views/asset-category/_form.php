@@ -4,7 +4,6 @@ use kartik\select2\Select2;
 use yii\helpers\Html;
 use kartik\widgets\ActiveForm;
 use kartik\builder\Form;
-use kartik\datecontrol\DateControl;
 
 /**
  * @var yii\web\View $this

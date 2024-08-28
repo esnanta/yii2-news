@@ -2,7 +2,7 @@
 
 use common\helper\IconHelper;
 use common\helper\MediaTypeHelper;
-use common\helper\UIHelper;
+use common\helper\LabelHelper;
 use kartik\detail\DetailView;
 use kartik\select2\Select2;
 
@@ -15,7 +15,7 @@ $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Office Media'),
     'url' => ['office/view', 'id' => $model->office_id]];
 $this->params['breadcrumbs'][] = $this->title;
-$create = UIHelper::getCreateButton();
+$create = LabelHelper::getCreateButton();
 ?>
 <div class="office-media-view">
 

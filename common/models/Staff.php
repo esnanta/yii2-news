@@ -3,7 +3,7 @@
 namespace common\models;
 
 use common\domain\AssetUseCase;
-use common\helper\UIHelper;
+use common\helper\LabelHelper;
 use common\models\base\Staff as BaseStaff;
 use common\service\CacheService;
 use Yii;
@@ -73,13 +73,13 @@ class Staff extends BaseStaff
 
             switch ($_module) {
                 case ($_module == self::GENDER_MALE):
-                    $returnValue = UIHelper::getPrimary($arrayModule[$_module]);
+                    $returnValue = LabelHelper::getPrimary($arrayModule[$_module]);
                     break;
                 case ($_module == self::GENDER_FEMALE):
-                    $returnValue = UIHelper::getSuccess($arrayModule[$_module]);
+                    $returnValue = LabelHelper::getSuccess($arrayModule[$_module]);
                     break;
                 default:
-                    $returnValue = UIHelper::getDefault('-');
+                    $returnValue = LabelHelper::getDefault('-');
             }
 
             return $returnValue;
@@ -105,13 +105,13 @@ class Staff extends BaseStaff
 
             switch ($_module) {
                 case ($_module == self::ACTIVE_STATUS_YES):
-                    $returnValue = UIHelper::getYes($arrayModule[$_module]);
+                    $returnValue = LabelHelper::getYes($arrayModule[$_module]);
                     break;
                 case ($_module == self::ACTIVE_STATUS_NO):
-                    $returnValue = UIHelper::getNo($arrayModule[$_module]);
+                    $returnValue = LabelHelper::getNo($arrayModule[$_module]);
                     break;
                 default:
-                    $returnValue = UIHelper::getDefault('-');
+                    $returnValue = LabelHelper::getDefault('-');
             }            
 
             return $returnValue;

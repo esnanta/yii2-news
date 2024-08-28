@@ -1,6 +1,6 @@
 <?php
 
-use common\helper\UIHelper;
+use common\helper\LabelHelper;
 use yii\helpers\Html;
 
 /**
@@ -9,7 +9,7 @@ use yii\helpers\Html;
  * @var common\models\AuthorMediaSearch $searchModel
  */
 $route = ['staff-media/create','staff'=>$model->id,'type'=>$mediaType];
-$create = UIHelper::getCreateButton($route);
+$create = LabelHelper::getCreateButton($route);
 ?>
 <div class="author-media-index">
     <table class="table table-striped">
