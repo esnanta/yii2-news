@@ -47,14 +47,6 @@ return [
         'view' => [
             'theme' => [
                 'pathMap' =>
-//                    [
-//                        '@dektrium/user/views' => '@app/web/themes-admin-unify/dektrium/user',
-//                        '@dektrium/rbac/views' => '@app/web/themes-admin-unify/dektrium/rbac',
-//                        '@backend/views' => '@backend/web/themes-admin-unify/views',
-//                    ],
-//                'basePath' => '@backend/web/themes-admin-unify',
-//                'baseUrl' => '@web/web/themes-admin-unify',
-
                 [
                     '@dektrium/user/views' => '@app/web/themes-niceadmin/dektrium/user',
                     '@dektrium/rbac/views' => '@app/web/themes-niceadmin/dektrium/rbac',

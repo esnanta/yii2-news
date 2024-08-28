@@ -14,7 +14,7 @@ use yii\bootstrap4\Html;
 
 =========================================================
 * Layout Page Frontend : https://github.com/adminmart/Modernize-bootstrap-free
-* Layout Page Backend : https://github.com/StartBootstrap/startbootstrap-sb-admin-2
+* Layout Page Backend : https://bootstrapmade.com/
 =========================================================
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.

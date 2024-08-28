@@ -5,7 +5,6 @@ use common\helper\MediaTypeHelper;
 use common\helper\UIHelper;
 use kartik\detail\DetailView;
 use kartik\select2\Select2;
-use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
