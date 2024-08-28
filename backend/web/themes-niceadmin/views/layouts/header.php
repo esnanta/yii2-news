@@ -1,5 +1,6 @@
 <?php
 
+use common\helper\ImageHelper;
 use common\service\CacheService;
 use common\models\Staff;
 use yii\bootstrap5\Breadcrumbs;
@@ -8,6 +9,8 @@ use yii\helpers\Url;
 
 $flushMenuEnabled       = false;
 $activityMenuEnabled    = false;
+$assetUrl       = ImageHelper::getNotAvailable();
+$staffTitle     = 'Guest';
 
 if (!Yii::$app->user->isGuest) {
 
@@ -15,7 +18,10 @@ if (!Yii::$app->user->isGuest) {
     $staffId        = CacheService::getInstance()->getStaffId();
     $staff          = Staff::find()->where(['id'=>$staffId])->one();
     $authItemName   = CacheService::getInstance()->getAuthItemName();
-    
+    $assetUrl       = $staff->assetUrl;
+    $staffTitle     = $staff->title;
+
+
     $flushMenuEnabled = ($authItemName == Yii::$app->params['userRoleAdmin']) ? true:false;
     
     if($authItemName == Yii::$app->params['userRoleAdmin'] ||
@@ -200,44 +206,56 @@ $signOut = '<i class="bi bi-box-arrow-right"></i><span>Sign Out</span>';
             <li class="nav-item dropdown pe-3">
 
                 <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                    <img src="<?= $staff->getAssetUrl();?>" alt="Profile" class="rounded-circle">
-                    <span class="d-none d-md-block dropdown-toggle ps-2"><?= $staff->title;?></span>
+                    <img src="<?= $assetUrl ;?>" alt="Profile" class="rounded-circle">
+                    <span class="d-none d-md-block dropdown-toggle ps-2"><?= $staffTitle;?></span>
                 </a><!-- End Profile Iamge Icon -->
 
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-                    <li class="dropdown-header">
-                        <h6><?= $staff->title;?></h6>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
+                    <?php if (!Yii::$app->user->getIsGuest()) { ?>
 
-                    <li>
-                        <a class="dropdown-item d-flex align-items-center" href="<?= Url::to(['/staff/view','id'=>$staff->id])?>">
-                            <i class="bi bi-person"></i>
-                            <span>My Profile</span>
-                        </a>
-                    </li>
+                        <li class="dropdown-header">
+                            <h6><?= $staff->title;?></h6>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
 
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="<?= Url::to(['/staff/view','id'=>$staff->id])?>">
+                                <i class="bi bi-person"></i>
+                                <span>My Profile</span>
+                            </a>
+                        </li>
 
-                    <li>
-                        <?= Html::a(
-                            $signOut,
-                            ['/user/logout'],
-                            ['data-method' => 'post',
-                                'data-confirm' => 'Logout now?',
-                                'class' => 'dropdown-item d-flex align-items-center',
-                                'title'=>'Sign Out']
-                        ) ?>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
 
-                    </li>
+                        <li>
+                            <?= Html::a(
+                                $signOut,
+                                ['/user/logout'],
+                                ['data-method' => 'post',
+                                    'data-confirm' => 'Logout now?',
+                                    'class' => 'dropdown-item d-flex align-items-center',
+                                    'title'=>'Sign Out']
+                            ) ?>
 
+                        </li>
+                    <?php } else { ?>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="<?= Url::to(['/user/login'])?>">
+                                <i class="bi bi-person"></i>
+                                <span>Sign in</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                    <?php } ?>
                 </ul><!-- End Profile Dropdown Items -->
             </li><!-- End Profile Nav -->
-
         </ul>
     </nav><!-- End Icons Navigation -->
 
