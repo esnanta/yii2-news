@@ -8,6 +8,7 @@
  * file that was distributed with this source code.
  */
 
+use common\helper\ImageHelper;
 use dektrium\user\widgets\Connect;
 use dektrium\user\models\LoginForm;
 use yii\helpers\Html;
@@ -154,7 +155,7 @@ $home = str_replace('user/', '', $tmpHome);
                         ?>
                     </div>
                     <div class="col-lg-6">
-                        <?=Html::img();?>
+                        <?=Html::img(ImageHelper::getLogin(),['class'=>'img-fluid']);?>
                     </div>
                 </div>
 

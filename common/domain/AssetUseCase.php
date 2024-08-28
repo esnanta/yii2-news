@@ -2,6 +2,7 @@
 
 namespace common\domain;
 
+use common\helper\ImageHelper;
 use Yii;
 use yii\base\Exception;
 use yii\helpers\FileHelper;
@@ -75,6 +76,6 @@ class AssetUseCase
 
     public static function getDefaultImage(): string
     {
-        return Yii::$app->urlManager->baseUrl.'/images/no-picture-available-icon-1.jpg';
+        return ImageHelper::getNotAvailable();
     }
 }
