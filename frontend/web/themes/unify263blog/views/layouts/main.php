@@ -538,7 +538,7 @@ Unify263BlogAsset::register($this);
                                     <?php foreach ($officeMedias as $officeMediaItem) { ;?>
                                         <li class="list-inline-item g-mx-2">
                                             <a class="u-icon-v2 u-icon-size--sm g-brd-secondary-light-v2 g-color-secondary-dark-v2 g-color-white--hover g-bg-primary--hover g-font-size-default rounded"
-                                               href="<?=$officeMediaItem->description;?>" data-toggle="tooltip" data-placement="top" title="<?=IconHelper::getOneFontAwesome($officeMediaItem->title);?>">
+                                               href="<?=$officeMediaItem->description;?>" data-toggle="tooltip" data-placement="top" title="<?=IconHelper::getOneFontAwesomeBrands($officeMediaItem->title);?>">
                                                 <i class="<?=$officeMediaItem->title;?>"></i>
                                             </a>
                                         </li>

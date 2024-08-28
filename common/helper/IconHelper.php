@@ -27,7 +27,7 @@ class IconHelper
         ];
     }
 
-    public static function getOneFontAwesome($_module = null): string
+    public static function getOneFontAwesomeBrands($_module = null): string
     {
         if($_module)
         {

@@ -5,6 +5,7 @@
 
 use backend\assets\NiceAdminAsset;
 use common\widgets\AlertBootstrap5 as Alert;
+use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
 
 NiceAdminAsset::register($this);
@@ -21,30 +22,40 @@ NiceAdminAsset::register($this);
         <title><?= Html::encode($this->title) ?></title>
         <?php $this->head() ?>
     </head>
+
     <body id="page-top">
 
     <?php $this->beginBody() ?>
 
     <div id="wrapper">
 
+        <?= $this->render('header.php'); ?>
 
         <!-- Sidebar Nav -->
-        <?= $this->render('left.php'); ?>
+        <aside id="sidebar" class="sidebar">
+            <?= $this->render('left.php'); ?>
+        </aside>
         <!-- End Sidebar Nav -->
-        <div id="content-wrapper" class="d-flex flex-column">
-            <div id="content">
-                <?= $this->render('header.php'); ?>
 
-                <div class="container-fluid">
-                    <?= Alert::widget() ?>
-                    <?= $content ?>
-                </div>
+        <main id="main" class="main">
+            <div class="pagetitle">
+                <?=
+                Breadcrumbs::widget([
+                    'links' => $this->params['breadcrumbs'] ?? [],
+                ])
+                ?>
             </div>
 
-            <!-- Footer -->
+            <section class="section dashboard">
+                <?= Alert::widget() ?>
+                <?= $content ?>
+            </section>
+        </main>
+
+        <footer id="footer" class="footer">
             <?= $this->render('footer.php'); ?>
-            <!-- End Footer -->
-        </div>
+        </footer>
+
     </div>
 
     <?php $this->endBody() ?>
