@@ -39,18 +39,19 @@ class ArticleSearch extends Article
         ];
     }
 
-    public function scenarios()
+    public function scenarios(): array
     {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
 
-    public function search($params)
+    public function search($params): ActiveDataProvider
     {
         $officeId = CacheService::getInstance()->getOfficeId();
 
         $query = Article::find()
-                    ->where(['tx_article.office_id'=>$officeId]);
+                    ->where(['tx_article.office_id'=>$officeId])
+        ->orderBy(['tx_article.created_at' => SORT_DESC]);
         $query->joinWith('articleCategory');
 
         $dataProvider = new ActiveDataProvider([
