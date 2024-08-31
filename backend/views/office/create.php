@@ -12,26 +12,18 @@ $this->params['breadcrumbs'][] = ['label' => 'Offices', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-
-<div class="panel panel-info">
-    <div class="panel-heading">
-        <div class="panel-title">
-            <?=Yii::t('app', 'Please fill out the form below')?>
-            <div class="pull-right">
-                <?= Html::encode($this->title) ?>
-            </div>
-        </div>
+<div class="card border-default mb-3">
+    <div class="card-header"><?= Yii::t('app', 'Please fill out the form below') ?>
+        <span class="float-right float-end">
+            <?= Html::encode($this->title) ?>
+        </span>
     </div>
-    <div class="panel-body">
-
-        <div class="office-create">
-
+    <div class="card-body text-secondary">
+        <div class="card-text">
             <?= $this->render('_form', [
                 'model' => $model,
-            ]) 
+            ])
             ?>
-
         </div>
-        
     </div>
 </div>

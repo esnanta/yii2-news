@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
         </div>
     </div>
     <div class="panel-body">
-        <div class="staff-media-update">
+        <div class="card-text">
             <?= $this->render('_form', [
                 'model' => $model,
                 'officeList' => $officeList,

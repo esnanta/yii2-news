@@ -21,8 +21,8 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= Html::encode($this->title) ?>
         </span>
     </div>
-    <div class="card-body text-default">
-        <div class="staff-media-create">
+    <div class="card-body text-secondary">
+        <div class="card-text">
             <?= $this->render('_form', [
                 'model' => $model,
                 'officeList' => $officeList,

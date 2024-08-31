@@ -18,17 +18,19 @@ $this->params['breadcrumbs'][] = 'Update';
 <div class="card border-default mb-3">
     <div class="card-header">
         <?= Yii::t('app', 'Please fill out the form below') ?>
-        <span class="pull-right">
+        <span class="float-right float-end">
             <?= Html::encode($this->title) ?>
         </span>
     </div>
-    <div class="card-body text-default">
-        <?= $this->render('_form', [
-            'model'         =>$model,
-            'tagsFlip'      =>$tagsFlip,
-            'tagList'       =>$tagList,
-            'authorList'    =>$authorList,
-            'articleCategoryList' => $articleCategoryList,
-        ]) ?>
+    <div class="card-body text-secondary">
+        <div class="card-text">
+            <?= $this->render('_form', [
+                'model'         =>$model,
+                'tagsFlip'      =>$tagsFlip,
+                'tagList'       =>$tagList,
+                'authorList'    =>$authorList,
+                'articleCategoryList' => $articleCategoryList,
+            ]) ?>
+        </div>
     </div>
 </div>

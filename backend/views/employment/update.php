@@ -17,12 +17,12 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 
 <div class="card border-default mb-3">
     <div class="card-header"><?=Yii::t('app', 'Please fill out the form below')?>
-        <span class="pull-right">
+        <span class="float-right float-end">
             <?= Html::encode($this->title) ?>
         </span>
     </div>
-    <div class="card-body text-default">
-        <div class="page-update">
+    <div class="card-body text-secondary">
+        <div class="card-text">
             <?= $this->render('_form', [
                 'model' => $model,
                 'officeList' => $officeList,

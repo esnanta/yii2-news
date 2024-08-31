@@ -5,6 +5,7 @@ use common\models\AuthAssignment;
 use common\models\Office;
 use common\models\Staff;
 use Yii;
+use yii\db\ActiveRecord;
 
 
 /*
@@ -25,7 +26,7 @@ class CacheService {
     private string $cacheAuthItemName;
     private string $combineCache;
     
-    private $userId;
+    private string $userId;
 
     function __construct()
     {
@@ -52,14 +53,15 @@ class CacheService {
         return self::$instance;
     }
 
-    public function Flush(){
+    public function Flush(): void
+    {
         Yii::$app->cache->flush();
         Yii::$app->getSession()->setFlash('success', [
             'message' => Yii::t('app', 'Cache Flushed'),
         ]);
     }
 
-    private function getDefaultOffice(): array|\yii\db\ActiveRecord|null
+    private function getDefaultOffice(): array|ActiveRecord|null
     {
         return Office::find()->where(['id'=>1])->one();
     }

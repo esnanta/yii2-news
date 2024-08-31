@@ -17,18 +17,15 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Office Media'),
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-
 <div class="card border-default mb-3">
-    <div class="card-header">
-        <?=Yii::t('app', 'Please fill out the form below')?>
-        <span class="pull-right">
+    <div class="card-header"><?= Yii::t('app', 'Please fill out the form below') ?>
+        <span class="float-right float-end">
             <?= Html::encode($this->title) ?>
         </span>
     </div>
-    <div class="card-body text-default">
-        <div class="office-media-create">
+    <div class="card-body text-secondary">
+        <div class="card-text">
             <?php
-
             if($model->media_type == MediaTypeHelper::getSocial()){
                 echo $this->render('_form_social', [
                     'model' => $model,
@@ -44,8 +41,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     'iconList' => $iconList
                 ]) ;
             }
-
-
             ?>
         </div>
     </div>

@@ -5,10 +5,15 @@
 
 use backend\assets\NiceAdminAsset;
 use common\widgets\AlertBootstrap5 as Alert;
-use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
 
 NiceAdminAsset::register($this);
+$this->registerCss("
+    .card-body {
+        padding: 20px 20px 20px 20px;
+    }
+");
+
 ?>
 <?php $this->beginPage() ?>
     <!DOCTYPE html>

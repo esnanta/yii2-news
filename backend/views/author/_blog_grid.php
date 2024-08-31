@@ -41,7 +41,7 @@ $unset = '#NA';
             }
         ?>
         </li>
-        <li class="pull-right">
+        <li class="float-right float-end">
             <?= ($model->publish_status!=null) ? $model->getOnePublishStatus($model->publish_status):'';?>
             <?= ($model->pinned_status!=null) ? $model->getOnePinnedStatus($model->pinned_status):'';?>
             

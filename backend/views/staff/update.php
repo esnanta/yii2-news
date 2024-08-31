@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = 'Update';
             <?= Html::encode($this->title) ?>
         </span>
     </div>
-    <div class="card-body text-default">
+    <div class="card-body text-secondary">
         <div class="card-text">
             <?= $this->render('_form_avatar', [
                 'model' => $model,

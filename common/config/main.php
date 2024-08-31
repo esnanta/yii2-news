@@ -11,7 +11,7 @@ return [
         '@npm' => '@vendor/npm-asset',
     ],
 
-    'name' => 'DNews',
+    'name' => 'dara',
     'timeZone' => 'Asia/Bangkok',
     'language' => 'id-ID',
 
