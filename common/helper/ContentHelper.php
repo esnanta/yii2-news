@@ -93,7 +93,7 @@ class ContentHelper
         return [$dom, $xpath];
     }
 
-    public static function getCover($content)
+    public static function getCover($content): string
     {
         [$dom, $xpath] = self::getXPath($content);
 

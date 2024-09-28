@@ -97,7 +97,7 @@ class Article extends BaseArticle
             'author',
             'articleCategory',
             'office',
-            'user' // TAMBAHAN
+            'user' // ADD
         ];
     }
 

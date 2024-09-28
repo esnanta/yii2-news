@@ -4,6 +4,7 @@ namespace frontend\controllers;
 use common\models\Article as Article;
 use common\models\Office as Office;
 use common\models\app\LoginForm;
+use common\service\ArticleService;
 use frontend\models\ContactForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
@@ -24,7 +25,7 @@ class SiteController extends Controller
     /**
      * @inheritdoc
      */
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'access' => [
@@ -52,7 +53,11 @@ class SiteController extends Controller
         ];
     }
 
-    public function beforeAction($action) {
+    /**
+     * @throws BadRequestHttpException
+     */
+    public function beforeAction($action): bool
+    {
         $this->enableCsrfValidation = false;
         return parent::beforeAction($action);
     }
@@ -60,7 +65,7 @@ class SiteController extends Controller
     /**
      * @inheritdoc
      */
-    public function actions()
+    public function actions(): array
     {
         return [
             'error' => [
@@ -121,18 +126,9 @@ class SiteController extends Controller
         return $this->render('index');
     }
 
-    public function actionTerms()
-    {
-        
-        return $this->render('terms',[
-            
-        ]);
-    }
 
     /**
      * Logs in a user.
-     *
-     * @return mixed
      */
     public function actionLogin()
     {
@@ -288,16 +284,4 @@ class SiteController extends Controller
         ]);
     }
 
-    public function actionSubscribe(){
-        $model = new Subscriber;
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', 'Subscribe berhasil disimpan. Terima kasih.');
-            return $this->redirect(['site/index']);
-        }
-
-        else {
-            return $this->redirect(['site/index']);
-        }
-    }
 }

@@ -1,8 +1,10 @@
 <?php
 
+use common\helper\ContentHelper;
 use common\helper\MetaHelper;
 use common\helper\MediaTypeHelper;
 use common\models\OfficeMedia;
+use common\service\ArticleService;
 use yii\db\Expression;
 
 use common\models\Article;
@@ -17,366 +19,167 @@ $this->title = Yii::$app->name;
 
 MetaHelper::setMetaTags();
 
-/**
- * /////////////////////////////////////////////////////////////////////////////
- * SECTION PROMO 5 ITEM
- * /////////////////////////////////////////////////////////////////////////////
- */
-
-$promoBlogs = Article::find()->limit(5)
-    ->where(['publish_status' => Article::PUBLISH_STATUS_YES])
-    ->orderBy(['date_issued'=>SORT_DESC])->all();
-
-
-/**
- * /////////////////////////////////////////////////////////////////////////////
- * SECTION NEWS 5 ITEM
- * /////////////////////////////////////////////////////////////////////////////
- */
-
-//EXAMPLE : SELECT * FROM tbl_table LIMIT 5,10;  # Retrieve rows 6-15
-$newsBlogs = Article::find()->limit(5)->offset(5)
-    ->where(['publish_status' => Article::PUBLISH_STATUS_YES])
-    ->orderBy(['date_issued'=>SORT_DESC])->all();
-
-/**
- * /////////////////////////////////////////////////////////////////////////////
- * SECTION PINNED POST 3 ITEM
- * /////////////////////////////////////////////////////////////////////////////
- */
-$pinnedBlogs = Article::find()->limit(3)
-->where([
-    'publish_status' => Article::PUBLISH_STATUS_YES,
-    'pinned_status' => Article::PINNED_STATUS_YES
-])
-->orderBy(['date_issued'=>SORT_DESC])->all();
-
-/**
- * /////////////////////////////////////////////////////////////////////////////
- * SECTION LINKS 6 ITEM
- * /////////////////////////////////////////////////////////////////////////////
- */
-
- $siteLinks = OfficeMedia::find()->limit(6)
-     ->where(['media_type'=>MediaTypeHelper::getLink()])
-     ->orderBy(['id'=>SORT_ASC])->all();
-
-
-/**
- * /////////////////////////////////////////////////////////////////////////////
- * SECTION POPULAR BLOG
- * 2 ITEM DI TENGAH
- * 4 ITEM DI BAWAHNYA
- * /////////////////////////////////////////////////////////////////////////////
- */
-
-$popularBlogsPrimary = Article::find()->limit(2)
-        ->where(['publish_status' => Article::PUBLISH_STATUS_YES])
-        ->andWhere(['>','view_counter','100'])
-        //->andWhere(['between','view_counter','10','199'])
-        ->orderBy(['date_issued'=>SORT_DESC])->all();
-
-$popularBlogSecondary = Article::find()->limit(6)
-        ->where(['publish_status' => Article::PUBLISH_STATUS_YES])
-        ->andWhere(['>','view_counter','200'])
-        //->andWhere(['between','view_counter','200','99999'])
-        ->orderBy(['date_issued'=>SORT_DESC])->all();
-
-/**
- * /////////////////////////////////////////////////////////////////////////////
- * SECTION AUTHOR : 5 ITEM
- * /////////////////////////////////////////////////////////////////////////////
- */
-
-$authors = Author::find()->limit(5)
-->where(['<>','id','1'])
-->orderBy((new Expression('rand()')))->all();
-
-/**
- * /////////////////////////////////////////////////////////////////////////////
- * SECTION OTHER POST 5 ITEM
- * /////////////////////////////////////////////////////////////////////////////
- */
-$otherBlogs = Article::find()->limit(3)
-->where([
-    'publish_status' => Article::PUBLISH_STATUS_YES,
-])
-->orderBy((new Expression('rand()')))->all();
-
+$articleService = new ArticleService();
+$articlesSlider = $articleService->getLatestArticles(3);
+$articlesPromo = $articleService->getLatestArticlesByOffset(6,5);
+$articlesPopular = $articleService->getPopularArticles(5);
+$articlesLatest = $articleService->getLatestArticles(5);
+$articlesPinned = $articleService->getPinnedArticles(5);
 ?>
 
 
-<!-- Promo Block -->
-<section class="g-py-50">
+<!-- Top News Start-->
+<div class="top-news">
     <div class="container">
-        <!-- News Section -->
-        <div class="row no-gutters">
-            <div class="col-lg-6 g-pr-1--lg g-mb-30 g-mb-2--lg">
-                <!-- Article -->
-                <?php
-                    foreach ($promoBlogs as $i => $modelItemData) {
-                        if ($i == 0) {
-                            echo $this->render('_promo_blog_1', ['model' => $modelItemData]);
-                        }
-                } ?>
-                <!-- End Article -->
-            </div>
-
-            <div class="col-lg-6 g-pl-1--lg g-mb-30 g-mb-2--lg">
-                <!-- Article -->
-                <?php
-                    foreach ($promoBlogs as $i => $modelItemData) {
-                        if ($i == 1) {
-                            echo $this->render('_promo_blog_1', ['model' => $modelItemData]);
-                        }
-                } ?>
-                <!-- End Article -->
-            </div>
-
-            <div class="col-lg-4 g-pr-1--lg g-mb-30 g-mb-0--lg">
-                <!-- Article -->
-                <?php
-                    foreach ($promoBlogs as $i => $modelItemData) {
-                        if ($i == 2) {
-                            echo $this->render('_promo_blog_2', ['model' => $modelItemData]);
-                        }
-                } ?>
-                <!-- End Article -->
-            </div>
-            <div class="col-lg-4 g-pr-1--lg g-mb-30 g-mb-0--lg">
-                <!-- Article -->
-                <?php
-                    foreach ($promoBlogs as $i => $modelItemData) {
-                        if ($i == 3) {
-                            echo $this->render('_promo_blog_2', ['model' => $modelItemData]);
-                        }
-                } ?>
-                <!-- End Article -->
-            </div>
-            <div class="col-lg-4 g-pr-1--lg g-mb-30 g-mb-0--lg">
-                <!-- Article -->
-                <?php
-                    foreach ($promoBlogs as $i => $modelItemData) {
-                        if ($i == 4) {
-                            echo $this->render('_promo_blog_2', ['model' => $modelItemData]);
-                        }
-                } ?>
-                <!-- End Article -->
-            </div>
-
-        </div>
-        <!-- News Section -->
-    </div>
-</section>
-<!-- End Promo Block -->
-
-
-
-<!-- News Content -->
-<section class="g-pb-10">
-    <div class="container">
-        <!-- News Section 1 -->
-        <div class="row g-mb-60">
-            <!-- Articles Content -->
-            <div class="col-lg-9 g-mb-50 g-mb-0--lg">
-                <!-- Latest News -->
-                <div class="g-mb-50">
-                    <div class="u-heading-v3-1 g-mb-30">
-                        <h2 class="h5 u-heading-v3__title g-font-primary g-font-weight-700 g-color-gray-dark-v1 text-uppercase g-brd-primary">
-                            Latest News
-                        </h2>
-                    </div>
-
-                    <div class="row">
-                        <!-- Article (Leftside) -->
-                        <div class="col-lg-7 g-mb-50 g-mb-0--lg">
-                            <?php
-                                foreach ($newsBlogs as $i => $modelItemData) {
-                                    if ($i == 0) {
-                                        echo $this->render('_news_main_left', ['model' => $modelItemData]);
-                                    }
-                            } ?>
-
-                        </div>
-                        <!-- End Article (Leftside) -->
-
-                        <!-- Article (Rightside) -->
-                        <div class="col-lg-5">
-                            <!-- Article -->
-                            <?php
-                                foreach ($newsBlogs as $i => $modelItemData) {
-                                    if ($i > 0) {
-                                        echo $this->render('_news_main_right', ['model' => $modelItemData]);
-                                    }
-                            } ?>
-                            <!-- End Article -->
-                        </div>
-                        <!-- End Article (Rightside) -->
-                    </div>
-                </div>
-            </div>
-            <!-- End Articles Content -->
-
-
-            <!-- Sidebar -->
-            <div class="col-lg-3">
-
-                <!-- News Pinned -->
-                <div class="g-mb-20">
-                    <div class="u-heading-v3-1 g-mb-30">
-                        <h2 class="h5 u-heading-v3__title g-font-primary g-font-weight-700 g-color-gray-dark-v1 text-uppercase g-brd-primary">
-                            Pinned News
-                        </h2>
-                    </div>
-
-                    <!-- Article -->
-                    <?php
-                        foreach ($pinnedBlogs as $i => $modelItemData) {
-                            echo $this->render('_pinned_news', ['model' => $modelItemData]);
-                        }
-                    ?>
-                </div>
-                <!-- End News Pinned -->
-
-
-                <!-- Useful Links -->
-                <div class="g-mb-50">
-                    <div class="u-heading-v3-1 g-mb-30">
-                        <h2 class="h5 u-heading-v3__title g-font-primary g-font-weight-700 g-color-gray-dark-v1 text-uppercase g-brd-primary">
-                            Useful Links
-                        </h2>
-                    </div>
-
-                    <ul class="list-unstyled">
-                        <?php
-                            foreach ($siteLinks as $i => $siteLinkItemData) {
-                        ?>
-                        <li class="g-brd-bottom g-brd-gray-light-v4 g-pb-10 g-mb-12">
-                            <h4 class="h6">
-                                <i class="fa fa-angle-right g-color-gray-dark-v5 g-mr-5"></i>
-                                <a class="u-link-v5 g-color-gray-dark-v1 g-color-primary--hover"
-                                    href="<?=$siteLinkItemData->description?>" target="_blank">
-                                    <?=$siteLinkItemData->title?>
-                                </a>
-                            </h4>
-                        </li>
-                        <?php
-                        } ?>
-                    </ul>
-                </div>
-                <!-- End Useful Links -->
-
-
-            </div>
-        </div>
-        <!-- News Section 1 -->
-
-        <!-- News Section 3 -->
         <div class="row">
-            <!-- Articles Content -->
-            <div class="col-lg-9 g-mb-50 g-mb-0--lg">
-                <!-- Popular News -->
-                <div class="g-mb-60">
-                    <div class="u-heading-v3-1 g-mb-30">
-                        <h2 class="h5 u-heading-v3__title g-font-primary g-font-weight-700 g-color-gray-dark-v1 text-uppercase g-brd-primary">
-                            Popular News
-                        </h2>
-                    </div>
-
-                    <!-- START PRIMARY -->
-                    <div class="row">
-                        <div class="col-lg-6 g-mb-50 g-mb-0--lg">
-                            <?php
-                                foreach ($popularBlogsPrimary as $i => $modelItemData) {
-                                    if ($i == 0) {
-                                        echo $this->render('_popular_news_primary', ['model' => $modelItemData]);
-                                    }
-                            } ?>
-
+            <div class="col-md-6 tn-left">
+                <div class="row tn-slider">
+                    <?php foreach ($articlesSlider as $i => $article) { ?>
+                        <div class="col-md-6">
+                            <div class="tn-img">
+                                <?= ContentHelper::getCover($article->content); ?>
+                                <div class="tn-title">
+                                    <?= $article->getUrl();?>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-lg-6 g-mb-50 g-mb-0--lg">
-                            <?php
-                                foreach ($popularBlogsPrimary as $i => $modelItemData) {
-                                    if ($i == 1) {
-                                        echo $this->render('_popular_news_primary', ['model' => $modelItemData]);
-                                    }
-                            } ?>
-                        </div>
-                    </div>
-                    <!-- END PRIMARY -->
-
-                    <!-- START SECONDARY -->
-                    <div class="row">
-                        <?php
-                            //POPULAR NEWS 0 & 1
-                            foreach ($popularBlogSecondary as $i => $modelItemData) {
-                                    echo $this->render('_popular_news_secondary', ['model' => $modelItemData]);
-
-                        } ?>
-                    </div>
-                    <!-- END SECONDARY -->
-
+                    <?php } ?>
                 </div>
-                <!-- End Popular News -->
+            </div>
+
+            <div class="col-md-6 tn-right">
+                <div class="row">
+                    <?php foreach ($articlesPromo as $i => $article) { ?>
+                        <div class="col-md-6">
+                            <div class="tn-img">
+                                <?= ContentHelper::getCover($article->content); ?>
+                                <div class="tn-title">
+                                    <?= $article->getUrl();?>
+                                </div>
+                            </div>
+                        </div>
+                    <?php } ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Top News End-->
+
+
+
+<!-- Tab News Start-->
+<div class="tab-news">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <ul class="nav nav-pills nav-justified">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="pill" href="#popular">
+                            <?= Yii::t('app', 'Popular News');?>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="pill" href="#latest">
+                            <?= Yii::t('app', 'Latest News');?>
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+
+                    <div id="popular" class="container tab-pane active">
+                        <?php foreach ($articlesPopular as $i => $article) { ?>
+                            <div class="tn-news">
+                                <div class="tn-img">
+                                    <?= ContentHelper::getCover($article->content); ?>
+                                </div>
+                                <div class="tn-title">
+                                    <?= $article->getUrl();?>
+                                </div>
+                            </div>
+                        <?php } ?>
+                    </div>
+                    <div id="latest" class="container tab-pane fade">
+                        <?php foreach ($articlesLatest as $i => $article) { ?>
+                            <div class="tn-news">
+                                <div class="tn-img">
+                                    <?= ContentHelper::getCover($article->content); ?>
+                                </div>
+                                <div class="tn-title">
+                                    <?= $article->getUrl();?>
+                                </div>
+                            </div>
+                        <?php } ?>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <ul class="nav nav-pills nav-justified">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="pill" href="#m-viewed">
+                            <?= Yii::t('app', 'Pinned News');?>
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+                    <div id="m-viewed" class="container tab-pane active">
+                        <?php foreach ($articlesPinned as $i => $article) { ?>
+                            <div class="tn-news">
+                                <div class="tn-img">
+                                    <?= ContentHelper::getCover($article->content); ?>
+                                </div>
+                                <div class="tn-title">
+                                    <?= $article->getUrl();?>
+                                </div>
+                            </div>
+                        <?php } ?>
+                    </div>
+                </div>
 
             </div>
-            <!-- End Articles -->
+        </div>
+    </div>
+</div>
+<!-- Tab News Start-->
 
-            <!-- Sidebar -->
+
+<!-- Main News Start-->
+<div class="main-news">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="row">
+
+                    <?php foreach ($articlesLatest as $i => $article) { ?>
+                        <div class="col-md-4">
+                            <div class="mn-img">
+                                <?= ContentHelper::getCover($article->content); ?>
+                                <div class="mn-title">
+                                    <?= $article->getUrl();?>
+                                </div>
+                            </div>
+                        </div>
+                    <?php } ?>
+
+                </div>
+            </div>
+
             <div class="col-lg-3">
-                <!-- Popular Tags -->
-                <div class="g-mb-20">
-                    <div class="u-heading-v3-1 g-mb-30">
-                        <h2 class="h5 u-heading-v3__title g-font-primary g-font-weight-700 g-color-gray-dark-v1 text-uppercase g-brd-primary">
-                            Tags
-                        </h2>
-                    </div>
-
-                    <ul class="u-list-inline g-font-size-11 text-uppercase mb-0">
-                        <?= TagCloud::widget([
-                            'title' => 'Tags',
-                            'maxTags' => 10,
-                        ]) ?>
+                <div class="mn-list">
+                    <h2><?= Yii::t('app', 'Read More');?></h2>
+                    <ul>
+                        <?php foreach ($articlesLatest as $i => $article) { ?>
+                            <li>
+                                <?= $article->getUrl();?>
+                            </li>
+                        <?php } ?>
                     </ul>
                 </div>
-                <!-- End Popular Tags -->
-
-
-                <!-- Berita Lainnya -->
-                <div class="g-mb-40">
-                    <div class="u-heading-v3-1 g-mb-30">
-                        <h2 class="h5 u-heading-v3__title g-font-primary g-font-weight-700 g-color-gray-dark-v1 text-uppercase g-brd-primary">
-                            Lainnya
-                        </h2>
-                    </div>
-                    <?php
-                        //BERITA LAINNYA
-                        foreach ($otherBlogs as $i => $modelItemData) {
-                            echo $this->render('_blog_other_right', ['model' => $modelItemData]);
-                    } ?>
-                </div>
-                <!-- End Top Authors -->
-
-                <!-- Top Authors -->
-<!--                <div class="g-mb-40">
-                    <div class="u-heading-v3-1 g-mb-30">
-                        <h2 class="h5 u-heading-v3__title g-font-primary g-font-weight-700 g-color-gray-dark-v1 text-uppercase g-brd-primary">
-                            Authors
-                        </h2>
-                    </div>
-                    <?php
-                        //POPULAR NEWS 2 & 3
-                        //foreach ($authors as $i => $modelItemData) {
-                        //    echo $this->render('_author', ['model' => $modelItemData]);
-                        //}
-                    ?>
-                </div>-->
-                <!-- End Top Authors -->
-
-
             </div>
-            <!-- End Sidebar -->
         </div>
-        <!-- News Section 3 -->
     </div>
-</section>
+</div>
+<!-- Main News End-->
