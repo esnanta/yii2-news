@@ -44,11 +44,11 @@ return [
             'theme' => [
 
                  'pathMap' => [
-                                     '@app/views' => '@app/web/themes/unify263blog/views',
-                                     '@dektrium/user/views' => '@app/web/themes/unify263blog/views/user'
+                                     '@app/views' => '@app/web/themes/bootstrap4news/views',
+                                     '@dektrium/user/views' => '@app/web/themes/bootstrap4news/views/user'
                                  ],
-                                 'basePath' => '@app/web/themes/unify263blog',
-                                 'baseUrl' => '@web/web/themes/unify263blog',                
+                                 'basePath' => '@app/web/themes/bootstrap4news',
+                                 'baseUrl' => '@web/web/themes/bootstrap4news',
                 
             ],
         ],
