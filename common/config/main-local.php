@@ -4,7 +4,7 @@ $config = [
     'components' => [
         'db' => [
             'class' => \yii\db\Connection::class,
-            'dsn' => 'mysql:host=localhost;dbname=yii2-news',
+            'dsn' => 'mysql:host=localhost;dbname=zttrhcuc_smanmba',
             'username' => 'root',
             'password' => '',
             'charset' => 'utf8',

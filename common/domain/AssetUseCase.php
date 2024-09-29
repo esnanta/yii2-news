@@ -76,6 +76,6 @@ class AssetUseCase
 
     public static function getDefaultImage(): string
     {
-        return ImageHelper::getNotAvailable();
+        return str_replace('frontend', 'backend', ImageHelper::getNotAvailable()) ;
     }
 }

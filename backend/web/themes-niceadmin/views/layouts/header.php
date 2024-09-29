@@ -7,6 +7,7 @@ use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
 use yii\helpers\Url;
 
+$homeUrl = str_replace('admin/','',Url::to(['/site/index']));
 $flushMenuEnabled       = false;
 $activityMenuEnabled    = false;
 $assetUrl       = ImageHelper::getNotAvailable();
@@ -36,7 +37,7 @@ $signOut = '<i class="bi bi-box-arrow-right"></i><span>Sign Out</span>';
 <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-        <a href="index.html" class="logo d-flex align-items-center">
+        <a href="<?= $homeUrl ?>" class="logo d-flex align-items-center">
             <img src="assets/img/logo.png" alt="">
             <span class="d-none d-lg-block">NiceAdmin</span>
         </a>

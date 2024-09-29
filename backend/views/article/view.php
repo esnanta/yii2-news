@@ -21,8 +21,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
 $create = LabelHelper::getCreateButton();
 $counter = LabelHelper::viewCounterIcon();
-$pinned = '<span class=float-right>'.$model->setPinUrl().'</span>';
-$publish = '<span class=float-right>'.$model->setPublishUrl().'</span>';
+$pinned = '<span class=float-end>'.$model->setPinUrl().'</span>';
+$publish = '<span class=float-end>'.$model->setPublishUrl().'</span>';
 ?>
 <?php
 $dom = new DOMDocument();
@@ -133,47 +133,41 @@ if(!empty($model->content)){
                         'valueColOptions'=>['style'=>'width:30%']
                     ], 
                 ],
-            ],            
-               
-            
+            ],
+
             [
-                'columns' => [
-                    [
-                        'attribute'=>'description', 
-                        'format'=>'html',
-                        'type'=>DetailView::INPUT_TEXTAREA,                    
+                'attribute'=>'tags',
+                'value'=> $model->tags,
+                'type'=>DetailView::INPUT_SELECT2,
+                'widgetOptions'=>[
+                    'class'=> Select2::class,
+                    'data' => $tagList,
+                    'maintainOrder' => true,
+                    'options' => [
+                        'multiple' => true,
+                        'value' => $model->tags,
                     ],
-                    [
-                        'attribute'=>'tags',
-                        'value'=> $model->tags,
-                        'type'=>DetailView::INPUT_SELECT2,
-                        'widgetOptions'=>[
-                            'class'=> Select2::class,
-                            'data' => $tagList,
-                            'maintainOrder' => true,
-                            'options' => [
-                                'multiple' => true,
-                                'value' => $tagList,
-                            ],
-                            'pluginOptions' => [
-                                'tags' => true,
-                                'tokenSeparators' => [',',' '],
-                                'maximumInputLength' => 5,
-                            ],
-                        ],
-                        'valueColOptions'=>['style'=>'width:30%']
+                    'pluginOptions' => [
+                        'tags' => true,
+                        'tokenSeparators' => [',',' '],
+                        'maximumInputLength' => 5,
                     ],
                 ],
-            ],              
-            
-            'cover',
+                //'valueColOptions'=>['style'=>'width:30%']
+            ],
 
+            'cover',
+            [
+                'attribute'=>'description',
+                'format'=>'html',
+                'type'=>DetailView::INPUT_TEXTAREA,
+            ],
             [
                 'group'=>true,
                 'rowOptions'=>['class'=>'default']
             ],               
             [
-                'attribute'=>'content', 
+                'attribute'=>'content',
                 'format'=>'raw',
                 'value'=>$model->content,
                 'type'=>DetailView::INPUT_WIDGET, 

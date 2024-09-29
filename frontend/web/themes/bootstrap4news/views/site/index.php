@@ -1,16 +1,10 @@
 <?php
 
+use common\domain\AssetUseCase;
 use common\helper\ContentHelper;
 use common\helper\MetaHelper;
-use common\helper\MediaTypeHelper;
-use common\models\OfficeMedia;
 use common\service\ArticleService;
-use yii\db\Expression;
-
-use common\models\Article;
-use common\models\Author;
-
-use common\widgets\blogunify236\TagCloud;
+use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
@@ -35,11 +29,12 @@ $articlesPinned = $articleService->getPinnedArticles(5);
             <div class="col-md-6 tn-left">
                 <div class="row tn-slider">
                     <?php foreach ($articlesSlider as $i => $article) { ?>
+
                         <div class="col-md-6">
                             <div class="tn-img">
-                                <?= ContentHelper::getCover($article->content); ?>
+                                <?= Html::img(ContentHelper::getCover($article->content));?>
                                 <div class="tn-title">
-                                    <?= $article->getUrl();?>
+                                    <?= Html::a($article->title, $article->getUrl()) ?>
                                 </div>
                             </div>
                         </div>
@@ -52,9 +47,9 @@ $articlesPinned = $articleService->getPinnedArticles(5);
                     <?php foreach ($articlesPromo as $i => $article) { ?>
                         <div class="col-md-6">
                             <div class="tn-img">
-                                <?= ContentHelper::getCover($article->content); ?>
+                                <?= Html::img(ContentHelper::getCover($article->content));?>
                                 <div class="tn-title">
-                                    <?= $article->getUrl();?>
+                                    <?= Html::a($article->title, $article->getUrl()) ?>
                                 </div>
                             </div>
                         </div>
@@ -92,10 +87,10 @@ $articlesPinned = $articleService->getPinnedArticles(5);
                         <?php foreach ($articlesPopular as $i => $article) { ?>
                             <div class="tn-news">
                                 <div class="tn-img">
-                                    <?= ContentHelper::getCover($article->content); ?>
+                                    <?= Html::img(ContentHelper::getCover($article->content));?>
                                 </div>
                                 <div class="tn-title">
-                                    <?= $article->getUrl();?>
+                                    <?= Html::a($article->title, $article->getUrl()) ?>
                                 </div>
                             </div>
                         <?php } ?>
@@ -104,10 +99,10 @@ $articlesPinned = $articleService->getPinnedArticles(5);
                         <?php foreach ($articlesLatest as $i => $article) { ?>
                             <div class="tn-news">
                                 <div class="tn-img">
-                                    <?= ContentHelper::getCover($article->content); ?>
+                                    <?= Html::img(ContentHelper::getCover($article->content));?>
                                 </div>
                                 <div class="tn-title">
-                                    <?= $article->getUrl();?>
+                                    <?= Html::a($article->title, $article->getUrl()) ?>
                                 </div>
                             </div>
                         <?php } ?>
@@ -129,10 +124,10 @@ $articlesPinned = $articleService->getPinnedArticles(5);
                         <?php foreach ($articlesPinned as $i => $article) { ?>
                             <div class="tn-news">
                                 <div class="tn-img">
-                                    <?= ContentHelper::getCover($article->content); ?>
+                                    <?= Html::img(ContentHelper::getCover($article->content));?>
                                 </div>
                                 <div class="tn-title">
-                                    <?= $article->getUrl();?>
+                                    <?= Html::a($article->title, $article->getUrl()) ?>
                                 </div>
                             </div>
                         <?php } ?>
@@ -156,9 +151,9 @@ $articlesPinned = $articleService->getPinnedArticles(5);
                     <?php foreach ($articlesLatest as $i => $article) { ?>
                         <div class="col-md-4">
                             <div class="mn-img">
-                                <?= ContentHelper::getCover($article->content); ?>
+                                <?= Html::img(ContentHelper::getCover($article->content));?>
                                 <div class="mn-title">
-                                    <?= $article->getUrl();?>
+                                    <?= Html::a($article->title, $article->getUrl()) ?>
                                 </div>
                             </div>
                         </div>
@@ -173,7 +168,7 @@ $articlesPinned = $articleService->getPinnedArticles(5);
                     <ul>
                         <?php foreach ($articlesLatest as $i => $article) { ?>
                             <li>
-                                <?= $article->getUrl();?>
+                                <?= Html::a($article->title, $article->getUrl()) ?>
                             </li>
                         <?php } ?>
                     </ul>

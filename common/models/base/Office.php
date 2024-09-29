@@ -32,17 +32,13 @@ use mootensai\behaviors\UUIDBehavior;
  * @property integer $verlock
  * @property string $uuid
  *
- * @property \common\models\Article[] $articles
- * @property \common\models\ArticleCategory[] $articleCategories
- * @property \common\models\Asset[] $assets
- * @property \common\models\AssetCategory[] $assetCategories
- * @property \common\models\Author[] $authors
+ * @property \common\models\AuthorMedia[] $authorMedia
  * @property \common\models\Counter[] $counters
  * @property \common\models\Employment[] $employments
  * @property \common\models\Event[] $events
- * @property \common\models\OfficeLink[] $officeLinks
  * @property \common\models\OfficeMedia[] $officeMedia
  * @property \common\models\Staff[] $staff
+ * @property \common\models\StaffMedia[] $staffMedia
  */
 class Office extends \yii\db\ActiveRecord
 {
@@ -70,17 +66,13 @@ class Office extends \yii\db\ActiveRecord
     public function relationNames(): array
     {
         return [
-            'articles',
-            'articleCategories',
-            'assets',
-            'assetCategories',
-            'authors',
+            'authorMedia',
             'counters',
             'employments',
             'events',
-            'officeLinks',
             'officeMedia',
-            'staff'
+            'staff',
+            'staffMedia'
         ];
     }
 
@@ -146,41 +138,9 @@ class Office extends \yii\db\ActiveRecord
     /**
      * @return ActiveQuery
      */
-    public function getArticles(): ActiveQuery
+    public function getAuthorMedia(): ActiveQuery
     {
-        return $this->hasMany(\common\models\Article::className(), ['office_id' => 'id']);
-    }
-        
-    /**
-     * @return ActiveQuery
-     */
-    public function getArticleCategories(): ActiveQuery
-    {
-        return $this->hasMany(\common\models\ArticleCategory::className(), ['office_id' => 'id']);
-    }
-        
-    /**
-     * @return ActiveQuery
-     */
-    public function getAssets(): ActiveQuery
-    {
-        return $this->hasMany(\common\models\Asset::className(), ['office_id' => 'id']);
-    }
-        
-    /**
-     * @return ActiveQuery
-     */
-    public function getAssetCategories(): ActiveQuery
-    {
-        return $this->hasMany(\common\models\AssetCategory::className(), ['office_id' => 'id']);
-    }
-        
-    /**
-     * @return ActiveQuery
-     */
-    public function getAuthors(): ActiveQuery
-    {
-        return $this->hasMany(\common\models\Author::className(), ['office_id' => 'id']);
+        return $this->hasMany(\common\models\AuthorMedia::className(), ['office_id' => 'id']);
     }
         
     /**
@@ -210,14 +170,6 @@ class Office extends \yii\db\ActiveRecord
     /**
      * @return ActiveQuery
      */
-    public function getOfficeLinks(): ActiveQuery
-    {
-        return $this->hasMany(\common\models\OfficeLink::className(), ['office_id' => 'id']);
-    }
-        
-    /**
-     * @return ActiveQuery
-     */
     public function getOfficeMedia(): ActiveQuery
     {
         return $this->hasMany(\common\models\OfficeMedia::className(), ['office_id' => 'id']);
@@ -229,6 +181,14 @@ class Office extends \yii\db\ActiveRecord
     public function getStaff(): ActiveQuery
     {
         return $this->hasMany(\common\models\Staff::className(), ['office_id' => 'id']);
+    }
+        
+    /**
+     * @return ActiveQuery
+     */
+    public function getStaffMedia(): ActiveQuery
+    {
+        return $this->hasMany(\common\models\StaffMedia::className(), ['office_id' => 'id']);
     }
     
     /**

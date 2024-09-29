@@ -14,6 +14,7 @@ class Bootstrap4news extends AssetBundle
 
     public $css = [
         'https://fonts.googleapis.com/css?family=Montserrat:400,600&display=swap',
+        'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css',
         'https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css',
         'lib/slick/slick.css',
         'lib/slick/slick-theme.css',
