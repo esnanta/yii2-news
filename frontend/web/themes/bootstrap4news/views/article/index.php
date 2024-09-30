@@ -9,51 +9,49 @@ MetaHelper::setMetaTags();
 <?php //echo $this->render('_search', ['model' => $searchModel]); ?>
 
 <?=
-    ListView::widget([
-        'dataProvider' => $dataProvider,
-        'summary' => '',
+ListView::widget([
+    'dataProvider' => $dataProvider,
+    'summary' => '',
+    'options' => [
+        'class' => 'row', // Bootstrap 4 grid row
+    ],
+    'itemOptions' => [
+        'tag' => 'div',
+        'class' => 'col-sm-6 mb-4', // Bootstrap 4 columns
+    ],
+    'pager' => [
+        'prevPageLabel' => '<i class="fa fa-angle-left mr-2"></i> Previous', // Bootstrap 4 margin utility
+        'nextPageLabel' => 'Next <i class="fa fa-angle-right ml-2"></i>',
+        'maxButtonCount' => 10,
+
+        // Surrounding container with Bootstrap 4 navigation classes
         'options' => [
-             //'tag' => 'div',
-             'class' => 'masonry-grid row g-mb-70', //Masonry Box
-             'id' => '',//list-wrapper
-         ],        
-        'itemOptions' => [
-            'tag' => 'div',
-            'class' => 'masonry-grid-item col-sm-6 g-mb-30', //Blog Grid
-
-        ],      
-        
-        'pager' => [
-            //'firstPageLabel' => '<i class="fa fa-angle-left g-mr-5"></i> First',
-            //'lastPageLabel' => 'last',
-            'prevPageLabel' => '<i class="fa fa-angle-left g-mr-5"></i> Previous',
-            'nextPageLabel' => 'Next <i class="fa fa-angle-right g-mr-5"></i>',
-            'maxButtonCount' => 10,
-
-            // Customzing options for pager container tag
-            'options' => [
-                'tag' => 'nav',
-                'class' => 'text-center container g-pr-20--lg',
-                'id'=>'stickyblock-end',
-                'aria-label'=>'Page Navigation'
-            ],
-
-            'linkContainerOptions'=>[
-                'tag' => 'li',
-                'class' => 'list-inline-item float-center g-hidden-xs-down',                
-            ],
-            // Customzing CSS class for pager link
-            'linkOptions' => ['class' => 'u-pagination-v1__item u-pagination-v1-4 g-rounded-50 g-pa-7-14'],
-            'activePageCssClass' => 'u-pagination-v1__item u-pagination-v1-4 u-pagination-v1-4--active g-rounded-50 g-pa-7-14',
-            'disabledPageCssClass' => 'u-pagination-v1__item u-pagination-v1-4 g-brd-gray-light-v3 g-brd-primary--hover g-rounded-50 g-pa-7-16',
-
-            // Customzing CSS class for navigating link
-            //'firstPageCssClass' => 'u-pagination-v1__item u-pagination-v1-4 g-brd-gray-light-v3 g-brd-primary--hover g-rounded-50 g-pa-7-16',
-            //'lastPageCssClass' => 'last',
-            'prevPageCssClass' => 'float-left g-hidden-xs-down g-rounded-50 g-pa-7-14',
-            'nextPageCssClass' => 'float-right g-hidden-xs-down g-rounded-50 g-pa-7-14',            
+            'tag' => 'nav',
+            'class' => 'd-flex justify-content-center', // Bootstrap 4 flex utilities
+            'aria-label' => 'Page Navigation',
         ],
-        
-        'itemView' => '_index_grid',
-    ]);
-?>                         
+
+        // Wrapping the links in a ul with pagination class
+        'linkContainerOptions' => [
+            'tag' => 'ul',
+            'class' => 'pagination', // Bootstrap 4 pagination class
+        ],
+
+        // Each link gets a page-item class
+        'linkOptions' => ['class' => 'page-link'], // Bootstrap 4 page link class
+
+        'activePageCssClass' => 'page-item active',
+        'disabledPageCssClass' => 'page-item disabled',
+
+        // Prev/Next container options
+        'prevPageCssClass' => 'page-item',
+        'nextPageCssClass' => 'page-item',
+    ],
+    'itemView' => '_index_grid', // Your view file for individual items
+]);
+?>
+
+
+
+
+

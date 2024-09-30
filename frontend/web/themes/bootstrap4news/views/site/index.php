@@ -15,10 +15,11 @@ MetaHelper::setMetaTags();
 
 $articleService = new ArticleService();
 $articlesSlider = $articleService->getLatestArticles(3);
-$articlesPromo = $articleService->getLatestArticlesByOffset(6,5);
-$articlesPopular = $articleService->getPopularArticles(5);
-$articlesLatest = $articleService->getLatestArticles(5);
-$articlesPinned = $articleService->getPinnedArticles(5);
+$articlesPromo = $articleService->getLatestArticlesByOffset(4,4);
+$articlesPopular = $articleService->getPopularArticles(4);
+$articlesLatest = $articleService->getLatestArticlesByOffset(4,8);
+$articlesPinned = $articleService->getPinnedArticles(4);
+$articlesRandom = $articleService->getRandomArticles(9);
 ?>
 
 
@@ -148,7 +149,7 @@ $articlesPinned = $articleService->getPinnedArticles(5);
             <div class="col-lg-9">
                 <div class="row">
 
-                    <?php foreach ($articlesLatest as $i => $article) { ?>
+                    <?php foreach ($articlesRandom as $i => $article) { ?>
                         <div class="col-md-4">
                             <div class="mn-img">
                                 <?= Html::img(ContentHelper::getCover($article->content));?>

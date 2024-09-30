@@ -1,5 +1,5 @@
 <?php
-namespace common\widgets\blogunify236;
+namespace common\widgets\bootstrap4news;
 
 use Yii;
 use yii\base\Widget;

@@ -97,15 +97,24 @@ class ContentHelper
     {
         [$dom, $xpath] = self::getXPath($content);
 
-        //$srcVideo   = $xpath->evaluate("string(//iframe/@src)");
         $srcImage   = $xpath->evaluate("string(//img/@src)");
 
-        // if(!empty($srcVideo)){
-        //     $value = $srcVideo;
-        // }
-        // else
+        // Define the path where the images are stored
+        $imagePath = (new AssetUseCase)->getWebRoot() . '/uploads/blog';  // Update with the actual path
+
         if (!empty($srcImage)) {
-            $value = $srcImage;
+            // Get the basename of the image (without URL part)
+            $imageFile = basename($srcImage);
+
+            // Full path to the image file
+            $fullPath = $imagePath . '/' . $imageFile;
+
+            // Check if the file exists physically
+            if (is_file($fullPath) && file_exists($fullPath)) {
+                $value = $srcImage;
+            } else {
+                $value = AssetUseCase::getDefaultImage();
+            }
         } else {
             $value = AssetUseCase::getDefaultImage();
         }

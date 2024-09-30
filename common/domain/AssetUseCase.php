@@ -10,7 +10,7 @@ use yii\helpers\FileHelper;
 class AssetUseCase
 {
 
-    private function getWebRoot() : String
+    public function getWebRoot() : String
     {
         return str_replace('frontend', 'backend', Yii::getAlias('@webroot'));
     }

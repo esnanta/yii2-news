@@ -42,7 +42,7 @@ class ArticleService
 
     public function getRandomArticles(int $limit = 3): array
     {
-        return Article::find()->limit(3)
+        return Article::find()->limit($limit)
             ->where([
                 'publish_status' => Article::PUBLISH_STATUS_YES,
             ])
