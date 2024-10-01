@@ -2,7 +2,9 @@
 
 use common\helper\MetaHelper;
 use yii\widgets\ListView;
-$this->title = 'Articles';
+
+
+$this->title = Yii::t('app', 'Articles');
 MetaHelper::setMetaTags();
 ?>
 
@@ -41,11 +43,16 @@ ListView::widget([
         'linkOptions' => ['class' => 'page-link'], // Bootstrap 4 page link class
 
         'activePageCssClass' => 'page-item active',
-        'disabledPageCssClass' => 'page-item disabled',
+        'disabledPageCssClass' => 'page-link page-item disabled',
 
-        // Prev/Next container options
+        // Customzing CSS class for navigating link
+        'pageCssClass' => ['class' => 'page-item'],
         'prevPageCssClass' => 'page-item',
         'nextPageCssClass' => 'page-item',
+        'firstPageCssClass' => 'page-first',
+        'lastPageCssClass' => 'page-last',
+
+
     ],
     'itemView' => '_index_grid', // Your view file for individual items
 ]);

@@ -58,4 +58,50 @@ class IconHelper
 
         return $brands[$iconClass] ?? 'Unknown';
     }
+
+    public static function getHome(): string
+    {
+        return '<i class="fas fa-home"></i>';
+    }
+    public static function getGithub(): string
+    {
+        return '<i class="fab fa-github"></i>';
+    }
+    public static function getSave(): string
+    {
+        return '<i class="fas fa-save"></i>';
+    }
+    public static function getSignIn(): string
+    {
+        return '<i class="fas fa-sign-in-alt"></i>';
+    }
+    public static function getChartLine(): string
+    {
+        return '<i class="fas fa-chart-line"></i>';
+    }
+    public static function getView(): string
+    {
+        return '<i class="fas fa-eye"></i>';
+    }
+    public static function getUpdate(): string
+    {
+        return '<i class="fas fa-pencil-alt"></i>';
+    }
+    public static function getUser(): string
+    {
+        return '<i class="fas fa-user"></i>';
+    }
+
+    public static function getReset(): string
+    {
+        return '<i class="fas fa-sync"></i>';
+    }
+    public static function getImport(): string
+    {
+        return '<i class="fas fa-file-import"></i>';
+    }
+    public static function getAdd(): string
+    {
+        return '<i class="fas fa-plus"></i>';
+    }
 }

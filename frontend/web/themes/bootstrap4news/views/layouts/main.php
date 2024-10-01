@@ -3,11 +3,7 @@
 
 /* @var $content string */
 
-
-use common\helper\ContentHelper;
-use common\helper\IconHelper;
 use common\helper\MediaTypeHelper;
-use common\models\Article;
 use common\models\ArticleCategory;
 use common\models\Office;
 use common\models\OfficeMedia;
@@ -15,7 +11,6 @@ use common\service\CacheService;
 use common\service\PageService;
 use common\widgets\Alert;
 use frontend\assets\Bootstrap4news;
-use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
 use yii\web\View;
 

@@ -1,6 +1,7 @@
 <?php
 
 use common\helper\ContentHelper;
+use common\helper\IconHelper;
 use yii\helpers\Html;
 
 $unset = '#NA';
@@ -55,10 +56,10 @@ if (strpos($articleCover, 'iframe') !== false) {
 
         <ul class="list-inline d-flex justify-content-between mb-0">
             <li class="list-inline-item text-muted small">
-                <i class="fa fa-eye mr-1"></i> <?= $model->view_counter; ?>
+                 <?= IconHelper::getView() .' '. $model->view_counter; ?>
             </li>
             <li class="list-inline-item text-muted small">
-                <i class="fa fa-user mr-1"></i> <?= Html::a($model->author->title, $model->author->getUrl(), ['class' => 'small']) ?>
+                <?= IconHelper::getUser() .' '.  Html::a($model->author->title, $model->author->getUrl(), ['class' => 'small']) ?>
             </li>
         </ul>
     </div>

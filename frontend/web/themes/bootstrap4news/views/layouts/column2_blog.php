@@ -1,11 +1,5 @@
 <?php
 
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 $this->beginContent('@app/views/layouts/main.php');
 
 use common\helper\MediaTypeHelper;
@@ -25,9 +19,6 @@ $siteLinks = OfficeMedia::find()->where(['media_type' => MediaTypeHelper::getLin
             <div class="row">
                 <div class="col-lg-8">
                     <div class="sn-container">
-                        <div class="sn-img">
-                            <img src="img/news-825x525.jpg"/>
-                        </div>
                         <div class="sn-content">
                             <?= $content; ?>
                         </div>
