@@ -46,10 +46,7 @@ if (strpos($articleCover, 'iframe') !== false) {
 
         <p class="text-muted">
             <?= strip_tags(ContentHelper::readMore($content)); ?>
-        </p>
-
-        <p>
-            <?= Html::a('Read More...', $model->getUrl(), ['class' => 'small text-primary']) ?>
+            <?= Html::a('(Read more)', $model->getUrl(), ['class' => 'small text-primary']) ?>
         </p>
 
         <hr>

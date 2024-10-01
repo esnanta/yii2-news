@@ -3,6 +3,12 @@
  * @var common\models\Office $office
  * @var common\models\OfficeMedia $officeMedias
  */
+
+use common\helper\MediaTypeHelper;
+use common\models\OfficeMedia;
+
+$siteLinks = OfficeMedia::find()->where(['media_type'=>MediaTypeHelper::getLink()])->limit(6)
+    ->orderBy(['id'=>SORT_ASC])->all();
 ?>
 
 
@@ -31,11 +37,12 @@
                 <div class="footer-widget">
                     <h3 class="title">Useful Links</h3>
                     <ul>
-                        <li><a href="#">Lorem ipsum</a></li>
-                        <li><a href="#">Pellentesque</a></li>
-                        <li><a href="#">Aenean vulputate</a></li>
-                        <li><a href="#">Vestibulum sit amet</a></li>
-                        <li><a href="#">Nam dignissim</a></li>
+                        <?php foreach ($siteLinks as $siteLinkItem) {  ?>
+                            <li><a href="<?=$siteLinkItemData->description?>">
+                                    <?=$siteLinkItemData->title?>
+                                </a>
+                            </li>
+                        <?php } ?>
                     </ul>
                 </div>
             </div>
