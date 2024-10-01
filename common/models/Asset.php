@@ -187,34 +187,25 @@ class Asset extends BaseAsset
     * @return mixed the uploaded asset instance
     */
     public function uploadAsset() {
-        // get the uploaded file instance. for multiple file uploads
-        // the following data will return an array (you may need to use
-        // getInstances method)
+        // Get the uploaded file instance
         $asset = UploadedFile::getInstance($this, 'asset');
 
-        // if no asset was uploaded abort the upload
-        if (empty($asset)) {
+        // Abort if no asset is uploaded
+        if (!$asset) {
             return false;
         }
 
-        // store the source file name
-        if($this->title==''){
+        // Store the source file name as title if it's empty
+        if (empty($this->title)) {
             $this->title = $asset->name;
         }
 
-        //generate a unique file name
-        //$ext = end((explode(".", $asset->name)));
-        $deleteExt          = substr($this->title, 0, strpos($this->title, "."));
-        $replaceSpace       = str_replace(' ','_', $deleteExt);
-        $replaceSlash       = str_replace('/','_', $replaceSpace);
-        $replaceComma       = str_replace(',','_', $replaceSlash);
-        $replaceDot         = str_replace('.','_', $replaceComma);
-        $title              = $replaceDot;
-        $tmp                = explode('.', $asset->name);
-        $ext                = end($tmp);          
-        $this->asset_name    = $title.'_'.uniqid().".{$ext}";
-        
-        // the uploaded asset instance
+        // Generate a unique file name
+        $baseTitle = preg_replace('/[.,\/\s]/', '_', pathinfo($this->title, PATHINFO_FILENAME));
+        $ext = pathinfo($asset->name, PATHINFO_EXTENSION);
+        $this->asset_name = "{$baseTitle}_" . uniqid() . ".{$ext}";
+
+        // Return the uploaded asset instance
         return $asset;
     }
 
