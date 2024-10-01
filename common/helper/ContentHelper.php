@@ -4,6 +4,7 @@ namespace common\helper;
 use common\domain\AssetUseCase;
 use DOMDocument;
 use DOMXPath;
+use Yii;
 use yii\helpers\Html;
 
 class ContentHelper
@@ -100,20 +101,21 @@ class ContentHelper
         $srcImage   = $xpath->evaluate("string(//img/@src)");
 
         // Define the path where the images are stored
-        $imagePath = (new AssetUseCase)->getWebRoot() . '/uploads/blog';  // Update with the actual path
+        $imagePath = (new AssetUseCase)->getWebRoot() . $srcImage;
 
         if (!empty($srcImage)) {
-            // Get the basename of the image (without URL part)
-            $imageFile = basename($srcImage);
-
-            // Full path to the image file
-            $fullPath = $imagePath . '/' . $imageFile;
-
             // Check if the file exists physically
-            if (is_file($fullPath) && file_exists($fullPath)) {
+            if (is_file($imagePath) && file_exists($imagePath)) {
                 $value = $srcImage;
             } else {
-                $value = AssetUseCase::getDefaultImage();
+                //remove '/main/admin' from $srcImage
+                $srcImage = str_replace('/main/admin','',$srcImage);
+                $imagePath = (new AssetUseCase)->getWebRoot() . $srcImage;
+                if (is_file($imagePath) && file_exists($imagePath)) {
+                    $value = Yii::$app->urlManager->baseUrl.$srcImage;
+                } else {
+                    $value = AssetUseCase::getDefaultImage();
+                }
             }
         } else {
             $value = AssetUseCase::getDefaultImage();
