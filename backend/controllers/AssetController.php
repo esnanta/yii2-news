@@ -117,7 +117,9 @@ class AssetController extends Controller
                 if ($model->save()) {
                     // upload only if valid uploaded file instance found
                     if ($asset !== false) { // delete old and overwrite
-                        file_exists($oldFile) ? unlink($oldFile) : '';
+                        if(file_exists($oldFile)) {
+                            unlink($oldFile);
+                        }
                         $path = $model->getAssetFile();
                         $asset->saveAs($path);
                     }
