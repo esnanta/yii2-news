@@ -9,14 +9,17 @@
 $this->beginContent('@app/views/layouts/main.php'); 
 
 ?>
-
-<div class="container g-pt-50 g-pb-20">
-    <div class="row justify-content-between">
-        <div class="col-lg-12 g-mb-80">
-            <?= $content; ?>
+    <div class="single-news">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="sn-container">
+                        <div class="sn-content">
+                            <?= $content; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-
-
 <?php $this->endContent(); ?>
