@@ -116,28 +116,38 @@ $img = Html::img(str_replace('frontend', 'backend', $model->getAssetUrl()), ['cl
                     'nextPageLabel' => 'Next <i class="fa fa-angle-right ml-2"></i>',
                     'maxButtonCount' => 10,
 
-                    // Pager container options
+                    // Pager container options using Bootstrap 4 flex utilities
                     'options' => [
                         'tag' => 'nav',
-                        'class' => 'text-center',
+                        'class' => 'd-flex justify-content-center', // Centered pager
                         'aria-label' => 'Page Navigation'
                     ],
 
+                    // Pager list container, adding the pagination class for Bootstrap
                     'linkContainerOptions' => [
-                        'tag' => 'li',
-                        'class' => 'page-item',
+                        'tag' => 'ul',
+                        'class' => 'pagination', // Bootstrap 4 pagination class
                     ],
-                    'linkOptions' => ['class' => 'page-link'],
-                    'activePageCssClass' => 'active',
-                    'disabledPageCssClass' => 'disabled',
 
+                    // Applying Bootstrap classes for page links
+                    'linkOptions' => ['class' => 'page-link'],
+
+                    // Adding 'page-item' to each page element
+                    'pageCssClass' => 'page-item',
+                    'activePageCssClass' => 'page-item active',
+                    'disabledPageCssClass' => 'page-item disabled',
+
+                    // Customizing the CSS classes for navigating links
                     'prevPageCssClass' => 'page-item',
                     'nextPageCssClass' => 'page-item',
+                    'firstPageCssClass' => 'page-item',
+                    'lastPageCssClass' => 'page-item',
                 ],
 
-                'itemView' => '_view_timeline',
+                'itemView' => '_view_timeline', // Your view file for individual items
             ]);
             ?>
+
         </div>
 
     </div>
