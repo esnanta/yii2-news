@@ -10,6 +10,7 @@ use common\models\Asset;
 use common\models\AssetSearch;
 use common\service\DataListService;
 use Yii;
+use yii\base\Exception;
 use yii\db\StaleObjectException;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -66,13 +67,14 @@ class AssetController extends Controller
      * Displays a single Asset model.
      * @param integer $id
      * @return mixed
+     * @throws Exception
      */
     public function actionView($id,$title=null)
     {
         if (Yii::$app->user->can('view-asset')) {
             $model = $this->findModel($id);
 
-            $officeList             = DataListService::getOffice();
+            $officeList           = DataListService::getOffice();
             $assetCategoryList    = DataListService::getAssetCategory();
 
             $isVisibleList = Asset::getArrayIsVisible();
@@ -161,7 +163,7 @@ class AssetController extends Controller
 
             $model = new Asset;
             $model->office_id = $officeId;
-            $model->date_issued = date(DateHelper::getDateSaveFormat());
+            $model->date_issued = date(DateHelper::getDateTimeSaveFormat());
             $model->is_visible = Asset::IS_VISIBLE_PRIVATE;
 
             $assetTypeList = Asset::getArrayAssetType();

@@ -8,7 +8,6 @@ use common\models\base\Asset as BaseAsset;
 use common\service\CacheService;
 use Yii;
 use yii\base\Exception;
-use yii\bootstrap5\Html;
 use yii\web\UploadedFile;
 
 /**
@@ -173,12 +172,23 @@ class Asset extends BaseAsset
     }
 
     /**
+     * Generates a URL pointing to a file on the server (image, PDF, etc.).
      * fetch stored asset url
      * @return string
      */
     public function getAssetUrl(): string
     {
-        return AssetUseCase::getUrl($this->getPath(), $this->asset_name);
+        return AssetUseCase::getFileUrl($this->getPath(), $this->asset_name);
+    }
+
+    /**
+     * Generates a URL pointing to a Yii controller action for routing requests
+     * @return string
+     */
+    public function getUrl(): string
+    {
+        return Yii::$app->getUrlManager()->createUrl(['asset/view', 'id' => $this->id,
+            'title' => $this->title]);
     }
 
     /**
@@ -234,37 +244,31 @@ class Asset extends BaseAsset
         return true;
     }
 
-    public function getUrl(): string
-    {
-        return Yii::$app->getUrlManager()->createUrl(['asset/view', 'id' => $this->id, 'title' => $this->title]);
-    }
 
-
-
-    public function getProceedButton(): string
-    {
-        $button = Html::a(
-            '<i class="fas fa-file-import"></i> '.Yii::t('app', 'Import'),
-            ['import','id'=>$this->id,'title'=>$this->title],
-            ['class' => 'btn btn-sm btn-info pull-right']
-        );
-        $asset = $this->getAssetFile();
-        if(!file_exists($asset)){
-            $button = Html::a(
-                '<i class="fas fa-plus"></i> '.Yii::t('app', 'Upload'),
-                ['asset/update','id'=>$this->id,'title'=>$this->title],
-                ['class' => 'btn btn-sm btn-danger pull-right']
-            );
-        }
-        return $button;
-    }
-
-    public function getUpdateButton(): string
-    {
-        return Html::a(
-            '<i class="fas fa-eye"></i>',
-            ['asset/view','id'=>$this->id,'title'=>$this->title],
-            ['class' => 'btn btn-sm btn-primary pull-right']
-        );
-    }
+//    public function getProceedButton(): string
+//    {
+//        $button = Html::a(
+//            '<i class="fas fa-file-import"></i> '.Yii::t('app', 'Import'),
+//            ['import','id'=>$this->id,'title'=>$this->title],
+//            ['class' => 'btn btn-sm btn-info pull-right']
+//        );
+//        $asset = $this->getAssetFile();
+//        if(!file_exists($asset)){
+//            $button = Html::a(
+//                '<i class="fas fa-plus"></i> '.Yii::t('app', 'Upload'),
+//                ['asset/update','id'=>$this->id,'title'=>$this->title],
+//                ['class' => 'btn btn-sm btn-danger pull-right']
+//            );
+//        }
+//        return $button;
+//    }
+//
+//    public function getUpdateButton(): string
+//    {
+//        return Html::a(
+//            '<i class="fas fa-eye"></i>',
+//            ['asset/view','id'=>$this->id,'title'=>$this->title],
+//            ['class' => 'btn btn-sm btn-primary pull-right']
+//        );
+//    }
 }

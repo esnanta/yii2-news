@@ -27,24 +27,19 @@ class AssetUseCase
         return $directory;
     }
 
-    public static function getUrl($path,$fileName): string
+    public static function getFileUrl($path,$fileName): string
     {
-        // return a default image placeholder if your source avatar is not found
-        $defaultImage = self::getDefaultImage();
-        $asset_name = (!empty($fileName)) ? $fileName : $defaultImage;
-        $directory = (new AssetUseCase)->getWebRoot() . $path;
+        // Set default image if fileName is empty
+        $assetName = !empty($fileName) ? $fileName : self::getDefaultImage();
+        $filePath = (new AssetUseCase)->getWebRoot() . $path . '/' . $assetName;
 
-        if (file_exists($directory.'/'.$asset_name)) {
-            $file_parts = pathinfo($directory.'/'.$asset_name);
-            if($file_parts['extension']=='pdf'){
-                Yii::$app->urlManager->baseUrl . $path.'/'.$asset_name;
-            }
+        // Check if the file exists
+        if (file_exists($filePath)) {
+            return Yii::$app->urlManager->baseUrl . $path . '/' . $assetName;
+        }
 
-            return Yii::$app->urlManager->baseUrl . $path.'/'.$asset_name;
-        }
-        else{
-            return $defaultImage;
-        }
+        // Return default image if file doesn't exist
+        return self::getDefaultImage();
     }
 
     /**

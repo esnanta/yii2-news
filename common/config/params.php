@@ -23,6 +23,14 @@ return [
     'Data_Query_Limit'      => 250,
     'Data_Each_Limit'       => 50,
 
+    'dateDisplayFormat'         => 'd-m-Y',
+    'timeDisplayFormat'         => 'H:i:s',
+    'datetimeDisplayFormat'     => 'd-m-Y H:i:s',  // Correct format
+
+    'dateSaveFormat'            => 'Y-m-d',
+    'timeSaveFormat'            => 'H:i:s',
+    'datetimeSaveFormat'        => 'Y-m-d H:i:s',
+
     'userRoleAdmin'         => 'admin',
     'userRoleOwner'         => 'owner',
     'userRoleRegular'       => 'regular'
