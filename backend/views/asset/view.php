@@ -1,16 +1,19 @@
 <?php
 
 use common\helper\LabelHelper;
+use common\models\Asset;
+use lesha724\documentviewer\ViewerJsDocumentViewer;
 use yii\helpers\Html;
 use kartik\detail\DetailView;
 use kartik\datecontrol\DateControl;
 use kartik\widgets\FileInput;
 use kartik\select2\Select2;
-use bajadev\ckeditor\CKEditor;
 
 /**
  * @var yii\web\View $this
  * @var common\models\Asset $model
+ * @var string $fileType
+ * @var common\helper\SpreadsheetHelper $helper
  */
 
 $this->title = $model->title;
@@ -37,7 +40,7 @@ $deleteAsset = Html::a('<i class="fa fa-trash"></i> Delete File', ['asset/delete
                                 ['asset/download','id'=>$model->id,'title'=>$model->title],
                                 ['class'=>'card-link','title'=>'Download']);
 
-                            if($isSpreadsheet == 'Xlsx') {
+                            if ($fileType == Asset::ASSET_TYPE_SPREADSHEET) {
                                 echo Html::a('<i class="fas fa-file-import"></i> Import',
                                     ['participant/import', 'id' => $model->id, 'title' => $model->title],
                                     ['class' => 'card-link', 'title' => 'Import']);
@@ -59,20 +62,20 @@ $deleteAsset = Html::a('<i class="fa fa-trash"></i> Delete File', ['asset/delete
                             $tmp        = explode('.', $model->asset);
                             $ext        = end($tmp);
 
-                            if($ext=='jpg'||$ext=='jpeg'||$ext=='png'||$ext=='gif'){
-                                echo Html::img(str_replace('frontend', 'backend', $assetUrl), ['class' => 'img-fluid']);
-                            } elseif ($isSpreadsheet == 'Xlsx'){
+                            if($fileType == Asset::ASSET_TYPE_IMAGE){
+                                echo Html::img($assetUrl, ['class' => 'img-fluid']);
+                            } elseif ($fileType == Asset::ASSET_TYPE_SPREADSHEET){
                                 echo $helper->displayGrid($sheetData);
                             } else {
-                                echo \lesha724\documentviewer\ViewerJsDocumentViewer::widget([
+                                echo ViewerJsDocumentViewer::widget([
                                     'url'=> $assetUrl,//url на ваш документ
-                                    //'url'=> 'www.hubunganinternasional.id/main/admin/uploads/archive/sA9CMQGWN_JbpSHqt2lsIrMLkc9Cxfl6.docx',//url на ваш документ
                                     'width'=>'100%',
                                     'height'=>'300px',
                                     //https://geektimes.ru/post/111647/
                                 ]);
                             }
-
+                            echo '<p>File name'.'<br>';
+                            echo $model->asset_name.'</p>';
                         ?>
                     </p>
 

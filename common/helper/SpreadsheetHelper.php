@@ -4,6 +4,7 @@ namespace common\helper;
 
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Reader\Exception;
 
 class SpreadsheetHelper
 {
@@ -16,6 +17,9 @@ class SpreadsheetHelper
         return self::$instance;
     }
 
+    /**
+     * @throws Exception
+     */
     public function getReader($inputFileName, $sheetName){
         $filterSubset = new ReadFilter();
 

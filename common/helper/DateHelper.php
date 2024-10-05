@@ -22,6 +22,28 @@ class DateHelper {
         return 'Y-m-d H:i:s';
     }
 
+    public static function getDateDisplayFormat(): string
+    {
+        return 'd-m-Y';
+    }
+    public static function getTimeDisplayFormat(): string
+    {
+        return 'hh:mm:ss a';
+    }
+    public static function getDatetimeDisplayFormat(): string
+    {
+        return 'dd-MM-yyyy hh:mm:ss a';
+    }
+
+    public static function getDateSaveFormat(): string
+    {
+        return 'Y-m-d';
+    }
+    public static function getTimeSaveFormat(): string
+    {
+        return 'H:i:s';
+    }
+
     /**
      * Formats the given datetime string based on application parameters.
      *

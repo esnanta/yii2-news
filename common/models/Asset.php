@@ -103,7 +103,7 @@ class Asset extends BaseAsset
     {
         return [
             //MASTER
-            self::ASSET_TYPE_DOCUMENT => Yii::t('app', 'Word'),
+            self::ASSET_TYPE_DOCUMENT => Yii::t('app', 'Document'),
             self::ASSET_TYPE_SPREADSHEET  => Yii::t('app', 'Spreadsheet'),
             self::ASSET_TYPE_IMAGE  => Yii::t('app', 'Image'),
             self::ASSET_TYPE_COMPRESSION  => Yii::t('app', 'Compression'),

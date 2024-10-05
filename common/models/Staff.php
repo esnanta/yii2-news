@@ -140,7 +140,7 @@ class Staff extends BaseStaff
      */
     public function getAssetUrl(): string
     {
-        return AssetUseCase::getUrl($this->getPath(), $this->file_name);
+        return AssetUseCase::getFileUrl($this->getPath(), $this->file_name);
     }    
     
     /**
