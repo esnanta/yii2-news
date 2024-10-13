@@ -79,7 +79,7 @@ $create = LabelHelper::getCreateButton();
         'deleteOptions' => [
             'url' => ['delete', 'id' => $model->id],
         ],
-        'enableEditMode' => true,
+        'enableEditMode' => Yii::$app->user->can('update-employment'),
     ]) ?>
 
 </div>

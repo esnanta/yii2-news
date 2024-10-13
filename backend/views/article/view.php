@@ -13,7 +13,14 @@ use yii\web\JqueryAsset;
 /**
  * @var yii\web\View $this
  * @var common\models\Article $model
+ * @var common\models\Article $publishList
+ * @var common\models\Article $pinnedList
+ * @var common\models\ArticleCategory $articleCategoryList
+ * @var common\models\Author $authorList
+ * @var common\models\Tag $tagList
  */
+
+
 
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Articles', 'url' => ['index']];
@@ -21,8 +28,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
 $create = LabelHelper::getCreateButton();
 $counter = LabelHelper::viewCounterIcon();
-$pinned = '<span class=float-end>'.$model->setPinUrl().'</span>';
-$publish = '<span class=float-end>'.$model->setPublishUrl().'</span>';
+$pinned = '<span class=float-end>'.$model->getPinUrl().'</span>';
+$publish = '<span class=float-end>'.$model->getPublishUrl().'</span>';
 ?>
 <?php
 $dom = new DOMDocument();

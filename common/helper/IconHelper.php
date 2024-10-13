@@ -104,4 +104,28 @@ class IconHelper
     {
         return '<i class="fas fa-plus"></i>';
     }
+
+    public static function getPin(): string
+    {
+        return '<i class="fas fa-thumbtack"></i>';
+    }
+
+    public static function getPrint(): string
+    {
+        return '<i class="fas fa-print"></i>';
+    }
+
+    public static function getPlus(): string
+    {
+        return '<i class="fas fa-plus"></i>';
+    }
+
+    public static function getDelete(): string
+    {
+        return '<i class="fas fa-trash-alt"></i>';
+    }
+    public static function getMinus(): string
+    {
+        return '<i class="fas fa-minus"></i>';
+    }
 }

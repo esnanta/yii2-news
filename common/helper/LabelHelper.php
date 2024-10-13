@@ -72,27 +72,27 @@ class LabelHelper {
     }
     public static function getCreateButton($route=['create']): string
     {
-        return Html::a('<i class="fas fa-plus"></i>',
+        return Html::a(IconHelper::getPlus(),
             $route,
             ['class' => 'button float-right float-end','style'=>'color:#333;padding:0 5px']);
     }
 
     public static function getPrintIcon(): string
     {
-        return '<span style="padding:0 5px">
-                    <i class="fas fa-print"></i> '.Yii::t('app', 'Publish').
+        return '<span style="padding:0 5px">'.
+                    IconHelper::getPrint().' '.Yii::t('app', 'Publish').
                 '</span>';
     }
     public static function getPinIcon(): string
     {
-        return '<span style="padding:0 5px">
-                    <i class="fas fa-thumbtack"></i> '.Yii::t('app', 'Pin').
+        return '<span style="padding:0 5px">'.
+                    IconHelper::getPin().' '.Yii::t('app', 'Pin').
                 '</span>';
     }
 
     public static function viewCounterIcon($counter=0): string
     {
-        return '<span class="label label-success" ><i class="fa fa-eye"></i> : '.$counter.'</span>';
+        return '<span class="label label-success">'.IconHelper::getView().' : '.$counter.'</span>';
     }
 
     public static function getLabelList(): array

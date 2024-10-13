@@ -96,7 +96,7 @@ $create = LabelHelper::getCreateButton($route);
         'deleteOptions' => [
             'url' => ['delete', 'id' => $model->id],
         ],
-        'enableEditMode' => true,
+        'enableEditMode' => Yii::$app->user->can('update-staffmedia'),
     ]) ?>
 
 </div>

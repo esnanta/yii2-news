@@ -29,6 +29,17 @@ class MessageHelper
         );
     }
 
+    public static function getFlashRemoveContentSuccess(): void
+    {
+        Yii::$app->getSession()->setFlash(
+            'danger',
+            ['message' => Yii::t(
+                'app',
+                'Content has been removed.'
+            )]
+        );
+    }
+
     public static function getFlashDeleteFailed(): void
     {
         Yii::$app->getSession()->setFlash(

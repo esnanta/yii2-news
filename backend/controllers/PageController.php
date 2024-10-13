@@ -27,6 +27,7 @@ class PageController extends Controller
                 'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['post'],
+                    'remove-content' => ['post'],
                 ],
             ],
         ];
@@ -156,6 +157,19 @@ class PageController extends Controller
             $this->findModel($id)->delete();
             MessageHelper::getFlashDeleteSuccess();
             return $this->redirect(['index']);
+        } else {
+            MessageHelper::getFlashAccessDenied();
+            throw new ForbiddenHttpException;
+        }
+    }
+
+    public function actionRemoveContent($id)
+    {
+        if (Yii::$app->user->can('delete-page')) {
+            $model = $this->findModel($id);
+            $model->content = null;
+            MessageHelper::getFlashRemoveContentSuccess();
+            return $this->redirect(['view','id'=>$model->id]);
         } else {
             MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;

@@ -184,7 +184,7 @@ class Article extends BaseArticle
     /**
      *
      */
-    public function setPublishUrl(): string
+    public function getPublishUrl(): string
     {
         $value = ($this->publish_status == self::PUBLISH_STATUS_NO) ?
             LabelHelper::getNo(LabelHelper::getPrintIcon()) :
@@ -192,7 +192,7 @@ class Article extends BaseArticle
         return Html::a($value, Yii::$app->getUrlManager()->createUrl(['article/publish','id'=>$this->id]));
     }
 
-    public function setPinUrl(): string
+    public function getPinUrl(): string
     {
         $value = ($this->pinned_status == self::PINNED_STATUS_NO) ?
             LabelHelper::getNo(LabelHelper::getPinIcon()) :

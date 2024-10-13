@@ -1,14 +1,14 @@
 <?php
 
+use common\models\Page;
 use kartik\editors\Summernote;
-use yii\helpers\Html;
 use kartik\detail\DetailView;
 use kartik\select2\Select2;
-use common\models\Page;
 
 /**
  * @var yii\web\View $this
  * @var common\models\Page $model
+ * @var common\models\Page $pageTypeList
  */
 
 $this->title = $model->title;
@@ -16,7 +16,7 @@ $labelBreadcrumbs = 'Pages ('.strip_tags($model->getOnePageType($model->page_typ
 $this->params['breadcrumbs'][] = ['label' => $labelBreadcrumbs, 'url' => ['index', 'type' => $model->page_type]];
 $this->params['breadcrumbs'][] = $this->title;
 
-$update = Html::a('<i class="fa fa-pencil"></i>', ['update', 'id' => $model->id], ['class' => 'button pull-right', 'style' => 'color:#333333;padding:0 5px']);
+$removeContent = '<span class=float-end>'.$model->getRemoveContentUrl().'</span>';
 ?>
 
 <div class="page-view">
@@ -27,7 +27,7 @@ $update = Html::a('<i class="fa fa-pencil"></i>', ['update', 'id' => $model->id]
         'hover' => true,
         'mode' => DetailView::MODE_VIEW,
         'panel' => [
-            'heading' => $this->title . $update,
+            'heading' => $this->title,
             'type' => DetailView::TYPE_DEFAULT,
         ],
         'attributes' => [
@@ -53,7 +53,7 @@ $update = Html::a('<i class="fa fa-pencil"></i>', ['update', 'id' => $model->id]
             [
                 'attribute' => 'content',
                 'format' => ($model->page_type != Page::PAGE_TYPE_IMAGE) ? 'html':'raw',
-                'value' => $model->content,
+                'value' => $removeContent.$model->content,
                 'type' => DetailView::INPUT_WIDGET,
                 'widgetOptions' => [
                     'class' => Summernote::class
@@ -63,7 +63,7 @@ $update = Html::a('<i class="fa fa-pencil"></i>', ['update', 'id' => $model->id]
         'deleteOptions' => [
             'url' => ['delete', 'id' => $model->id],
         ],
-        'enableEditMode' => false,
+        'enableEditMode' => Yii::$app->user->can('update-page'),
     ]);
     ?>
 </div>

@@ -4,9 +4,11 @@ namespace common\models;
 
 
 use common\helper\ContentHelper;
+use common\helper\IconHelper;
 use common\helper\LabelHelper;
 use common\models\base\Page as BaseThemeDetail;
 use Yii;
+use yii\helpers\Html;
 
 class Page extends BaseThemeDetail
 {
@@ -71,5 +73,22 @@ class Page extends BaseThemeDetail
         }
         else
             return 'null';
+    }
+
+    public function getRemoveContentUrl(): string
+    {
+        $value = LabelHelper::getNo(IconHelper::getMinus());
+
+        return Html::a(
+            $value,
+            ['/page/remove-content','id'=>$this->id],
+            [
+                'data-method' => 'post',
+                'data-confirm' => 'Remove content?',
+                'class' => 'nav-link',
+                'role' => 'button',
+                'title'=> 'Remove content'
+            ]
+        );
     }
 }
