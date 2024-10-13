@@ -57,9 +57,7 @@ use yii\helpers\Html;
             </div>
             <div class="col-lg-6 col-md-4">
                 <div class="b-ads">
-                    <a href="https://htmlcodex.com">
-                        <img src="img/ads-1.jpg" alt="Ads">
-                    </a>
+                    <?= str_replace('user/', '', Html::a($logo2Image, ['site/index'])); ?>
                 </div>
             </div>
             <div class="col-lg-3 col-md-4">

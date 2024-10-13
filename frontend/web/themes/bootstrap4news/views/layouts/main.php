@@ -60,8 +60,8 @@ $officeMedias = OfficeMedia::find()
     ->where(['office_id' => $officeId, 'media_type' => MediaTypeHelper::getSocial()])
     ->all();
 
-$logo1Image = PageService::getLogo1(200,60);
-$logo2Image = PageService::getLogo2(200,60);
+$logo1Image = PageService::getLogo1('200px','60px');
+$logo2Image = PageService::getLogo2('500px','90px');
 
 Bootstrap4news::register($this);
 ?>
@@ -89,6 +89,7 @@ Bootstrap4news::register($this);
     $this->render('header.php',[
             'office'=>$office,
             'logo1Image' => $logo1Image,
+            'logo2Image' => $logo2Image,
             'categories' => $categories,
             'officeMedias' => $officeMedias
     ]);

@@ -23,12 +23,7 @@ $siteLinks = OfficeMedia::find()->where(['media_type'=>MediaTypeHelper::getLink(
                         <p><i class="fa fa-map-marker"></i><?=$office->address;?></p>
                         <p><i class="fa fa-envelope"></i><?=$office->email;?></p>
                         <p><i class="fa fa-phone"></i><?=$office->phone_number;?></p>
-                        <div class="social">
-                            <?php foreach ($officeMedias as $officeMediaItem) {  ?>
-                                <a href="<?= $officeMediaItem->description; ?>">
-                                    <i class="<?= $officeMediaItem->title; ?>"></i></a>
-                            <?php } ?>
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -49,16 +44,15 @@ $siteLinks = OfficeMedia::find()->where(['media_type'=>MediaTypeHelper::getLink(
 
             <div class="col-lg-4 col-md-6">
                 <div class="footer-widget">
-                    <h3 class="title">Newsletter</h3>
-                    <div class="newsletter">
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sed porta dui. Class aptent
-                            taciti sociosqu
-                        </p>
-                        <form>
-                            <input class="form-control" type="email" placeholder="Your email here">
-                            <button class="btn">Submit</button>
-                        </form>
+                    <h3 class="title">Social</h3>
+                    <div class="footer-widget">
+                        <div class="social">
+                            <?php foreach ($officeMedias as $officeMediaItem) {  ?>
+                                <a href="<?= $officeMediaItem->description; ?>">
+                                    <i class="<?= $officeMediaItem->title; ?>"></i></a>
+                            <?php } ?>
+                        </div>
+
                     </div>
                 </div>
             </div>
