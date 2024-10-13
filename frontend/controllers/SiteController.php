@@ -93,18 +93,22 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-
-        if(Yii::$app->request->get('keyword'))
-        {
+        if (Yii::$app->request->get('keyword')) {
 
             $tmpKeyword = strtr(Yii::$app->request->get('keyword'), array('%'=>'\%', '_'=>'\_', '\\'=>'\\\\'));
             $keyword = Yii::$app->formatter->asText($tmpKeyword);
 
-            $searchQuery = Article::find()->where(['publish_status' => Article::PUBLISH_STATUS_YES])->all();
+            // Build the query
+            $searchQuery = Article::find()->where(['publish_status' => Article::PUBLISH_STATUS_YES]);
+
+            // Add the filter condition
             $searchQuery->andFilterWhere([
-                'or', ['like', 'title', $keyword], ['like', 'content', $keyword]
+                'or',
+                ['like', 'title', $keyword],
+                ['like', 'content', $keyword]
             ]);
 
+            // Use the query to create the ActiveDataProvider
             $searchProvider = new ActiveDataProvider([
                 'query' => $searchQuery,
                 'pagination' => [
@@ -117,10 +121,9 @@ class SiteController extends Controller
                 ],
             ]);
 
-            return $this->render('index',[
-                'dataProvider'    => $searchProvider,
+            return $this->render('index', [
+                'dataProvider' => $searchProvider,
             ]);
-
         }
 
         return $this->render('index');

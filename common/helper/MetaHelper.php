@@ -12,7 +12,7 @@ class MetaHelper
     {
         $description    = PageService::getDescription();
         $keyword        = PageService::getKeyWord();
-        $logo1Image     = PageService::getLogo1Url();
+        $logo1Image     = PageService::getLogo1();
 
         Yii::$app->params['meta_description']['content'] = $description;
         Yii::$app->params['meta_keywords']['content'] = $keyword;

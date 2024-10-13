@@ -124,9 +124,9 @@ class ContentHelper
         return $value;
     }
 
-    public static function getLogo($content): array|string
+    public static function getLogo($content,$width,$height): array|string
     {
-        $style = 'width:100px;height:40px';
+        $style = 'width:'.$width.';height:'.$height;
         $class = 'img-fluid';
         if (!empty($content)) {
             [$dom, $xpath] = self::getXPath($content);

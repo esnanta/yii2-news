@@ -4,8 +4,6 @@
  * @var common\models\OfficeMedia $officeMedias
  * @var String $logo1Image
  */
-
-use common\helper\IconHelper;
 use yii\helpers\Html;
 
 ?>

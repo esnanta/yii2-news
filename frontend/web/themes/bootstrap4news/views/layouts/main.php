@@ -60,8 +60,8 @@ $officeMedias = OfficeMedia::find()
     ->where(['office_id' => $officeId, 'media_type' => MediaTypeHelper::getSocial()])
     ->all();
 
-$logo1Image = PageService::getLogo1Url();
-$logo2Image = PageService::getLogo2Url();
+$logo1Image = PageService::getLogo1(200,60);
+$logo2Image = PageService::getLogo2(200,60);
 
 Bootstrap4news::register($this);
 ?>
@@ -74,6 +74,8 @@ Bootstrap4news::register($this);
     <meta name="robots" content="follow"/>
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="shortcut icon" href="<?= Yii::getAlias('@web') ?>/favicon.ico">
 
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>

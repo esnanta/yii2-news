@@ -8,16 +8,16 @@ use yii\db\ActiveRecord;
 
 class PageService
 {
-    private static function getLogo1() : string
+    public static function getLogo1($width='100px',$height='40px') : string
     {
         $model = Page::find(['content'])->where(['id'=>1])->one();
-        return $model->content;
+        return ContentHelper::getLogo($model->content,$width,$height);
     }
 
-    private static function getLogo2() : string
+    public static function getLogo2($width='100px',$height='40px') : string
     {
         $model = Page::find(['content'])->where(['id'=>2])->one();
-        return $model->content;
+        return ContentHelper::getLogo($model->content,$width,$height);
     }
 
     private static function getLogoReport1() : string {
@@ -43,13 +43,5 @@ class PageService
     public static function getAbout(): array|ActiveRecord|null
     {
         return Page::find()->where(['id'=>21])->one();
-    }
-
-    public static function getLogo1Url() : string {
-        return ContentHelper::getLogo(self::getLogo1());
-    }
-
-    public static function getLogo2Url() : string {
-        return ContentHelper::getLogo(self::getLogo2());
     }
 }
