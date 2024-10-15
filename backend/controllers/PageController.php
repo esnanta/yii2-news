@@ -170,7 +170,7 @@ class PageController extends Controller
             $model->content = null;
             $model->save();
             MessageHelper::getFlashRemoveContentSuccess();
-            return $this->redirect(['view','id'=>$model->id]);
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
