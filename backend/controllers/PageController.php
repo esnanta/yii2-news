@@ -141,7 +141,7 @@ class PageController extends Controller
             }
         } else {
             MessageHelper::getFlashAccessDenied();
-            throw new ForbiddenHttpException;
+            return throw new ForbiddenHttpException;
         }
     }
 
@@ -150,6 +150,7 @@ class PageController extends Controller
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
+     * @throws ForbiddenHttpException
      */
     public function actionDelete($id)
     {
@@ -159,11 +160,16 @@ class PageController extends Controller
             return $this->redirect(['index']);
         } else {
             MessageHelper::getFlashAccessDenied();
-            throw new ForbiddenHttpException;
+            return throw new ForbiddenHttpException;
         }
     }
 
-    public function actionRemoveContent($id)
+    /**
+     * @throws \yii\db\Exception
+     * @throws NotFoundHttpException
+     * @throws ForbiddenHttpException
+     */
+    public function actionEmpty($id): Response
     {
         if (Yii::$app->user->can('delete-page')) {
             $model = $this->findModel($id);
@@ -173,7 +179,7 @@ class PageController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             MessageHelper::getFlashAccessDenied();
-            throw new ForbiddenHttpException;
+            return throw new ForbiddenHttpException;
         }
     }
 

@@ -16,7 +16,7 @@ $labelBreadcrumbs = 'Pages ('.strip_tags($model->getOnePageType($model->page_typ
 $this->params['breadcrumbs'][] = ['label' => $labelBreadcrumbs, 'url' => ['index', 'type' => $model->page_type]];
 $this->params['breadcrumbs'][] = $this->title;
 
-$removeContent = '<span class=float-end>'.$model->getRemoveContentUrl().'</span>';
+$emptyContent = '<span class=float-end>'.$model->getEmptyContentUrl().'</span>';
 ?>
 
 <div class="page-view">
@@ -53,7 +53,7 @@ $removeContent = '<span class=float-end>'.$model->getRemoveContentUrl().'</span>
             [
                 'attribute' => 'content',
                 'format' => ($model->page_type != Page::PAGE_TYPE_IMAGE) ? 'html':'raw',
-                'value' => $removeContent.$model->content,
+                'value' => $emptyContent.$model->content,
                 'type' => DetailView::INPUT_WIDGET,
                 'widgetOptions' => [
                     'class' => Summernote::class

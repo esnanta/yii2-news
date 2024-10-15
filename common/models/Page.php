@@ -75,13 +75,13 @@ class Page extends BaseThemeDetail
             return 'null';
     }
 
-    public function getRemoveContentUrl(): string
+    public function getEmptyContentUrl(): string
     {
         $value = LabelHelper::getNo(IconHelper::getMinus());
 
         return Html::a(
             $value,
-            ['/page/remove-content','id'=>$this->id],
+            ['/page/empty','id'=>$this->id],
             [
                 'data-method' => 'post',
                 'data-confirm' => 'Remove content?',
