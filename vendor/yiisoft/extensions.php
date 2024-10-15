@@ -39,6 +39,16 @@ return array (
       '@kartik/select2' => $vendorDir . '/kartik-v/yii2-widget-select2/src',
     ),
   ),
+  'esnanta/dektrium-rbac' => 
+  array (
+    'name' => 'esnanta/dektrium-rbac',
+    'version' => '1.0.1.0',
+    'alias' => 
+    array (
+      '@dektrium/rbac' => $vendorDir . '/esnanta/dektrium-rbac',
+    ),
+    'bootstrap' => 'dektrium\\rbac\\Bootstrap',
+  ),
   'yiisoft/yii2-symfonymailer' => 
   array (
     'name' => 'yiisoft/yii2-symfonymailer',
@@ -75,6 +85,16 @@ return array (
       '@yii/authclient' => $vendorDir . '/yiisoft/yii2-authclient/src',
     ),
   ),
+  'esnanta/dektrium-user' => 
+  array (
+    'name' => 'esnanta/dektrium-user',
+    'version' => '1.0.1.0',
+    'alias' => 
+    array (
+      '@dektrium/user' => $vendorDir . '/esnanta/dektrium-user',
+    ),
+    'bootstrap' => 'dektrium\\user\\Bootstrap',
+  ),
   'kartik-v/yii2-bootstrap4-dropdown' => 
   array (
     'name' => 'kartik-v/yii2-bootstrap4-dropdown',
@@ -102,6 +122,15 @@ return array (
       '@kartik/dialog' => $vendorDir . '/kartik-v/yii2-dialog/src',
     ),
   ),
+  'kartik-v/yii2-date-range' => 
+  array (
+    'name' => 'kartik-v/yii2-date-range',
+    'version' => 'dev-master',
+    'alias' => 
+    array (
+      '@kartik/daterange' => $vendorDir . '/kartik-v/yii2-date-range/src',
+    ),
+  ),
   'kartik-v/yii2-widget-activeform' => 
   array (
     'name' => 'kartik-v/yii2-widget-activeform',
@@ -120,6 +149,15 @@ return array (
       '@kartik/sortable' => $vendorDir . '/kartik-v/yii2-sortable/src',
     ),
   ),
+  'kartik-v/yii2-grid' => 
+  array (
+    'name' => 'kartik-v/yii2-grid',
+    'version' => 'dev-master',
+    'alias' => 
+    array (
+      '@kartik/grid' => $vendorDir . '/kartik-v/yii2-grid/src',
+    ),
+  ),
   'kartik-v/yii2-dynagrid' => 
   array (
     'name' => 'kartik-v/yii2-dynagrid',
@@ -136,15 +174,6 @@ return array (
     'alias' => 
     array (
       '@kartik/editors' => $vendorDir . '/kartik-v/yii2-editors/src',
-    ),
-  ),
-  'kartik-v/yii2-grid' => 
-  array (
-    'name' => 'kartik-v/yii2-grid',
-    'version' => 'dev-master',
-    'alias' => 
-    array (
-      '@kartik/grid' => $vendorDir . '/kartik-v/yii2-grid/src',
     ),
   ),
   'kartik-v/yii2-mpdf' => 
@@ -219,15 +248,6 @@ return array (
       '@kartik/color' => $vendorDir . '/kartik-v/yii2-widget-colorinput/src',
     ),
   ),
-  'kartik-v/yii2-widget-depdrop' => 
-  array (
-    'name' => 'kartik-v/yii2-widget-depdrop',
-    'version' => 'dev-master',
-    'alias' => 
-    array (
-      '@kartik/depdrop' => $vendorDir . '/kartik-v/yii2-widget-depdrop/src',
-    ),
-  ),
   'kartik-v/yii2-widget-datepicker' => 
   array (
     'name' => 'kartik-v/yii2-widget-datepicker',
@@ -246,6 +266,24 @@ return array (
       '@kartik/datetime' => $vendorDir . '/kartik-v/yii2-widget-datetimepicker/src',
     ),
   ),
+  'kartik-v/yii2-widget-depdrop' => 
+  array (
+    'name' => 'kartik-v/yii2-widget-depdrop',
+    'version' => 'dev-master',
+    'alias' => 
+    array (
+      '@kartik/depdrop' => $vendorDir . '/kartik-v/yii2-widget-depdrop/src',
+    ),
+  ),
+  'kartik-v/yii2-widget-fileinput' => 
+  array (
+    'name' => 'kartik-v/yii2-widget-fileinput',
+    'version' => '1.1.1.0',
+    'alias' => 
+    array (
+      '@kartik/file' => $vendorDir . '/kartik-v/yii2-widget-fileinput/src',
+    ),
+  ),
   'kartik-v/yii2-widget-rangeinput' => 
   array (
     'name' => 'kartik-v/yii2-widget-rangeinput',
@@ -262,15 +300,6 @@ return array (
     'alias' => 
     array (
       '@kartik/rating' => $vendorDir . '/kartik-v/yii2-widget-rating/src',
-    ),
-  ),
-  'kartik-v/yii2-widget-fileinput' => 
-  array (
-    'name' => 'kartik-v/yii2-widget-fileinput',
-    'version' => '1.1.1.0',
-    'alias' => 
-    array (
-      '@kartik/file' => $vendorDir . '/kartik-v/yii2-widget-fileinput/src',
     ),
   ),
   'kartik-v/yii2-widget-sidenav' => 
@@ -381,6 +410,24 @@ return array (
       '@kartik/tabs' => $vendorDir . '/kartik-v/yii2-tabs-x/src',
     ),
   ),
+  'kartik-v/yii2-export' => 
+  array (
+    'name' => 'kartik-v/yii2-export',
+    'version' => '1.4.3.0',
+    'alias' => 
+    array (
+      '@kartik/export' => $vendorDir . '/kartik-v/yii2-export/src',
+    ),
+  ),
+  'kartik-v/yii2-helpers' => 
+  array (
+    'name' => 'kartik-v/yii2-helpers',
+    'version' => '1.3.9.0',
+    'alias' => 
+    array (
+      '@kartik/helpers' => $vendorDir . '/kartik-v/yii2-helpers/src',
+    ),
+  ),
   'kartik-v/yii2-builder' => 
   array (
     'name' => 'kartik-v/yii2-builder',
@@ -400,24 +447,6 @@ return array (
     ),
     'bootstrap' => 'mootensai\\enhancedgii\\Bootstrap',
   ),
-  'kartik-v/yii2-export' => 
-  array (
-    'name' => 'kartik-v/yii2-export',
-    'version' => '1.4.3.0',
-    'alias' => 
-    array (
-      '@kartik/export' => $vendorDir . '/kartik-v/yii2-export/src',
-    ),
-  ),
-  'kartik-v/yii2-helpers' => 
-  array (
-    'name' => 'kartik-v/yii2-helpers',
-    'version' => '1.3.9.0',
-    'alias' => 
-    array (
-      '@kartik/helpers' => $vendorDir . '/kartik-v/yii2-helpers/src',
-    ),
-  ),
   'onmotion/yii2-widget-apexcharts' => 
   array (
     'name' => 'onmotion/yii2-widget-apexcharts',
@@ -436,15 +465,6 @@ return array (
       '@yii/jui' => $vendorDir . '/yiisoft/yii2-jui',
     ),
   ),
-  'kartik-v/yii2-detail-view' => 
-  array (
-    'name' => 'kartik-v/yii2-detail-view',
-    'version' => '1.8.7.0',
-    'alias' => 
-    array (
-      '@kartik/detail' => $vendorDir . '/kartik-v/yii2-detail-view/src',
-    ),
-  ),
   'kartik-v/yii2-icons' => 
   array (
     'name' => 'kartik-v/yii2-icons',
@@ -452,6 +472,15 @@ return array (
     'alias' => 
     array (
       '@kartik/icons' => $vendorDir . '/kartik-v/yii2-icons/src',
+    ),
+  ),
+  'kartik-v/yii2-detail-view' => 
+  array (
+    'name' => 'kartik-v/yii2-detail-view',
+    'version' => '1.8.7.0',
+    'alias' => 
+    array (
+      '@kartik/detail' => $vendorDir . '/kartik-v/yii2-detail-view/src',
     ),
   ),
   'kartik-v/yii2-datecontrol' => 
@@ -490,34 +519,5 @@ return array (
       '@yii/bootstrap5' => $vendorDir . '/yiisoft/yii2-bootstrap5/src',
     ),
     'bootstrap' => 'yii\\bootstrap5\\i18n\\TranslationBootstrap',
-  ),
-  'esnanta/dektrium-rbac' => 
-  array (
-    'name' => 'esnanta/dektrium-rbac',
-    'version' => '1.0.1.0',
-    'alias' => 
-    array (
-      '@dektrium/rbac' => $vendorDir . '/esnanta/dektrium-rbac',
-    ),
-    'bootstrap' => 'dektrium\\rbac\\Bootstrap',
-  ),
-  'esnanta/dektrium-user' => 
-  array (
-    'name' => 'esnanta/dektrium-user',
-    'version' => '1.0.1.0',
-    'alias' => 
-    array (
-      '@dektrium/user' => $vendorDir . '/esnanta/dektrium-user',
-    ),
-    'bootstrap' => 'dektrium\\user\\Bootstrap',
-  ),
-  'kartik-v/yii2-date-range' => 
-  array (
-    'name' => 'kartik-v/yii2-date-range',
-    'version' => 'dev-master',
-    'alias' => 
-    array (
-      '@kartik/daterange' => $vendorDir . '/kartik-v/yii2-date-range/src',
-    ),
   ),
 );
