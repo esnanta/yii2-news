@@ -173,7 +173,7 @@ class PageController extends Controller
     {
         if (Yii::$app->user->can('delete-page')) {
             $model = $this->findModel($id);
-            $model->content = null;
+            $model->content = '';
             $model->save();
             MessageHelper::getFlashRemoveContentSuccess();
             return $this->redirect(['view', 'id' => $model->id]);
