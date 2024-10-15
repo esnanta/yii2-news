@@ -169,7 +169,7 @@ class PageController extends Controller
      * @throws NotFoundHttpException
      * @throws ForbiddenHttpException
      */
-    public function actionEmpty($id): Response
+    public function actionRemoveContent($id): Response
     {
         if (Yii::$app->user->can('delete-page')) {
             $model = $this->findModel($id);

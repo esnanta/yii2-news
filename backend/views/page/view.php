@@ -16,7 +16,7 @@ $labelBreadcrumbs = 'Pages ('.strip_tags($model->getOnePageType($model->page_typ
 $this->params['breadcrumbs'][] = ['label' => $labelBreadcrumbs, 'url' => ['index', 'type' => $model->page_type]];
 $this->params['breadcrumbs'][] = $this->title;
 
-$emptyContent = '<span class=float-end>'.$model->getEmptyContentUrl().'</span>';
+$emptyContent = '<span class=float-end>'.$model->getRemoveContentUrl().'</span>';
 ?>
 
 <div class="page-view">
