@@ -1,10 +1,10 @@
 {
     "name": "esnanta/yii2-news",
-    "description": "Yii2 News",
-    "keywords": ["daraspace", "yii2", "blog", "article", "news"],
+    "description": "Open-source project that aimed at providing a simple, flexible platform for managing news articles and content.",
+    "keywords": ["daraspace", "php", "blog", "article", "news"],
     "homepage": "https://www.daraspace.com/",
     "type": "project",
-    "license": "BSD-3-Clause",
+    "license": "Creative Commons Attribution-NonCommercial 4.0 International",
     "support": {
         "issues": "https://github.com/esnanta/yii2-news/issues?state=open",
         "source": "https://github.com/esnanta/yii2-news"
