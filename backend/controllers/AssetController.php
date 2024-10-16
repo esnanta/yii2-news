@@ -170,7 +170,7 @@ class AssetController extends Controller
 
             $model = new Asset;
             $model->office_id = $officeId;
-            $model->date_issued = date(DateHelper::getDateTimeSaveFormat());
+            $model->date_issued = date(DateHelper::getDateSaveFormat());
             $model->is_visible = Asset::IS_VISIBLE_PRIVATE;
 
             $assetTypeList = Asset::getArrayAssetType();
