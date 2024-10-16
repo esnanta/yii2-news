@@ -6,11 +6,8 @@
     "type": "project",
     "license": "BSD-3-Clause",
     "support": {
-        "issues": "https://github.com/yiisoft/yii2/issues?state=open",
-        "forum": "https://www.yiiframework.com/forum/",
-        "wiki": "https://www.yiiframework.com/wiki/",
-        "irc": "irc://irc.freenode.net/yii",
-        "source": "https://github.com/yiisoft/yii2"
+        "issues": "https://github.com/esnanta/yii2-news/issues?state=open",
+        "source": "https://github.com/esnanta/yii2-news"
     },
     "minimum-stability": "stable",
     "require": {

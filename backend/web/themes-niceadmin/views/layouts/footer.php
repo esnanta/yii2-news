@@ -5,15 +5,15 @@ use yii\bootstrap4\Html;
 ?>
 <!--
 =========================================================
-* YII2 QUIZ ISPRING
+* YII2 NEWS
 =========================================================
 
-* Product Page: https://github.com/esnanta/yii2-quiz-ispring
+* Product Page: https://github.com/esnanta/yii2-news
 * Licensed under MIT
 * Power by Yii
 
 =========================================================
-* Layout Page Frontend : https://github.com/adminmart/Modernize-bootstrap-free
+* Layout Page Frontend : https://htmlcodex.com
 * Layout Page Backend : https://bootstrapmade.com/
 =========================================================
 
@@ -24,10 +24,10 @@ use yii\bootstrap4\Html;
 
 
 <div class="copyright">
-    &copy; Copyright <strong><span>Nantha Seutia</span></strong> |
     <i class="fab fa-github"></i>
-    <?= Html::a(Html::encode(Yii::$app->name) . ' ' . date('Y'),
-        'https://github.com/esnanta/yii2-quiz-ispring') ?> |
+    <?= Html::a('Daraspace',
+        'https://daraspace.com') ?> |
+    &copy; Copyright <strong><span>Nantha Seutia</span></strong> |
     Power by <?= Html::a('Yii', 'https://www.yiiframework.com/') ?>
 </div>
 <div class="credits">

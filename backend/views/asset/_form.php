@@ -10,6 +10,9 @@ use kartik\widgets\FileInput;
 /**
  * @var yii\web\View $this
  * @var common\models\Asset $model
+ * @var common\models\Asset $assetTypeList
+ * @var common\models\Asset $isVisibleList
+ * @var common\models\Asset $assetCategoryList
  * @var yii\widgets\ActiveForm $form
  */
 ?>
