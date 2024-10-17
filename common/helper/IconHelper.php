@@ -128,4 +128,8 @@ class IconHelper
     {
         return '<i class="fas fa-minus"></i>';
     }
+    public static function getUpload(): string
+    {
+        return '<i class="fas fa-file-upload"></i>';
+    }
 }

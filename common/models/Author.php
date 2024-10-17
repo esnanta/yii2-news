@@ -50,7 +50,7 @@ class Author extends BaseAuthor
      */  
     public function getAssetUrl()
     {
-        return AssetUseCase::getUrl($this->getPath(), $this->file_name);
+        return AssetUseCase::getFileUrl($this->getPath(), $this->file_name);
     }
 
     /**
@@ -89,8 +89,8 @@ class Author extends BaseAuthor
     *
     * @return boolean the status of deletion
     */
-    public function deleteImage() {
-        $file = $this->getImageFile();
+    public function deleteAsset() {
+        $file = $this->getAssetFile();
 
         if(AssetUseCase::deleteFile($file)){
             $this->file_name = null;
@@ -99,8 +99,8 @@ class Author extends BaseAuthor
         else{
             return false;
         }
-    }        
-    
+    }
+
     public function getUrl()
     {
         return Yii::$app->getUrlManager()->createUrl(['author/view', 'id' => $this->id, 'title' => $this->title]);

@@ -243,32 +243,4 @@ class Asset extends BaseAsset
 
         return true;
     }
-
-
-//    public function getProceedButton(): string
-//    {
-//        $button = Html::a(
-//            '<i class="fas fa-file-import"></i> '.Yii::t('app', 'Import'),
-//            ['import','id'=>$this->id,'title'=>$this->title],
-//            ['class' => 'btn btn-sm btn-info pull-right']
-//        );
-//        $asset = $this->getAssetFile();
-//        if(!file_exists($asset)){
-//            $button = Html::a(
-//                '<i class="fas fa-plus"></i> '.Yii::t('app', 'Upload'),
-//                ['asset/update','id'=>$this->id,'title'=>$this->title],
-//                ['class' => 'btn btn-sm btn-danger pull-right']
-//            );
-//        }
-//        return $button;
-//    }
-//
-//    public function getUpdateButton(): string
-//    {
-//        return Html::a(
-//            '<i class="fas fa-eye"></i>',
-//            ['asset/view','id'=>$this->id,'title'=>$this->title],
-//            ['class' => 'btn btn-sm btn-primary pull-right']
-//        );
-//    }
 }

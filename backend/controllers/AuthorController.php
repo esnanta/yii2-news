@@ -12,6 +12,7 @@ use common\models\AuthorSearch;
 use common\service\CacheService;
 use common\service\DataListService;
 use Yii;
+use yii\db\StaleObjectException;
 use yii\filters\VerbFilter;
 use yii\helpers\FileHelper;
 use yii\web\Controller;
@@ -33,6 +34,7 @@ class AuthorController extends Controller
                 'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['post'],
+                    'delete-file' => ['post'],
                 ],
             ],
         ];
@@ -172,38 +174,45 @@ class AuthorController extends Controller
      */
     public function actionUpdate($id)
     {
-        if(Yii::$app->user->can('update-author')){
-            $model      = $this->findModel($id);
-            $officeList = DataListService::getOffice();
 
-            if ($model->load(Yii::$app->request->post())) {
+        if (Yii::$app->user->can('update-author')) {
+            try {
+                $officeList = DataListService::getOffice();
 
-                $urlTmpCrop = Yii::$app->urlManager->baseUrl.self::$pathTmpCrop;
-                $model->file_name = str_replace($urlTmpCrop, '', $model->file_name);
-                $model->file_name = str_replace('/', '', $model->file_name);      
-                
-                if ($model->save()) {
-                    //DELETE FILE LAMA
-                    file_exists($urlTmpCrop.'/'.$model->file_name) ? unlink($urlTmpCrop.'/'.$model->file_name) : '' ;
-                    //PINDAHIN DATA DARI TMP KE DIREKTORI MODEL
-                    rename(Yii::getAlias('@webroot').self::$pathTmpCrop.'/'.$model->file_name, $model->getAssetFile());
-                    MessageHelper::getFlashUpdateSuccess();
-                    return $this->redirect(['view', 'id'=>$model->id]);
+                $model = $this->findModel($id);
+
+                if ($model->load(Yii::$app->request->post())) {
+                    $urlTmpCrop = Yii::$app->urlManager->baseUrl.self::$pathTmpCrop;
+                    $model->file_name = str_replace($urlTmpCrop, '', $model->file_name);
+                    $model->file_name = str_replace('/', '', $model->file_name);
+
+                    if ($model->save()) {
+                        //DELETE OLD FILE
+                        if(file_exists($urlTmpCrop.'/'.$model->file_name)) :
+                            unlink($urlTmpCrop.'/'.$model->file_name);
+                        endif;
+
+                        ///MOVE DATA FROM TMP TO MODEL DIRECTORY
+                        rename(str_replace('frontend', 'backend', Yii::getAlias('@webroot')).
+                            self::$pathTmpCrop.'/'.$model->file_name, $model->getAssetFile());
+
+                        MessageHelper::getFlashUpdateSuccess();
+                        return $this->redirect(['view', 'id'=>$model->id, 'title'=>$model->title]);
+                    } else {
+                        MessageHelper::getFlashSaveFailed();
+                    }
                 }
-                
-                else {
-                    MessageHelper::getFlashUpdateFailed();
-                }
+                return $this->render('update', [
+                    'model'=>$model,
+                    'officeList'=>$officeList
+                ]);
+            } catch (StaleObjectException $e) {
+                throw new StaleObjectException('The object being updated is outdated.');
             }
-            return $this->render('update', [
-                'model'=>$model,
-                'officeList' => $officeList
-            ]);            
-        }
-        else{
+        } else {
             MessageHelper::getFlashAccessDenied();
             throw new ForbiddenHttpException;
-        }          
+        }
     }
 
     /**
@@ -211,6 +220,7 @@ class AuthorController extends Controller
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
+     * @throws ForbiddenHttpException
      */
     public function actionDelete($id)
     {
@@ -220,7 +230,8 @@ class AuthorController extends Controller
             // validate deletion and on failure process any exception 
             // e.g. display an error message 
             if ($model->delete()) {
-                if (!$model->deleteImage()) {
+                MessageHelper::getFlashDeleteSuccess();
+                if (!$model->deleteAsset()) {
                     MessageHelper::getFlashDeleteAssetFailed();
                 }
             }
@@ -229,10 +240,24 @@ class AuthorController extends Controller
         }
         else{
             MessageHelper::getFlashAccessDenied();
-            throw new ForbiddenHttpException;
-        }           
-
+            return throw new ForbiddenHttpException;
+        }
     }
+
+    public function actionDeleteFile($id)
+    {
+        if (Yii::$app->user->can('delete-author')) {
+            $model = Author::find()->where(['id' => $id])->one();
+            $model->deleteAsset();
+            $model->save();
+            MessageHelper::getFlashDeleteSuccess();
+            return $this->redirect(['author/view', 'id' => $model->id, 'title' => $model->title]);
+        } else {
+            MessageHelper::getFlashLoginInfo();
+            throw new ForbiddenHttpException;
+        }
+    }
+
     /**
      * Finds the Author model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

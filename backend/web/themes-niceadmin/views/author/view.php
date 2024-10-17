@@ -1,23 +1,22 @@
 <?php
 
 use common\helper\IconHelper;
+use kartik\detail\DetailView;
 use common\helper\LabelHelper;
+use kartik\widgets\Select2;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use kartik\detail\DetailView;
-use kartik\widgets\Select2;
 
 /**
  * @var yii\web\View $this
- * @var common\models\Staff $model
- * @var common\models\StaffMedia $dataProviderSocial
+ * @var common\models\Author $model
  */
+
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Staff', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Authors', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 $create = LabelHelper::getCreateButton();
 ?>
-
 
 <div class="row">
     <div class="col-xl-3">
@@ -27,26 +26,25 @@ $create = LabelHelper::getCreateButton();
                 <img src="<?= $model->getAssetUrl() ?>" alt="Profile" class="rounded-circle img-fluid">
                 <br>
                 <h5><?= $model->title ?></h5>
-                <span><?= $model->employment->title ?></span>
                 <span><?= (!empty($model->email)) ? $model->email : '-' ?></span>
                 <span><?= (!empty($model->phone_number)) ? $model->phone_number : '-'; ?></span>
                 <div class="social-links mt-2">
                     <?php
-                    foreach ($dataProviderSocial->getModels() as $key => $staffMediaItem) {
-                        $title = $staffMediaItem->title;
-                        $href = $staffMediaItem->description;
-                        $class = IconHelper::getOneFontAwesomeBrands($staffMediaItem->title);
+                    foreach ($dataProviderSocial->getModels() as $key => $authorMedia) {
+                        $title = $authorMedia->title;
+                        $href = $authorMedia->description;
+                        $class = IconHelper::getOneFontAwesomeBrands($authorMedia->title);
                         ?>
                         <a href="<?= $href ?>" class="<?= $class; ?>"><i class="<?= $title; ?>"></i></a>
                     <?php } ?>
                 </div>
                 <div class="pt-2 float-end">
                     <?=
-                    Html::a(IconHelper::getUpload(), ['staff/update', 'id' => $model->id, 'title'=>$model->title],
+                    Html::a(IconHelper::getUpload(), ['author/update', 'id' => $model->id, 'title' => $model->title],
                         ['class' => 'btn btn-primary btn-sm', 'title' => 'Upload new profile image?'])
                     ?>
                     <?=
-                    Html::a(IconHelper::getDelete(), ['staff/delete-file', 'id' => $model->id],
+                    Html::a(IconHelper::getDelete(), ['author/delete-file', 'id' => $model->id],
                         ['class' => 'btn btn-danger btn-sm', 'data-confirm' => "Delete File?",
                             'data-method' => 'POST', 'title' => 'Delete File?'])
                     ?>
@@ -114,57 +112,7 @@ $create = LabelHelper::getCreateButton();
                                 [
                                     'columns' => [
                                         [
-                                            'attribute' => 'employment_id',
-                                            'value' => ($model->employment_id != null) ? $model->employment->title : '',
-                                            'type' => DetailView::INPUT_SELECT2,
-                                            'options' => ['id' => 'employment_id', 'prompt' => '', 'disabled' => false],
-                                            'items' => $employmentList,
-                                            'widgetOptions' => [
-                                                'class' => Select2::class,
-                                                'data' => $employmentList,
-                                            ],
-                                            'valueColOptions' => ['style' => 'width:30%']
-                                        ],
-                                        [
-                                            'attribute' => 'active_status',
-                                            'value' => ($model->active_status != null) ? $model->getOneActiveStatus($model->active_status) : '',
-                                            'format' => 'html',
-                                            'type' => DetailView::INPUT_SELECT2,
-                                            'options' => ['id' => 'active_status', 'prompt' => '', 'disabled' => false],
-                                            'items' => $activeStatusList,
-                                            'widgetOptions' => [
-                                                'class' => Select2::class,
-                                                'data' => $activeStatusList,
-                                            ],
-                                            'valueColOptions' => ['style' => 'width:30%']
-                                        ],
-                                    ],
-                                ],
-                                [
-                                    'columns' => [
-                                        [
                                             'attribute' => 'phone_number',
-                                            'valueColOptions' => ['style' => 'width:30%']
-                                        ],
-                                        [
-                                            'attribute' => 'gender_status',
-                                            'value' => ($model->gender_status != null) ? $model->getOneGenderStatus($model->gender_status) : '',
-                                            'format' => 'html',
-                                            'type' => DetailView::INPUT_SELECT2,
-                                            'options' => ['id' => 'gender_status', 'prompt' => '', 'disabled' => false],
-                                            'items' => $genderList,
-                                            'widgetOptions' => [
-                                                'class' => Select2::class,
-                                                'data' => $genderList,
-                                            ],
-                                            'valueColOptions' => ['style' => 'width:30%']
-                                        ],
-                                    ],
-                                ],
-                                [
-                                    'columns' => [
-                                        [
-                                            'attribute' => 'initial',
                                             'valueColOptions' => ['style' => 'width:30%']
                                         ],
                                         [

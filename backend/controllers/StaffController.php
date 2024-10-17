@@ -32,6 +32,7 @@ class StaffController extends Controller
                 'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['post'],
+                    'delete-file' => ['post'],
                 ],
             ],
         ];
@@ -180,7 +181,6 @@ class StaffController extends Controller
                 $officeList         = DataListService::getOffice();
                 
                 $model = $this->findModel($id);
-                $oldFile = $model->getAssetFile();
 
                 if ($model->load(Yii::$app->request->post())) {
                     $urlTmpCrop = Yii::$app->urlManager->baseUrl.self::$pathTmpCrop;
@@ -188,11 +188,12 @@ class StaffController extends Controller
                     $model->file_name = str_replace('/', '', $model->file_name);
 
                     if ($model->save()) {
-                        //DELETE FILE LAMA
-                        file_exists($urlTmpCrop.'/'.$model->file_name) ?
-                            unlink($urlTmpCrop.'/'.$model->file_name) : '' ;
+                        //DELETE OLD FILE
+                        if(file_exists($urlTmpCrop.'/'.$model->file_name)) :
+                            unlink($urlTmpCrop.'/'.$model->file_name);
+                        endif;
 
-                        //PINDAHIN DATA DARI TMP KE DIREKTORI MODEL
+                        //MOVE DATA FROM TMP TO MODEL DIRECTORY
                         rename(str_replace('frontend', 'backend', Yii::getAlias('@webroot')).
                             self::$pathTmpCrop.'/'.$model->file_name, $model->getAssetFile());
 
@@ -225,9 +226,31 @@ class StaffController extends Controller
     public function actionDelete($id)
     {
         if (Yii::$app->user->can('delete-staff')) {
-            $this->findModel($id)->delete();
-            MessageHelper::getFlashDeleteSuccess();
+            $model = $this->findModel($id);
+
+            // validate deletion and on failure process any exception
+            // e.g. display an error message
+            if ($model->delete()) {
+                MessageHelper::getFlashDeleteSuccess();
+                if (!$model->deleteImage()) {
+                    MessageHelper::getFlashDeleteAssetFailed();
+                }
+            }
             return $this->redirect(['index']);
+        } else {
+            MessageHelper::getFlashLoginInfo();
+            return throw new ForbiddenHttpException;
+        }
+    }
+
+    public function actionDeleteFile($id)
+    {
+        if (Yii::$app->user->can('delete-staff')) {
+            $model = Staff::find()->where(['id' => $id])->one();
+            $model->deleteAsset();
+            $model->save();
+            MessageHelper::getFlashDeleteSuccess();
+            return $this->redirect(['staff/view', 'id' => $model->id, 'title' => $model->title]);
         } else {
             MessageHelper::getFlashLoginInfo();
             throw new ForbiddenHttpException;

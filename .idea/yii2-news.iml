@@ -12,6 +12,7 @@
       <sourceFolder url="file://$MODULE_DIR$/backend/web/assets/32c415de/" isTestSource="false" packagePrefix="kartik\plugins\dateformatter\" />
       <sourceFolder url="file://$MODULE_DIR$/backend/web/assets/553094e/" isTestSource="false" packagePrefix="kartik\plugins\fileinput\" />
       <sourceFolder url="file://$MODULE_DIR$/backend/web/assets/c6e56c2/" isTestSource="false" packagePrefix="kartik\plugins\dateformatter\" />
+      <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/bower-asset/inputmask" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/bower-asset/jcrop" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/bower-asset/jquery" />

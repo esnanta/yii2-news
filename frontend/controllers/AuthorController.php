@@ -209,7 +209,7 @@ class AuthorController extends Controller
         // validate deletion and on failure process any exception 
         // e.g. display an error message 
         if ($model->delete()) {
-            if (!$model->deleteImage()) {
+            if (!$model->deleteAsset()) {
                 Yii::$app->session->setFlash('error', 'Error deleting image');
             }
         }
