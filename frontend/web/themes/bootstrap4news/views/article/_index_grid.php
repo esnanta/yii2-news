@@ -9,7 +9,7 @@ $unset = '#NA';
 
 <?php
 $content = $model->content;
-$articleCover = ContentHelper::getCover($model->content);
+$articleCover = ContentHelper::getCover($model->content,$model->cover);
 $vid = '';
 
 if (strpos($articleCover, 'iframe') !== false) {
@@ -30,7 +30,7 @@ if (strpos($articleCover, 'iframe') !== false) {
 
 <?php } else { ?>
 
-    <?= Html::img($articleCover, ['class' => 'img-fluid w-100 mb-3','style'=>'height:200px']); ?>
+    <?= Html::img($articleCover, ['class' => 'img-fluid w-100 mb-3','height'=>'200px']); ?>
 
 <?php } ?>
 

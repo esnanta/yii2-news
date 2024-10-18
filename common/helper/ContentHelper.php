@@ -94,34 +94,49 @@ class ContentHelper
         return [$dom, $xpath];
     }
 
-    public static function getCover($content): string
+    public static function getCover($content,$coverUrl=null): string
     {
+        // If the cover URL is not null, use it directly
+        if (!empty($coverUrl)) {
+            return $coverUrl;
+        }
+
+        // Otherwise, proceed to check the content for the first image
         [$dom, $xpath] = self::getXPath($content);
+        $srcImage = $xpath->evaluate("string(//img/@src)");
 
-        $srcImage   = $xpath->evaluate("string(//img/@src)");
-
-        // Define the path where the images are stored
-        $imagePath = (new AssetUseCase)->getWebRoot() . $srcImage;
-
+        // Check if the srcImage is base64 or a URL
         if (!empty($srcImage)) {
-            // Check if the file exists physically
+            if (self::isBase64($srcImage)) {
+                return $srcImage; // Base64 image can be used directly
+            }
+
+            // Define the path where the images are stored
+            $imagePath = (new AssetUseCase)->getWebRoot() . $srcImage;
+
+            // Check if the image exists physically
             if (is_file($imagePath) && file_exists($imagePath)) {
-                $value = $srcImage;
+                return $srcImage;
             } else {
-                //remove '/main/admin' from $srcImage
-                $srcImage = str_replace('/main/admin','',$srcImage);
+                // Try to clean up the path in case of admin URL issues
+                $srcImage = str_replace('/main/admin', '', $srcImage);
                 $imagePath = (new AssetUseCase)->getWebRoot() . $srcImage;
+
                 if (is_file($imagePath) && file_exists($imagePath)) {
-                    $value = Yii::$app->urlManager->baseUrl.$srcImage;
+                    return Yii::$app->urlManager->baseUrl . $srcImage;
                 } else {
-                    $value = AssetUseCase::getDefaultImage();
+                    return AssetUseCase::getDefaultImage();
                 }
             }
         } else {
-            $value = AssetUseCase::getDefaultImage();
+            return AssetUseCase::getDefaultImage(); // Fallback to default if no image found
         }
+    }
 
-        return $value;
+    // Helper function to check if a string is a base64-encoded image
+    private static function isBase64($string): bool
+    {
+        return (bool) preg_match('/^data:image\/(jpeg|png|gif|bmp);base64,/', $string);
     }
 
     public static function getLogo($content,$width,$height): array|string

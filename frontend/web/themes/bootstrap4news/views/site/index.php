@@ -33,7 +33,7 @@ $articlesRandom = $articleService->getRandomArticles(9);
 
                         <div class="col-md-6">
                             <div class="tn-img">
-                                <?= Html::img(ContentHelper::getCover($article->content),['style'=>'width=450px;height:350px']);?>
+                                <?= Html::img(ContentHelper::getCover($article->content,$article->cover),['width'=>'450','height'=>'350']);?>
                                 <div class="tn-title">
                                     <?= Html::a($article->title, $article->getUrl()) ?>
                                 </div>
@@ -48,7 +48,7 @@ $articlesRandom = $articleService->getRandomArticles(9);
                     <?php foreach ($articlesPromo as $i => $article) { ?>
                         <div class="col-md-6">
                             <div class="tn-img">
-                                <?= Html::img(ContentHelper::getCover($article->content),['style'=>'width=350px;height:175px']);?>
+                                <?= Html::img(ContentHelper::getCover($article->content,$article->cover),['width'=>'350px','height'=>'175px']);?>
                                 <div class="tn-title">
                                     <?= Html::a($article->title, $article->getUrl()) ?>
                                 </div>
@@ -72,12 +72,12 @@ $articlesRandom = $articleService->getRandomArticles(9);
                 <ul class="nav nav-pills nav-justified">
                     <li class="nav-item">
                         <a class="nav-link active" data-toggle="pill" href="#popular">
-                            <?= Yii::t('app', 'Popular News');?>
+                            <?= Yii::t('app', 'Popular');?>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="pill" href="#latest">
-                            <?= Yii::t('app', 'Latest News');?>
+                            <?= Yii::t('app', 'Latest');?>
                         </a>
                     </li>
                 </ul>
@@ -88,7 +88,7 @@ $articlesRandom = $articleService->getRandomArticles(9);
                         <?php foreach ($articlesPopular as $i => $article) { ?>
                             <div class="tn-news">
                                 <div class="tn-img">
-                                    <?= Html::img(ContentHelper::getCover($article->content),['style'=>'width=150px;height:95px']);?>
+                                    <?= Html::img(ContentHelper::getCover($article->content,$article->cover),['width'=>'150px','height'=>'95px']);?>
                                 </div>
                                 <div class="tn-title">
                                     <?= Html::a($article->title, $article->getUrl()) ?>
@@ -100,7 +100,7 @@ $articlesRandom = $articleService->getRandomArticles(9);
                         <?php foreach ($articlesLatest as $i => $article) { ?>
                             <div class="tn-news">
                                 <div class="tn-img">
-                                    <?= Html::img(ContentHelper::getCover($article->content),['style'=>'width=150px;height:95px']);?>
+                                    <?= Html::img(ContentHelper::getCover($article->content,$article->cover),['width'=>'150px','height'=>'95px']);?>
                                 </div>
                                 <div class="tn-title">
                                     <?= Html::a($article->title, $article->getUrl()) ?>
@@ -115,7 +115,7 @@ $articlesRandom = $articleService->getRandomArticles(9);
                 <ul class="nav nav-pills nav-justified">
                     <li class="nav-item">
                         <a class="nav-link active" data-toggle="pill" href="#m-viewed">
-                            <?= Yii::t('app', 'Pinned News');?>
+                            <?= Yii::t('app', 'Pinned');?>
                         </a>
                     </li>
                 </ul>
@@ -125,7 +125,7 @@ $articlesRandom = $articleService->getRandomArticles(9);
                         <?php foreach ($articlesPinned as $i => $article) { ?>
                             <div class="tn-news">
                                 <div class="tn-img">
-                                    <?= Html::img(ContentHelper::getCover($article->content),['style'=>'width=150px;height:95px']);?>
+                                    <?= Html::img(ContentHelper::getCover($article->content,$article->cover),['width'=>'150px','height'=>'95px']);?>
                                 </div>
                                 <div class="tn-title">
                                     <?= Html::a($article->title, $article->getUrl()) ?>
@@ -152,7 +152,7 @@ $articlesRandom = $articleService->getRandomArticles(9);
                     <?php foreach ($articlesRandom as $i => $article) { ?>
                         <div class="col-md-4">
                             <div class="mn-img">
-                                <?= Html::img(ContentHelper::getCover($article->content),['style'=>'width=255px;height:160px']);?>
+                                <?= Html::img(ContentHelper::getCover($article->content,$article->cover),['width'=>'255px','height'=>'160px']);?>
                                 <div class="mn-title">
                                     <?= Html::a($article->title, $article->getUrl()) ?>
                                 </div>

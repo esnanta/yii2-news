@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
 $unset = '#NA';
 $model->content = ContentHelper::configureContentImage($model->content);
 $model->content = ContentHelper::configureContentTable($model->content);
-$articleCover   = ContentHelper::getCover($model->content);
+$articleCover   = ContentHelper::getCover($model->content,$model->cover);
 $model->content = str_replace('&nbsp;', '', $model->content);
 
 
