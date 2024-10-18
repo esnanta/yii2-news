@@ -3,7 +3,10 @@
  * @var common\models\Office $office
  * @var common\models\OfficeMedia $officeMedias
  * @var String $logo1Image
+ * @var String $logo2Image
  */
+
+use common\helper\IconHelper;
 use yii\helpers\Html;
 
 ?>
@@ -24,7 +27,7 @@ use yii\helpers\Html;
                 if (Yii::$app->user->getIsGuest()) {
                     echo Yii::$app->user->identity;
                     echo '<li>';
-                    echo str_replace('user/user/', '', Html::a('Login', ['admin/user/login'], ['class' => 'd-block g-color-secondary-dark-v1 g-color-primary--hover g-text-underline--none--hover g-py-5 g-px-20']));
+                    echo str_replace('user/user/', '', Html::a(IconHelper::getUser(), ['admin/user/login'], ['class' => 'd-block g-color-secondary-dark-v1 g-color-primary--hover g-text-underline--none--hover g-py-5 g-px-20']));
                     echo '</li>';
                 } else {
 
