@@ -49,8 +49,9 @@ class AssetSearch extends Asset
     public function search($params)
     {
         $officeId = CacheService::getInstance()->getOfficeId();
-        $query = Asset::find()->where(['office_id'=>$officeId]);
-
+        $query = Asset::find()->where(['office_id'=>$officeId])
+                    ->orderBy(['created_at' => SORT_DESC]);
+        
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
