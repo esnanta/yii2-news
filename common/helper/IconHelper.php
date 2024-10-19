@@ -132,4 +132,12 @@ class IconHelper
     {
         return '<i class="fas fa-file-upload"></i>';
     }
+    public static function getSignOut(): string
+    {
+        return '<i class="fas fa-sign-out-alt"></i>';
+    }
+    public static function getGlobe(): string
+    {
+        return '<i class="fas fa-globe"></i>';
+    }
 }

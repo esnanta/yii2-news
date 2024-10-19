@@ -89,8 +89,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filterInputOptions'=>['placeholder'=>''],
                 'format'=>'raw'
             ],
-            
-                        
+            'description',
             [
                 'class' => 'common\widgets\ActionColumn',
                 'contentOptions' => ['style' => 'white-space:nowrap;'],

@@ -30,16 +30,17 @@ use yii\helpers\Html;
                     echo str_replace('user/user/', '', Html::a(IconHelper::getUser(), ['admin/user/login'], ['class' => 'd-block g-color-secondary-dark-v1 g-color-primary--hover g-text-underline--none--hover g-py-5 g-px-20']));
                     echo '</li>';
                 } else {
-
+                    $signOut = Html::a(IconHelper::getSignOut().' Sign Out', ['user/security/logout'], ['data-method' => 'POST', 'class' => 'g-color-secondary-dark-v1 g-color-primary--hover g-text-underline--none--hover g-py-5 g-px-20']);
                     if (Yii::$app->user->identity->isAdmin == true) {
                         echo '<li>';
-                        echo Html::a('Admin', ['/backend/web/site/index'], ['class' => 'd-block g-color-secondary-dark-v1 g-color-primary--hover g-text-underline--none--hover g-py-5 g-px-20']);
+                        $admin = Html::a(IconHelper::getUser().' Admin', ['/backend/web/site/index'], ['class' => 'g-color-secondary-dark-v1 g-color-primary--hover g-text-underline--none--hover g-py-5 g-px-20']);
+                        echo $admin.' | '.$signOut;
+                        echo '</li>';
+                    } else {
+                        echo '<li>';
+                        echo $signOut;
                         echo '</li>';
                     }
-
-                    echo '<li>';
-                    echo Html::a('Sign Out ', ['user/security/logout'], ['data-method' => 'POST', 'class' => 'd-block g-color-secondary-dark-v1 g-color-primary--hover g-text-underline--none--hover g-py-5 g-px-20']);
-                    echo '</li>';
                 }
                 ?>
                 </div>

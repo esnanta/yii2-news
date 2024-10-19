@@ -1,5 +1,6 @@
 <?php
 
+use common\helper\IconHelper;
 use yii\bootstrap4\Html;
 
 ?>
@@ -24,7 +25,7 @@ use yii\bootstrap4\Html;
 
 
 <div class="copyright">
-    <i class="fab fa-github"></i>
+    <?= IconHelper::getGlobe()?>
     <?= Html::a('Daraspace',
         'https://daraspace.com') ?> |
     &copy; Copyright <strong><span>Nantha Seutia</span></strong> |
