@@ -3,8 +3,6 @@
 namespace frontend\controllers;
 
 use backend\models\AssetReport;
-use Box\Spout\Writer\Common\Creator\WriterEntityFactory;
-use common\helper\ReportCloud;
 use common\models\Asset;
 use common\models\AssetCategory;
 use common\models\AssetSearch;
@@ -144,91 +142,6 @@ class AssetController extends Controller
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
-        }
-    }
-
-    public function actionReport()
-    {
-        if (Yii::$app->user->can('report-archive')) {
-            $model = new AssetReport;
-            $assetCategoryList = ArrayHelper::map(AssetCategory::find()->asArray()->all(), 'id', 'title');
-            $dateAttributeList = ['date_issued' => 'Date Issued'];
-
-            if ($model->load(Yii::$app->request->post())) {
-
-                $formatter = \Yii::$app->formatter;
-                $title = 'Arsip ';
-                $filename = $title . ' ' . Yii::$app->formatter->asDate(time(), 'd-MM-Y');
-                $dateFirst = $model->date_first;
-                $dateLast = $model->date_last;
-                $query = Asset::find()->where(['between', $model->option_date, $model->date_first, $model->date_last]);
-
-                if (!empty($model->archive_category_id)) {
-                    $query->andWhere(['archive_category_id' => $model->archive_category_id]);
-                }
-
-                $countRecords = $query->count();
-
-                $headerStyle = ReportCloud::getHeaderStyle();
-                $rowStyle = ReportCloud::getRowStyle();
-
-                $writer = ReportCloud::getWriterFactory();
-                $writer->openToBrowser($filename . ReportCloud::getFileExtension());
-                $writer->getCurrentSheet();
-                $writer->setDefaultRowStyle($rowStyle);
-
-                $rangeDate = Yii::$app->formatter->asDate($dateFirst, 'd-MM-Y') . ' - ' . Yii::$app->formatter->asDate($dateLast, 'd-MM-Y');
-                $rowEmpty = WriterEntityFactory::createRowFromArray(['']);
-                $rowTitle = WriterEntityFactory::createRowFromArray([$title . ' (' . $rangeDate . ')']);
-                $rowTanggalPrint = WriterEntityFactory::createRowFromArray(['Tanggal Print ', '', Yii::$app->formatter->asDate(time(), 'dd/MM/yy HH:mm:ss')]);
-
-                $writer->addRows([$rowTitle, $rowTanggalPrint]);
-
-                $rowTotalRecords = WriterEntityFactory::createRowFromArray(['Total Records', '', $formatter->asDecimal($countRecords)]);
-                $rowTableTitle = WriterEntityFactory::createRowFromArray([
-                    'No', 'Judul', 'Tanggal',
-                    'Kategori', 'Akses',
-                    'Aset', 'Deskripsi'], $headerStyle);
-
-                $writer->addRows([$rowTotalRecords, $rowEmpty, $rowTableTitle]);
-
-
-                $plunck_data = [];
-                $dataEachLimit = Yii::$app->params['Data_Each_Limit'];
-                foreach ($query->each($dataEachLimit) as $i => $recordModel) {
-
-                    //$MODEL ADALAH FORM
-                    //$RECORMODEL ADALAH DATANYA
-                    $categoryTitle = $recordModel->archiveCategory->title;
-                    $isVisible = strip_tags($recordModel->getOneIsVisible($recordModel->is_visible));
-
-                    $cellValues = [
-                        ($i + 1),
-                        $recordModel->title,
-                        Yii::$app->formatter->format($recordModel->date_issued, 'date'),
-                        $categoryTitle,
-                        $isVisible,
-                        $recordModel->file_name,
-                        strip_tags($recordModel->description),
-                    ];
-
-                    $rowDetailCell = WriterEntityFactory::createRowFromArray($cellValues);
-                    $plunck_data[] = $rowDetailCell;
-                }
-
-                //PLUNCK ROW SUDAH DALAM BENTUK ARRAY, SO REMOVE []
-                $writer->addRows($plunck_data);
-                $writer->close();
-            } else {
-                return $this->render('_form_report', [
-                    'model' => $model,
-                    'archiveCategoryList' => $assetCategoryList,
-                    'dateAttributeList' => $dateAttributeList
-                ]);
-            }
-        } else {
-            Yii::$app->getSession()->setFlash(Yii::$app->params['LabelMessage'], ['message' => Yii::t('app', DateUseCase::getLoginInfo())]);
-            throw new ForbiddenHttpException(Yii::t('app', DateUseCase::getAccessDenied()));
         }
     }
 }
