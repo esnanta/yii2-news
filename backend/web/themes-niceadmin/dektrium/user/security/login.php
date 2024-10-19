@@ -29,7 +29,7 @@ $forgotPassword = Html::a('Forgot password?', ['/user/recovery/request']);
 <?php
 $tmpHome = Html::a('<i class="fa fa-home"></i> Back To Home ',
     ['site/index']);
-$home = str_replace('user/', '', $tmpHome);
+$home = str_replace('admin/user/', '', $tmpHome);
 ?>
 
 <div class="row justify-content-center">
