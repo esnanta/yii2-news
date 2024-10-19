@@ -90,7 +90,7 @@ $deleteAsset = Html::a('<i class="fa fa-trash"></i> Delete File', ['asset/delete
                 'hover' => true,
                 'mode' => Yii::$app->request->get('edit') == 't' ? DetailView::MODE_EDIT : DetailView::MODE_VIEW,
                 'panel' => [
-                    'heading' => $this->title,
+                    'heading' => $this->title.$create,
                     'type' => DetailView::TYPE_DEFAULT,
                 ],
                 'attributes' => [
