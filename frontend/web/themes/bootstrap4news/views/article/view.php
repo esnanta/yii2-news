@@ -154,5 +154,48 @@ $newContent = str_replace('%09', '', $dom->saveHtml());
 
         <hr class="my-3">
 
+        <?php if(Yii::$app->params['GraphComment']==false){?>
+            <div class="alert alert-warning">
+                Comment has been disabled.
+            </div>
+        <?php } else { ?>
+
+            <div class="mb-4">
+                <div id="graphcomment"></div>
+                <script type="text/javascript">
+
+                    /* - - - CONFIGURATION VARIABLES - - - */
+
+                    var __semio__params = {
+                        // make sure the id is yours
+                        graphcommentId: "<?php echo Yii::$app->params['GraphCommentId']; ?>",
+
+                        behaviour: {
+                            // HIGHLY RECOMMENDED
+                            // uniq identifer for the comments thread on your page (ex: your page id)
+                            uid: "<?php echo $model->id; ?>",
+                        },
+
+                        // configure your variables here
+
+                    }
+
+                    /* - - - DON'T EDIT BELOW THIS LINE - - - */
+
+                    function __semio__onload() {
+                        __semio__gc_graphlogin(__semio__params)
+                    }
+
+
+                    (function() {
+                        var gc = document.createElement('script'); gc.type = 'text/javascript'; gc.async = true;
+                        gc.onload = __semio__onload; gc.defer = true; gc.src = 'https://integration.graphcomment.com/gc_graphlogin.js?' + Date.now();
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(gc);
+                    })();
+
+
+                </script>
+            </div>
+        <?php } ?>
     </div>
 </div>

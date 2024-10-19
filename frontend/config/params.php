@@ -28,9 +28,6 @@ return [
     'googleplus_description'    => ['itemprop' => 'description', 'content' => 'Discover beneficial content and resources.'],
     'googleplus_image'          => ['itemprop' => 'image', 'content' => 'https://www.daraspace.com/images/googleplus-image.jpg'],
 
-//    'onBeginRequest'            => create_function('$event', 'return ob_start("ob_gzhandler");'),
-//    'onEndRequest'              => create_function('$event', 'return ob_end_flush();'),
-
-    'GOOGLE_API_KEY'            => 'AIzaSyAkkJTa7erb_WQNe78_cvVBo8-nsvKlu9c', // use your own api key
-    'googleMapsApiKey'          => 'AIzaSyAkkJTa7erb_WQNe78_cvVBo8-nsvKlu9c', // use your own api key
+    'GraphComment'              => false,
+    'GraphCommentId'            => 'YourGraphCommentId',
 ];
