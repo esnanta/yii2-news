@@ -11,7 +11,7 @@ return [
         '@npm' => '@vendor/npm-asset',
     ],
 
-    'name' => 'dara',
+    'name' => 'Daraspace',
     'timeZone' => 'Asia/Bangkok',
     'language' => 'id-ID',
 
