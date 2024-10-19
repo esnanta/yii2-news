@@ -83,19 +83,18 @@ class ArticleController extends Controller
             $publishList            = Article::getArrayPublishStatus();
             $pinnedList             = Article::getArrayPinnedStatus();
 
-            $tagsVal                = explode(',',$model->tags);//split as array
+            // Split the tags string into an array
+            $tagsVal = explode(',', $model->tags);
+            // Optionally trim the tags to remove any spaces
+            // Ensure the values are clean
+            $articleTags = array_map('trim', $tagsVal);
 
-            foreach($tagsVal as $key => $val) {
-                $new[$val]=$val;
-            }
-
-            $tagsFlip       = $new;
             if ($model->load(Yii::$app->request->post())) {
                 return $this->validateAndSave($model);
             } else {
                 return $this->render('view', [
                     'model'         =>$model,
-                    'tagsFlip'      =>$tagsFlip,
+                    'articleTags'   =>$articleTags,
                     'tagList'       =>$tagList,
                     'authorList'    =>$authorList,
                     'articleCategoryList' => $articleCategoryList,

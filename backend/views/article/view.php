@@ -1,14 +1,11 @@
 <?php
 
-use common\helper\DateHelper;
 use common\helper\LabelHelper;
 use common\models\User;
 use kartik\editors\Summernote;
 use kartik\detail\DetailView;
 use kartik\select2\Select2;
 use kartik\datecontrol\DateControl;
-use yii\helpers\Html;
-use yii\web\JqueryAsset;
 
 /**
  * @var yii\web\View $this
@@ -152,7 +149,7 @@ if(!empty($model->content)){
                     'maintainOrder' => true,
                     'options' => [
                         'multiple' => true,
-                        'value' => $model->tags,
+                        'value' => $articleTags,  // Correct place to pass the array
                     ],
                     'pluginOptions' => [
                         'tags' => true,
