@@ -42,9 +42,11 @@
 
         "budyaga/yii2-cropper": "*",
         "aneeshikmat/yii2-time-down-counter": "v1.1.0-stable",
+        "supplyhog/yii2-clipboardjs" : "dev-master",
 
         "mootensai/yii2-enhanced-gii": "dev-master",
         "warrence/yii2-kartikgii": "dev-master",
+
         "ext-dom": "*",
         "ext-zip": "*",
         "ext-libxml": "*"

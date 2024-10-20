@@ -140,4 +140,8 @@ class IconHelper
     {
         return '<i class="fas fa-globe"></i>';
     }
+    public static function getClipboard(): string
+    {
+        return '<i class="fas fa-copy"></i>';
+    }
 }

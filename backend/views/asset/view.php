@@ -1,8 +1,10 @@
 <?php
 
+use common\helper\IconHelper;
 use common\helper\LabelHelper;
 use common\models\Asset;
 use lesha724\documentviewer\ViewerJsDocumentViewer;
+use supplyhog\ClipboardJs\ClipboardJsWidget;
 use yii\helpers\Html;
 use kartik\detail\DetailView;
 use kartik\datecontrol\DateControl;
@@ -12,8 +14,12 @@ use kartik\select2\Select2;
 /**
  * @var yii\web\View $this
  * @var common\models\Asset $model
+ * @var common\models\Asset $isVisibleList
+ * @var common\models\Asset $assetTypeList
+ * @var common\models\AssetCategory $assetCategoryList
  * @var string $fileType
  * @var common\helper\SpreadsheetHelper $helper
+ *
  */
 
 $this->title = $model->title;
@@ -57,8 +63,14 @@ $deleteAsset = Html::a('<i class="fa fa-trash"></i> Delete File', ['asset/delete
                     <p class="card-text">
 
                         <?php
+                        $clipboard = ClipboardJsWidget::widget([
+                            'text' => 'https://' . Yii::$app->getRequest()->serverName . $model->getAssetUrl(),
+                            'label' => IconHelper::getClipboard().' Copy',
+                            'htmlOptions' => ['class' => 'btn btn-small'],
+                            'tag' => 'button',
+                        ]);
 
-                            $assetUrl   = $model->getAssetUrl();
+                        $assetUrl   = $model->getAssetUrl();
                             $tmp        = explode('.', $model->asset);
                             $ext        = end($tmp);
 
@@ -154,7 +166,7 @@ $deleteAsset = Html::a('<i class="fa fa-trash"></i> Delete File', ['asset/delete
                     
                     [
                         'attribute' => 'asset',
-                        'label' => 'Asset Url',
+                        'label' => 'Asset Url '.$clipboard,
                         'value' => 'https://'.Yii::$app->getRequest()->serverName.$model->getAssetUrl(),
                         'format' => 'raw',
 

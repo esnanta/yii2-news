@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "258a96c6ddf057305a3b162eb5b4f5fc",
+    "content-hash": "7233e39201a8612e13adab17cabaaa17",
     "packages": [
         {
             "name": "aneeshikmat/yii2-time-down-counter",
@@ -57,31 +57,49 @@
         },
         {
             "name": "bower-asset/bootstrap",
-            "version": "v5.2.3",
+            "version": "v5.3.3",
             "source": {
                 "type": "git",
-                "url": "git@github.com:twbs/bootstrap.git",
-                "reference": "cb021439c683d9805e2864c58095b92d405e9b11"
+                "url": "https://github.com/twbs/bootstrap.git",
+                "reference": "6e1f75f420f68e1d52733b8e407fc7c3766c9dba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/cb021439c683d9805e2864c58095b92d405e9b11",
-                "reference": "cb021439c683d9805e2864c58095b92d405e9b11"
+                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/6e1f75f420f68e1d52733b8e407fc7c3766c9dba",
+                "reference": "6e1f75f420f68e1d52733b8e407fc7c3766c9dba"
             },
             "type": "bower-asset"
         },
         {
-            "name": "bower-asset/inputmask",
-            "version": "5.0.8",
+            "name": "bower-asset/clipboard",
+            "version": "v1.7.1",
             "source": {
                 "type": "git",
-                "url": "git@github.com:RobinHerbots/Inputmask.git",
-                "reference": "e0f39e0c93569c6b494c3a57edef2c59313a6b64"
+                "url": "git@github.com:zenorocha/clipboard.js.git",
+                "reference": "b6e6b80ab07eab03ce0d277515b3ed540773a330"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RobinHerbots/Inputmask/zipball/e0f39e0c93569c6b494c3a57edef2c59313a6b64",
-                "reference": "e0f39e0c93569c6b494c3a57edef2c59313a6b64"
+                "url": "https://api.github.com/repos/zenorocha/clipboard.js/zipball/b6e6b80ab07eab03ce0d277515b3ed540773a330",
+                "reference": "b6e6b80ab07eab03ce0d277515b3ed540773a330"
+            },
+            "type": "bower-asset",
+            "license": [
+                "MIT"
+            ]
+        },
+        {
+            "name": "bower-asset/inputmask",
+            "version": "5.0.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/RobinHerbots/Inputmask.git",
+                "reference": "310a33557e2944daf86d5946a5e8c82b9118f8f7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/RobinHerbots/Inputmask/zipball/310a33557e2944daf86d5946a5e8c82b9118f8f7",
+                "reference": "310a33557e2944daf86d5946a5e8c82b9118f8f7"
             },
             "require": {
                 "bower-asset/jquery": ">=1.7"
@@ -5020,6 +5038,48 @@
             "time": "2024-09-02T10:17:15+00:00"
         },
         {
+            "name": "supplyhog/yii2-clipboardjs",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/supplyhog/yii2-clipboardjs.git",
+                "reference": "9bb74f4cfef3ddd05a572e0c0c59ed2cef3745f4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/supplyhog/yii2-clipboardjs/zipball/9bb74f4cfef3ddd05a572e0c0c59ed2cef3745f4",
+                "reference": "9bb74f4cfef3ddd05a572e0c0c59ed2cef3745f4",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/clipboard": "^1.5",
+                "php": ">=5.4.0",
+                "yiisoft/yii2": "*"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "supplyhog\\ClipboardJs\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Wil Wade",
+                    "email": "wil@supplyhog.com"
+                }
+            ],
+            "support": {
+                "issues": "https://github.com/supplyhog/yii2-clipboardjs/issues",
+                "source": "https://github.com/supplyhog/yii2-clipboardjs/tree/master"
+            },
+            "time": "2016-10-31T13:13:08+00:00"
+        },
+        {
             "name": "symfony/deprecation-contracts",
             "version": "v2.5.3",
             "source": {
@@ -6748,25 +6808,25 @@
     "packages-dev": [
         {
             "name": "behat/gherkin",
-            "version": "v4.9.0",
+            "version": "v4.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Behat/Gherkin.git",
-                "reference": "0bc8d1e30e96183e4f36db9dc79caead300beff4"
+                "reference": "cbb83c4c435dd8d05a161f2a5ae322e61b2f4db6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Behat/Gherkin/zipball/0bc8d1e30e96183e4f36db9dc79caead300beff4",
-                "reference": "0bc8d1e30e96183e4f36db9dc79caead300beff4",
+                "url": "https://api.github.com/repos/Behat/Gherkin/zipball/cbb83c4c435dd8d05a161f2a5ae322e61b2f4db6",
+                "reference": "cbb83c4c435dd8d05a161f2a5ae322e61b2f4db6",
                 "shasum": ""
             },
             "require": {
                 "php": "~7.2|~8.0"
             },
             "require-dev": {
-                "cucumber/cucumber": "dev-gherkin-22.0.0",
+                "cucumber/cucumber": "dev-gherkin-24.1.0",
                 "phpunit/phpunit": "~8|~9",
-                "symfony/yaml": "~3|~4|~5"
+                "symfony/yaml": "~3|~4|~5|~6|~7"
             },
             "suggest": {
                 "symfony/yaml": "If you want to parse features, represented in YAML files"
@@ -6805,9 +6865,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Behat/Gherkin/issues",
-                "source": "https://github.com/Behat/Gherkin/tree/v4.9.0"
+                "source": "https://github.com/Behat/Gherkin/tree/v4.10.0"
             },
-            "time": "2021-10-12T13:05:09+00:00"
+            "time": "2024-10-19T14:46:06+00:00"
         },
         {
             "name": "clue/ndjson-react",
@@ -12169,6 +12229,7 @@
         "kartik-v/yii2-password": 20,
         "kartik-v/yii2-editors": 20,
         "kartik-v/yii2-social": 20,
+        "supplyhog/yii2-clipboardjs": 20,
         "mootensai/yii2-enhanced-gii": 20,
         "warrence/yii2-kartikgii": 20,
         "phpmd/phpmd": 0,

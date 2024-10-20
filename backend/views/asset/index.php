@@ -1,5 +1,8 @@
 <?php
 
+use common\helper\IconHelper;
+use Eddmash\Clipboard\Clipboard;
+use supplyhog\ClipboardJs\ClipboardJsWidget;
 use yii\helpers\Html;
 use kartik\grid\GridView;
 use yii\widgets\Pjax;
@@ -8,6 +11,9 @@ use yii\widgets\Pjax;
  * @var yii\web\View $this
  * @var yii\data\ActiveDataProvider $dataProvider
  * @var common\models\AssetSearch $searchModel
+ * @var common\models\AssetCategory $assetCategoryList
+ * @var common\models\Asset $isVisibleList
+ *
  */
 
 $this->title = Yii::t('app', 'Assets');
@@ -44,26 +50,19 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'title',
-            [
-                'attribute'=>'asset_type',
-                'vAlign'=>'middle',
-                'width'=>'180px',
-                'value'=>function ($model, $key, $index, $widget) {
-                    return ($model->asset_type!=null) ? $model->getOneAssetType($model->asset_type):'';
-                },
-                'filterType'=>GridView::FILTER_SELECT2,
-                'filter'=>$assetTypeList,
-                'filterWidgetOptions'=>[
-                    'pluginOptions'=>['allowClear'=>true],
-                ],
-                'filterInputOptions'=>['placeholder'=>''],
-                'format'=>'raw'
-            ],
+//            [
+//                'attribute'=>'asset_url',
+//                'vAlign'=>'middle',
+//                'width'=>'180px',
+//                'value'=>function ($model, $key, $index, $widget) {
+//                    return ($model->asset_url!=null) ? 'https://'.Yii::$app->getRequest()->serverName.$model->getAssetUrl():'';
+//                },
+//            ],
             [
                 'attribute'=>'asset_category_id', 
                 'vAlign'=>'middle',
                 'width'=>'180px',
-                'value'=>function ($model, $key, $index, $widget) { 
+                'value'=>function ($model, $key, $index, $widget) {
                     return ($model->asset_category_id!=null) ? $model->assetCategory->title:'';
                 },
                 'filterType'=>GridView::FILTER_SELECT2,
@@ -91,10 +90,27 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'description',
             [
+                'header'=>'View',
+                'format' => ['image',['width'=>'70','height'=>'50']],
+                'vAlign'=>'middle',
+                'width'=>'50px',
+                'value'=>function ($model, $key, $index, $widget) {
+                    return ($model->getAssetUrl());
+                },
+            ],
+            [
                 'class' => 'common\widgets\ActionColumn',
                 'contentOptions' => ['style' => 'white-space:nowrap;'],
-                'template'=>'{update} {view}',                
+                'template'=>'{copy} {update} {view}',
                 'buttons' => [
+                    'copy' => function ($url, $model) {
+                        return ClipboardJsWidget::widget([
+                            'text' => 'https://'.Yii::$app->getRequest()->serverName.$model->getAssetUrl(),
+                            'label' => IconHelper::getClipboard(),
+                            'htmlOptions' => ['class' => 'btn btn-sm btn-info'],
+                            'tag' => 'button',
+                        ]);
+                    },
                     'update' => function ($url, $model) {
                         return Html::a('<i class="fas fa-pencil-alt"></i>',
                             Yii::$app->urlManager->createUrl(['asset/view', 'id' => $model->id, 'edit' => 't']),
