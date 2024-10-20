@@ -116,7 +116,7 @@ class ContentHelper
 
             // Check if the image exists physically
             if (is_file($imagePath) && file_exists($imagePath)) {
-                return $srcImage;
+                return Yii::$app->urlManager->baseUrl . $srcImage;
             } else {
                 // Try to clean up the path in case of admin URL issues
                 $srcImage = str_replace('/main/admin', '', $srcImage);
