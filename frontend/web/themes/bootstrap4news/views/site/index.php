@@ -16,7 +16,7 @@ MetaHelper::setMetaTags();
 $articleService = new ArticleService();
 $articlesSlider = $articleService->getLatestArticles(3);
 $articlesPromo = $articleService->getLatestArticlesByOffset(4,4);
-$articlesPopular = $articleService->getPopularArticles(4);
+$articlesPopular = $articleService->getPopularArticles(4,5);
 $articlesLatest = $articleService->getLatestArticlesByOffset(4,8);
 $articlesPinned = $articleService->getPinnedArticles(4);
 $articlesRandom = $articleService->getRandomArticles(9);

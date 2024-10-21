@@ -21,10 +21,10 @@ class RecentBlogs extends Widget
 
     public function run()
     {
-        $blogs = Article::find()->where(['publish_status' => Article::PUBLISH_STATUS_YES])->orderBy(['created_at' => SORT_DESC])->limit($this->maxData)->all();
+        $articleList = Article::find()->where(['publish_status' => Article::PUBLISH_STATUS_YES])->orderBy(['created_at' => SORT_DESC])->limit($this->maxData)->all();
         return $this->render('_recent_blog', [
             'title' => $this->title,
-            'blogs' => $blogs,
+            'articleList' => $articleList,
         ]);
     }
 }

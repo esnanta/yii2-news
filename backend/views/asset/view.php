@@ -65,14 +65,14 @@ $deleteAsset = Html::a('<i class="fa fa-trash"></i> Delete File', ['asset/delete
                     <p class="card-text">
 
                         <?php
-                        $assetUrl   = $model->getAssetUrl();
+                            $assetUrl   = $model->getAssetUrl();
                             $tmp        = explode('.', $model->asset);
                             $ext        = end($tmp);
 
                             if($fileType == Asset::ASSET_TYPE_IMAGE){
                                 echo Html::img($assetUrl, ['class' => 'img-fluid']);
                             } elseif ($fileType == Asset::ASSET_TYPE_SPREADSHEET){
-                                echo $helper->displayGrid($sheetData);
+                                echo $helper->displayGrid($fileData);
                             } else {
                                 echo ViewerJsDocumentViewer::widget([
                                     'url'=> $assetUrl,//url на ваш документ
