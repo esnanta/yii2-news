@@ -114,4 +114,4 @@ Bootstrap4news::register($this);
 </html>
 <?php $this->endPage() ?>
 
-<script async src="https://cse.google.com/cse.js?cx=fa142c22a7a1bf20b"></script>
+<script async src="https://cse.google.com/cse.js?cx=40a3035444fb94798"></script>
