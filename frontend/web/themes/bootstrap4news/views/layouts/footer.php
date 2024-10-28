@@ -29,7 +29,7 @@ $siteLinks = OfficeMedia::find()->where(['media_type'=>MediaTypeHelper::getLink(
                 </div>
             </div>
 
-            <div class="col-lg-4 col-md-6">
+            <div class="col-lg-5 col-md-5">
                 <div class="footer-widget">
                     <h3 class="title">Useful Links</h3>
                     <ul>
@@ -43,7 +43,7 @@ $siteLinks = OfficeMedia::find()->where(['media_type'=>MediaTypeHelper::getLink(
                 </div>
             </div>
 
-            <div class="col-lg-4 col-md-6">
+            <div class="col-lg-3 col-md-3">
                 <div class="footer-widget">
                     <h3 class="title">Social</h3>
                     <div class="footer-widget">
