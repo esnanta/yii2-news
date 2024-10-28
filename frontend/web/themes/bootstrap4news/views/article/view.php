@@ -65,25 +65,21 @@ $newContent = str_replace('%09', '', $dom->saveHtml());
     Yii::$app->params['og_title']['content']        = $model->title;
     Yii::$app->params['og_description']['content']  = $model->description;
     Yii::$app->params['og_type']['content']         = 'website';
-    Yii::$app->params['og_image']['content']        = 'https://'.Yii::$app->request->serverName.$articleCover;
-    Yii::$app->params['og_url']['content']          = 'https://'. Yii::$app->request->serverName.
-        Yii::$app->getUrlManager()->createUrl(['article/view', 'id' => $model->id, 'title' => $model->title
-    ]);
+    Yii::$app->params['og_image']['content']        = $articleCover;
+    Yii::$app->params['og_url']['content']          = 'https://'. Yii::$app->request->serverName.$model->getUrl();
     Yii::$app->params['og_updated_time']['content'] = $model->updated_at;
 
 //TWITTER
     Yii::$app->params['twitter_title']['content']        = $model->title;
     Yii::$app->params['twitter_description']['content']  = $model->description;
     Yii::$app->params['twitter_card']['content']         = 'summary_large_image';//summary_large_image
-    Yii::$app->params['twitter_image']['content']        = 'https://'.Yii::$app->request->serverName.$articleCover;
-    Yii::$app->params['twitter_url']['content']          = 'https://'. Yii::$app->request->serverName.
-        Yii::$app->getUrlManager()->createUrl(['article/view', 'id' => $model->id, 'title' => $model->title
-    ]);
+    Yii::$app->params['twitter_image']['content']        = $articleCover;
+    Yii::$app->params['twitter_url']['content']          = 'https://'. Yii::$app->request->serverName.$model->getUrl();
 
 //GOOGLE PLUS
     Yii::$app->params['googleplus_name']['content']        = $model->title;
     Yii::$app->params['googleplus_description']['content'] = $model->description;
-    Yii::$app->params['googleplus_image']['content']       = 'https://'.Yii::$app->request->serverName.$articleCover;
+    Yii::$app->params['googleplus_image']['content']       = $articleCover;
 ?>
 
 <div class="sn-container">
