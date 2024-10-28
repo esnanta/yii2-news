@@ -65,7 +65,10 @@ class Article extends BaseArticle
         }
 
         // Clean up the content using HtmlPurifier
-        $this->content = HtmlPurifier::process($this->content);
+        $this->content = HtmlPurifier::process($this->content, [
+            'HTML.Allowed' => 'p,b,strong,i,em,u,a[href|title],ul,ol,li,br,span[style]', // Example: Allow only certain tags
+            'AutoFormat.RemoveEmpty' => true, // Remove empty tags
+        ]);
 
         return parent::beforeSave($insert);
     }
