@@ -8,6 +8,7 @@ use common\models\base\Article as BaseArticle;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\helpers\Html;
+use yii\helpers\HtmlPurifier;
 
 class Article extends BaseArticle
 {
@@ -62,6 +63,9 @@ class Article extends BaseArticle
         if(empty($this->date_issued)){
             $this->date_issued          = $this->created_at;
         }
+
+        // Clean up the content using HtmlPurifier
+        $this->content = HtmlPurifier::process($this->content);
 
         return parent::beforeSave($insert);
     }
