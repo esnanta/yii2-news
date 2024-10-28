@@ -34,8 +34,8 @@ $siteLinks = OfficeMedia::find()->where(['media_type'=>MediaTypeHelper::getLink(
                     <h3 class="title">Useful Links</h3>
                     <ul>
                         <?php foreach ($siteLinks as $siteLinkItem) {  ?>
-                            <li><a href="<?=$siteLinkItemData->description?>">
-                                    <?=$siteLinkItemData->title?>
+                            <li><a href="<?=$siteLinkItem->description?>">
+                                    <?=$siteLinkItem->title?>
                                 </a>
                             </li>
                         <?php } ?>
