@@ -66,7 +66,7 @@ if (!empty($currentFile)) {
     <div class="card-body text-default">
 
         <?php
-            $assetUrl   = $model->getAssetUrl();
+            $assetUrl   = str_replace('frontend', 'backend', $model->getAssetUrl());
             $tmp        = explode('.', $model->asset);
             $ext        = end($tmp);
 
