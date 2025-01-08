@@ -66,8 +66,6 @@ $deleteAsset = Html::a('<i class="fa fa-trash"></i> Delete File', ['asset/delete
 
                         <?php
                             $assetUrl   = $model->getAssetUrl();
-                            $tmp        = explode('.', $model->asset);
-                            $ext        = end($tmp);
 
                             if($fileType == Asset::ASSET_TYPE_IMAGE){
                                 echo Html::img($assetUrl, ['class' => 'img-fluid']);

@@ -13,7 +13,7 @@ use yii\helpers\Html;
  * @var common\models\Asset $model
  */
 
-$currentFile    = str_replace('frontend', 'backend', $model->getAssetFile());
+$currentFile    = $model->getAssetFile();
 $currentName    = $model->asset_name;
 $fileData       = null;
 $fileType       = null; // Type of file: 'spreadsheet', 'image', 'document'
@@ -66,15 +66,15 @@ if (!empty($currentFile)) {
     <div class="card-body text-default">
 
         <?php
-            $assetUrl   = str_replace('frontend', 'backend', $model->getAssetUrl());
-            $tmp        = explode('.', $model->asset);
-            $ext        = end($tmp);
+            $assetUrl   = str_replace('uploads','backend/web/uploads',$model->getAssetUrl());
 
             if($fileType == Asset::ASSET_TYPE_IMAGE){
-                echo Html::img($assetUrl, ['class' => 'img-fluid','width'=>100]);
+                echo Html::img($assetUrl, ['class' => 'img-fluid']);
+            } elseif ($fileType == Asset::ASSET_TYPE_SPREADSHEET){
+                echo $helper->displayGrid($fileData);
             } else {
                 echo ViewerJsDocumentViewer::widget([
-                    'url'=> $assetUrl,//url на ваш документ
+                    'url'=> str_replace('frontend','backend',$assetUrl),//url на ваш документ
                     'width'=>'100%',
                     'height'=>'300px',
                     //https://geektimes.ru/post/111647/

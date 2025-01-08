@@ -50,14 +50,6 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'title',
-//            [
-//                'attribute'=>'asset_url',
-//                'vAlign'=>'middle',
-//                'width'=>'180px',
-//                'value'=>function ($model, $key, $index, $widget) {
-//                    return ($model->asset_url!=null) ? 'https://'.Yii::$app->getRequest()->serverName.$model->getAssetUrl():'';
-//                },
-//            ],
             [
                 'attribute'=>'asset_category_id', 
                 'vAlign'=>'middle',

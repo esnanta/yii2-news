@@ -12,7 +12,7 @@ class AssetUseCase
 
     public function getWebRoot() : String
     {
-        return str_replace('frontend', 'backend', Yii::getAlias('@webroot'));
+        return Yii::getAlias('@backend/web');
     }
 
     /**
@@ -27,7 +27,7 @@ class AssetUseCase
         return $directory;
     }
 
-    public static function getFileUrl($path,$fileName): string
+    public static function getFileUrl($path, $fileName): string
     {
         // Set default image if fileName is empty
         $assetName = !empty($fileName) ? $fileName : self::getDefaultImage();
