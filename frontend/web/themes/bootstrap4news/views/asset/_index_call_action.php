@@ -13,7 +13,7 @@ use yii\helpers\Html;
  * @var common\models\Asset $model
  */
 
-$currentFile    = $model->getAssetFile();
+$currentFile    = str_replace('frontend', 'backend', $model->getAssetFile());
 $currentName    = $model->asset_name;
 $fileData       = null;
 $fileType       = null; // Type of file: 'spreadsheet', 'image', 'document'
