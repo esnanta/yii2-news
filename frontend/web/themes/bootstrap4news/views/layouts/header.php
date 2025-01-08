@@ -89,6 +89,8 @@ use yii\helpers\Html;
                     <?= str_replace('user/', '', Html::a(Yii::t('app', 'Home'), ['site/index'], ['id' => 'nav-link--pages', 'class' => 'nav-item nav-link'])) ?>
                     <?= str_replace('user/', '', Html::a(Yii::t('app', 'Article'), ['article/index'], ['id' => 'nav-link--pages', 'class' => 'nav-item nav-link'])) ?>
                     <?= str_replace('user/', '', Html::a(Yii::t('app', 'Download'), ['asset/index'], ['id' => 'nav-link--pages', 'class' => 'nav-item nav-link'])) ?>
+                    <?= str_replace('user/', '', Html::a(Yii::t('app', 'Staff'), ['staff/index'], ['id' => 'nav-link--pages', 'class' => 'nav-item nav-link'])) ?>
+                    <?= str_replace('user/', '', Html::a(Yii::t('app', 'About'), ['site/about'], ['id' => 'nav-link--pages', 'class' => 'nav-item nav-link'])) ?>
 
                     <?php if(!empty($categories)) : ?>
                     <div class="nav-item dropdown">

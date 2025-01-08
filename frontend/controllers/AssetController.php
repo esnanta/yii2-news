@@ -2,17 +2,13 @@
 
 namespace frontend\controllers;
 
-use backend\models\AssetReport;
 use common\models\Asset;
-use common\models\AssetCategory;
-use common\models\AssetSearch;
 use common\service\DataListService;
+use frontend\models\AssetSearch;
 use Yii;
 use yii\base\Exception;
 use yii\filters\VerbFilter;
-use yii\helpers\ArrayHelper;
 use yii\web\Controller;
-use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -136,7 +132,7 @@ class AssetController extends Controller
      * @return Asset the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected function findModel($id): Asset
     {
         if (($model = Asset::findOne($id)) !== null) {
             return $model;

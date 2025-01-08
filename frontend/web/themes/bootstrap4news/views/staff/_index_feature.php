@@ -2,61 +2,47 @@
 
 use common\models\StaffMedia;
 use yii\helpers\Html;
-?>
-<style>
-    .list-unstyled {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    .list-unstyled li {
-        display: flex;
-        justify-content: center;
-        width: 100%;
-    }
-</style>
-<?php
-    $img = Html::img(str_replace('frontend', 'backend', $model->getAssetUrl()), [
-        'class'=>'w-100 g-mb-30',
-    ]);
-    $linkClass = 'u-link-v5 g-color-black g-color-primary--hover g-cursor-pointer';
+
+/**
+ * @var $model common\models\Staff
+ */
+
+$img = Html::img(str_replace('frontend', 'backend', $model->getAssetUrl()), [
+    'class' => 'img-fluid rounded mb-3',
+    'alt' => $model->title,
+]);
+
+$linkClass = 'text-dark font-weight-bold';
+
 ?>
 
-<!-- Figure -->
-<figure class="g-color-gray-dark-v2">
-    <!-- Figure Image -->
-    <?= $img; ?>
-    <!-- End Figure Image -->
+<div class="card h-100">
+    <div class="card-body text-center">
+        <?= $img ?>
 
-    <!-- Figure Info -->
-    <em class="d-block g-font-style-normal g-font-size-11 text-uppercase g-color-primary g-mb-5">
-        <?= (!empty($model->employment_id)) ? $model->employment->title:'Not Set';?>
-    </em>
+        <em class="d-block text-uppercase text-primary mb-2">
+            <?= $model->employment_id ? $model->employment->title : 'Not Set'; ?>
+        </em>
 
-    <h4 class="h5 g-color-black-light-v3 g-mb-5">
-        <?= Html::a($model->title, $model->getUrl(), ['class' => $linkClass]) ?>
-    </h4>
+        <h5 class="card-title">
+            <?= Html::a(Html::encode($model->title), $model->getUrl(), ['class' => $linkClass]) ?>
+        </h5>
 
-    <p class="g-font-size-13 g-color-gray-dark-v4"><?= $model->description?></p>
-    <!-- End Info -->
+        <p class="card-text text-muted"><?= Html::encode($model->description) ?></p>
+    </div>
 
-    <hr class="g-brd-gray-light-v4 g-my-15">
-
-    <!-- Contact Info -->
-    <?php
-        $staffMedias = StaffMedia::find()->where(['staff_id' => $model->id])->all();
-    ?>
-    <ul class="list-unstyled g-font-size-13 g-color-gray-dark-v4 ">
-        <?php foreach ($staffMedias as $staffMediaItem): ?>
-
-            <li class="g-mb-5">
-                <?php
-                    $title = '<i class="' . $staffMediaItem->title . ' g-mr-10"></i>';
-                ?>
-                <?= Html::a($title, $staffMediaItem->description, ['class' => $linkClass]) ?>
-            </li>
-        <?php endforeach;?>
-    </ul>
-    <!-- End Contact Info -->
-</figure>
-<!-- End Figure -->
+    <div class="card-footer bg-transparent border-top-0">
+        <?php $staffMedias = StaffMedia::find()->where(['staff_id' => $model->id])->all(); ?>
+        <ul class="list-inline text-center mb-0">
+            <?php foreach ($staffMedias as $staffMediaItem): ?>
+                <li class="list-inline-item">
+                    <?= Html::a('<i class="' . $staffMediaItem->title . '"></i>', $staffMediaItem->description, [
+                        'class' => 'text-muted',
+                        'target' => '_blank',
+                        'rel' => 'noopener noreferrer'
+                    ]) ?>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+</div>
