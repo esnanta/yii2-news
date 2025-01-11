@@ -2,17 +2,18 @@
 
 namespace backend\controllers;
 
-use common\domain\AssetUseCase;
 use common\helper\MediaTypeHelper;
 use common\helper\MessageHelper;
 use common\models\Staff;
 use common\models\StaffMediaSearch;
 use common\models\StaffSearch;
+use common\service\AssetService;
 use common\service\DataListService;
 use Yii;
 use yii\base\Exception;
 use yii\db\StaleObjectException;
 use yii\filters\VerbFilter;
+use yii\helpers\FileHelper;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
@@ -22,28 +23,28 @@ use yii\web\NotFoundHttpException;
  */
 class StaffController extends Controller
 {
-    
-    public static $pathTmpCrop='/uploads/tmp';
-    
-    public function behaviors(): array
+
+    public static $pathTmpCrop= '/uploads/tmp';
+
+    public function behaviors()
     {
         return [
             'verbs' => [
                 'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['post'],
-                    'delete-file' => ['post'],
                 ],
             ],
         ];
     }
 
-    /**
-     * @throws Exception
-     */
     public function actions()
     {
-        AssetUseCase::createBackendDirectory(self::$pathTmpCrop);
+        $directory = str_replace('frontend', 'backend', Yii::getAlias('@webroot')) . self::$pathTmpCrop;
+        if (!is_dir($directory)) {
+            FileHelper::createDirectory($directory, $mode = 0777);
+        }
+
         return [
             'avatar' => [
                 'class' => 'budyaga\cropper\actions\UploadAction',
@@ -56,7 +57,7 @@ class StaffController extends Controller
             ]
         ];
     }
-    
+
     /**
      * Lists all Staff models.
      * @return mixed
@@ -66,20 +67,19 @@ class StaffController extends Controller
         if (Yii::$app->user->can('index-staff')) {
             $searchModel = new StaffSearch;
             $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
-
             $officeList         = DataListService::getOffice();
             $employmentList     = DataListService::getEmployment();
             $genderList         = Staff::getArrayGenderStatus();
             $activeStatusList   = Staff::getArrayActiveStatus();
-            
+
             return $this->render('index', [
                 'dataProvider' => $dataProvider,
                 'searchModel' => $searchModel,
                 'officeList' => $officeList,
-                'employmentList'=>$employmentList,
+                'employmentList'=> $employmentList,
                 'genderList' => $genderList,
                 'activeStatusList' => $activeStatusList
-                    
+
             ]);
         } else {
             MessageHelper::getFlashAccessDenied();
@@ -91,6 +91,7 @@ class StaffController extends Controller
      * Displays a single Staff model.
      * @param integer $id
      * @return mixed
+     * @throws NotFoundHttpException
      */
     public function actionView($id)
     {
@@ -106,7 +107,7 @@ class StaffController extends Controller
             $employmentList     = DataListService::getEmployment();
             $genderList         = Staff::getArrayGenderStatus();
             $activeStatusList   = Staff::getArrayActiveStatus();
-            
+
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 MessageHelper::getFlashUpdateSuccess();
                 return $this->redirect(['view', 'id' => $model->id]);
@@ -131,17 +132,16 @@ class StaffController extends Controller
      * Creates a new Staff model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
-     * @throws StaleObjectException|ForbiddenHttpException|\yii\db\Exception
+     * @throws StaleObjectException|ForbiddenHttpException
      */
     public function actionCreate()
     {
         if (Yii::$app->user->can('create-staff')) {
-            $model = new Staff;
-
-            $officeList         = DataListService::getOffice();
-            $employmentList     = DataListService::getEmployment();
+            $model              = new Staff;
             $genderList         = Staff::getArrayGenderStatus();
             $activeStatusList   = Staff::getArrayActiveStatus();
+            $officeList         = DataListService::getOffice();
+            $employmentList     = DataListService::getEmployment();
 
             try {
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -150,8 +150,8 @@ class StaffController extends Controller
                 } else {
                     return $this->render('create', [
                         'model' => $model,
-                        'officeList'=>$officeList,
-                        'employmentList'=>$employmentList,
+                        'officeList' => $officeList,
+                        'employmentList'=> $employmentList,
                         'genderList' => $genderList,
                         'activeStatusList' => $activeStatusList
                     ]);
@@ -171,31 +171,44 @@ class StaffController extends Controller
      * @param integer $id
      * @return mixed
      */
-    
-    
-    public function actionUpdate($id)
+
+
+    public function actionUpdate($id,$title=null)
     {
-    
+
         if (Yii::$app->user->can('update-staff')) {
             try {
-                $officeList         = DataListService::getOffice();
-                
-                $model = $this->findModel($id);
+
+                $model          = $this->findModel($id);
+                $currentAsset   = $model->file_name;
+                $officeList     = DataListService::getOffice();
 
                 if ($model->load(Yii::$app->request->post())) {
-                    $urlTmpCrop = Yii::$app->urlManager->baseUrl.self::$pathTmpCrop;
-                    $model->file_name = str_replace($urlTmpCrop, '', $model->file_name);
-                    $model->file_name = str_replace('/', '', $model->file_name);
+                    $urlTmpCrop         = Yii::$app->urlManager->baseUrl.self::$pathTmpCrop;
+                    $model->file_name  = str_replace($urlTmpCrop, '', $model->file_name);
+                    $model->file_name  = str_replace('/', '', $model->file_name);
+                    $temporaryAsset     = $model->file_name;
+
+                    $isFileExisted = $model->getAssetFile(true);
+                    if(!file_exists($isFileExisted)):
+                        MessageHelper::getFlashCropImage();
+                        return $this->render('update', [
+                            'model' => $model,
+                            'officeList' => $officeList
+                        ]);
+                    endif;
 
                     if ($model->save()) {
-                        //DELETE OLD FILE
-                        if(file_exists($urlTmpCrop.'/'.$model->file_name)) :
-                            unlink($urlTmpCrop.'/'.$model->file_name);
-                        endif;
+                        //DELETE CURRENT ASSET
+                        $model->file_name = $currentAsset;
+                        $model->deleteAsset(false);
 
-                        //MOVE DATA FROM TMP TO MODEL DIRECTORY
-                        rename(str_replace('frontend', 'backend', Yii::getAlias('@webroot')).
-                            self::$pathTmpCrop.'/'.$model->file_name, $model->getAssetFile());
+                        //SET ASSET TEMPORARY
+                        //MOVE FROM TMP DIR TO MODEL DIR
+                        //DELETE ASSET TEMPORARY
+                        $model->file_name = $temporaryAsset;
+                        rename($model->getAssetFile(true), $model->getAssetFile(false));
+                        $model->deleteAsset(true);
 
                         MessageHelper::getFlashUpdateSuccess();
                         return $this->redirect(['view', 'id'=>$model->id, 'title'=>$model->title]);
@@ -204,8 +217,8 @@ class StaffController extends Controller
                     }
                 }
                 return $this->render('update', [
-                    'model'=>$model,
-                    'officeList'=>$officeList
+                    'model' => $model,
+                    'officeList' => $officeList
                 ]);
             } catch (StaleObjectException $e) {
                 throw new StaleObjectException('The object being updated is outdated.');
@@ -222,35 +235,16 @@ class StaffController extends Controller
      * @param integer $id
      * @return mixed
      * @throws ForbiddenHttpException
+     * @throws NotFoundHttpException
      */
     public function actionDelete($id)
     {
         if (Yii::$app->user->can('delete-staff')) {
             $model = $this->findModel($id);
-
-            // validate deletion and on failure process any exception
-            // e.g. display an error message
-            if ($model->delete()) {
-                MessageHelper::getFlashDeleteSuccess();
-                if (!$model->deleteImage()) {
-                    MessageHelper::getFlashDeleteAssetFailed();
-                }
-            }
-            return $this->redirect(['index']);
-        } else {
-            MessageHelper::getFlashLoginInfo();
-            return throw new ForbiddenHttpException;
-        }
-    }
-
-    public function actionDeleteFile($id)
-    {
-        if (Yii::$app->user->can('delete-staff')) {
-            $model = Staff::find()->where(['id' => $id])->one();
+            $model->delete();
             $model->deleteAsset();
-            $model->save();
             MessageHelper::getFlashDeleteSuccess();
-            return $this->redirect(['staff/view', 'id' => $model->id, 'title' => $model->title]);
+            return $this->redirect(['index']);
         } else {
             MessageHelper::getFlashLoginInfo();
             throw new ForbiddenHttpException;

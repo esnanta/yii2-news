@@ -17,11 +17,6 @@ use budyaga\cropper\Widget;
 
     echo $form->field($model, 'file_name')->widget(Widget::class, [
         'uploadUrl' => Url::toRoute('/staff/avatar'),
-        'width'=> '400',
-        'height'=> '400' ,
-        //'maxSize'=> 4097152,
-        'cropAreaWidth'=> '100%',
-        'cropAreaHeight'=> '600px', 
     ]); 
 
     echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'),

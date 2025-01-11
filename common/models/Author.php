@@ -2,8 +2,8 @@
 
 namespace common\models;
 
-use common\domain\AssetUseCase;
 use common\models\base\Author as BaseAuthor;
+use common\service\AssetService;
 use common\service\CacheService;
 use Yii;
 use yii\base\Exception;
@@ -41,7 +41,7 @@ class Author extends BaseAuthor
      */
     public function getAssetFile(): string
     {
-        return AssetUseCase::getFile($this->getPath(),$this->file_name);
+        return AssetService::getFile($this->getPath(),$this->file_name);
     }
 
     /**
@@ -50,7 +50,7 @@ class Author extends BaseAuthor
      */  
     public function getAssetUrl()
     {
-        return AssetUseCase::getFileUrl($this->getPath(), $this->file_name);
+        return AssetService::getFileUrl($this->getPath(), $this->file_name);
     }
 
     /**
@@ -92,7 +92,7 @@ class Author extends BaseAuthor
     public function deleteAsset() {
         $file = $this->getAssetFile();
 
-        if(AssetUseCase::deleteFile($file)){
+        if(AssetService::deleteFile($file)){
             $this->file_name = null;
             return true;
         }

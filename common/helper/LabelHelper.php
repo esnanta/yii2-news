@@ -113,4 +113,13 @@ class LabelHelper {
 
         return $brands[$$label] ?? 'Unknown';
     }
+
+    public static function getInfo($text): string
+    {
+        return '<span class="badge bg-info text-white">'.$text.'</span>';
+    }
+    public static function getSecondary($text): string
+    {
+        return '<span class="badge bg-secondary text-white">'.$text.'</span>';
+    }
 }

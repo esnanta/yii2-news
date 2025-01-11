@@ -132,7 +132,7 @@ class Staff extends \yii\db\ActiveRecord
             'gender_status' => Yii::t('app', 'Gender Status'),
             'active_status' => Yii::t('app', 'Active Status'),
             'address' => Yii::t('app', 'Address'),
-            'file_name' => Yii::t('app', 'File Name'),
+            'file_name' => Yii::t('app', 'Asset Name'),
             'email' => Yii::t('app', 'Email'),
             'google_plus' => Yii::t('app', 'Google Plus'),
             'instagram' => Yii::t('app', 'Instagram'),

@@ -2,6 +2,7 @@
 
 use common\helper\IconHelper;
 use common\helper\LabelHelper;
+use common\helper\MessageHelper;
 use common\models\Asset;
 use lesha724\documentviewer\ViewerJsDocumentViewer;
 use supplyhog\ClipboardJs\ClipboardJsWidget;
@@ -70,7 +71,11 @@ $deleteAsset = Html::a('<i class="fa fa-trash"></i> Delete File', ['asset/delete
                             if($fileType == Asset::ASSET_TYPE_IMAGE){
                                 echo Html::img($assetUrl, ['class' => 'img-fluid']);
                             } elseif ($fileType == Asset::ASSET_TYPE_SPREADSHEET){
-                                echo $helper->displayGrid($fileData);
+                                if (!empty($fileData)){
+                                    $helper->displayGrid($fileData);
+                                } else {
+                                    MessageHelper::getFlashAssetNotFound();
+                                }
                             } else {
                                 echo ViewerJsDocumentViewer::widget([
                                     'url'=> $assetUrl,//url на ваш документ

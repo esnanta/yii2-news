@@ -1,7 +1,7 @@
 <?php
 namespace common\helper;
 
-use common\domain\AssetUseCase;
+use common\service\AssetService;
 use DOMDocument;
 use DOMXPath;
 use Yii;
@@ -112,7 +112,7 @@ class ContentHelper
             }
 
             // Define the path where the images are stored
-            $imagePath = (new AssetUseCase)->getWebRoot() . $srcImage;
+            $imagePath = (new AssetService)->getWebRoot() . $srcImage;
 
             // Check if the image exists physically
             if (is_file($imagePath) && file_exists($imagePath)) {
@@ -120,16 +120,16 @@ class ContentHelper
             } else {
                 // Try to clean up the path in case of admin URL issues
                 $srcImage = str_replace('/main/admin', '', $srcImage);
-                $imagePath = (new AssetUseCase)->getWebRoot() . $srcImage;
+                $imagePath = (new AssetService)->getWebRoot() . $srcImage;
 
                 if (is_file($imagePath) && file_exists($imagePath)) {
                     return Yii::$app->urlManager->baseUrl . $srcImage;
                 } else {
-                    return AssetUseCase::getDefaultImage();
+                    return AssetService::getDefaultImage();
                 }
             }
         } else {
-            return AssetUseCase::getDefaultImage(); // Fallback to default if no image found
+            return AssetService::getDefaultImage(); // Fallback to default if no image found
         }
     }
 
@@ -169,7 +169,7 @@ class ContentHelper
 
             return str_replace('<br>', '', $dom->saveHTML());
         } else {
-            return Html::img(AssetUseCase::getDefaultImage(),['class'=>$class,'style' => $style]);
+            return Html::img(AssetService::getDefaultImage(),['class'=>$class,'style' => $style]);
         }
 
     }

@@ -15,7 +15,7 @@ class StaffSearch extends Staff
     {
         return [
             [['employment_id', 'gender_status', 'active_status', 'created_at', 'updated_at', 'created_by', 'updated_by', 'is_deleted', 'deleted_at', 'deleted_by', 'verlock'], 'integer'],
-            [['title', 'identity_number', 'initial', 'phone_number', 'address', 'file_name', 'email', 'google_plus', 'instagram', 'facebook', 'twitter', 'description'], 'safe'],
+            [['title', 'identity_number', 'initial', 'phone_number', 'address', 'asset_name', 'email', 'google_plus', 'instagram', 'facebook', 'twitter', 'description'], 'safe'],
         ];
     }
 
@@ -56,7 +56,7 @@ class StaffSearch extends Staff
             ->andFilterWhere(['like', 'initial', $this->initial])
             ->andFilterWhere(['like', 'phone_number', $this->phone_number])
             ->andFilterWhere(['like', 'address', $this->address])
-            ->andFilterWhere(['like', 'file_name', $this->file_name])
+            ->andFilterWhere(['like', 'asset_name', $this->asset_name])
             ->andFilterWhere(['like', 'email', $this->email])
             ->andFilterWhere(['like', 'google_plus', $this->google_plus])
             ->andFilterWhere(['like', 'instagram', $this->instagram])

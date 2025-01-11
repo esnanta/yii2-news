@@ -148,4 +148,12 @@ class IconHelper
     {
         return '<i class="fas fa-copy"></i>';
     }
+    public static function getCheck(): string
+    {
+        return '<i class="fas fa-check"></i>';
+    }
+    public static function getExclamation(): string
+    {
+        return '<i class="fas fa-exclamation-circle"></i>';
+    }
 }

@@ -33,7 +33,7 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'description') ?>
 
-    <?php // echo $form->field($model, 'file_name') ?>
+    <?php // echo $form->field($model, 'asset_name') ?>
 
     <?php // echo $form->field($model, 'created_at') ?>
 

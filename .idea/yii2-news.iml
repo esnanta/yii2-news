@@ -169,7 +169,6 @@
       <excludeFolder url="file://$MODULE_DIR$/backend/web/assets/ed8c0f76" />
       <excludeFolder url="file://$MODULE_DIR$/backend/web/assets/ee296814" />
       <excludeFolder url="file://$MODULE_DIR$/backend/web/assets/f86be3e9" />
-      <excludeFolder url="file://$MODULE_DIR$/backend/web/uploads" />
       <excludeFolder url="file://$MODULE_DIR$/common/tests/_support/_generated" />
       <excludeFolder url="file://$MODULE_DIR$/console/runtime/cache" />
       <excludeFolder url="file://$MODULE_DIR$/console/runtime/debug" />
@@ -185,6 +184,7 @@
       <excludeFolder url="file://$MODULE_DIR$/frontend/web/assets/ec1196a5" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/bower-asset/clipboard" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/supplyhog/yii2-clipboardjs" />
+      <excludeFolder url="file://$MODULE_DIR$/common/web/uploads" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

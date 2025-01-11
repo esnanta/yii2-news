@@ -8,6 +8,10 @@ use kartik\widgets\Select2;
 /**
  * @var yii\web\View $this
  * @var common\models\Staff $model
+ * @var common\models\Staff $activeStatusList
+ * @var common\models\Staff $genderList
+ * @var common\models\Office $officeList
+ * @var common\models\Employment $employmentList
  */
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Staff', 'url' => ['index']];

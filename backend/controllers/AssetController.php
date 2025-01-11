@@ -2,12 +2,13 @@
 
 namespace backend\controllers;
 
-use common\helper\DataIdHelper;
 use common\helper\DateHelper;
 use common\helper\MessageHelper;
 use common\helper\SpreadsheetHelper;
 use common\models\Asset;
 use common\models\AssetSearch;
+use common\service\AssetService;
+use common\service\CacheService;
 use common\service\DataListService;
 use Yii;
 use yii\base\Exception;
@@ -22,6 +23,15 @@ use yii\web\NotFoundHttpException;
  */
 class AssetController extends Controller
 {
+    private AssetService $assetService;
+
+    public function __construct($id, $module,
+        AssetService $assetService, $config = [])
+    {
+        $this->assetService = $assetService;
+        parent::__construct($id, $module, $config);
+    }
+
     public function behaviors(): array
     {
         return [
@@ -78,40 +88,39 @@ class AssetController extends Controller
             $assetCategoryList    = DataListService::getAssetCategory();
             $isVisibleList        = Asset::getArrayIsVisible();
             $assetTypeList        = Asset::getArrayAssetType();
+            $fileExtensionList    = Asset::getArrayFileExtension();
 
-            $currentFile    = $model->getAssetFile();
-            $currentName    = $model->asset_name;
+            $renderIndexFileStatus = $this->assetService->renderIndexFileStatus($model);
+            $currentFile    = $this->assetService->getAssetFile($model);
+            $assetUrl       = $this->assetService->getAssetUrl($model);
             $fileData       = null;
             $fileType       = null; // Type of file: 'spreadsheet', 'image', 'document'
             $helper         = null;
 
             if (!empty($currentFile)) {
                 try {
-                    $fileExtension = pathinfo($currentFile, PATHINFO_EXTENSION);
+                    $fileExtension = strtolower(pathinfo($currentFile, PATHINFO_EXTENSION));
 
-                    // Identify file type based on extension
-                    if (in_array(strtolower($fileExtension), ['xlsx', 'xls'])) {
-                        // Spreadsheet handling
-                        $fileType = Asset::ASSET_TYPE_SPREADSHEET;
+                    foreach ($fileExtensionList as $type => $extensions) {
+                        if (in_array($fileExtension, $extensions)) {
+                            $fileType = $type; // Assign the asset type integer
+                            break;
+                        }
+                    }
+
+                    if ($fileType === Asset::ASSET_TYPE_SPREADSHEET) {
                         $spreadsheetHelper = SpreadsheetHelper::getInstance();
                         $helper = $spreadsheetHelper->getHelper();
-                        $sheetName = $spreadsheetHelper->getSheetName();
-                        $reader = $spreadsheetHelper->getReader($currentFile, $sheetName);
+                        $reader = $spreadsheetHelper->getReader($currentFile);
                         $spreadsheet = $reader->load($currentFile);
                         $activeRange = $spreadsheet->getActiveSheet()->calculateWorksheetDataDimension();
                         $fileData = $spreadsheet->getActiveSheet()->rangeToArray(
                             $activeRange, null, true, true, true
                         );
-
-                    } elseif (in_array(strtolower($fileExtension), ['jpg', 'jpeg', 'png', 'gif'])) {
-                        // Image handling
-                        $fileType = Asset::ASSET_TYPE_IMAGE;
-                        $fileData = $currentFile; // Assuming this is the file path to display the image
-                    } elseif (in_array(strtolower($fileExtension), ['pdf', 'doc', 'docx'])) {
-                        // Document handling
-                        $fileType = Asset::ASSET_TYPE_DOCUMENT;
-                        $fileData = $currentFile; // Assuming this is the file path for download or preview
+                    } else  {
+                        $fileData = $currentFile;
                     }
+
                 } catch (\Exception $e) {
                     MessageHelper::getFlashAssetNotFound();
                 }
@@ -119,19 +128,19 @@ class AssetController extends Controller
 
             if ($model->load(Yii::$app->request->post())) {
                 // process uploaded asset file instance
-                $asset = $model->uploadAsset();
+                $asset = $this->assetService->uploadAsset($model);
 
-                // revert back if no valid file instance uploaded
-                if ($asset === false) {
-                    $model->asset_name = $currentName;
-                }
+                if(!empty($asset)):
+                    $model->asset_name  = $asset->name;
+                    $model->asset_url = $this->assetService->getAssetUrl($model);
+                endif;
 
                 if ($model->save()) {
                     if ($asset !== false) {
                         if (file_exists($currentFile)) {
                             unlink($currentFile);
                         }
-                        $path = $model->getAssetFile();
+                        $path = $this->assetService->getAssetFile($model);
                         $asset->saveAs($path);
                     }
                     MessageHelper::getFlashUpdateSuccess();
@@ -145,9 +154,11 @@ class AssetController extends Controller
                 'assetCategoryList' => $assetCategoryList,
                 'isVisibleList' => $isVisibleList,
                 'assetTypeList' => $assetTypeList,
+                'assetUrl' => $assetUrl,
                 'fileType' => $fileType,
                 'helper' => $helper,
                 'fileData' => $fileData,
+                'renderIndexFileStatus' => $renderIndexFileStatus
             ]);
         } else {
             MessageHelper::getFlashAccessDenied();
@@ -164,14 +175,14 @@ class AssetController extends Controller
     {
         if (Yii::$app->user->can('create-asset')) {
 
-            $officeId             = DataIdHelper::getOfficeId();
+            $officeId             = CacheService::getInstance()->getOfficeId();
             $officeList           = DataListService::getOffice();
             $assetCategoryList    = DataListService::getAssetCategory();
 
-            $model = new Asset;
-            $model->office_id = $officeId;
+            $model              = new Asset;
+            $model->office_id   = $officeId;
             $model->date_issued = date(DateHelper::getDateSaveFormat());
-            $model->is_visible = Asset::IS_VISIBLE_PRIVATE;
+            $model->is_visible  = Asset::IS_VISIBLE_PRIVATE;
 
             $assetTypeList = Asset::getArrayAssetType();
             $isVisibleList = Asset::getArrayIsVisible();
@@ -179,13 +190,19 @@ class AssetController extends Controller
             try {
                 if ($model->load(Yii::$app->request->post())) {
                     // process uploaded asset file instance
-                    $asset = $model->uploadAsset();
-                    $model->asset_url = $model->getAssetUrl();
+                    $asset = $this->assetService->uploadAsset($model);
+
+                    if(empty($asset)){
+                        MessageHelper::getFlashUploadFailed();
+                    } else {
+                        $model->asset_name = $asset->name;
+                        $model->asset_url = $this->assetService->getAssetUrl($model);
+                    }
 
                     if ($model->save()) :
                         // upload only if valid uploaded file instance found
                         if ($asset !== false) {
-                            $path = $model->getAssetFile();
+                            $path = $this->assetService->getAssetFile($model);
                             $asset->saveAs($path);
                         }
                         MessageHelper::getFlashUpdateSuccess();
@@ -214,13 +231,14 @@ class AssetController extends Controller
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
+     * @throws NotFoundHttpException
      */
     public function actionUpdate($id,$title=null)
     {
         if (Yii::$app->user->can('update-asset')) {
             $model = $this->findModel($id);
 
-            $officeList             = DataListService::getOffice();
+            $officeList           = DataListService::getOffice();
             $assetCategoryList    = DataListService::getAssetCategory();
 
             $assetTypeList = Asset::getArrayAssetType();
@@ -228,14 +246,19 @@ class AssetController extends Controller
 
             if ($model->load(Yii::$app->request->post())) {
 
-                // process uploaded asset file instance
-                $asset = $model->uploadAsset();
-                $model->asset_url = $model->getPath() . '/' . $asset->name;
+                $asset = $this->assetService->uploadAsset($model);
+
+                if(empty($asset)){
+                    MessageHelper::getFlashAssetNotFound();
+                } else {
+                    $model->asset_name  = $asset->name;
+                    $model->asset_url = $this->assetService->getAssetUrl($model);
+                }
 
                 if ($model->save()) :
                     // upload only if valid uploaded file instance found
                     if ($asset !== false) {
-                        $path = $model->getAssetFile();
+                        $path = $this->assetService->getAssetFile($model);
                         $asset->saveAs($path);
                     }
                     MessageHelper::getFlashUpdateSuccess();
@@ -263,6 +286,7 @@ class AssetController extends Controller
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
+     * @throws Exception
      */
     public function actionDelete($id)
     {
@@ -271,8 +295,8 @@ class AssetController extends Controller
             // validate deletion and on failure process any exception
             // e.g. display an error message
             if ($model->delete()) {
-                if (!$model->deleteAsset()) {
-                    Yii::$app->session->setFlash('error', 'Error deleting file');
+                if (!$this->assetService->deleteAsset($model)) {
+                    Yii::$app->session->setFlash('error', 'Asset not found');
                 }
             }
             MessageHelper::getFlashDeleteSuccess();
@@ -283,11 +307,16 @@ class AssetController extends Controller
         }
     }
 
+    /**
+     * @throws Exception
+     * @throws \yii\db\Exception
+     * @throws ForbiddenHttpException
+     */
     public function actionDeleteFile($id)
     {
         if (Yii::$app->user->can('delete-asset')) {
-            $model = Asset::find()->where(['id' => $id])->one();
-            $model->deleteAsset();
+            $model = $this->findModel($id);
+            $this->assetService->deleteAsset($model);
             $model->save();
             MessageHelper::getFlashDeleteSuccess();
             return $this->redirect(['asset/view', 'id' => $model->id, 'title' => $model->title]);
@@ -316,7 +345,7 @@ class AssetController extends Controller
     public function actionDownload($id, $title = null)
     {
         $model = $this->findModel($id);
-        $path = $model->getAssetFile();
+        $path = $this->assetService->getAssetFile($model);
         if (!empty($path)) {
             return $model->downloadFile($path);
         } else {

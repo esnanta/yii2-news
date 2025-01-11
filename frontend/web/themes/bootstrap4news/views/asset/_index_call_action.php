@@ -29,8 +29,7 @@ if (!empty($currentFile)) {
             $fileType = Asset::ASSET_TYPE_SPREADSHEET;
             $spreadsheetHelper = SpreadsheetHelper::getInstance();
             $helper = $spreadsheetHelper->getHelper();
-            $sheetName = $spreadsheetHelper->getSheetName();
-            $reader = $spreadsheetHelper->getReader($currentFile, $sheetName);
+            $reader = $spreadsheetHelper->getReader($currentFile);
             $spreadsheet = $reader->load($currentFile);
             $activeRange = $spreadsheet->getActiveSheet()->calculateWorksheetDataDimension();
             $fileData = $spreadsheet->getActiveSheet()->rangeToArray(
@@ -43,7 +42,7 @@ if (!empty($currentFile)) {
             $fileData = $currentFile; // Assuming this is the file path to display the image
         } elseif (in_array(strtolower($fileExtension), ['pdf', 'doc', 'docx'])) {
             // Document handling
-            $fileType = Asset::ASSET_TYPE_DOCUMENT;
+            $fileType = Asset::ASSET_TYPE_PDF;
             $fileData = $currentFile; // Assuming this is the file path for download or preview
         }
     } catch (\Exception $e) {
@@ -56,7 +55,7 @@ if (!empty($currentFile)) {
 <div class="card border-default mb-3">
     <div class="card-header">
 
-        <?= $model->title; ?>
+        <?= Html::a($model->title, $model->getUrl()) ?>
 
         <span class="float-right">
             <?= IconHelper::getDownload();?>
@@ -66,12 +65,12 @@ if (!empty($currentFile)) {
     <div class="card-body text-default">
 
         <?php
-            $assetUrl   = str_replace('uploads','backend/web/uploads',$model->getAssetUrl());
+            $assetUrl   = $model->getAssetUrl();
 
             if($fileType == Asset::ASSET_TYPE_IMAGE){
                 echo Html::img($assetUrl, ['class' => 'img-fluid']);
             } elseif ($fileType == Asset::ASSET_TYPE_SPREADSHEET){
-                echo $helper->displayGrid($fileData);
+                $helper->displayGrid($fileData);
             } else {
                 echo ViewerJsDocumentViewer::widget([
                     'url'=> str_replace('frontend','backend',$assetUrl),//url на ваш документ

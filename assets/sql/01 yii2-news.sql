@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 14, 2024 at 10:18 AM
+-- Generation Time: Jan 11, 2025 at 05:36 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.10
 
@@ -112,6 +112,15 @@ CREATE TABLE `tx_asset` (
                             `uuid` varchar(36) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `tx_asset`
+--
+
+INSERT INTO `tx_asset` (`id`, `office_id`, `is_visible`, `asset_type`, `asset_group`, `asset_category_id`, `title`, `date_issued`, `asset_name`, `asset_url`, `size`, `mime_type`, `view_counter`, `download_counter`, `description`, `created_at`, `updated_at`, `created_by`, `updated_by`, `is_deleted`, `deleted_at`, `deleted_by`, `verlock`, `uuid`) VALUES
+                                                                                                                                                                                                                                                                                                                                                               (4, 1, 2, 3, NULL, 1, 'Jalan Sunyi Seorang Seniman', '2025-01-08', 'Jalan_Sunyi_Seorang_Seniman_677df5729a145.png', '/app/yii2-news/admin/images/no-picture-available-icon-1.jpg', NULL, NULL, 0, 3, '', '2025-01-08 10:48:02', '2025-01-08 11:09:42', 1, NULL, NULL, NULL, NULL, 3, '5c5d4f93cd7311efaa70c858c0b7f92f'),
+                                                                                                                                                                                                                                                                                                                                                               (5, 1, 2, 1, NULL, 1, 'Gambar Article', '2025-01-08', 'Gambar_Article_677df58a659ef.pdf', '/app/yii2-news/admin/images/no-picture-available-icon-1.jpg', NULL, NULL, 0, 3, '', '2025-01-08 10:48:26', '2025-01-08 11:09:40', 1, NULL, NULL, NULL, NULL, 3, '6a8aab6ecd7311efaa70c858c0b7f92f'),
+                                                                                                                                                                                                                                                                                                                                                               (6, 1, 2, 2, NULL, 1, 'tes pdf', '2025-01-08', 'tes_pdf_677df82133b47.xlsx', '/app/yii2-news/admin/images/no-picture-available-icon-1.jpg', NULL, NULL, 0, 0, '-', '2025-01-08 10:59:29', '2025-01-08 10:59:29', 1, 1, NULL, NULL, NULL, 0, 'f5995e14cd7411efaa70c858c0b7f92f');
+
 -- --------------------------------------------------------
 
 --
@@ -134,6 +143,13 @@ CREATE TABLE `tx_asset_category` (
                                      `verlock` bigint(20) DEFAULT NULL,
                                      `uuid` varchar(36) CHARACTER SET utf8 DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tx_asset_category`
+--
+
+INSERT INTO `tx_asset_category` (`id`, `office_id`, `title`, `sequence`, `description`, `created_at`, `updated_at`, `created_by`, `updated_by`, `is_deleted`, `deleted_at`, `deleted_by`, `verlock`, `uuid`) VALUES
+    (1, 1, 'test', 1, '', '2025-01-08 10:12:19', '2025-01-08 10:12:19', 1, 1, NULL, NULL, NULL, 0, '5ed0d057cd6e11efaa70c858c0b7f92f');
 
 -- --------------------------------------------------------
 
@@ -210,7 +226,7 @@ CREATE TABLE `tx_auth_assignment` (
 --
 
 INSERT INTO `tx_auth_assignment` (`item_name`, `user_id`, `created_at`) VALUES
-    ('admin', '1', 1728893833);
+    ('admin', '1', 1736305518);
 
 -- --------------------------------------------------------
 
@@ -233,102 +249,102 @@ CREATE TABLE `tx_auth_item` (
 --
 
 INSERT INTO `tx_auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
-                                                                                                                ('admin', 1, 'Admin', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('create-article', 2, 'Create Article', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('create-articlecategory', 2, 'Create Article Category', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('create-asset', 2, 'Create Asset', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('create-assetcategory', 2, 'Create Asset Category', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('create-author', 2, 'Create Author', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('create-authormedia', 2, 'Create Author Media', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('create-employment', 2, 'Create Employment', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('create-event', 2, 'Create Event', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('create-master', 2, 'Create Master', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('create-office', 2, 'Create Office', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('create-officemedia', 2, 'Create Office Media', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('create-page', 2, 'Create Page', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('create-profile', 2, 'Create Profile', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('create-quote', 2, 'Create Quote', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('create-staff', 2, 'Create Staff', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('create-staffmedia', 2, 'Create Staff Media', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('create-transaction', 2, 'Create Transaction', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('create-user-owner', 2, 'Create User Owner', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('create-user-regular', 2, 'Create User Regular', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('delete-article', 2, 'Delete Article', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('delete-articlecategory', 2, 'Delete Article Category', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('delete-asset', 2, 'Delete Asset', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('delete-assetcategory', 2, 'Delete Asset Category', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('delete-author', 2, 'Delete Author', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('delete-authormedia', 2, 'Delete Author Media', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('delete-employment', 2, 'Delete Employment', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('delete-event', 2, 'Delete Event', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('delete-master', 2, 'Delete Master', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('delete-office', 2, 'Delete Office', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('delete-officemedia', 2, 'Delete Office Media', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('delete-page', 2, 'Delete Page', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('delete-profile', 2, 'Delete Profile', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('delete-quote', 2, 'Delete Quote', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('delete-staff', 2, 'Delete Staff', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('delete-staffmedia', 2, 'Delete Staff Media', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('delete-transaction', 2, 'Delete Transaction', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('guest', 1, 'Guest', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('index-article', 2, 'Index Article', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('index-articlecategory', 2, 'Index Article Category', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('index-asset', 2, 'Index Asset', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('index-assetcategory', 2, 'Index Asset Category', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('index-author', 2, 'Index Author', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('index-authormedia', 2, 'Index Author Media', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('index-employment', 2, 'Index Employment', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('index-event', 2, 'Index Event', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('index-master', 2, 'Index Master', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('index-office', 2, 'Index Office', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('index-officemedia', 2, 'Index Office Media', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('index-page', 2, 'Index Page', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('index-profile', 2, 'Index Profile', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('index-quote', 2, 'Index Quote', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('index-staff', 2, 'Index Staff', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('index-staffmedia', 2, 'Index Staff Media', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('index-transaction', 2, 'Index Transaction', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('regular', 1, 'Reguler', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('report-article', 2, 'Report Article', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('report-articlecategory', 2, 'Report Article Category', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('report-asset', 2, 'Report Asset', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('report-assetcategory', 2, 'Report Asset Category', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('report-master', 2, 'Report Master', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('report-transaction', 2, 'Report Transaction', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('update-article', 2, 'Update Article', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('update-articlecategory', 2, 'Update Archive Category', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('update-asset', 2, 'Update Asset', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('update-assetcategory', 2, 'Update Asset Category', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('update-author', 2, 'Update Author', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('update-authormedia', 2, 'Update Author Media', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('update-employment', 2, 'Update Employment', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('update-event', 2, 'Update Event', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('update-master', 2, 'Update Master', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('update-office', 2, 'Update Office', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('update-officemedia', 2, 'Update Office Media', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('update-page', 2, 'Update Page', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('update-profile', 2, 'Update Profile', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('update-quote', 2, 'Update Quote', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('update-staff', 2, 'Update Staff', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('update-staffmedia', 2, 'Update Staff Media', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('update-transaction', 2, 'Update Transaction', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('view-article', 2, 'View Article', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('view-articlecategory', 2, 'View Article Category', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('view-asset', 2, 'View Asset', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('view-assetcategory', 2, 'View Asset Category', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('view-author', 2, 'View Author', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('view-authormedia', 2, 'View Author Media', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('view-employment', 2, 'View Employment', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('view-event', 2, 'View Event', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('view-master', 2, 'View Master', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('view-office', 2, 'View Office', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('view-officemedia', 2, 'View Office Media', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('view-page', 2, 'View Page', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('view-profile', 2, 'View Profile', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('view-quote', 2, 'View Quote', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('view-staff', 2, 'View Staff', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('view-staffmedia', 2, 'View Staff Media', NULL, NULL, 1728893833, 1728893833),
-                                                                                                                ('view-transaction', 2, 'View Transaction', NULL, NULL, 1728893833, 1728893833);
+                                                                                                                ('admin', 1, 'Admin', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('create-article', 2, 'Create Article', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('create-articlecategory', 2, 'Create Article Category', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('create-asset', 2, 'Create Asset', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('create-assetcategory', 2, 'Create Asset Category', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('create-author', 2, 'Create Author', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('create-authormedia', 2, 'Create Author Media', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('create-employment', 2, 'Create Employment', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('create-event', 2, 'Create Event', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('create-master', 2, 'Create Master', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('create-office', 2, 'Create Office', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('create-officemedia', 2, 'Create Office Media', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('create-page', 2, 'Create Page', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('create-profile', 2, 'Create Profile', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('create-quote', 2, 'Create Quote', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('create-staff', 2, 'Create Staff', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('create-staffmedia', 2, 'Create Staff Media', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('create-transaction', 2, 'Create Transaction', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('create-user-owner', 2, 'Create User Owner', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('create-user-regular', 2, 'Create User Regular', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('delete-article', 2, 'Delete Article', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('delete-articlecategory', 2, 'Delete Article Category', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('delete-asset', 2, 'Delete Asset', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('delete-assetcategory', 2, 'Delete Asset Category', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('delete-author', 2, 'Delete Author', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('delete-authormedia', 2, 'Delete Author Media', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('delete-employment', 2, 'Delete Employment', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('delete-event', 2, 'Delete Event', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('delete-master', 2, 'Delete Master', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('delete-office', 2, 'Delete Office', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('delete-officemedia', 2, 'Delete Office Media', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('delete-page', 2, 'Delete Page', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('delete-profile', 2, 'Delete Profile', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('delete-quote', 2, 'Delete Quote', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('delete-staff', 2, 'Delete Staff', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('delete-staffmedia', 2, 'Delete Staff Media', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('delete-transaction', 2, 'Delete Transaction', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('guest', 1, 'Guest', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('index-article', 2, 'Index Article', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('index-articlecategory', 2, 'Index Article Category', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('index-asset', 2, 'Index Asset', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('index-assetcategory', 2, 'Index Asset Category', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('index-author', 2, 'Index Author', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('index-authormedia', 2, 'Index Author Media', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('index-employment', 2, 'Index Employment', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('index-event', 2, 'Index Event', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('index-master', 2, 'Index Master', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('index-office', 2, 'Index Office', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('index-officemedia', 2, 'Index Office Media', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('index-page', 2, 'Index Page', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('index-profile', 2, 'Index Profile', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('index-quote', 2, 'Index Quote', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('index-staff', 2, 'Index Staff', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('index-staffmedia', 2, 'Index Staff Media', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('index-transaction', 2, 'Index Transaction', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('regular', 1, 'Reguler', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('report-article', 2, 'Report Article', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('report-articlecategory', 2, 'Report Article Category', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('report-asset', 2, 'Report Asset', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('report-assetcategory', 2, 'Report Asset Category', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('report-master', 2, 'Report Master', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('report-transaction', 2, 'Report Transaction', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('update-article', 2, 'Update Article', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('update-articlecategory', 2, 'Update Archive Category', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('update-asset', 2, 'Update Asset', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('update-assetcategory', 2, 'Update Asset Category', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('update-author', 2, 'Update Author', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('update-authormedia', 2, 'Update Author Media', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('update-employment', 2, 'Update Employment', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('update-event', 2, 'Update Event', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('update-master', 2, 'Update Master', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('update-office', 2, 'Update Office', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('update-officemedia', 2, 'Update Office Media', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('update-page', 2, 'Update Page', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('update-profile', 2, 'Update Profile', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('update-quote', 2, 'Update Quote', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('update-staff', 2, 'Update Staff', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('update-staffmedia', 2, 'Update Staff Media', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('update-transaction', 2, 'Update Transaction', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('view-article', 2, 'View Article', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('view-articlecategory', 2, 'View Article Category', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('view-asset', 2, 'View Asset', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('view-assetcategory', 2, 'View Asset Category', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('view-author', 2, 'View Author', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('view-authormedia', 2, 'View Author Media', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('view-employment', 2, 'View Employment', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('view-event', 2, 'View Event', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('view-master', 2, 'View Master', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('view-office', 2, 'View Office', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('view-officemedia', 2, 'View Office Media', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('view-page', 2, 'View Page', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('view-profile', 2, 'View Profile', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('view-quote', 2, 'View Quote', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('view-staff', 2, 'View Staff', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('view-staffmedia', 2, 'View Staff Media', NULL, NULL, 1736305518, 1736305518),
+                                                                                                                ('view-transaction', 2, 'View Transaction', NULL, NULL, 1736305518, 1736305518);
 
 -- --------------------------------------------------------
 
@@ -745,10 +761,18 @@ CREATE TABLE `tx_session` (
 INSERT INTO `tx_session` (`id`, `expire`, `data`) VALUES
                                                       ('0qmlr3iph45nl8cst2fmtvmfm2', 1723382163, 0x5f5f666c6173687c613a303a7b7d5f5f69647c693a313b5f5f617574684b65797c733a33323a226530656538647744706c4c5661476c4b475a74654d5371507031696b4a46516d223b),
                                                       ('0vonnia33auapusrtms0of5c8m', 1723478368, 0x5f5f666c6173687c613a303a7b7d5f5f72657475726e55726c7c733a34323a22687474703a2f2f6c6f63616c686f73742f6170702f796969322d6573637962657231332f61646d696e2f223b5f5f69647c693a313b5f5f617574684b65797c733a33323a226530656538647744706c4c5661476c4b475a74654d5371507031696b4a46516d223b),
+                                                      ('662d476bmi69a6s47pjp9ebel4', 1736312877, 0x5f5f666c6173687c613a303a7b7d),
                                                       ('cr4nm3fap25lutl3rjuoqdko9d', 1724051742, 0x5f5f666c6173687c613a303a7b7d5f5f69647c693a313b5f5f617574684b65797c733a33323a226530656538647744706c4c5661476c4b475a74654d5371507031696b4a46516d223b),
                                                       ('et40u8ui35oc136spej8od45as', 1723369406, 0x5f5f666c6173687c613a303a7b7d),
+                                                      ('jhvvp186f0vk7q0s3vevsb1ssk', 1736338102, 0x5f5f666c6173687c613a303a7b7d5f5f69647c693a313b5f5f617574684b65797c733a33323a226530656538647744706c4c5661476c4b475a74654d5371507031696b4a46516d223b),
+                                                      ('jp4b5af75rblmogi4628tmv1fp', 1736313726, 0x5f5f666c6173687c613a313a7b733a363a2264616e676572223b693a313b7d5f5f69647c693a313b5f5f617574684b65797c733a33323a226530656538647744706c4c5661476c4b475a74654d5371507031696b4a46516d223b64616e6765727c613a313a7b733a373a226d657373616765223b733a31363a224173736574206e6f7420666f756e642e223b7d),
+                                                      ('k700usv8eg5hrv06tik88mesgf', 1736309447, 0x5f5f666c6173687c613a303a7b7d),
                                                       ('lq9fhof7mbjrnvcefcep1rob1b', 1723994741, 0x5f5f666c6173687c613a303a7b7d5f5f72657475726e55726c7c733a34323a22687474703a2f2f6c6f63616c686f73742f6170702f796969322d6573637962657231332f61646d696e2f223b5f5f69647c693a313b5f5f617574684b65797c733a33323a226530656538647744706c4c5661476c4b475a74654d5371507031696b4a46516d223b),
-                                                      ('qterljtbj60pp5j8hih5voegje', 1724338235, 0x5f5f666c6173687c613a303a7b7d);
+                                                      ('lvumj24ubqe65hpbigesvfcm6u', 1736571592, 0x5f5f666c6173687c613a303a7b7d5f5f69647c693a313b5f5f617574684b65797c733a33323a226530656538647744706c4c5661476c4b475a74654d5371507031696b4a46516d223b),
+                                                      ('mvaottor80ksredf6utp9n7d6q', 1736341778, 0x5f5f666c6173687c613a303a7b7d),
+                                                      ('qterljtbj60pp5j8hih5voegje', 1724338235, 0x5f5f666c6173687c613a303a7b7d),
+                                                      ('trqbv5ofg5gt1kbfhr0pv2mgt1', 1736482724, 0x5f5f666c6173687c613a313a7b733a363a2264616e676572223b693a313b7d64616e6765727c613a313a7b733a373a226d657373616765223b733a31363a224173736574206e6f7420666f756e642e223b7d),
+                                                      ('vb3si0k0h73bh7h57inkkr0qk4', 1736307582, 0x5f5f666c6173687c613a303a7b7d);
 
 -- --------------------------------------------------------
 
@@ -809,7 +833,7 @@ CREATE TABLE `tx_staff` (
 --
 
 INSERT INTO `tx_staff` (`id`, `office_id`, `user_id`, `employment_id`, `title`, `initial`, `identity_number`, `phone_number`, `gender_status`, `active_status`, `address`, `file_name`, `email`, `google_plus`, `instagram`, `facebook`, `twitter`, `description`, `created_at`, `updated_at`, `created_by`, `updated_by`, `is_deleted`, `deleted_at`, `deleted_by`, `verlock`, `uuid`) VALUES
-    (1, 1, 1, 1, 'Randhi Satria, S.IP., M.A', 'R.S', '', '324234', 1, 1, '', '66a3df381d8ab.jpg', 'ransatriastaff.uns.ac.id', '', '', '', '', 'Dosen Hubungan Internasional Fakultas Ilmu Sosial dan Ilmu Politik Universitas Sebelas Maret Surakarta', '2020-08-14 14:43:54', '2024-07-27 00:39:07', 1, 1, 0, NULL, NULL, 14, '');
+    (1, 1, 1, 1, 'Randhi Satria, S.IP., M.A', 'R.S', '', '324234', 1, 1, '', '6781f4cc05f48.jpg', 'ransatriastaff.uns.ac.id', '', '', '', '', 'Dosen Hubungan Internasional Fakultas Ilmu Sosial dan Ilmu Politik Universitas Sebelas Maret Surakarta', '2020-08-14 14:43:54', '2025-01-11 11:34:21', 1, 1, 0, NULL, NULL, 15, '');
 
 -- --------------------------------------------------------
 
@@ -834,6 +858,13 @@ CREATE TABLE `tx_staff_media` (
                                   `verlock` bigint(20) DEFAULT NULL,
                                   `uuid` varchar(36) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tx_staff_media`
+--
+
+INSERT INTO `tx_staff_media` (`id`, `office_id`, `staff_id`, `media_type`, `title`, `description`, `created_at`, `updated_at`, `created_by`, `updated_by`, `is_deleted`, `deleted_at`, `deleted_by`, `verlock`, `uuid`) VALUES
+    (1, 1, 1, 11, 'fab fa-instagram', 'ig', '2025-01-11 11:35:16', '2025-01-11 11:35:16', 1, 1, NULL, NULL, NULL, 0, '74cdc5f7cfd511ef8d58c858c0b7f92f');
 
 -- --------------------------------------------------------
 
@@ -896,7 +927,7 @@ CREATE TABLE `tx_user` (
 --
 
 INSERT INTO `tx_user` (`id`, `username`, `email`, `password_hash`, `auth_key`, `unconfirmed_email`, `registration_ip`, `flags`, `confirmed_at`, `blocked_at`, `updated_at`, `created_at`, `last_login_at`, `auth_tf_key`, `auth_tf_enabled`) VALUES
-    (1, 'admin', 'ombakrinai@gmail.com', '$2y$10$oD129/e5PjrTkIV1yiR3AuOc2/XAOXLWgKPfb8svo8BdBA4PUsw3G', 'e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm', NULL, '::1', 0, 1598256482, NULL, 1507741399, 1507741399, 1724050297, NULL, 0);
+    (1, 'admin', 'ombakrinai@gmail.com', '$2y$10$oD129/e5PjrTkIV1yiR3AuOc2/XAOXLWgKPfb8svo8BdBA4PUsw3G', 'e0ee8dwDplLVaGlKGZteMSqPp1ikJFQm', NULL, '::1', 0, 1598256482, NULL, 1507741399, 1507741399, 1736565555, NULL, 0);
 
 --
 -- Indexes for dumped tables
@@ -1118,13 +1149,13 @@ ALTER TABLE `tx_article_category`
 -- AUTO_INCREMENT for table `tx_asset`
 --
 ALTER TABLE `tx_asset`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `tx_asset_category`
 --
 ALTER TABLE `tx_asset_category`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tx_author`
@@ -1196,7 +1227,7 @@ ALTER TABLE `tx_staff`
 -- AUTO_INCREMENT for table `tx_staff_media`
 --
 ALTER TABLE `tx_staff_media`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tx_tag`

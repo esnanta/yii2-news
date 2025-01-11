@@ -5,12 +5,14 @@ namespace common\helper;
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Reader\Exception;
+use PhpOffice\PhpSpreadsheet\Reader\IReader;
 
-class SpreadsheetHelper
+class SpreadsheetHelper extends Sample
 {
     private static ?SpreadsheetHelper $instance = null;
 
-    public static function getInstance(): SpreadsheetHelper{
+    public static function getInstance(): SpreadsheetHelper
+    {
         if (self::$instance === null) {
             self::$instance = new SpreadsheetHelper();
         }
@@ -20,14 +22,20 @@ class SpreadsheetHelper
     /**
      * @throws Exception
      */
-    public function getReader($inputFileName, $sheetName){
-        $filterSubset = new ReadFilter();
-
+    public function getReader($inputFileName, $sheetName = 'Participant'): IReader
+    {
         $inputFileType = IOFactory::identify($inputFileName);
         $reader = IOFactory::createReader($inputFileType);
-        $reader->setReadDataOnly(true); //THIS WILL IGNORE FORMATTING
+        $reader->setReadDataOnly(true);
+
+        $spreadsheet = $reader->load($inputFileName);
+        $sheetNames = $spreadsheet->getSheetNames();
+
+        if (!in_array($sheetName, $sheetNames)) {
+            $sheetName = in_array('Sheet1', $sheetNames) ? 'Sheet1' : $sheetNames[0];
+        }
+
         $reader->setLoadSheetsOnly($sheetName);
-        $reader->setReadFilter($filterSubset);
 
         return $reader;
     }
@@ -37,12 +45,31 @@ class SpreadsheetHelper
         return new Sample();
     }
 
-    public function getSheetName(): String {
-        return 'Participant';
-    }
-
     public function getIdentify($inputFileName): string
     {
         return IOFactory::identify($inputFileName);
+    }
+
+    public function getDataList($data): array
+    {
+        $dataList = [];
+
+        foreach ($data->getRowIterator(1) as $row) {
+            $cellIterator = $row->getCellIterator();
+            $cellIterator->setIterateOnlyExistingCells(false);
+
+            $rowList = [];
+            foreach ($cellIterator as $i => $cell) {
+                if ($i != 'A' && $cell->getValue() !== null) {
+                    $rowList[] = $cell->getFormattedValue();
+                }
+            }
+
+            if (!empty($rowList)) {
+                $dataList[] = $rowList;
+            }
+        }
+
+        return $dataList;
     }
 }

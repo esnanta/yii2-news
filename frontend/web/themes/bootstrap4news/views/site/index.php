@@ -1,6 +1,5 @@
 <?php
 
-use common\domain\AssetUseCase;
 use common\helper\ContentHelper;
 use common\helper\MetaHelper;
 use common\service\ArticleService;
