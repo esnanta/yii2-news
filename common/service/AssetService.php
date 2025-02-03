@@ -162,7 +162,7 @@ class AssetService
     }
 
     // Utility methods for asset paths
-    private function getWebRoot(): string
+    public function getWebRoot(): string
     {
         return str_replace('frontend', 'backend', Yii::getAlias('@webroot'));
     }
