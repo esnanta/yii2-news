@@ -125,11 +125,11 @@ class ContentHelper
                 if (is_file($imagePath) && file_exists($imagePath)) {
                     return Yii::$app->urlManager->baseUrl . $srcImage;
                 } else {
-                    return AssetService::getDefaultImage();
+                    return (new \common\service\AssetService)->getDefaultImage();
                 }
             }
         } else {
-            return AssetService::getDefaultImage(); // Fallback to default if no image found
+            return (new \common\service\AssetService)->getDefaultImage(); // Fallback to default if no image found
         }
     }
 
