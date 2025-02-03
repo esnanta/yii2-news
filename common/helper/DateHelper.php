@@ -132,17 +132,6 @@ class DateHelper {
         return str_replace(',', '', $_number);
     }
 
-    public static function GetBetween($var1='',$var2='',$pool): string
-    {
-        $temp1 = strpos($pool,$var1)+strlen($var1);
-        $result = substr($pool,$temp1,strlen($pool));
-        $dd=strpos($result,$var2);
-        if($dd == 0){
-            $dd = strlen($result);
-        }
-        return substr($result,0,$dd);
-    }
-
     public static function formatBillingCycle($_date,$_monthPeriod){
         $date   = $_date;
         $month  = substr($_monthPeriod, 0,2);
