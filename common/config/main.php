@@ -14,6 +14,7 @@ return [
     'name' => 'Daraspace',
     'timeZone' => 'Asia/Bangkok',
     'language' => 'id-ID',
+    'charset' => 'utf-8',
 
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
 
@@ -23,7 +24,7 @@ return [
             'dsn' => 'mysql:host=localhost;dbname=yii2_news',
             'username' => 'root',
             'password' => '',
-            'charset' => 'utf8',
+            'charset' => 'utf8mb4',
             'tablePrefix' => 'tx_',
             'enableSchemaCache' => false,
             'schemaCacheDuration' => 3600, // Duration of schema cache.

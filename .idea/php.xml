@@ -145,6 +145,7 @@
       <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-widget-sidenav" />
       <path value="$PROJECT_DIR$/vendor/bower-asset/clipboard" />
       <path value="$PROJECT_DIR$/vendor/supplyhog/yii2-clipboardjs" />
+      <path value="$PROJECT_DIR$/vendor/thtmorais/yii2-test" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.0" />
