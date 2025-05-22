@@ -2,11 +2,13 @@
 
 namespace common\models;
 
+use common\helper\ImageHelper;
 use common\models\base\Author as BaseAuthor;
 use common\service\AssetService;
 use common\service\CacheService;
 use Yii;
 use yii\base\Exception;
+use yii\helpers\FileHelper;
 use yii\web\UploadedFile;
 
 class Author extends BaseAuthor
@@ -39,18 +41,57 @@ class Author extends BaseAuthor
      * @return string
      * @throws Exception
      */
-    public function getAssetFile(): string
+    /**
+     * fetch stored image file name with complete path
+     * @return string
+     * @throws Exception
+     */
+    public function getAssetFile($isTemporary=false): string
     {
-        return AssetService::getFile($this->getPath(),$this->file_name);
+        $directory = str_replace('frontend', 'backend', Yii::getAlias('@webroot')) . $this->getPath();
+        if ($isTemporary) :
+            $directory = str_replace('frontend', 'backend', Yii::getAlias('@webroot')) . $this->getTmpPath();
+        endif;
+
+        if (!is_dir($directory)) {
+            FileHelper::createDirectory($directory, $mode = 0777);
+        }
+        return (!empty($this->file_name)) ? $directory.'/'. $this->file_name : '';
     }
 
-    /**
-     * fetch stored image url
-     * @return string
-     */  
-    public function getAssetUrl()
+
+    public function getAssetUrl(): string
     {
-        return AssetService::getFileUrl($this->getPath(), $this->file_name);
+        // return a default image placeholder if your source avatar is not found
+        $defaultImage = '/images/if_skype2512x512_197582.png';
+        $file_name = (!empty($this->file_name)) ? $this->file_name : $defaultImage;
+        $directory = str_replace('frontend', 'backend', Yii::getAlias('@webroot')) . $this->getPath();
+
+        if (file_exists($directory.'/'.$file_name)) {
+            $file_parts = pathinfo($directory.'/'.$file_name);
+            if($file_parts['extension']=='pdf'){
+                Yii::$app->urlManager->baseUrl . $this->getPath().'/'.$file_name;
+            }
+
+            return Yii::$app->urlManager->baseUrl . $this->getPath().'/'.$file_name;
+        }
+        else{
+            return Yii::$app->urlManager->baseUrl . $defaultImage;
+        }
+    }
+
+    public function createBackendDirectory($path): string
+    {
+        $directory = str_replace('frontend', 'backend', Yii::getAlias('@webroot')) . $path;
+        if (!is_dir($directory)) {
+            FileHelper::createDirectory($directory, $mode = 0777);
+        }
+        return $directory;
+    }
+
+    public function getDefaultImage(): string
+    {
+        return str_replace('frontend', 'backend', ImageHelper::getNotAvailable()) ;
     }
 
     /**

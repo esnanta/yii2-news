@@ -89,11 +89,8 @@ class SiteController extends Controller
     public function actionIndex()
     {
 
-        $officeId       = CacheService::getInstance()->getOfficeId();
         $staffId        = CacheService::getInstance()->getStaffId();
-
         $profile        = Profile::find()->where(['user_id' => Yii::$app->user->id])->one();
-        $office         = Office::find()->where(['id' => $officeId])->one();
         $staff          = Staff::find()->where(['id' => $staffId])->one();
 
 

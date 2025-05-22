@@ -177,7 +177,7 @@ return [
     'Web' => '',
     'Website' => '',
     'Yes' => '',
-    'Import' => '@@@@',
-    'Upload' => '@@@@',
-    'Word' => '@@@@',
+    'Import' => 'Import',
+    'Upload' => 'Unggah',
+    'Word' => 'Word',
 ];

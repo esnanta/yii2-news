@@ -10,6 +10,7 @@ use common\models\OfficeMedia;
 use common\service\CacheService;
 use common\service\PageService;
 use common\widgets\Alert;
+use common\widgets\AlertBootstrap4;
 use frontend\assets\Bootstrap4news;
 use yii\helpers\Html;
 use yii\web\View;
@@ -95,7 +96,7 @@ Bootstrap4news::register($this);
     ]);
 ?>
 
-    <?= Alert::widget() ?>
+    <?php // AlertBootstrap4::widget() ?>
     <?= $content ?>
 
 <?=

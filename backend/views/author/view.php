@@ -1,5 +1,6 @@
 <?php
 
+use common\service\AssetService;
 use kartik\detail\DetailView;
 use bajadev\ckeditor\CKEditor;
 use common\helper\LabelHelper;
@@ -43,7 +44,7 @@ $create = LabelHelper::getCreateButton();
                        href="#">
                         <i class="hs-admin-pencil g-absolute-centered g-font-size-16 g-color-white"></i>
                     </a>
-                    <img class="img-fluid rounded-circle" src="<?= $model->getAssetUrl() ?>"
+                    <img class="img-fluid rounded-circle" src="<?= (new common\service\AssetService)->getAssetUrl($model) ?>"
                          alt="<?= $model->title ?>">
                 </div>
 

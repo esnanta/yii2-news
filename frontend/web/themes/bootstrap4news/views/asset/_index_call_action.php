@@ -65,8 +65,11 @@ if (!empty($currentFile)) {
     <div class="card-body text-default">
 
         <?php
-            $assetUrl   = $model->getAssetUrl();
 
+        $file = $model->getAssetFile();
+
+        if (file_exists($file)) {
+            $assetUrl   = $model->getAssetUrl();
             if($fileType == Asset::ASSET_TYPE_IMAGE){
                 echo Html::img($assetUrl, ['class' => 'img-fluid']);
             } elseif ($fileType == Asset::ASSET_TYPE_SPREADSHEET){
@@ -79,6 +82,10 @@ if (!empty($currentFile)) {
                     //https://geektimes.ru/post/111647/
                 ]);
             }
+        }
+
+
+
         ?>
 
         <p><?= $model->description; ?></p>
