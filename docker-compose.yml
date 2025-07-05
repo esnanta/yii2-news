@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 version: '3.8'
 
 services:
@@ -21,11 +22,38 @@ services:
       - php
     networks:
       - yii2-network
+=======
+version: '3.9'
+
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "20080:80"
+    volumes:
+      # Re-use local composer cache via host-volume (Linux-friendly)
+      - ${HOME}/.composer-docker/cache:/root/.composer/cache:delegated
+      # Mount source-code for development
+      - ./frontend:/app
+    depends_on:
+      - mysql
+
+  backend:
+    build: ./backend
+    ports:
+      - "21080:80"
+    volumes:
+      - ${HOME}/.composer-docker/cache:/root/.composer/cache:delegated
+      - ./backend:/app
+    depends_on:
+      - mysql
+>>>>>>> Stashed changes
 
   mysql:
     image: mysql:8.0
     container_name: yii2-mysql
     environment:
+<<<<<<< Updated upstream
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
@@ -41,3 +69,16 @@ volumes:
 networks:
   yii2-network:
     driver: bridge
+=======
+      MYSQL_ROOT_PASSWORD: verysecret
+      MYSQL_DATABASE: yii2advanced
+      MYSQL_USER: yii2advanced
+      MYSQL_PASSWORD: secret
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
+>>>>>>> Stashed changes
