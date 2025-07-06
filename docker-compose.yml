@@ -1,38 +1,45 @@
 version: '3.8'
 
 services:
-  apache:
-    image: php:8.2-apache
-    container_name: yii2-apache
+  nginx:
+    image: nginx:latest
+    container_name: nginx
     ports:
       - "8080:80"
     volumes:
-      - .:/var/www/html
-    environment:
-      APACHE_DOCUMENT_ROOT: /var/www/html/web
-    networks:
-      - yii2-network
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./app:/var/www/html
     depends_on:
-      - mysql
-    command: >
-      bash -c "a2enmod rewrite && docker-php-ext-install pdo pdo_mysql && apache2-foreground"
+      - php
+    networks:
+      - webnet
+
+  php:
+    image: php:8.2-fpm
+    container_name: php
+    volumes:
+      - ./app:/var/www/html
+    networks:
+      - webnet
 
   mysql:
     image: mysql:8.0
-    container_name: yii2-mysql
+    container_name: mysql
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root}
       MYSQL_DATABASE: ${MYSQL_DATABASE:-yii2db}
       MYSQL_USER: ${MYSQL_USER:-yii2user}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD:-password}
+    ports:
+      - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
     networks:
-      - yii2-network
+      - webnet
 
 volumes:
   db_data:
 
 networks:
-  yii2-network:
-    driver: bridge
+  webnet:
