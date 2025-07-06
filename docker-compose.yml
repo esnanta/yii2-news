@@ -27,10 +27,10 @@ services:
     container_name: mysql
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root}
-      MYSQL_DATABASE: ${MYSQL_DATABASE:-yii2db}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-yourrootpswd}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-yii2-news}
       MYSQL_USER: ${MYSQL_USER:-yii2user}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-password}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-youruserpswd}
     ports:
       - "3306:3306"
     volumes:
