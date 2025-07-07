@@ -12,3 +12,5 @@
 /frontend/config/main-local.php
 /frontend/config/params-local.php
 /backend/config/main-local.php
+
+.env
