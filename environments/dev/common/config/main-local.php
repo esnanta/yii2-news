@@ -7,7 +7,7 @@ $config = [
             'dsn' => 'mysql:host=localhost;dbname=yii2-news-local',
             'username' => 'root',
             'password' => '',
-            'charset' => 'utf8',
+            'charset' => 'utf8mb4',
         ],
         'mailer' => [
             'class' => \yii\symfonymailer\Mailer::class,
@@ -56,33 +56,25 @@ if (!YII_ENV_TEST) {
     $config['modules']['gii']['generators'] = [
 
             'kartikgii-crud' => [ // generator name
-                'class' => 'common\templates\kartikgii\crud\Generator', // generator class
-                'templates' => [ //setting for out templates
-                    'kartikgii' => '@common/templates/kartikgii/crud/default', // template name => path to template
+                'class' => 'common\templates\kartikgii\crud\Generator',
+                'templates' => [
+                    'kartikgii' => '@common/templates/kartikgii/crud/default',
                 ]
-            ],    
+            ],
             
             'mootensai-crud' => [ // generator name
-                'class' => 'common\templates\mootensai\crud\Generator', // generator class
-                'templates' => [ //setting for out templates
-                    'mootensai-crud' => '@common/templates/mootensai/crud/default', // template name => path to template
+                'class' => 'common\templates\mootensai\crud\Generator',
+                'templates' => [
+                    'mootensai-crud' => '@common/templates/mootensai/crud/default',
                 ]
             ],
         
             'mootensai-model' => [ // generator name
-                'class' => 'common\templates\mootensai\model\Generator', // generator class
-                'templates' => [ //setting for out templates
-                    'mootensai-model' => '@common/templates/mootensai/model/default', // template name => path to template
+                'class' => 'common\templates\mootensai\model\Generator',
+                'templates' => [
+                    'mootensai-model' => '@common/templates/mootensai/model/default',
                 ]
             ],
-        
-            'thtmorais-test' => [ // generator name
-                'class' => 'thtmorais\test\unit\Generator', // generator class
-                'templates' => [ //setting for out templates
-                    'yii2-test' => 'vendor/thtmorais/yii2-test/src/unit/default', // template name => path to template
-                ]
-            ] 
-        
     ];
 }
 
