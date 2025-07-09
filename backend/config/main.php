@@ -48,8 +48,8 @@ return [
             'theme' => [
                 'pathMap' =>
                 [
-                    '@dektrium/user/views' => '@app/web/themes-niceadmin/dektrium/user',
-                    '@dektrium/rbac/views' => '@app/web/themes-niceadmin/dektrium/rbac',
+                    '@dektrium/user/views' => '@backend/views/user/dektrium/user',
+                    '@dektrium/rbac/views' => '@backend/views/user/dektrium/rbac',
                     '@backend/views' => '@backend/web/themes-niceadmin/views',
                 ],
                 'basePath' => '@backend/web/themes-niceadmin',
