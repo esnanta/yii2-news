@@ -30,7 +30,9 @@ For the full license text, see the [LICENSE](LICENSE.md) file.
 
 The application provides two layouts:
 - **Frontend**: Public-facing interface for readers to view news articles and content.
+  ![Frontend](https://github.com/esnanta/yii2-news/blob/main/screenshots/home.png)
 - **Backend**: Secure admin panel for managing articles, assets, staff, and more.
+  ![Backend](https://github.com/esnanta/yii2-news/blob/main/screenshots/article_create.png)
 
 ## Requirements
 
