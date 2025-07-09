@@ -1,10 +1,25 @@
 # Yii2 News Management System
 
-![GitHub version](https://img.shields.io/github/v/tag/esnanta/yii2-news?label=version&color=blue)
-![License](https://img.shields.io/github/license/esnanta/yii2-news?color=green)
+![Version](https://img.shields.io/github/v/tag/esnanta/yii2-news?label=version&color=blue)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![PHP](https://img.shields.io/badge/PHP-8.x-blue)
 
 This is an **open-source project** aimed at providing a **simple, flexible platform** for managing news articles and content. The application includes features for managing articles, authors, staff, assets, and layout customization.
+
+## License
+
+You are free to:
+
+- **Use** — for personal, educational, or commercial purposes.
+- **Modify** — adapt the project to your needs.
+- **Distribute** — share it with others.
+- **Sublicense and sell** copies of the project.
+
+**Condition**:
+- You must include the original copyright and license notice in
+  any copy of the Software/source code.
+
+For the full license text, see the [LICENSE](LICENSE.md) file.
 
 ## Features
 
@@ -49,7 +64,7 @@ Follow these steps to set up the project on your local environment:
       ```
 
 4. **Create Database**
-    - Create a MySQL database (e.g., `yii2_news`).
+
     - Configure your database connection in:
       ```
       common/config/main.php
@@ -59,37 +74,25 @@ Follow these steps to set up the project on your local environment:
       environments/dev/common/config/main-local.php
       ```
       according to your database credentials.
+   - Create a MySQL database
+     ```bash
+        php yii db/create
+     ```
+   - Run Migrations. This will create all required tables and apply initial schema.
+       ```bash
+          php yii migrate
+       ```
 
-5. **Run Database Initialization**
-    ```bash
-    php yii db/create
-    ```
-   This will create the necessary database structure if configured.
-
-6. **Run Migrations**
-    ```bash
-    php yii migrate
-    ```
-   This will create all required tables and apply initial schema.
-
-7. **Set Writable Permissions**
-   Ensure the following directories are writable:
-    - `backend/web/assets`
-    - `frontend/web/assets`
-    - `backend/runtime`
-    - `frontend/runtime`
-    - `common/runtime`
-
-8. **Run the Application**
+5. **Run the Application**
     - For the backend:
       Open in browser:
       ```
-      http://localhost/yii2-news/backend/web
+      http://localhost/yii2-news/admin/
       ```
     - For the frontend:
       Open in browser:
       ```
-      http://localhost/yii2-news/frontend/web
+      http://localhost/yii2-news
       ```
 
 ## Directory Structure
