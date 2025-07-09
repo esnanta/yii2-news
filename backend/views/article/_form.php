@@ -53,10 +53,27 @@ use kartik\editors\Summernote;
                 'widgetClass' => Select2::class,
                 'options' => [
                     'data' => $articleCategoryList,
-                    'options' => ['placeholder' => '', 'disabled' => false],
+                    'options' => ['placeholder' => 'Pilih Kategori Artikel', 'disabled' => false],
                 ],
                 'pluginOptions' => [
-                    'allowClear' => true
+                    'allowClear' => true,
+                ],
+                'fieldConfig' => [
+                    // Menggunakan template kustom untuk menempatkan input dan tombol dalam satu baris
+                    'template' => '
+            {label}
+            <div class="col-sm-7"> {input}
+            </div>
+            <div class="col-sm-3"> ' . (empty($articleCategoryList) ? Html::a(
+                        '<i class="fas fa-plus"></i>',
+                        ['/article-category/create'],
+                        ['class' => 'btn btn-success', 'title' => 'Tambah Kategori Artikel Baru']
+                    ) : '') . '
+            </div>
+            <div class="clearfix"></div> <div class="col-sm-offset-3 col-sm-9"> {error}{hint}
+            </div>
+        ',
+                    'labelOptions' => ['class' => 'control-label col-sm-3'], // Label standar untuk horizontal form
                 ],
             ],
 
@@ -92,8 +109,9 @@ use kartik\editors\Summernote;
     ]);
 
 
-    echo Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'),
+    echo Html::submitButton(
+        $model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'),
         ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']
     );
     ActiveForm::end();
-?>
+

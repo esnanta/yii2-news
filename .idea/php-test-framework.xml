@@ -13,10 +13,10 @@
   </component>
   <component name="PhpTestFrameworkVersionCache">
     <tools_cache>
-      <tool tool_name="Codeception">
+      <tool tool_name="PHPUnit">
         <cache>
           <versions>
-            <info id="LocalD:\web\htdocs\app\yii2-news\vendor\codeception\codeception\codecept" version="4.2.2" />
+            <info id="Local/vendor/autoload.php" version="9.5.28" />
           </versions>
         </cache>
       </tool>

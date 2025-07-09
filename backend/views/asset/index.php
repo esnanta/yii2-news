@@ -1,7 +1,6 @@
 <?php
 
 use common\helper\IconHelper;
-use Eddmash\Clipboard\Clipboard;
 use supplyhog\ClipboardJs\ClipboardJsWidget;
 use yii\helpers\Html;
 use kartik\grid\GridView;
@@ -21,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="asset-index">
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php // echo $this->render('_search', ['model' => $searchModel]);?>
 
     <p>
         <?php /* echo Html::a(Yii::t('app', 'Create {modelClass}', [
@@ -29,119 +28,136 @@ $this->params['breadcrumbs'][] = $this->title;
 ]), ['create'], ['class' => 'btn btn-success'])*/  ?>
     </p>
 
-    <?php Pjax::begin(); echo GridView::widget([
+    <?php Pjax::begin();
+        echo GridView::widget([
         'dataProvider' => $dataProvider,
         'pageSummaryPosition' => GridView::POS_BOTTOM,
         'showPageSummary' => true,
         'toolbar' => [
-            [
-                'content'=>
-                    Html::a('<i class="fas fa-plus"></i> Add New', ['create'], ['class' => 'btn btn-success'])
-                     . ' '.
-                    Html::a('<i class="fas fa-redo"></i> Reset List', ['index'], ['class' => 'btn btn-info']),
-                'options' => ['class' => 'btn-group-md']
-            ],
-            //'{export}',
-            //'{toggleData}'
+        [
+            'content'=>
+                Html::a('<i class="fas fa-plus"></i> Add New', ['create'], ['class' => 'btn btn-success'])
+                 . ' '.
+                Html::a('<i class="fas fa-redo"></i> Reset List', ['index'], ['class' => 'btn btn-info']),
+            'options' => ['class' => 'btn-group-md']
         ],
-        
+        //'{export}',
+        //'{toggleData}'
+        ],
+
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+        ['class' => 'yii\grid\SerialColumn'],
 
-            'title',
+        'title',
+        [
+            'attribute'=>'asset_category_id',
+            'vAlign'=>'middle',
+            'width'=>'180px',
+            'value'=>function ($model, $key, $index, $widget) {
+                return ($model->asset_category_id!=null) ? $model->assetCategory->title:'';
+            },
+            'filterType'=>GridView::FILTER_SELECT2,
+            'filter'=>$assetCategoryList,
+            'filterWidgetOptions'=>[
+                'pluginOptions'=>['allowClear'=>true],
+            ],
+            'filterInputOptions'=>['placeholder'=>''],
+            'format'=>'raw'
+        ],
             [
-                'attribute'=>'asset_category_id', 
+                'attribute'=>'asset_type',
                 'vAlign'=>'middle',
                 'width'=>'180px',
                 'value'=>function ($model, $key, $index, $widget) {
-                    return ($model->asset_category_id!=null) ? $model->assetCategory->title:'';
+                    return ($model->asset_type!=null) ? $model->getOneAssetType($model->asset_type):'';
                 },
                 'filterType'=>GridView::FILTER_SELECT2,
-                'filter'=>$assetCategoryList, 
-                'filterWidgetOptions'=>[
-                    'pluginOptions'=>['allowClear'=>true],
-                ],
-                'filterInputOptions'=>['placeholder'=>''],
-                'format'=>'raw'
-            ], 
-            [
-                'attribute'=>'is_visible',
-                'vAlign'=>'middle',
-                'width'=>'120px',
-                'value'=>function ($model, $key, $index, $widget) {
-                    return ($model->is_visible!=null) ? $model->getOneIsVisible($model->is_visible):'';
-                },
-                'filterType'=>GridView::FILTER_SELECT2,
-                'filter'=>$isVisibleList,
+                'filter'=>$assetTypeList,
                 'filterWidgetOptions'=>[
                     'pluginOptions'=>['allowClear'=>true],
                 ],
                 'filterInputOptions'=>['placeholder'=>''],
                 'format'=>'raw'
             ],
-            'description',
-            [
-                'header'=>'View',
-                'format' => ['image',['width'=>'70','height'=>'50']],
-                'vAlign'=>'middle',
-                'width'=>'50px',
-                'value'=>function ($model, $key, $index, $widget) {
-                    return ($model->getAssetUrl());
+        [
+            'attribute'=>'is_visible',
+            'vAlign'=>'middle',
+            'width'=>'120px',
+            'value'=>function ($model, $key, $index, $widget) {
+                return ($model->is_visible!=null) ? $model->getOneIsVisible($model->is_visible):'';
+            },
+            'filterType'=>GridView::FILTER_SELECT2,
+            'filter'=>$isVisibleList,
+            'filterWidgetOptions'=>[
+                'pluginOptions'=>['allowClear'=>true],
+            ],
+            'filterInputOptions'=>['placeholder'=>''],
+            'format'=>'raw'
+            ],
+        'description',
+        [
+            'header'=>'View',
+            'format' => ['image',['width'=>'70','height'=>'50']],
+            'vAlign'=>'middle',
+            'width'=>'50px',
+            'value'=>function ($model, $key, $index, $widget) {
+                return ($model->getAssetUrl());
+            },
+            ],
+        [
+            'class' => 'common\widgets\ActionColumn',
+            'contentOptions' => ['style' => 'white-space:nowrap;'],
+            'template'=>'{copy} {update} {view}',
+            'buttons' => [
+                'copy' => function ($url, $model) {
+                    return ClipboardJsWidget::widget([
+                        'text' => 'https://'.Yii::$app->getRequest()->serverName.$model->getAssetUrl(),
+                        'label' => IconHelper::getClipboard(),
+                        'htmlOptions' => ['class' => 'btn btn-sm btn-info'],
+                        'tag' => 'button',
+                    ]);
+                },
+                'update' => function ($url, $model) {
+                    return Html::a(
+                        '<i class="fas fa-pencil-alt"></i>',
+                        Yii::$app->urlManager->createUrl(['asset/view', 'id' => $model->id, 'edit' => 't']),
+                        [
+                            'title' => Yii::t('yii', 'Edit'),
+                            'class'=>'btn btn-sm btn-info',
+                        ]
+                    );
+                },
+                'view' => function ($url, $model) {
+                    return Html::a(
+                        '<i class="fas fa-eye"></i>',
+                        Yii::$app->urlManager->createUrl(['asset/view', 'id' => $model->id, 'title'=>$model->title]),
+                        [
+                            'title' => Yii::t('yii', 'View'),
+                            'class'=>'btn btn-sm btn-info',
+                        ]
+                    );
                 },
             ],
-            [
-                'class' => 'common\widgets\ActionColumn',
-                'contentOptions' => ['style' => 'white-space:nowrap;'],
-                'template'=>'{copy} {update} {view}',
-                'buttons' => [
-                    'copy' => function ($url, $model) {
-                        return ClipboardJsWidget::widget([
-                            'text' => 'https://'.Yii::$app->getRequest()->serverName.$model->getAssetUrl(),
-                            'label' => IconHelper::getClipboard(),
-                            'htmlOptions' => ['class' => 'btn btn-sm btn-info'],
-                            'tag' => 'button',
-                        ]);
-                    },
-                    'update' => function ($url, $model) {
-                        return Html::a('<i class="fas fa-pencil-alt"></i>',
-                            Yii::$app->urlManager->createUrl(['asset/view', 'id' => $model->id, 'edit' => 't']),
-                            [
-                                'title' => Yii::t('yii', 'Edit'),
-                                'class'=>'btn btn-sm btn-info',
-                            ]
-                        );
-                    },
-                    'view' => function ($url, $model) {
-                        return Html::a('<i class="fas fa-eye"></i>',
-                            Yii::$app->urlManager->createUrl(['asset/view', 'id' => $model->id, 'title'=>$model->title]),
-                            [
-                                'title' => Yii::t('yii', 'View'),
-                                'class'=>'btn btn-sm btn-info',
-                            ]
-                        );
-                    },        
-                ],
             ],
         ],
         'responsive' => true,
         'hover' => true,
         'condensed' => true,
         'floatHeader' => false,
-                        
+
         'bordered' => true,
         'striped' => false,
         'responsiveWrap' => false,
 
         'panel' => [
-            'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-th-list"></i> '.Html::encode($this->title).' </h3>',
-            'type' => 'default',
-            //'before' => Html::a('<i class="glyphicon glyphicon-plus"></i> Add', ['create'], ['class' => 'btn btn-success']),
-            //'after' => Html::a('<i class="glyphicon glyphicon-repeat"></i> Reset List', ['index'], ['class' => 'btn btn-info']),
-            'showFooter' => false,
+                'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-th-list"></i> '.Html::encode($this->title).' </h3>',
+                'type' => 'default',
+                //'before' => Html::a('<i class="glyphicon glyphicon-plus"></i> Add', ['create'], ['class' => 'btn btn-success']),
+                //'after' => Html::a('<i class="glyphicon glyphicon-repeat"></i> Reset List', ['index'], ['class' => 'btn btn-info']),
+                'showFooter' => false,
 
-        ],
-    ]); Pjax::end(); ?>
-    
-
+                    ],
+        ]);
+        Pjax::end(); ?>
 </div>
