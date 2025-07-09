@@ -8,17 +8,6 @@ This is an **open-source project** aimed at providing a **simple, flexible platf
 
 ## License
 
-You are free to:
-
-- **Use** — for personal, educational, or commercial purposes.
-- **Modify** — adapt the project to your needs.
-- **Distribute** — share it with others.
-- **Sublicense and sell** copies of the project.
-
-**Condition**:
-- You must include the original copyright and license notice in
-  any copy of the Software/source code.
-
 For the full license text, see the [LICENSE](LICENSE.md) file.
 
 ## Features
