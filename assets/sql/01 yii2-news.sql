@@ -833,7 +833,7 @@ CREATE TABLE `tx_staff` (
 --
 
 INSERT INTO `tx_staff` (`id`, `office_id`, `user_id`, `employment_id`, `title`, `initial`, `identity_number`, `phone_number`, `gender_status`, `active_status`, `address`, `file_name`, `email`, `google_plus`, `instagram`, `facebook`, `twitter`, `description`, `created_at`, `updated_at`, `created_by`, `updated_by`, `is_deleted`, `deleted_at`, `deleted_by`, `verlock`, `uuid`) VALUES
-    (1, 1, 1, 1, 'Randhi Satria, S.IP., M.A', 'R.S', '', '324234', 1, 1, '', '6781f4cc05f48.jpg', 'ransatriastaff.uns.ac.id', '', '', '', '', 'Dosen Hubungan Internasional Fakultas Ilmu Sosial dan Ilmu Politik Universitas Sebelas Maret Surakarta', '2020-08-14 14:43:54', '2025-01-11 11:34:21', 1, 1, 0, NULL, NULL, 15, '');
+    (1, 1, 1, 1, 'Name Here', 'R.S', '', '', 1, 1, '', '6781f4cc05f48.jpg', '', '', '', '', '', '', '2020-08-14 14:43:54', '2025-01-11 11:34:21', 1, 1, 0, NULL, NULL, 15, '');
 
 -- --------------------------------------------------------
 
