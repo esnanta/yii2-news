@@ -1,4 +1,4 @@
-# Yii2 News Management System
+# Yii2 News
 
 ![Version](https://img.shields.io/github/v/tag/esnanta/yii2-news?label=version&color=blue)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
