@@ -53,30 +53,12 @@ use kartik\editors\Summernote;
                 'widgetClass' => Select2::class,
                 'options' => [
                     'data' => $articleCategoryList,
-                    'options' => ['placeholder' => 'Pilih Kategori Artikel', 'disabled' => false],
+                    'options' => ['placeholder' => '', 'disabled' => false],
                 ],
                 'pluginOptions' => [
                     'allowClear' => true,
                 ],
-                'fieldConfig' => [
-                    // Menggunakan template kustom untuk menempatkan input dan tombol dalam satu baris
-                    'template' => '
-            {label}
-            <div class="col-sm-7"> {input}
-            </div>
-            <div class="col-sm-3"> ' . (empty($articleCategoryList) ? Html::a(
-                        '<i class="fas fa-plus"></i>',
-                        ['/article-category/create'],
-                        ['class' => 'btn btn-success', 'title' => 'Tambah Kategori Artikel Baru']
-                    ) : '') . '
-            </div>
-            <div class="clearfix"></div> <div class="col-sm-offset-3 col-sm-9"> {error}{hint}
-            </div>
-        ',
-                    'labelOptions' => ['class' => 'control-label col-sm-3'], // Label standar untuk horizontal form
-                ],
             ],
-
         ]
 
     ]);
