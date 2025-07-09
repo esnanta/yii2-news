@@ -1,79 +1,98 @@
-<p>
-  This is an open-source project aimed at providing a simple, flexible platform for managing news articles and content. The application includes features for managing articles, authors, staff, assets, and layout customization.
-</p>
-<h2>
-  Features
-</h2>
-<ul>
-  <li>
-    <strong>
-      Articles:
-    </strong>
-    Create, edit, and manage news articles.
-  </li>
-  <li>
-    <strong>
-      Authors:
-    </strong>
-    Assign authors to articles and manage author information
-  </li>
-  <li>
-    <strong>
-      Assets:
-    </strong>
-    Upload and manage documents or images, with the option to set them as public or private.
-  </li>
-  <li>
-    <strong>
-      Layout :
-    </strong>
-    Customize the appearance of the site by uploading logos and banners.
-  </li>
-</ul>
-<p>
-  The application provides two layouts:
-</p>
-<ul>
-  <li>
-    <strong>
-      Frontend:
-    </strong>
-    A public-facing interface for readers to view news articles and other content.
-  </li>
-  <li>
-    <strong>
-      Backend:
-    </strong>
-    A secure admin panel for managing articles, assets, staff, and more.
-  </li>
-</ul>
-<h2>
-  Getting Started
-</h2>
-<p>
-  To get started with the project, please follow the installation instructions below. Contributions, suggestions, and feedback are all welcome. We’re excited to see how the community uses and improves this project!
-</p>
+# Yii2 News Management System
 
-REQUIREMENT
--------------------
-PHP 8.x <br>
-Composer 2.x <br>
+![GitHub version](https://img.shields.io/github/v/tag/esnanta/yii2-news?label=version&color=blue)
+![License](https://img.shields.io/github/license/esnanta/yii2-news?color=green)
+![PHP](https://img.shields.io/badge/PHP-8.x-blue)
 
-INSTALLATION
--------------------
-composer create-project esnanta/yii2-news
+This is an **open-source project** aimed at providing a **simple, flexible platform** for managing news articles and content. The application includes features for managing articles, authors, staff, assets, and layout customization.
 
-environment:<br>
-in command do "php init" and choose development or production.<br>
-1. if you choose development, update composer package:<br>
-composer update<br>
-<br>
-or 2. production:<br>
-composer update --no-dev<br>
+## Features
 
+- **Articles**: Create, edit, and manage news articles.
+- **Authors**: Assign authors to articles and manage author information.
+- **Assets**: Upload and manage documents or images, with the option to set them as public or private.
+- **Layout**: Customize the site's appearance by uploading logos and banners.
 
-DIRECTORY STRUCTURE
--------------------
+The application provides two layouts:
+- **Frontend**: Public-facing interface for readers to view news articles and content.
+- **Backend**: Secure admin panel for managing articles, assets, staff, and more.
+
+## Requirements
+
+- PHP 8.x
+- Composer 2.x
+- MySQL / MariaDB
+
+## Installation
+
+Follow these steps to set up the project on your local environment:
+
+1. **Clone or Create Project**
+    ```bash
+    composer create-project esnanta/yii2-news
+    ```
+
+2. **Initialize Environment**
+    ```bash
+    php init
+    ```
+   Select either `development` or `production`.
+
+3. **Install Composer Dependencies**
+    - For development:
+      ```bash
+      composer update
+      ```
+    - For production:
+      ```bash
+      composer update --no-dev
+      ```
+
+4. **Create Database**
+    - Create a MySQL database (e.g., `yii2_news`).
+    - Configure your database connection in:
+      ```
+      common/config/main.php
+      ```
+      or environment-specific:
+      ```
+      environments/dev/common/config/main-local.php
+      ```
+      according to your database credentials.
+
+5. **Run Database Initialization**
+    ```bash
+    php yii db/create
+    ```
+   This will create the necessary database structure if configured.
+
+6. **Run Migrations**
+    ```bash
+    php yii migrate
+    ```
+   This will create all required tables and apply initial schema.
+
+7. **Set Writable Permissions**
+   Ensure the following directories are writable:
+    - `backend/web/assets`
+    - `frontend/web/assets`
+    - `backend/runtime`
+    - `frontend/runtime`
+    - `common/runtime`
+
+8. **Run the Application**
+    - For the backend:
+      Open in browser:
+      ```
+      http://localhost/yii2-news/backend/web
+      ```
+    - For the frontend:
+      Open in browser:
+      ```
+      http://localhost/yii2-news/frontend/web
+      ```
+
+## Directory Structure
 
 ```
 assets
@@ -103,3 +122,10 @@ frontend
 vendor/                  contains dependent 3rd-party packages
 environments/            contains environment-based overrides
 ```
+
+
+## Contribution
+
+Contributions, suggestions, and feedback are welcome! Feel free to submit pull requests or open issues to improve this project.
+
+---
