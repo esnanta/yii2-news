@@ -40,6 +40,31 @@ class Article extends BaseArticle
             [['verlock'], 'mootensai\components\OptimisticLockValidator'],
         ];
     }
+
+    public function attributeLabels(): array
+    {
+        return [
+            'id' => Yii::t('app', 'ID'),
+            'office_id' => Yii::t('app', 'Office'),
+            'article_category_id' => Yii::t('app', 'Category'),
+            'author_id' => Yii::t('app', 'Author'),
+            'title' => Yii::t('app', 'Title'),
+            'cover' => Yii::t('app', 'Cover'),
+            'url' => Yii::t('app', 'Url'),
+            'content' => Yii::t('app', 'Content'),
+            'description' => Yii::t('app', 'Description'),
+            'tags' => Yii::t('app', 'Tags'),
+            'publish_status' => Yii::t('app', 'Publish'),
+            'pinned_status' => Yii::t('app', 'Pinned'),
+            'view_counter' => Yii::t('app', 'Counter'),
+            'rating' => Yii::t('app', 'Rating'),
+            'date_issued' => Yii::t('app', 'Issued'),
+            'is_deleted' => Yii::t('app', 'Is Deleted'),
+            'verlock' => Yii::t('app', 'Verlock'),
+            'uuid' => Yii::t('app', 'Uuid'),
+        ];
+    }
+
     /**
      * Custom validator for image size in content
      */
