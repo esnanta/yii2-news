@@ -12,5 +12,5 @@
 /frontend/config/main-local.php
 /frontend/config/params-local.php
 /backend/config/main-local.php
-
+.php-cs-fixer.cache
 .env
