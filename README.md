@@ -4,7 +4,7 @@
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![PHP](https://img.shields.io/badge/PHP-8.x-blue)
 
-This is an **open-source project** aimed at providing a **simple, flexible platform** for managing news articles. The application includes features for managing articles, authors, staff, assets, and layout customization.
+This is an **open-source project** aimed at providing a **simple, flexible platform** for managing news articles. The application includes features for managing articles, authors, staff, and assets (image or documents like word, excel, pdf).
 
 ## License
 
