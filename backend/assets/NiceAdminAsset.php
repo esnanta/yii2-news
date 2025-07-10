@@ -13,11 +13,10 @@ class NiceAdminAsset extends AssetBundle
     public $baseUrl = '@web/themes-niceadmin';
 
     public $css = [
-
         'https://fonts.gstatic.com',
         'https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i',
 
-        //Vendor CSS Files
+        // Vendor CSS Files
         'assets/vendor/fontawesome-free/css/all.css',
         'assets/vendor/bootstrap/css/bootstrap.min.css',
         'assets/vendor/bootstrap-icons/bootstrap-icons.css',
@@ -27,11 +26,11 @@ class NiceAdminAsset extends AssetBundle
         'assets/vendor/remixicon/remixicon.css',
         'assets/vendor/simple-datatables/style.css',
 
-        //Template Main CSS File
-        'assets/css/style.css'
+        // Template Main CSS File
+        'assets/css/style.css',
     ];
     public $js = [
-        //Vendor JS Files
+        // Vendor JS Files
         'assets/vendor/apexcharts/apexcharts.min.js',
         'assets/vendor/bootstrap/js/bootstrap.bundle.min.js',
         'assets/vendor/chart.js/chart.umd.js',
@@ -41,8 +40,8 @@ class NiceAdminAsset extends AssetBundle
         'assets/vendor/tinymce/tinymce.min.js',
         'assets/vendor/php-email-form/validate.js',
 
-        //Template Main JS File
-        'assets/js/main.js'
+        // Template Main JS File
+        'assets/js/main.js',
     ];
 
     public $depends = [
