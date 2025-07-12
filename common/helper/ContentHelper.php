@@ -91,6 +91,7 @@ class ContentHelper
         // Otherwise, proceed to check the content for the first image
         [$dom, $xpath] = self::getXPath($content);
         $srcImage = $xpath->evaluate('string(//img/@src)');
+        $srcImage = str_replace('/main/admin', '', $srcImage);
 
         // Check if the srcImage is base64 or a URL
         if (!empty($srcImage)) {
@@ -103,12 +104,10 @@ class ContentHelper
 
             // Check if the image exists physically
             if (is_file($imagePath) && file_exists($imagePath)) {
-                return \Yii::$app->urlManager->baseUrl.$srcImage;
+                return \Yii::$app->urlManager->baseUrl.'/backend/web'.$srcImage;
             }
-            // Try to clean up the path in case of admin URL issues
-            $srcImage = str_replace('/main/admin', '', $srcImage);
-            $imagePath = (new AssetService())->getWebRoot().$srcImage;
 
+            $imagePath = (new AssetService())->getWebRoot().$srcImage;
             if (is_file($imagePath) && file_exists($imagePath)) {
                 return \Yii::$app->urlManager->baseUrl.$srcImage;
             }
