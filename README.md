@@ -85,7 +85,10 @@ Follow these steps to set up the project on your local environment:
       ```
       http://localhost/yii2-news
       ```
-
+6. **Admin**
+   User : admin
+   Pass : Admin123
+   
 ## Directory Structure
 
 ```
