@@ -2,97 +2,111 @@
 
 namespace common\models;
 
-use common\helper\LabelHelper;
-use common\models\base\ArticleCategory as BaseArticleCategory;
-use common\models\Article as Article;
+use common\models\query\ArticleCategoryQuery;
+use Yii;
+use yii\behaviors\SluggableBehavior;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "tx_category".
+ * This is the model class for table "article_category".
+ *
+ * @property integer         $id
+ * @property string          $slug
+ * @property string          $title
+ * @property integer         $status
+ *
+ * @property Article[]       $articles
+ * @property ArticleCategory $parent
  */
-class ArticleCategory extends BaseArticleCategory
+class ArticleCategory extends ActiveRecord
 {
-    
-    const TIME_LINE_NO     = 1;
-    const TIME_LINE_YES    = 2;    
-    
+    const STATUS_ACTIVE = 1;
+    const STATUS_DRAFT  = 0;
+
     /**
      * @inheritdoc
      */
-    public function rules(): array
+    public static function tableName()
     {
-        return [
-            [['office_id', 'sequence', 'time_line', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
-            [['description'], 'string'],
-            [['created_at', 'updated_at', 'deleted_at'], 'safe'],
-            [['title'], 'string', 'max' => 100],
-            [['label'], 'string', 'max' => 20],
-            [['uuid'], 'string', 'max' => 36],
-            [['verlock'], 'default', 'value' => '0'],
-            [['verlock'], 'mootensai\components\OptimisticLockValidator']
-        ];         
-        
+        return '{{%article_category}}';
     }
-	
-    public function beforeSave($insert) {
-        if (!parent::beforeSave($insert)) {
-            return false;
-        }
 
-        if (empty($this->time_line)){
-            $this->time_line = self::TIME_LINE_NO;
-        }
-        
-        if ($this->time_line==self::TIME_LINE_YES) {
-            $categories = ArticleCategory::find()->where(['<>','id',$this->id])->all();
-            foreach ($categories as $categoryModel) {
-                $categoryModel->time_line = self::TIME_LINE_NO;
-                $categoryModel->save();
-            }
-        }        
+    /**
+     * @return ArticleCategoryQuery
+     */
+    public static function find()
+    {
+        return new ArticleCategoryQuery(get_called_class());
+    }
 
-        return true;
-    }    
-    
-    public static function getArrayTimeLine(): array
+    /**
+     * @return array statuses list
+     */
+    public static function statuses()
     {
         return [
-            //MASTER
-            self::TIME_LINE_NO      => 'No',
-            self::TIME_LINE_YES     => 'Yes',
+            self::STATUS_DRAFT => Yii::t('common', 'Draft'),
+            self::STATUS_ACTIVE => Yii::t('common', 'Active'),
         ];
-    }    
-    
-    public static function getOneTimeLine($_module = null)
+    }
+
+    /** @inheritdoc */
+    public function behaviors()
     {
-        if($_module)
-        {
-            $arrayModule = self::getArrayTimeLine();
+        return [
+            TimestampBehavior::class,
+            [
+                'class' => SluggableBehavior::class,
+                'attribute' => 'title',
+                'immutable' => true,
+            ],
+        ];
+    }
 
-            switch ($_module) {
-                case ($_module == self::TIME_LINE_NO):
-                    $returnValue = LabelHelper::getDanger($arrayModule[$_module]);
-                    break;
-                case ($_module == self::TIME_LINE_YES):
-                    $returnValue = LabelHelper::getPrimary($arrayModule[$_module]);
-                    break;
-                default:
-                    $returnValue = LabelHelper::getDefault();
-            }
 
-            return $returnValue;
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['title'], 'required'],
+            [['title'], 'string', 'max' => 512],
+            [['slug'], 'unique'],
+            [['slug'], 'string', 'max' => 255],
+            ['status', 'integer'],
+            ['parent_id', 'exist', 'targetClass' => ArticleCategory::class, 'targetAttribute' => 'id'],
+        ];
+    }
 
-        }
-        else
-            return;
-    }        
-    
-    
-    public function countAuthorBlog($author){
-        return Article::find()->where
-            ([
-                'article_category_id'=>$this->id,
-                'author_id'=>$author,
-                'publish_status'=>Article::PUBLISH_STATUS_YES
-            ])->count();
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => Yii::t('common', 'ID'),
+            'slug' => Yii::t('common', 'Slug'),
+            'title' => Yii::t('common', 'Title'),
+            'parent_id' => Yii::t('common', 'Parent Category'),
+            'status' => Yii::t('common', 'Active'),
+        ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getArticles()
+    {
+        return $this->hasMany(Article::class, ['category_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getParent()
+    {
+        return $this->hasMany(ArticleCategory::class, ['id' => 'parent_id']);
     }
 }

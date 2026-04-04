@@ -1,45 +1,77 @@
-version: '3.8'
+version: "3.7"
 
 services:
+  frontend:
+    build: frontend
+    volumes:
+      # Mount source-code for development
+      - ./:/app
+
+  backend:
+    build: backend
+    volumes:
+      # Mount source-code for development
+      - ./:/app
+
+  console:
+    build: console
+    volumes:
+      # Re-use local composer cache via host-volume
+      - ~/.composer-docker/cache:/root/.composer/cache:delegated
+      # Mount source-code for development
+      - ./:/app
+    working_dir: /app
+
+  storage:
+    build: storage
+    volumes:
+      # Mount source-code for development
+      - ./:/app
+
+  api:
+    build: api
+    volumes:
+      # Mount source-code for development
+      - ./:/app
+
   nginx:
-    image: nginx:latest
-    container_name: nginx
+    image: nginx:stable-alpine
     ports:
-      - "8080:80"
+      - 80:80
     volumes:
-      - ./nginx/conf.d:/etc/nginx/conf.d
-      - ./frontend:/var/www/html
+      - ./:/app
+      - ./docker/nginx/vhost.conf:/etc/nginx/conf.d/vhost.conf
     depends_on:
-      - php
-    networks:
-      - webnet
+      - api
+      - frontend
+      - backend
+      - console
+      - storage
 
-  php:
-    image: php:8.2-fpm
-    container_name: php
+  node:
+    image: node:16-alpine
     volumes:
-      - ./app:/var/www/html
-    networks:
-      - webnet
+      - ./:/app
+    working_dir: /app
 
-  mysql:
-    image: mysql:8.0
-    container_name: mysql
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-yourrootpswd}
-      MYSQL_DATABASE: ${MYSQL_DATABASE:-yii2-news}
-      MYSQL_USER: ${MYSQL_USER:-yii2user}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-youruserpswd}
+  mailcatcher:
+    image: schickling/mailcatcher:latest
     ports:
-      - "3306:3306"
-    volumes:
-      - db_data:/var/lib/mysql
-    networks:
-      - webnet
+      - 1080:1080
 
-volumes:
-  db_data:
+  db:
+    image: mysql:8
+    volumes:
+      - /var/lib/mysql
+      - ./docker/mysql/config.cnf:/etc/mysql/conf.d/config.cnf
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: yii2-starter-kit
+      MYSQL_USER: ysk_dbu
+      MYSQL_PASSWORD: ysk_pass
 
 networks:
-  webnet:
+  default:
+    name: yii2-starter-kit_default
