@@ -4,9 +4,6 @@
     <option name="configurations">
       <list>
         <Configuration>
-          <option name="path" value="$PROJECT_DIR$/tests" />
-        </Configuration>
-        <Configuration>
           <option name="namespace" value="common\tests" />
           <option name="path" value="$PROJECT_DIR$/common/tests" />
           <option name="mySuiteNamespaces">
@@ -14,6 +11,29 @@
               <entry key="unit" value="common\tests\unit" />
             </map>
           </option>
+        </Configuration>
+        <Configuration>
+          <option name="path" value="$PROJECT_DIR$/tests" />
+        </Configuration>
+        <Configuration>
+          <option name="namespace" value="tests\common" />
+          <option name="path" value="$PROJECT_DIR$/tests/common" />
+        </Configuration>
+        <Configuration>
+          <option name="namespace" value="tests\console" />
+          <option name="path" value="$PROJECT_DIR$/tests/console" />
+        </Configuration>
+        <Configuration>
+          <option name="namespace" value="tests\backend" />
+          <option name="path" value="$PROJECT_DIR$/tests/backend" />
+        </Configuration>
+        <Configuration>
+          <option name="namespace" value="tests\frontend" />
+          <option name="path" value="$PROJECT_DIR$/tests/frontend" />
+        </Configuration>
+        <Configuration>
+          <option name="namespace" value="tests\api" />
+          <option name="path" value="$PROJECT_DIR$/tests/api" />
         </Configuration>
       </list>
     </option>
