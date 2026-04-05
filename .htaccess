@@ -1,0 +1,25 @@
+RewriteEngine On
+RewriteBase /yii2-news/
+
+# Canonicalize legacy backend/web URLs to clean backend URLs.
+RewriteRule ^(?:yii2-news/)?backend/web(?:/(.*))?$ /yii2-news/backend/$1 [R=301,L,NE]
+
+# Canonicalize other old URLs that still contain /web.
+RewriteCond %{THE_REQUEST} \s/+[^\s]*?(frontend|storage)/web(?:/|\s|\?) [NC]
+RewriteRule ^(frontend|storage)/web/?(.*)$ $1/$2 [R=301,L,NE]
+
+# Stop processing internally rewritten /web paths to avoid rewrite loops.
+RewriteRule ^(frontend|backend|storage)/web(?:/|$) - [L]
+
+# Clean backend URL: /backend -> backend/web
+RewriteRule ^backend(?:/(.*))?$ backend/web/$1 [L,QSA]
+
+# Clean storage URL: /storage -> storage/web
+RewriteRule ^storage(?:/(.*))?$ storage/web/$1 [L,QSA]
+
+# Optional clean frontend URL: /frontend -> frontend/web
+RewriteRule ^frontend(?:/(.*))?$ frontend/web/$1 [L,QSA]
+
+# Default app at project root without exposing /web.
+RewriteRule ^$ frontend/web/ [L,QSA]
+RewriteRule ^(.*)$ frontend/web/$1 [L,QSA]
