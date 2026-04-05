@@ -5,10 +5,18 @@
       <sourceFolder url="file://$MODULE_DIR$/backend/tests" isTestSource="true" packagePrefix="backend\tests\" />
       <sourceFolder url="file://$MODULE_DIR$/backend/tests/_support" isTestSource="true" packagePrefix="backend\tests\" />
       <sourceFolder url="file://$MODULE_DIR$/common/tests" isTestSource="true" packagePrefix="common\tests\" />
+      <sourceFolder url="file://$MODULE_DIR$/common/tests" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/common/tests/_support" isTestSource="true" packagePrefix="common\tests\" />
       <sourceFolder url="file://$MODULE_DIR$/frontend/tests" isTestSource="true" packagePrefix="frontend\tests\" />
       <sourceFolder url="file://$MODULE_DIR$/frontend/tests/_support" isTestSource="true" packagePrefix="frontend\tests\" />
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" packagePrefix="tests\" />
+      <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/tests/api" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/tests/backend" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/tests/common" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/tests/console" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/tests/frontend" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/bower-asset/inputmask" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/bower-asset/jcrop" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/bower-asset/jquery" />
@@ -260,6 +268,60 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/yiisoft/yii2-debug" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/yiisoft/yii2-faker" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/yiisoft/yii2-gii" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/alexantr/yii2-elfinder" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/almasaeed2010/adminlte" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/asofter/yii2-imperavi-redactor" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/bower-asset/ace-builds" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/bower-asset/eonasdan-bootstrap-datetimepicker" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/bower-asset/moment" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/bower-asset/swagger-ui" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/codeception/module-phpbrowser" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/annotations" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/fortawesome/font-awesome" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/graham-campbell/result-type" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/guzzlehttp/guzzle" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/guzzlehttp/promises" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/intervention/image" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/league/flysystem" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/league/glide" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/league/mime-type-detection" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/league/uri-components" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/league/uri-interfaces" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/league/uri-manipulations" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/league/uri-parser" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/league/uri-schemes" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/npm-asset/blueimp-canvas-to-blob" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/npm-asset/blueimp-file-upload" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/npm-asset/blueimp-load-image" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/npm-asset/blueimp-tmpl" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/npm-asset/flot" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/npm-asset/font-awesome" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/npm-asset/html5shiv" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/npm-asset/jquery" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/npm-asset/jquery-slimscroll" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/phpoption/phpoption" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/psr/cache" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/rmrevin/yii2-fontawesome" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/studio-42/elfinder" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/swiftmailer/swiftmailer" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/http-foundation" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-iconv" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/trntv/cheatsheet" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/trntv/probe" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/trntv/yii2-aceeditor" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/trntv/yii2-command-bus" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/trntv/yii2-datetime-widget" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/trntv/yii2-glide" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/vlucas/phpdotenv" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/yii-starter-kit/sitemaped" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/yii2-starter-kit/yii2-file-kit" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/yii2mod/yii2-swagger" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/yiisoft/yii2-queue" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/yiisoft/yii2-swiftmailer" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/zircote/swagger-php" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/codechap/yii2-ai-boost" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/deprecations" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/jeremykendall/php-domain-parser" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

@@ -233,9 +233,63 @@
       <path value="$PROJECT_DIR$/vendor/nikic/php-parser" />
       <path value="$PROJECT_DIR$/vendor/friendsofphp/php-cs-fixer" />
       <path value="$PROJECT_DIR$/vendor/ralouphie/getallheaders" />
+      <path value="$PROJECT_DIR$/vendor/studio-42/elfinder" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/promises" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/guzzle" />
+      <path value="$PROJECT_DIR$/vendor/bower-asset/moment" />
+      <path value="$PROJECT_DIR$/vendor/bower-asset/eonasdan-bootstrap-datetimepicker" />
+      <path value="$PROJECT_DIR$/vendor/bower-asset/ace-builds" />
+      <path value="$PROJECT_DIR$/vendor/bower-asset/swagger-ui" />
+      <path value="$PROJECT_DIR$/vendor/codeception/module-phpbrowser" />
+      <path value="$PROJECT_DIR$/vendor/fortawesome/font-awesome" />
+      <path value="$PROJECT_DIR$/vendor/intervention/image" />
+      <path value="$PROJECT_DIR$/vendor/swiftmailer/swiftmailer" />
+      <path value="$PROJECT_DIR$/vendor/graham-campbell/result-type" />
+      <path value="$PROJECT_DIR$/vendor/almasaeed2010/adminlte" />
+      <path value="$PROJECT_DIR$/vendor/yii2-starter-kit/yii2-file-kit" />
+      <path value="$PROJECT_DIR$/vendor/yii-starter-kit/sitemaped" />
+      <path value="$PROJECT_DIR$/vendor/psr/cache" />
+      <path value="$PROJECT_DIR$/vendor/trntv/yii2-glide" />
+      <path value="$PROJECT_DIR$/vendor/trntv/yii2-command-bus" />
+      <path value="$PROJECT_DIR$/vendor/trntv/cheatsheet" />
+      <path value="$PROJECT_DIR$/vendor/trntv/yii2-aceeditor" />
+      <path value="$PROJECT_DIR$/vendor/trntv/yii2-datetime-widget" />
+      <path value="$PROJECT_DIR$/vendor/trntv/probe" />
+      <path value="$PROJECT_DIR$/vendor/league/uri-components" />
+      <path value="$PROJECT_DIR$/vendor/league/uri-interfaces" />
+      <path value="$PROJECT_DIR$/vendor/league/flysystem" />
+      <path value="$PROJECT_DIR$/vendor/league/uri-manipulations" />
+      <path value="$PROJECT_DIR$/vendor/league/uri-parser" />
+      <path value="$PROJECT_DIR$/vendor/league/mime-type-detection" />
+      <path value="$PROJECT_DIR$/vendor/league/uri-schemes" />
+      <path value="$PROJECT_DIR$/vendor/league/glide" />
+      <path value="$PROJECT_DIR$/vendor/vlucas/phpdotenv" />
+      <path value="$PROJECT_DIR$/vendor/asofter/yii2-imperavi-redactor" />
+      <path value="$PROJECT_DIR$/vendor/rmrevin/yii2-fontawesome" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-iconv" />
+      <path value="$PROJECT_DIR$/vendor/symfony/http-foundation" />
+      <path value="$PROJECT_DIR$/vendor/yii2mod/yii2-swagger" />
+      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-swiftmailer" />
+      <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-queue" />
+      <path value="$PROJECT_DIR$/vendor/zircote/swagger-php" />
+      <path value="$PROJECT_DIR$/vendor/alexantr/yii2-elfinder" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/annotations" />
+      <path value="$PROJECT_DIR$/vendor/npm-asset/blueimp-file-upload" />
+      <path value="$PROJECT_DIR$/vendor/npm-asset/flot" />
+      <path value="$PROJECT_DIR$/vendor/npm-asset/jquery-slimscroll" />
+      <path value="$PROJECT_DIR$/vendor/npm-asset/blueimp-load-image" />
+      <path value="$PROJECT_DIR$/vendor/npm-asset/blueimp-tmpl" />
+      <path value="$PROJECT_DIR$/vendor/npm-asset/jquery" />
+      <path value="$PROJECT_DIR$/vendor/npm-asset/blueimp-canvas-to-blob" />
+      <path value="$PROJECT_DIR$/vendor/npm-asset/font-awesome" />
+      <path value="$PROJECT_DIR$/vendor/npm-asset/html5shiv" />
+      <path value="$PROJECT_DIR$/vendor/phpoption/phpoption" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/deprecations" />
+      <path value="$PROJECT_DIR$/vendor/jeremykendall/php-domain-parser" />
+      <path value="$PROJECT_DIR$/vendor/codechap/yii2-ai-boost" />
     </include_path>
   </component>
-  <component name="PhpProjectSharedConfiguration" php_language_level="7.4" />
+  <component name="PhpProjectSharedConfiguration" php_language_level="8.0" />
   <component name="PhpStan">
     <PhpStan_settings>
       <PhpStanConfiguration tool_path="$PROJECT_DIR$/vendor/bin/phpstan" />
