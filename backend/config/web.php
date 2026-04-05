@@ -86,14 +86,31 @@ $config = [
 if (YII_ENV_DEV) {
     $config['modules']['gii'] = [
         'class' => yii\gii\Module::class,
+        'allowedIPs' => ['*'],
         'generators' => [
             'crud' => [
                 'class' => yii\gii\generators\crud\Generator::class,
                 'templates' => [
-                    'yii2-starter-kit' => Yii::getAlias('@backend/views/_gii/templates'),
+                    'common-starter-kit' => '@common/templates/_gii/templates',
+                    'backend-starter-kit' => '@backend/views/_gii/templates',
                 ],
-                'template' => 'yii2-starter-kit',
+                'template' => 'common-starter-kit', // default pilihan
                 'messageCategory' => 'backend',
+            ],
+
+            'mootensai-crud' => [
+                'class' => common\templates\mootensai\crud\Generator::class,
+                'templates' => [
+                    'default' => '@common/templates/mootensai/crud/default',
+                ],
+                'template' => 'default',
+            ],
+            'mootensai-model' => [
+                'class' => common\templates\mootensai\model\Generator::class,
+                'templates' => [
+                    'default' => '@common/templates/mootensai/model/default',
+                ],
+                'template' => 'default',
             ],
         ],
     ];
