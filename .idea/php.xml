@@ -288,6 +288,7 @@
       <path value="$PROJECT_DIR$/vendor/jeremykendall/php-domain-parser" />
       <path value="$PROJECT_DIR$/vendor/codechap/yii2-ai-boost" />
       <path value="$PROJECT_DIR$/vendor/yiisoft/yii2-coding-standards" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php84" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.0" />

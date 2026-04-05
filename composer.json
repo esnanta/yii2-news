@@ -74,7 +74,8 @@
     "codeception/module-yii2": "^1.1",
     "codeception/module-phpbrowser": "^3.0",
     "codechap/yii2-ai-boost": "^1.3",
-    "squizlabs/php_codesniffer": "^4.0"
+    "squizlabs/php_codesniffer": "^4.0",
+    "friendsofphp/php-cs-fixer": "*"
   },
   "autoload-dev": {
     "psr-4": {
