@@ -2,16 +2,13 @@
 
 namespace backend\controllers;
 
-use Yii;
+use yii\web\Controller;
 
 /**
- * Site controller
+ * Site controller.
  */
-class SiteController extends \yii\web\Controller
+class SiteController extends Controller
 {
-    /**
-     * @inheritdoc
-     */
     public function actions()
     {
         return [
@@ -23,7 +20,7 @@ class SiteController extends \yii\web\Controller
 
     public function beforeAction($action)
     {
-        $this->layout = Yii::$app->user->isGuest || !Yii::$app->user->can('loginToBackend') ? 'base' : 'common';
+        $this->layout = \Yii::$app->user->isGuest || !\Yii::$app->user->can('loginToBackend') ? 'base' : 'common';
 
         return parent::beforeAction($action);
     }
