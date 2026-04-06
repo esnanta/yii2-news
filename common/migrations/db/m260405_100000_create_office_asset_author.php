@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 
-class m260405_100000_add_news extends Migration
+class m260405_100000_create_office_asset_author extends Migration
 {
     /**
      * @return bool|void
@@ -146,4 +146,5 @@ class m260405_100000_add_news extends Migration
         $this->dropTable('{{%office}}');
     }
 }
+
 
