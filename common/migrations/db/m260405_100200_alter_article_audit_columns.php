@@ -29,10 +29,7 @@ class m260405_100200_alter_article_audit_columns extends Migration
         $this->addColumn('{{%article}}', 'deleted_by', $this->integer());
         $this->addColumn('{{%article}}', 'verlock', $this->bigInteger());
         $this->addColumn('{{%article}}', 'uuid', $this->string(36));
-        $this->addColumn('{{%article}}', 'author_id', $this->integer());
-
-        $this->createIndex('idx-article-author_id', '{{%article}}', 'author_id');
-        $this->addForeignKey('fk-article-author_id', '{{%article}}', 'author_id', '{{%author}}', 'id');
+        $this->addColumn('{{%article}}', 'author_id', $this->integer()->after('id'));
 
         $this->convertUnixIntToDateTime('{{%article_attachment}}', 'created_at');
 
@@ -51,6 +48,7 @@ class m260405_100200_alter_article_audit_columns extends Migration
      */
     public function safeDown()
     {
+
         $this->dropColumn('{{%article_attachment}}', 'uuid');
         $this->dropColumn('{{%article_attachment}}', 'verlock');
         $this->dropColumn('{{%article_attachment}}', 'deleted_by');
@@ -67,9 +65,6 @@ class m260405_100200_alter_article_audit_columns extends Migration
         $this->dropColumn('{{%article}}', 'deleted_by');
         $this->dropColumn('{{%article}}', 'deleted_at');
         $this->dropColumn('{{%article}}', 'is_deleted');
-
-        $this->dropForeignKey('fk-article-author_id', '{{%article}}');
-        $this->dropIndex('idx-article-author_id', '{{%article}}');
         $this->dropColumn('{{%article}}', 'author_id');
 
         $this->convertDateToUnixInt('{{%article}}', 'published_at');
@@ -90,7 +85,7 @@ class m260405_100200_alter_article_audit_columns extends Migration
 
     private function convertUnixIntToDateTime($table, $column)
     {
-        $temporaryColumn = $column . '_tmp_datetime';
+        $temporaryColumn = $column.'_tmp_datetime';
         $this->addColumn($table, $temporaryColumn, $this->dateTime());
         $this->execute("UPDATE {$table} SET [[{$temporaryColumn}]] = FROM_UNIXTIME([[{$column}]]) WHERE [[{$column}]] IS NOT NULL");
         $this->dropColumn($table, $column);
@@ -99,7 +94,7 @@ class m260405_100200_alter_article_audit_columns extends Migration
 
     private function convertUnixIntToDate($table, $column)
     {
-        $temporaryColumn = $column . '_tmp_date';
+        $temporaryColumn = $column.'_tmp_date';
         $this->addColumn($table, $temporaryColumn, $this->date());
         $this->execute("UPDATE {$table} SET [[{$temporaryColumn}]] = DATE(FROM_UNIXTIME([[{$column}]])) WHERE [[{$column}]] IS NOT NULL");
         $this->dropColumn($table, $column);
@@ -108,7 +103,7 @@ class m260405_100200_alter_article_audit_columns extends Migration
 
     private function convertDateTimeToUnixInt($table, $column)
     {
-        $temporaryColumn = $column . '_tmp_integer';
+        $temporaryColumn = $column.'_tmp_integer';
         $this->addColumn($table, $temporaryColumn, $this->integer());
         $this->execute("UPDATE {$table} SET [[{$temporaryColumn}]] = UNIX_TIMESTAMP([[{$column}]]) WHERE [[{$column}]] IS NOT NULL");
         $this->dropColumn($table, $column);
@@ -117,11 +112,10 @@ class m260405_100200_alter_article_audit_columns extends Migration
 
     private function convertDateToUnixInt($table, $column)
     {
-        $temporaryColumn = $column . '_tmp_integer';
+        $temporaryColumn = $column.'_tmp_integer';
         $this->addColumn($table, $temporaryColumn, $this->integer());
         $this->execute("UPDATE {$table} SET [[{$temporaryColumn}]] = UNIX_TIMESTAMP([[{$column}]]) WHERE [[{$column}]] IS NOT NULL");
         $this->dropColumn($table, $column);
         $this->renameColumn($table, $temporaryColumn, $column);
     }
 }
-

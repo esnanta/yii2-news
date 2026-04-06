@@ -2,13 +2,16 @@
 
 use yii\db\Migration;
 
-class m260405_100100_add_relations extends Migration
+class m260405_100300_add_relations extends Migration
 {
     /**
      * @return bool|void
      */
     public function safeUp()
     {
+        // Add indexes first to support foreign-key creation.
+        $this->createIndex('idx-article-author_id', '{{%article}}', 'author_id');
+
         $this->createIndex('idx-office_media-office_id', '{{%office_media}}', 'office_id');
 
         $this->createIndex('idx-asset-office_id', '{{%asset}}', 'office_id');
@@ -34,6 +37,9 @@ class m260405_100100_add_relations extends Migration
 
         $this->createIndex('idx-staff_media-office_id', '{{%staff_media}}', 'office_id');
         $this->createIndex('idx-staff_media-staff_id', '{{%staff_media}}', 'staff_id');
+
+        // Add foreign keys after all index artifacts are ready.
+        $this->addForeignKey('fk-article-author_id', '{{%article}}', 'author_id', '{{%author}}', 'id');
 
         $this->addForeignKey('fk-office_media-office_id', '{{%office_media}}', 'office_id', '{{%office}}', 'id');
 
@@ -69,6 +75,9 @@ class m260405_100100_add_relations extends Migration
      */
     public function safeDown()
     {
+        // Roll back constraints first, then supporting indexes.
+        $this->dropForeignKey('fk-article-author_id', '{{%article}}');
+
         $this->dropForeignKey('fk-staff_media-staff_id', '{{%staff_media}}');
         $this->dropForeignKey('fk-staff_media-office_id', '{{%staff_media}}');
 
@@ -90,6 +99,8 @@ class m260405_100100_add_relations extends Migration
         $this->dropForeignKey('fk-asset-office_id', '{{%asset}}');
 
         $this->dropForeignKey('fk-office_media-office_id', '{{%office_media}}');
+
+        $this->dropIndex('idx-article-author_id', '{{%article}}');
 
         $this->dropIndex('idx-staff_media-staff_id', '{{%staff_media}}');
         $this->dropIndex('idx-staff_media-office_id', '{{%staff_media}}');

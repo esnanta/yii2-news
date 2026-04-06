@@ -2,13 +2,14 @@
 
 use yii\db\Migration;
 
-class m260405_100000_create_office_asset_author extends Migration
+class m260405_100100_create_office_asset_author extends Migration
 {
     /**
      * @return bool|void
      */
     public function safeUp()
     {
+        // Create/alter tables first; indexes and foreign keys are added in the next migration.
         $this->createTable('{{%office}}', [
             'id' => $this->primaryKey(),
             'unique_id' => $this->string(15),
@@ -203,6 +204,7 @@ class m260405_100000_create_office_asset_author extends Migration
      */
     public function safeDown()
     {
+        // Drop in reverse dependency order.
         $this->dropTable('{{%staff_media}}');
         $this->dropTable('{{%staff}}');
         $this->dropTable('{{%employment}}');
@@ -214,4 +216,3 @@ class m260405_100000_create_office_asset_author extends Migration
         $this->dropTable('{{%office}}');
     }
 }
-
