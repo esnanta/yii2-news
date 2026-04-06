@@ -41,6 +41,27 @@ $this->params['breadcrumbs'][] = $this->title;
                     'options' => ['style' => 'width: 20%'],
                 ],
                 [
+                    'label' => Yii::t('backend', 'Preview'),
+                    'format' => 'raw',
+                    'options' => ['style' => 'width: 90px'],
+                    'value' => static function ($model) {
+                        $url = $model->asset_url;
+                        if (!$url && $model->base_url && $model->path) {
+                            $url = rtrim($model->base_url, '/') . '/' . ltrim($model->path, '/');
+                        }
+
+                        if (!$url) {
+                            return Html::tag('span', Yii::t('backend', 'No image'), ['class' => 'text-muted']);
+                        }
+
+                        $alt = $model->alt_text ?: ($model->title ?: $model->key);
+                        return Html::img($url, [
+                            'alt' => $alt,
+                            'style' => 'width:56px;height:56px;object-fit:cover;border-radius:4px;border:1px solid #dee2e6;',
+                        ]);
+                    },
+                ],
+                [
                     'attribute' => 'title',
                     'value' => function ($model) {
                         $label = $model->title ?: $model->key;
