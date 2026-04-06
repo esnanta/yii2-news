@@ -2,43 +2,45 @@
 /**
  * @author Eugine Terentev <eugine@terentev.net>
  * @author Victor Gonzalez <victor@vgr.cl>
- * @var yii\web\View $this
+ *
+ * @var View   $this
  * @var string $content
  */
 
 use backend\assets\BackendAsset;
 use backend\modules\system\models\SystemLog;
 use backend\widgets\MainSidebarMenu;
-use common\models\TimelineEvent;
-use yii\bootstrap4\Alert;
-use yii\helpers\ArrayHelper;
-use yii\helpers\Url;
-use yii\log\Logger;
-use yii\bootstrap4\Breadcrumbs;
-use yii\bootstrap4\Nav;
-use yii\bootstrap4\NavBar;
-use yii\bootstrap4\Html;
-use rmrevin\yii\fontawesome\FAR;
-use rmrevin\yii\fontawesome\FAS;
 use common\components\keyStorage\FormModel;
 use common\components\keyStorage\FormWidget;
+use common\models\TimelineEvent;
+use rmrevin\yii\fontawesome\FAR;
+use rmrevin\yii\fontawesome\FAS;
+use yii\bootstrap4\Alert;
+use yii\bootstrap4\Breadcrumbs;
+use yii\bootstrap4\Html;
+use yii\bootstrap4\Nav;
+use yii\bootstrap4\NavBar;
+use yii\helpers\ArrayHelper;
+use yii\i18n\DbMessageSource;
+use yii\log\Logger;
+use yii\web\View;
 
 $bundle = BackendAsset::register($this);
-Yii::info(Yii::$app->components["i18n"]["translations"]['*']['class'], 'test');
+Yii::info(Yii::$app->components['i18n']['translations']['*']['class'], 'test');
 
 $keyStorage = Yii::$app->keyStorage;
 
 $logEntries = [
     [
         'label' => Yii::t('backend', 'You have {num} log items', ['num' => SystemLog::find()->count()]),
-        'linkOptions' => ['class' => ['dropdown-item', 'dropdown-header']]
+        'linkOptions' => ['class' => ['dropdown-item', 'dropdown-header']],
     ],
     '<div class="dropdown-divider"></div>',
 ];
 foreach (SystemLog::find()->orderBy(['log_time' => SORT_DESC])->limit(5)->all() as $logEntry) {
     $logEntries[] = [
-        'label' => FAS::icon('exclamation-triangle', ['class' => [$logEntry->level === Logger::LEVEL_ERROR ? 'text-red' : 'text-yellow']]). ' '. $logEntry->category,
-        'url' => ['/system/log/view', 'id' => $logEntry->id]
+        'label' => FAS::icon('exclamation-triangle', ['class' => [Logger::LEVEL_ERROR === $logEntry->level ? 'text-red' : 'text-yellow']]).' '.$logEntry->category,
+        'url' => ['/system/log/view', 'id' => $logEntry->id],
     ];
     $logEntries[] = '<div class="dropdown-divider"></div>';
 }
@@ -46,7 +48,7 @@ foreach (SystemLog::find()->orderBy(['log_time' => SORT_DESC])->limit(5)->all() 
 $logEntries[] = [
     'label' => Yii::t('backend', 'View all'),
     'url' => ['/system/log/index'],
-    'linkOptions' => ['class' => ['dropdown-item', 'dropdown-footer']]
+    'linkOptions' => ['class' => ['dropdown-item', 'dropdown-footer']],
 ];
 ?>
 
@@ -79,9 +81,9 @@ $logEntries[] = [
                     'options' => [
                         'data' => ['widget' => 'pushmenu'],
                         'role' => 'button',
-                    ]
+                    ],
                 ],
-            ]
+            ],
         ]); ?>
         <!-- /left navbar links -->
 
@@ -93,7 +95,7 @@ $logEntries[] = [
                 [
                     // timeline events
                     'label' => FAR::icon('bell').' <span class="badge badge-success navbar-badge">'.TimelineEvent::find()->today()->count().'</span>',
-                    'url'  => ['/timeline-event/index']
+                    'url' => ['/timeline-event/index'],
                 ],
                 [
                     // log events
@@ -137,14 +139,14 @@ $logEntries[] = [
                 [
                     // control sidebar button
                     'label' => FAS::icon('th-large'),
-                    'url'  => '#',
+                    'url' => '#',
                     'linkOptions' => [
                         'data' => ['widget' => 'control-sidebar', 'slide' => 'true'],
-                        'role' => 'button'
+                        'role' => 'button',
                     ],
                     'visible' => Yii::$app->user->can('administrator'),
                 ],
-            ]
+            ],
         ]); ?>
         <!-- /right navbar links -->
 
@@ -152,12 +154,12 @@ $logEntries[] = [
     <!-- /navbar -->
 
     <!-- main sidebar -->
-    <aside class="main-sidebar sidebar-dark-primary elevation-4 <?php echo $keyStorage->get('adminlte.sidebar-no-expand') ? 'sidebar-no-expand' : null ?>">
+    <aside class="main-sidebar sidebar-dark-primary elevation-4 <?php echo $keyStorage->get('adminlte.sidebar-no-expand') ? 'sidebar-no-expand' : null; ?>">
         <!-- brand logo -->
-        <a href="<?php echo Yii::getAlias('@backendUrl') ?>" class="brand-link text-center <?php echo $keyStorage->get('adminlte.brand-text-small') ? 'text-sm' : null ?>">
+        <a href="<?php echo Yii::getAlias('@backendUrl'); ?>" class="brand-link text-center <?php echo $keyStorage->get('adminlte.brand-text-small') ? 'text-sm' : null; ?>">
             <!-- <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
                 style="opacity: .8"> -->
-            <span class="brand-text font-weight-bold"><?php echo Yii::$app->name ?></span>
+            <span class="brand-text font-weight-bold"><?php echo Yii::$app->name; ?></span>
         </a>
         <!-- /brand logo -->
 
@@ -169,10 +171,10 @@ $logEntries[] = [
                     <?php echo Html::img(
                         Yii::$app->user->identity->userProfile->getAvatar('/img/anonymous.png'),
                         ['class' => ['img-circle', 'elevation-2', 'bg-white'], 'alt' => 'User image']
-                    ) ?>
+                    ); ?>
                 </div>
                 <div class="info">
-                    <a href="#" class="d-block"><?php echo Yii::$app->user->identity->publicIdentity ?></a>
+                    <a href="#" class="d-block"><?php echo Yii::$app->user->identity->publicIdentity; ?></a>
                 </div>
             </div>
             <!-- /sidebar user panel -->
@@ -194,7 +196,7 @@ $logEntries[] = [
                         ],
                         'data' => [
                             'widget' => 'treeview',
-                            'accordion' => 'false'
+                            'accordion' => 'false',
                         ],
                         'role' => 'menu',
                     ],
@@ -214,7 +216,7 @@ $logEntries[] = [
                             'label' => Yii::t('backend', 'Users'),
                             'icon' => FAS::icon('users', ['class' => ['nav-icon']]),
                             'url' => ['/user/index'],
-                            'active' => Yii::$app->controller->id === 'user',
+                            'active' => 'user' === Yii::$app->controller->id,
                             'visible' => Yii::$app->user->can('administrator'),
                         ],
                         [
@@ -225,27 +227,27 @@ $logEntries[] = [
                             'label' => Yii::t('backend', 'Static pages'),
                             'url' => ['/content/page/index'],
                             'icon' => FAS::icon('thumbtack', ['class' => ['nav-icon']]),
-                            'active' => Yii::$app->controller->id === 'page',
+                            'active' => 'page' === Yii::$app->controller->id,
                         ],
                         [
                             'label' => Yii::t('backend', 'Articles'),
                             'url' => '#',
                             'icon' => FAS::icon('newspaper', ['class' => ['nav-icon']]),
                             'options' => ['class' => 'nav-item has-treeview'],
-                            'active' => 'content' === Yii::$app->controller->module->id &&
-                                ('article' === Yii::$app->controller->id || 'category' === Yii::$app->controller->id),
+                            'active' => 'content' === Yii::$app->controller->module->id
+                                && ('article' === Yii::$app->controller->id || 'category' === Yii::$app->controller->id),
                             'items' => [
                                 [
                                     'label' => Yii::t('backend', 'Articles'),
                                     'url' => ['/content/article/index'],
                                     'icon' => FAR::icon('circle', ['class' => ['nav-icon']]),
-                                    'active' => Yii::$app->controller->id === 'article',
+                                    'active' => 'article' === Yii::$app->controller->id,
                                 ],
                                 [
                                     'label' => Yii::t('backend', 'Categories'),
                                     'url' => ['/content/category/index'],
                                     'icon' => FAR::icon('circle', ['class' => ['nav-icon']]),
-                                    'active' => Yii::$app->controller->id === 'category',
+                                    'active' => 'category' === Yii::$app->controller->id,
                                 ],
                             ],
                         ],
@@ -254,19 +256,19 @@ $logEntries[] = [
                             'url' => '#',
                             'icon' => FAS::icon('puzzle-piece', ['class' => ['nav-icon']]),
                             'options' => ['class' => 'nav-item has-treeview'],
-                            'active' => Yii::$app->controller->module->id === 'widget',
+                            'active' => 'widget' === Yii::$app->controller->module->id,
                             'items' => [
                                 [
                                     'label' => Yii::t('backend', 'Text Blocks'),
                                     'url' => ['/widget/text/index'],
                                     'icon' => FAR::icon('circle', ['class' => ['nav-icon']]),
-                                    'active' => Yii::$app->controller->id === 'text',
+                                    'active' => 'text' === Yii::$app->controller->id,
                                 ],
                                 [
                                     'label' => Yii::t('backend', 'Menu'),
                                     'url' => ['/widget/menu/index'],
                                     'icon' => FAR::icon('circle', ['class' => ['nav-icon']]),
-                                    'active' => Yii::$app->controller->id === 'menu',
+                                    'active' => 'menu' === Yii::$app->controller->id,
                                 ],
                                 [
                                     'label' => Yii::t('backend', 'Carousel'),
@@ -274,19 +276,25 @@ $logEntries[] = [
                                     'icon' => FAR::icon('circle', ['class' => ['nav-icon']]),
                                     'active' => in_array(Yii::$app->controller->id, ['carousel', 'carousel-item']),
                                 ],
+                                [
+                                    'label' => Yii::t('backend', 'Images'),
+                                    'url' => ['/widget/image/index'],
+                                    'icon' => FAR::icon('circle', ['class' => ['nav-icon']]),
+                                    'active' => 'image' === Yii::$app->controller->id,
+                                ],
                             ],
                         ],
                         [
                             'label' => Yii::t('backend', 'Translation'),
                             'options' => ['class' => 'nav-header'],
-                            'visible' => Yii::$app->components["i18n"]["translations"]['*']['class'] === \yii\i18n\DbMessageSource::class,
+                            'visible' => DbMessageSource::class === Yii::$app->components['i18n']['translations']['*']['class'],
                         ],
                         [
                             'label' => Yii::t('backend', 'Translation'),
                             'url' => ['/translation/default/index'],
                             'icon' => FAS::icon('language', ['class' => ['nav-icon']]),
-                            'active' => (Yii::$app->controller->module->id == 'translation'),
-                            'visible' => Yii::$app->components["i18n"]["translations"]['*']['class'] === \yii\i18n\DbMessageSource::class,
+                            'active' => ('translation' == Yii::$app->controller->module->id),
+                            'visible' => DbMessageSource::class === Yii::$app->components['i18n']['translations']['*']['class'],
                         ],
                         [
                             'label' => Yii::t('backend', 'System'),
@@ -297,7 +305,7 @@ $logEntries[] = [
                             'url' => '#',
                             'icon' => FAS::icon('user-shield', ['class' => ['nav-icon']]),
                             'options' => ['class' => 'nav-item has-treeview'],
-                            'active' => (Yii::$app->controller->module->id == 'rbac'),
+                            'active' => ('rbac' == Yii::$app->controller->module->id),
                             'items' => [
                                 [
                                     'label' => Yii::t('backend', 'Assignments'),
@@ -326,19 +334,19 @@ $logEntries[] = [
                             'url' => '#',
                             'icon' => FAS::icon('folder-open', ['class' => ['nav-icon']]),
                             'options' => ['class' => 'nav-item has-treeview'],
-                            'active' => (Yii::$app->controller->module->id == 'file'),
+                            'active' => ('file' == Yii::$app->controller->module->id),
                             'items' => [
                                 [
                                     'label' => Yii::t('backend', 'Storage'),
                                     'url' => ['/file/storage/index'],
                                     'icon' => FAS::icon('database', ['class' => ['nav-icon']]),
-                                    'active' => (Yii::$app->controller->id == 'storage'),
+                                    'active' => ('storage' == Yii::$app->controller->id),
                                 ],
                                 [
                                     'label' => Yii::t('backend', 'Manager'),
                                     'url' => ['/file/manager/index'],
                                     'icon' => FAS::icon('archive', ['class' => ['nav-icon']]),
-                                    'active' => (Yii::$app->controller->id == 'manager'),
+                                    'active' => ('manager' == Yii::$app->controller->id),
                                 ],
                             ],
                         ],
@@ -346,7 +354,7 @@ $logEntries[] = [
                             'label' => Yii::t('backend', 'Key-Value Storage'),
                             'url' => ['/system/key-storage/index'],
                             'icon' => FAS::icon('exchange-alt', ['class' => ['nav-icon']]),
-                            'active' => (Yii::$app->controller->id == 'key-storage'),
+                            'active' => ('key-storage' == Yii::$app->controller->id),
                         ],
                         [
                             'label' => Yii::t('backend', 'Cache'),
@@ -366,7 +374,7 @@ $logEntries[] = [
                             'badgeBgClass' => 'badge-danger',
                         ],
                     ],
-                ]) ?>
+                ]); ?>
             </nav>
             <!-- /sidebar menu -->
         </div>
@@ -381,14 +389,14 @@ $logEntries[] = [
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0 text-dark"><?php echo Html::encode($this->title) ?></h1>
+                        <h1 class="m-0 text-dark"><?php echo Html::encode($this->title); ?></h1>
                     </div>
                     <div class="col-sm-6">
                         <?php echo Breadcrumbs::widget([
                             'tag' => 'ol',
                             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-                            'options' => ['class' => ['breadcrumb', 'float-sm-right']]
-                        ]) ?>
+                            'options' => ['class' => ['breadcrumb', 'float-sm-right']],
+                        ]); ?>
                     </div>
                 </div>
             </div>
@@ -398,13 +406,13 @@ $logEntries[] = [
         <!-- main content -->
         <section class="content">
             <div class="container-fluid">
-                <?php if (Yii::$app->session->hasFlash('alert')) : ?>
+                <?php if (Yii::$app->session->hasFlash('alert')) { ?>
                     <?php echo Alert::widget([
                         'body' => ArrayHelper::getValue(Yii::$app->session->getFlash('alert'), 'body'),
                         'options' => ArrayHelper::getValue(Yii::$app->session->getFlash('alert'), 'options'),
-                    ]) ?>
-                <?php endif; ?>
-                <?php echo $content ?>
+                    ]); ?>
+                <?php } ?>
+                <?php echo $content; ?>
             </div>
         </section>
         <!-- /main content -->
@@ -413,18 +421,18 @@ $logEntries[] = [
             'class' => ['btn', 'btn-primary', 'back-to-top'],
             'role' => 'button',
             'aria-label' => 'Scroll to top',
-        ]) ?>
+        ]); ?>
     </div>
     <!-- /content wrapper -->
 
     <!-- footer -->
-    <footer class="main-footer <?php echo $keyStorage->get('adminlte.footer-small-text') ? 'text-sm' : null ?>">
-        <strong>&copy; My Company <?php echo date('Y') ?></strong>
-        <div class="float-right d-none d-sm-inline-block"><?php echo Yii::powered() ?></div>
+    <footer class="main-footer <?php echo $keyStorage->get('adminlte.footer-small-text') ? 'text-sm' : null; ?>">
+        <strong>&copy; My Company <?php echo date('Y'); ?></strong>
+        <div class="float-right d-none d-sm-inline-block"><?php echo Yii::powered(); ?></div>
     </footer>
     <!-- /footer -->
 
-    <?php if (Yii::$app->user->can('administrator')) : ?>
+    <?php if (Yii::$app->user->can('administrator')) { ?>
     <!-- control sidebar -->
     <div class="control-sidebar control-sidebar-dark overflow-auto">
         <div class="control-sidebar-content p-3">
@@ -433,7 +441,7 @@ $logEntries[] = [
                     'keys' => [
                         'frontend.options' => [
                             'type' => FormModel::TYPE_HEADER,
-                            'content' => 'Frontend Options'
+                            'content' => 'Frontend Options',
                         ],
                         'frontend.maintenance' => [
                             'label' => Yii::t('backend', 'Maintenance mode'),
@@ -445,7 +453,7 @@ $logEntries[] = [
                         ],
                         'backend.options' => [
                             'type' => FormModel::TYPE_HEADER,
-                            'content' => 'Backend Options'
+                            'content' => 'Backend Options',
                         ],
                         'adminlte.body-small-text' => [
                             'label' => Yii::t('backend', 'Body small text'),
@@ -517,12 +525,12 @@ $logEntries[] = [
                 'submitOptions' => ['class' => 'btn btn-primary'],
                 'formOptions' => [
                     'action' => ['/system/settings/index'],
-                    'method' => 'post'
+                    'method' => 'post',
                 ],
-            ]) ?>
+            ]); ?>
         </div>
     </div>
     <!-- /control sidebar -->
-    <?php endif; ?>
+    <?php } ?>
 </div>
 <?php $this->endContent(); ?>
