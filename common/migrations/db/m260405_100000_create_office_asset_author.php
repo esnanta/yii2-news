@@ -131,6 +131,71 @@ class m260405_100000_create_office_asset_author extends Migration
             'verlock' => $this->bigInteger(),
             'uuid' => $this->string(36),
         ]);
+
+        $this->createTable('{{%employment}}', [
+            'id' => $this->primaryKey(),
+            'office_id' => $this->integer(),
+            'title' => $this->string(100),
+            'description' => $this->text(),
+            'sequence' => $this->tinyInteger(),
+            'created_at' => $this->dateTime(),
+            'updated_at' => $this->dateTime(),
+            'created_by' => $this->integer(),
+            'updated_by' => $this->integer(),
+            'is_deleted' => $this->integer(),
+            'deleted_at' => $this->dateTime(),
+            'deleted_by' => $this->integer(),
+            'verlock' => $this->bigInteger(),
+            'uuid' => $this->string(36),
+        ]);
+
+        $this->createTable('{{%staff}}', [
+            'id' => $this->primaryKey(),
+            'office_id' => $this->integer(),
+            'user_id' => $this->integer(),
+            'employment_id' => $this->integer(),
+            'title' => $this->string(100),
+            'initial' => $this->string(10)->notNull(),
+            'identity_number' => $this->string(100),
+            'phone_number' => $this->string(50),
+            'gender_status' => $this->integer(),
+            'active_status' => $this->integer(),
+            'address' => 'tinytext',
+            'file_name' => $this->string(200),
+            'email' => $this->string(100),
+            'google_plus' => $this->string(100),
+            'instagram' => $this->string(100),
+            'facebook' => $this->string(100),
+            'twitter' => $this->string(100),
+            'description' => 'tinytext',
+            'created_at' => $this->dateTime(),
+            'updated_at' => $this->dateTime(),
+            'created_by' => $this->integer(),
+            'updated_by' => $this->integer(),
+            'is_deleted' => $this->integer(),
+            'deleted_at' => $this->dateTime(),
+            'deleted_by' => $this->integer(),
+            'verlock' => $this->bigInteger(),
+            'uuid' => $this->string(36),
+        ]);
+
+        $this->createTable('{{%staff_media}}', [
+            'id' => $this->primaryKey(),
+            'office_id' => $this->integer(),
+            'staff_id' => $this->integer(),
+            'media_type' => $this->integer(),
+            'title' => $this->string(100),
+            'description' => 'longtext',
+            'created_at' => $this->dateTime(),
+            'updated_at' => $this->dateTime(),
+            'created_by' => $this->integer(),
+            'updated_by' => $this->integer(),
+            'is_deleted' => $this->integer(),
+            'deleted_at' => $this->dateTime(),
+            'deleted_by' => $this->integer(),
+            'verlock' => $this->bigInteger(),
+            'uuid' => $this->string(36),
+        ]);
     }
 
     /**
@@ -138,6 +203,9 @@ class m260405_100000_create_office_asset_author extends Migration
      */
     public function safeDown()
     {
+        $this->dropTable('{{%staff_media}}');
+        $this->dropTable('{{%staff}}');
+        $this->dropTable('{{%employment}}');
         $this->dropTable('{{%author_media}}');
         $this->dropTable('{{%author}}');
         $this->dropTable('{{%asset}}');
@@ -146,5 +214,4 @@ class m260405_100000_create_office_asset_author extends Migration
         $this->dropTable('{{%office}}');
     }
 }
-
 

@@ -22,10 +22,29 @@ class m260405_100100_add_relations extends Migration
         $this->createIndex('idx-author_media-office_id', '{{%author_media}}', 'office_id');
         $this->createIndex('idx-author_media-author_id', '{{%author_media}}', 'author_id');
 
+        $this->createIndex('idx-employment-office_id', '{{%employment}}', 'office_id');
+
+        $this->createIndex('idx-staff-office_id', '{{%staff}}', 'office_id');
+        $this->createIndex('idx-staff-user_id', '{{%staff}}', 'user_id');
+        $this->createIndex(
+            'idx-staff-employment_id',
+            '{{%staff}}',
+            'employment_id'
+        );
+
+        $this->createIndex('idx-staff_media-office_id', '{{%staff_media}}', 'office_id');
+        $this->createIndex('idx-staff_media-staff_id', '{{%staff_media}}', 'staff_id');
+
         $this->addForeignKey('fk-office_media-office_id', '{{%office_media}}', 'office_id', '{{%office}}', 'id');
 
         $this->addForeignKey('fk-asset-office_id', '{{%asset}}', 'office_id', '{{%office}}', 'id');
-        $this->addForeignKey('fk-asset-asset_category_id', '{{%asset}}', 'asset_category_id', '{{%asset_category}}', 'id');
+        $this->addForeignKey(
+            'fk-asset-asset_category_id',
+            '{{%asset}}',
+            'asset_category_id',
+            '{{%asset_category}}',
+            'id'
+        );
 
         $this->addForeignKey('fk-asset_category-office_id', '{{%asset_category}}', 'office_id', '{{%office}}', 'id');
 
@@ -34,6 +53,15 @@ class m260405_100100_add_relations extends Migration
 
         $this->addForeignKey('fk-author_media-office_id', '{{%author_media}}', 'office_id', '{{%office}}', 'id');
         $this->addForeignKey('fk-author_media-author_id', '{{%author_media}}', 'author_id', '{{%author}}', 'id');
+
+        $this->addForeignKey('fk-employment-office_id', '{{%employment}}', 'office_id', '{{%office}}', 'id');
+
+        $this->addForeignKey('fk-staff-office_id', '{{%staff}}', 'office_id', '{{%office}}', 'id');
+        $this->addForeignKey('fk-staff-user_id', '{{%staff}}', 'user_id', '{{%user}}', 'id');
+        $this->addForeignKey('fk-staff-employment_id', '{{%staff}}', 'employment_id', '{{%employment}}', 'id');
+
+        $this->addForeignKey('fk-staff_media-office_id', '{{%staff_media}}', 'office_id', '{{%office}}', 'id');
+        $this->addForeignKey('fk-staff_media-staff_id', '{{%staff_media}}', 'staff_id', '{{%staff}}', 'id');
     }
 
     /**
@@ -41,6 +69,15 @@ class m260405_100100_add_relations extends Migration
      */
     public function safeDown()
     {
+        $this->dropForeignKey('fk-staff_media-staff_id', '{{%staff_media}}');
+        $this->dropForeignKey('fk-staff_media-office_id', '{{%staff_media}}');
+
+        $this->dropForeignKey('fk-staff-employment_id', '{{%staff}}');
+        $this->dropForeignKey('fk-staff-user_id', '{{%staff}}');
+        $this->dropForeignKey('fk-staff-office_id', '{{%staff}}');
+
+        $this->dropForeignKey('fk-employment-office_id', '{{%employment}}');
+
         $this->dropForeignKey('fk-author_media-author_id', '{{%author_media}}');
         $this->dropForeignKey('fk-author_media-office_id', '{{%author_media}}');
 
@@ -53,6 +90,15 @@ class m260405_100100_add_relations extends Migration
         $this->dropForeignKey('fk-asset-office_id', '{{%asset}}');
 
         $this->dropForeignKey('fk-office_media-office_id', '{{%office_media}}');
+
+        $this->dropIndex('idx-staff_media-staff_id', '{{%staff_media}}');
+        $this->dropIndex('idx-staff_media-office_id', '{{%staff_media}}');
+
+        $this->dropIndex('idx-staff-employment_id', '{{%staff}}');
+        $this->dropIndex('idx-staff-user_id', '{{%staff}}');
+        $this->dropIndex('idx-staff-office_id', '{{%staff}}');
+
+        $this->dropIndex('idx-employment-office_id', '{{%employment}}');
 
         $this->dropIndex('idx-author_media-author_id', '{{%author_media}}');
         $this->dropIndex('idx-author_media-office_id', '{{%author_media}}');
