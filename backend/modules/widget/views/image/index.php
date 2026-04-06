@@ -4,7 +4,7 @@ use common\widgets\ActionColumn;
 use yii\grid\GridView;
 use yii\helpers\Html;
 
-/*
+/**
  * @var yii\web\View $this
  * @var backend\modules\widget\models\search\ImageSearch $searchModel
  * @var yii\data\ActiveDataProvider $dataProvider
