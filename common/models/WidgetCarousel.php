@@ -3,26 +3,22 @@
 namespace common\models;
 
 use common\behaviors\CacheInvalidateBehavior;
-use Yii;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "widget_carousel".
  *
- * @property integer $id
- * @property string $key
- * @property integer $status
- *
+ * @property int                  $id
+ * @property string               $key
+ * @property int                  $status
  * @property WidgetCarouselItem[] $items
  */
 class WidgetCarousel extends ActiveRecord
 {
-    const STATUS_DRAFT = 0;
-    const STATUS_ACTIVE = 1;
+    public const STATUS_DRAFT = 0;
+    public const STATUS_ACTIVE = 1;
 
-    /**
-     * @inheritdoc
-     */
     public static function tableName()
     {
         return '{{%widget_carousel}}';
@@ -34,14 +30,11 @@ class WidgetCarousel extends ActiveRecord
     public static function statuses()
     {
         return [
-            self::STATUS_DRAFT => Yii::t('common', 'Draft'),
-            self::STATUS_ACTIVE => Yii::t('common', 'Active'),
+            self::STATUS_DRAFT => \Yii::t('common', 'Draft'),
+            self::STATUS_ACTIVE => \Yii::t('common', 'Active'),
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function behaviors()
     {
         return [
@@ -52,41 +45,35 @@ class WidgetCarousel extends ActiveRecord
                     function ($model) {
                         return [
                             self::class,
-                            $model->key
+                            $model->key,
                         ];
-                    }
-                ]
-            ]
+                    },
+                ],
+            ],
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
             [['key'], 'required'],
             [['key'], 'unique'],
             [['status'], 'integer'],
-            [['key'], 'string', 'max' => 255]
+            [['key'], 'string', 'max' => 255],
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('common', 'ID'),
-            'key' => Yii::t('common', 'Key'),
-            'status' => Yii::t('common', 'Active'),
+            'id' => \Yii::t('common', 'ID'),
+            'key' => \Yii::t('common', 'Key'),
+            'status' => \Yii::t('common', 'Active'),
         ];
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getItems()
     {
