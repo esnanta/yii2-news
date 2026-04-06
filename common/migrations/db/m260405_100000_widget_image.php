@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 
-class m260405_100150_create_widget_image extends Migration
+class m260405_100000_widget_image extends Migration
 {
     /**
      * @return bool|void
