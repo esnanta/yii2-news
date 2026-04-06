@@ -50,6 +50,29 @@ class m260405_100100_create_office_asset_author extends Migration
             'uuid' => $this->string(36),
         ]);
 
+        $this->createTable('{{%widget_image}}', [
+            'id' => $this->primaryKey(),
+            'key' => $this->string(100)->notNull(),
+            'title' => $this->string(100),
+            'base_url' => $this->string(1024),
+            'path' => $this->string(1024),
+            'asset_url' => $this->string(1024),
+            'mime_type' => $this->string(100),
+            'size' => $this->integer(),
+            'link_url' => $this->string(500),
+            'alt_text' => $this->string(255),
+            'sequence' => $this->integer(),
+            'created_at' => $this->dateTime(),
+            'updated_at' => $this->dateTime(),
+            'created_by' => $this->integer(),
+            'updated_by' => $this->integer(),
+            'is_deleted' => $this->integer(),
+            'deleted_at' => $this->dateTime(),
+            'deleted_by' => $this->integer(),
+            'verlock' => $this->bigInteger(),
+            'uuid' => $this->string(36),
+        ]);
+
         $this->createTable('{{%asset_category}}', [
             'id' => $this->primaryKey(),
             'office_id' => $this->integer(),
@@ -212,6 +235,7 @@ class m260405_100100_create_office_asset_author extends Migration
         $this->dropTable('{{%author}}');
         $this->dropTable('{{%asset}}');
         $this->dropTable('{{%asset_category}}');
+        $this->dropTable('{{%widget_image}}');
         $this->dropTable('{{%office_media}}');
         $this->dropTable('{{%office}}');
     }

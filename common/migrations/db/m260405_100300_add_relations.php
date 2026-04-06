@@ -14,6 +14,8 @@ class m260405_100300_add_relations extends Migration
 
         $this->createIndex('idx-office_media-office_id', '{{%office_media}}', 'office_id');
 
+        $this->createIndex('idx-widget_image-key', '{{%widget_image}}', 'key');
+
         $this->createIndex('idx-asset-office_id', '{{%asset}}', 'office_id');
         $this->createIndex('idx-asset-asset_category_id', '{{%asset}}', 'asset_category_id');
 
@@ -101,6 +103,8 @@ class m260405_100300_add_relations extends Migration
         $this->dropForeignKey('fk-office_media-office_id', '{{%office_media}}');
 
         $this->dropIndex('idx-article-author_id', '{{%article}}');
+
+        $this->dropIndex('idx-widget_image-key', '{{%widget_image}}');
 
         $this->dropIndex('idx-staff_media-staff_id', '{{%staff_media}}');
         $this->dropIndex('idx-staff_media-office_id', '{{%staff_media}}');
