@@ -26,8 +26,8 @@ class m260405_100000_widget_image extends Migration
         $this->createIndex('idx-widget_image-key', '{{%widget_image}}', 'key');
 
         $now = time();
-        $frontendUrl = \Yii::getAlias('@frontendUrl');
-        $themeImageBaseUrl = $frontendUrl . '/themes/bootstrap4news/assets/img';
+        $frontendUrl = Yii::getAlias('@frontendUrl');
+        $themeImageBaseUrl = $frontendUrl.'/themes/bootstrap4news/assets/img';
 
         // Default placeholders for common page image slots.
         $this->batchInsert('{{%widget_image}}', [
