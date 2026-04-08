@@ -25,11 +25,11 @@ use yii\db\ActiveRecord;
  * @property array               $attachments
  * @property int                 $category_id
  * @property int                 $status
- * @property int                 $published_at
+ * @property string              $published_at
  * @property int                 $created_by
  * @property int                 $updated_by
- * @property int                 $created_at
- * @property int                 $updated_at
+ * @property string              $created_at
+ * @property string              $updated_at
  * @property User                $author
  * @property User                $updater
  * @property ArticleCategory     $category
@@ -64,7 +64,14 @@ class Article extends BaseArticle
     public function behaviors(): array
     {
         return [
-            TimestampBehavior::class,
+            'timestamp' => [
+                'class' => TimestampBehavior::class,
+                'createdAtAttribute' => 'created_at',
+                'updatedAtAttribute' => 'updated_at',
+                'value' => static function (): string {
+                    return date('Y-m-d H:i:s');
+                },
+            ],
             BlameableBehavior::class,
             [
                 'class' => SluggableBehavior::class,
@@ -99,11 +106,11 @@ class Article extends BaseArticle
             [['slug'], 'unique'],
             [['body'], 'string'],
             [['published_at'], 'default', 'value' => function () {
-                return date(DATE_ISO8601);
+                return date('Y-m-d');
             }],
-            [['published_at'], 'filter', 'filter' => 'strtotime', 'skipOnEmpty' => true],
+            [['published_at', 'created_at', 'updated_at'], 'safe'],
             [['category_id'], 'exist', 'targetClass' => ArticleCategory::class, 'targetAttribute' => 'id'],
-            [['status', 'created_by', 'updated_by'], 'integer'],
+            [['author_id', 'status', 'created_by', 'updated_by'], 'integer'],
             [['thumbnail_base_url', 'thumbnail_path'], 'string', 'max' => 1024],
             [['title'], 'string', 'max' => 512],
             [['view', 'slug'], 'string', 'max' => 255],
