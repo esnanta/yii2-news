@@ -2,57 +2,37 @@
 
 namespace common\models;
 
-use common\models\query\ArticleCategoryQuery;
-use Yii;
+use common\models\base\ArticleCategory as BaseArticleCategory;
 use yii\behaviors\SluggableBehavior;
 use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "article_category".
  *
- * @property integer         $id
+ * @property int             $id
  * @property string          $slug
  * @property string          $title
- * @property integer         $status
- *
+ * @property int             $status
  * @property Article[]       $articles
  * @property ArticleCategory $parent
  */
-class ArticleCategory extends ActiveRecord
+class ArticleCategory extends BaseArticleCategory
 {
-    const STATUS_ACTIVE = 1;
-    const STATUS_DRAFT  = 0;
-
-    /**
-     * @inheritdoc
-     */
-    public static function tableName()
-    {
-        return '{{%article_category}}';
-    }
-
-    /**
-     * @return ArticleCategoryQuery
-     */
-    public static function find()
-    {
-        return new ArticleCategoryQuery(get_called_class());
-    }
+    public const STATUS_ACTIVE = 1;
+    public const STATUS_DRAFT = 0;
 
     /**
      * @return array statuses list
      */
-    public static function statuses()
+    public static function statuses(): array
     {
         return [
-            self::STATUS_DRAFT => Yii::t('common', 'Draft'),
-            self::STATUS_ACTIVE => Yii::t('common', 'Active'),
+            self::STATUS_DRAFT => \Yii::t('common', 'Draft'),
+            self::STATUS_ACTIVE => \Yii::t('common', 'Active'),
         ];
     }
 
-    /** @inheritdoc */
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             TimestampBehavior::class,
@@ -64,11 +44,7 @@ class ArticleCategory extends ActiveRecord
         ];
     }
 
-
-    /**
-     * @inheritdoc
-     */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['title'], 'required'],
@@ -80,33 +56,14 @@ class ArticleCategory extends ActiveRecord
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
-            'id' => Yii::t('common', 'ID'),
-            'slug' => Yii::t('common', 'Slug'),
-            'title' => Yii::t('common', 'Title'),
-            'parent_id' => Yii::t('common', 'Parent Category'),
-            'status' => Yii::t('common', 'Active'),
+            'id' => \Yii::t('common', 'ID'),
+            'slug' => \Yii::t('common', 'Slug'),
+            'title' => \Yii::t('common', 'Title'),
+            'parent_id' => \Yii::t('common', 'Parent Category'),
+            'status' => \Yii::t('common', 'Active'),
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getArticles()
-    {
-        return $this->hasMany(Article::class, ['category_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getParent()
-    {
-        return $this->hasMany(ArticleCategory::class, ['id' => 'parent_id']);
     }
 }
