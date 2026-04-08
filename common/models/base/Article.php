@@ -52,7 +52,8 @@ class Article extends BaseActiveRecord
     private $_rt_softdelete;
     private $_rt_softrestore;
 
-    public function __construct(){
+    public function __construct()
+    {
         parent::__construct();
         $this->_rt_softdelete = [
             'deleted_by' => \Yii::$app->user->id,
@@ -114,7 +115,8 @@ class Article extends BaseActiveRecord
      * return string name of field are used to stored optimistic lock
      *
      */
-    public function optimisticLock(): string {
+    public function optimisticLock(): string
+    {
         return 'verlock';
     }
 
@@ -201,7 +203,7 @@ class Article extends BaseActiveRecord
             ],
             'uuid' => [
                 'class' => UUIDBehavior::class,
-                'column' => 'uuiid',
+                'column' => 'uuid',
             ],
         ];
     }
@@ -232,7 +234,8 @@ class Article extends BaseActiveRecord
      * @inheritdoc
      * @return ArticleQuery the active query used by this AR class.
      */
-    public static function find(): ArticleQuery    {
+    public static function find(): ArticleQuery
+    {
         $query = new ArticleQuery(get_called_class());
         return $query->where(['t_article.deleted_by' => 0]);
     }
