@@ -10,10 +10,10 @@ use mootensai\behaviors\UUIDBehavior;
 use yii\db\ActiveQuery;
 use mootensai\relation\RelationTrait;
 use common\models\query\OfficeQuery;
-use common\models\Asset;
-use common\models\AssetCategory;
 use common\models\Author;
 use common\models\AuthorSocialAccount;
+use common\models\Document;
+use common\models\DocumentCategory;
 use common\models\Employment;
 use common\models\OfficeSocialAccount;
 use common\models\Staff;
@@ -43,10 +43,10 @@ use common\models\StaffSocialAccount;
  * @property integer $verlock
  * @property string $uuid
  *
- * @property Asset[] $assets
- * @property AssetCategory[] $assetCategories
  * @property Author[] $authors
  * @property AuthorSocialAccount[] $authorSocialAccounts
+ * @property Document[] $documents
+ * @property DocumentCategory[] $documentCategories
  * @property Employment[] $employments
  * @property OfficeSocialAccount[] $officeSocialAccounts
  * @property Staff[] $staff
@@ -78,10 +78,10 @@ class Office extends BaseActiveRecord
     public function relationNames(): array
     {
         return [
-            'assets',
-            'assetCategories',
             'authors',
             'authorSocialAccounts',
+            'documents',
+            'documentCategories',
             'employments',
             'officeSocialAccounts',
             'staff',
@@ -151,22 +151,6 @@ class Office extends BaseActiveRecord
     /**
      * @return ActiveQuery
      */
-    public function getAssets(): ActiveQuery
-    {
-        return $this->hasMany(Asset::class, ['office_id' => 'id']);
-    }
-        
-    /**
-     * @return ActiveQuery
-     */
-    public function getAssetCategories(): ActiveQuery
-    {
-        return $this->hasMany(AssetCategory::class, ['office_id' => 'id']);
-    }
-        
-    /**
-     * @return ActiveQuery
-     */
     public function getAuthors(): ActiveQuery
     {
         return $this->hasMany(Author::class, ['office_id' => 'id']);
@@ -178,6 +162,22 @@ class Office extends BaseActiveRecord
     public function getAuthorSocialAccounts(): ActiveQuery
     {
         return $this->hasMany(AuthorSocialAccount::class, ['office_id' => 'id']);
+    }
+        
+    /**
+     * @return ActiveQuery
+     */
+    public function getDocuments(): ActiveQuery
+    {
+        return $this->hasMany(Document::class, ['office_id' => 'id']);
+    }
+        
+    /**
+     * @return ActiveQuery
+     */
+    public function getDocumentCategories(): ActiveQuery
+    {
+        return $this->hasMany(DocumentCategory::class, ['office_id' => 'id']);
     }
         
     /**

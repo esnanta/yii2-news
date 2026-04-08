@@ -2,46 +2,48 @@
 
 namespace common\models\base;
 
+use Yii;
 use common\base\BaseActiveRecord;
+use yii\behaviors\TimestampBehavior;
+use yii\behaviors\BlameableBehavior;
+use mootensai\behaviors\UUIDBehavior;
+use yii\db\ActiveQuery;
+use mootensai\relation\RelationTrait;
+use common\models\query\AuthorQuery;
 use common\models\Article;
 use common\models\AuthorSocialAccount;
 use common\models\Office;
-use common\models\query\AuthorQuery;
 use common\models\User;
-use mootensai\behaviors\UUIDBehavior;
-use mootensai\relation\RelationTrait;
-use yii\behaviors\BlameableBehavior;
-use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveQuery;
 
 /**
  * This is the base model class for table "t_author".
  *
- * @property int                   $id
- * @property int                   $office_id
- * @property int                   $user_id
- * @property string                $title
- * @property string                $phone_number
- * @property string                $email
- * @property string                $photo_base_url
- * @property string                $photo_path
- * @property string                $photo_name
- * @property string                $photo_type
- * @property int                   $photo_size
- * @property string                $address
- * @property string                $description
- * @property string                $created_at
- * @property string                $updated_at
- * @property int                   $created_by
- * @property int                   $updated_by
- * @property int                   $is_deleted
- * @property string                $deleted_at
- * @property int                   $deleted_by
- * @property int                   $verlock
- * @property string                $uuid
- * @property Article[]             $articles
- * @property Office                $office
- * @property User                  $user
+ * @property integer $id
+ * @property integer $office_id
+ * @property integer $user_id
+ * @property string $title
+ * @property string $phone_number
+ * @property string $email
+ * @property string $base_url
+ * @property string $path
+ * @property string $name
+ * @property string $type
+ * @property integer $size
+ * @property string $address
+ * @property string $description
+ * @property string $created_at
+ * @property string $updated_at
+ * @property integer $created_by
+ * @property integer $updated_by
+ * @property integer $is_deleted
+ * @property string $deleted_at
+ * @property integer $deleted_by
+ * @property integer $verlock
+ * @property string $uuid
+ *
+ * @property Article[] $articles
+ * @property Office $office
+ * @property User $user
  * @property AuthorSocialAccount[] $authorSocialAccounts
  */
 class Author extends BaseActiveRecord
@@ -51,8 +53,7 @@ class Author extends BaseActiveRecord
     private $_rt_softdelete;
     private $_rt_softrestore;
 
-    public function __construct()
-    {
+    public function __construct(){
         parent::__construct();
         $this->_rt_softdelete = [
             'deleted_by' => \Yii::$app->user->id,
@@ -65,95 +66,115 @@ class Author extends BaseActiveRecord
     }
 
     /**
-     * This function helps \mootensai\relation\RelationTrait runs faster.
-     *
-     * @return array relation names of this model
-     */
+    * This function helps \mootensai\relation\RelationTrait runs faster
+    * @return array relation names of this model
+    */
     public function relationNames(): array
     {
         return [
             'articles',
             'office',
             'user',
-            'authorSocialAccounts',
+            'authorSocialAccounts'
         ];
     }
 
+    /**
+     * @inheritdoc
+     */
     public function rules(): array
     {
         return [
-            [['office_id', 'user_id', 'photo_size',
-                'created_by', 'updated_by', 'is_deleted',
-                'deleted_by', 'verlock'], 'integer'],
+            [['office_id', 'user_id', 'size', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['address', 'description'], 'string'],
             [['created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['title', 'email'], 'string', 'max' => 100],
-            [['photo_base_url', 'photo_path', 'photo_name', 'photo_type'], 'string', 'max' => 255],
             [['phone_number'], 'string', 'max' => 50],
+            [['base_url', 'path', 'name', 'type'], 'string', 'max' => 255],
             [['uuid'], 'string', 'max' => 36],
             [['verlock'], 'default', 'value' => '0'],
-            [['verlock'], 'mootensai\components\OptimisticLockValidator'],
+            [['verlock'], 'mootensai\components\OptimisticLockValidator']
         ];
     }
 
+    /**
+     * @inheritdoc
+     */
     public static function tableName(): string
     {
         return 't_author';
     }
 
     /**
+     *
      * @return string
-     *                overwrite function optimisticLock
-     *                return string name of field are used to stored optimistic lock
+     * overwrite function optimisticLock
+     * return string name of field are used to stored optimistic lock
+     *
      */
-    public function optimisticLock(): string
-    {
+    public function optimisticLock(): string {
         return 'verlock';
     }
 
+    /**
+     * @inheritdoc
+     */
     public function attributeLabels(): array
     {
         return [
-            'id' => \Yii::t('common', 'ID'),
-            'office_id' => \Yii::t('common', 'Office ID'),
-            'user_id' => \Yii::t('common', 'User ID'),
-            'title' => \Yii::t('common', 'Title'),
-            'phone_number' => \Yii::t('common', 'Phone Number'),
-            'email' => \Yii::t('common', 'Email'),
-            'photo_base_url' => \Yii::t('common', 'Photo Base Url'),
-            'photo_path' => \Yii::t('common', 'Photo Path'),
-            'photo_name' => \Yii::t('common', 'Photo Name'),
-            'photo_type' => \Yii::t('common', 'Photo Type'),
-            'photo_size' => \Yii::t('common', 'Photo Size'),
-            'address' => \Yii::t('common', 'Address'),
-            'description' => \Yii::t('common', 'Description'),
-            'is_deleted' => \Yii::t('common', 'Is Deleted'),
-            'verlock' => \Yii::t('common', 'Verlock'),
-            'uuid' => \Yii::t('common', 'Uuid'),
+            'id' => Yii::t('common', 'ID'),
+            'office_id' => Yii::t('common', 'Office ID'),
+            'user_id' => Yii::t('common', 'User ID'),
+            'title' => Yii::t('common', 'Title'),
+            'phone_number' => Yii::t('common', 'Phone Number'),
+            'email' => Yii::t('common', 'Email'),
+            'base_url' => Yii::t('common', 'Base Url'),
+            'path' => Yii::t('common', 'Path'),
+            'name' => Yii::t('common', 'Name'),
+            'type' => Yii::t('common', 'Type'),
+            'size' => Yii::t('common', 'Size'),
+            'address' => Yii::t('common', 'Address'),
+            'description' => Yii::t('common', 'Description'),
+            'is_deleted' => Yii::t('common', 'Is Deleted'),
+            'verlock' => Yii::t('common', 'Verlock'),
+            'uuid' => Yii::t('common', 'Uuid'),
         ];
     }
-
+    
+    /**
+     * @return ActiveQuery
+     */
     public function getArticles(): ActiveQuery
     {
         return $this->hasMany(Article::class, ['author_id' => 'id']);
     }
-
+        
+    /**
+     * @return ActiveQuery
+     */
     public function getOffice(): ActiveQuery
     {
         return $this->hasOne(Office::class, ['id' => 'office_id']);
     }
-
+        
+    /**
+     * @return ActiveQuery
+     */
     public function getUser(): ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
-
+        
+    /**
+     * @return ActiveQuery
+     */
     public function getAuthorSocialAccounts(): ActiveQuery
     {
         return $this->hasMany(AuthorSocialAccount::class, ['author_id' => 'id']);
     }
-
+    
     /**
+     * @inheritdoc
      * @return array mixed
      */
     public function behaviors(): array
@@ -200,12 +221,11 @@ class Author extends BaseActiveRecord
      */
 
     /**
-     * @return AuthorQuery the active query used by this AR class
+     * @inheritdoc
+     * @return AuthorQuery the active query used by this AR class.
      */
-    public static function find(): AuthorQuery
-    {
+    public static function find(): AuthorQuery    {
         $query = new AuthorQuery(get_called_class());
-
         return $query->where(['t_author.deleted_by' => 0]);
     }
 }
