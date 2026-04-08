@@ -9,7 +9,7 @@ use yii\db\ActiveRecord;
 /**
  * This is the model class for table "timeline_event".
  *
- * @property integer $id
+ * @property int    $id
  * @property string $application
  * @property string $category
  * @property string $event
@@ -18,9 +18,6 @@ use yii\db\ActiveRecord;
  */
 class TimelineEvent extends ActiveRecord
 {
-    /**
-     * @inheritdoc
-     */
     public static function tableName()
     {
         return '{{%timeline_event}}';
@@ -43,26 +40,20 @@ class TimelineEvent extends ActiveRecord
             'timestamp' => [
                 'class' => TimestampBehavior::class,
                 'createdAtAttribute' => 'created_at',
-                'updatedAtAttribute' => null
-            ]
+                'updatedAtAttribute' => null,
+            ],
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
             [['application', 'category', 'event'], 'required'],
             [['data'], 'safe'],
-            [['application', 'category', 'event'], 'string', 'max' => 64]
+            [['application', 'category', 'event'], 'string', 'max' => 64],
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function afterFind()
     {
         $this->data = @json_decode($this->data, true);
