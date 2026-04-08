@@ -33,11 +33,33 @@ class m260405_100100_create_office_asset_author extends Migration
             'uuid' => $this->string(36),
         ]);
 
-        $this->createTable('{{%office_media}}', [
+        $this->createTable('{{%social_platform}}', [
+            'id' => $this->primaryKey(),
+            'code' => $this->string(50)->notNull(),
+            'name' => $this->string(100)->notNull(),
+            'base_url' => $this->string(255),
+            'is_active' => $this->tinyInteger()->defaultValue(1),
+            'sequence' => $this->integer()->defaultValue(0),
+            'created_at' => $this->dateTime(),
+            'updated_at' => $this->dateTime(),
+            'created_by' => $this->integer(),
+            'updated_by' => $this->integer(),
+            'is_deleted' => $this->integer(),
+            'deleted_at' => $this->dateTime(),
+            'deleted_by' => $this->integer(),
+            'verlock' => $this->bigInteger(),
+            'uuid' => $this->string(36),
+        ]);
+
+        $this->createTable('{{%office_social_account}}', [
             'id' => $this->primaryKey(),
             'office_id' => $this->integer(),
-            'media_type' => $this->integer(),
-            'title' => $this->string(100),
+            'platform_id' => $this->integer(),
+            'username' => $this->string(100),
+            'profile_url' => $this->string(500),
+            'is_primary' => $this->tinyInteger()->defaultValue(0),
+            'is_visible' => $this->tinyInteger()->defaultValue(1),
+            'sequence' => $this->integer()->defaultValue(0),
             'description' => 'longtext',
             'created_at' => $this->dateTime(),
             'updated_at' => $this->dateTime(),
@@ -115,12 +137,16 @@ class m260405_100100_create_office_asset_author extends Migration
             'uuid' => $this->string(36),
         ]);
 
-        $this->createTable('{{%author_media}}', [
+        $this->createTable('{{%author_social_account}}', [
             'id' => $this->primaryKey(),
             'office_id' => $this->integer(),
             'author_id' => $this->integer(),
-            'media_type' => $this->integer(),
-            'title' => $this->string(100),
+            'platform_id' => $this->integer(),
+            'username' => $this->string(100),
+            'profile_url' => $this->string(500),
+            'is_primary' => $this->tinyInteger()->defaultValue(0),
+            'is_visible' => $this->tinyInteger()->defaultValue(1),
+            'sequence' => $this->integer()->defaultValue(0),
             'description' => 'longtext',
             'created_at' => $this->dateTime(),
             'updated_at' => $this->dateTime(),
@@ -180,12 +206,16 @@ class m260405_100100_create_office_asset_author extends Migration
             'uuid' => $this->string(36),
         ]);
 
-        $this->createTable('{{%staff_media}}', [
+        $this->createTable('{{%staff_social_account}}', [
             'id' => $this->primaryKey(),
             'office_id' => $this->integer(),
             'staff_id' => $this->integer(),
-            'media_type' => $this->integer(),
-            'title' => $this->string(100),
+            'platform_id' => $this->integer(),
+            'username' => $this->string(100),
+            'profile_url' => $this->string(500),
+            'is_primary' => $this->tinyInteger()->defaultValue(0),
+            'is_visible' => $this->tinyInteger()->defaultValue(1),
+            'sequence' => $this->integer()->defaultValue(0),
             'description' => 'longtext',
             'created_at' => $this->dateTime(),
             'updated_at' => $this->dateTime(),
@@ -205,14 +235,15 @@ class m260405_100100_create_office_asset_author extends Migration
     public function safeDown()
     {
         // Drop in reverse dependency order.
-        $this->dropTable('{{%staff_media}}');
+        $this->dropTable('{{%staff_social_account}}');
         $this->dropTable('{{%staff}}');
         $this->dropTable('{{%employment}}');
-        $this->dropTable('{{%author_media}}');
+        $this->dropTable('{{%author_social_account}}');
         $this->dropTable('{{%author}}');
         $this->dropTable('{{%asset}}');
         $this->dropTable('{{%asset_category}}');
-        $this->dropTable('{{%office_media}}');
+        $this->dropTable('{{%office_social_account}}');
+        $this->dropTable('{{%social_platform}}');
         $this->dropTable('{{%office}}');
     }
 }
