@@ -8,20 +8,14 @@ use yii\data\ActiveDataProvider;
 
 class ArticleCategorySearch extends ArticleCategory
 {
-    /**
-     * @inheritdoc
-     */
-    public function rules()
+    public function rules(): array
     {
         return [
-            [['id', 'status'], 'integer'],
+            [['id', 'parent_id', 'status'], 'integer'],
             [['slug', 'title'], 'safe'],
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function scenarios()
     {
         // bypass scenarios() implementation in the parent class
@@ -29,7 +23,9 @@ class ArticleCategorySearch extends ArticleCategory
     }
 
     /**
-     * Creates data provider instance with search query applied
+     * Creates data provider instance with search query applied.
+     *
+     * @param mixed $params
      *
      * @return ActiveDataProvider
      */
@@ -47,11 +43,13 @@ class ArticleCategorySearch extends ArticleCategory
 
         $query->andFilterWhere([
             'id' => $this->id,
+            'parent_id' => $this->parent_id,
             'status' => $this->status,
         ]);
 
         $query->andFilterWhere(['like', 'slug', $this->slug])
-            ->andFilterWhere(['like', 'title', $this->title]);
+            ->andFilterWhere(['like', 'title', $this->title])
+        ;
 
         return $dataProvider;
     }

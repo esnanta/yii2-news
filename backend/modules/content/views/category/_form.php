@@ -1,8 +1,9 @@
 <?php
 
+use common\models\ArticleCategory;
+use rmrevin\yii\fontawesome\FAS;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
-use rmrevin\yii\fontawesome\FAS;
 
 /**
  * @var yii\web\View $this
@@ -30,9 +31,9 @@ use rmrevin\yii\fontawesome\FAS;
 
             <?php echo $form->field($model, 'slug')
                 ->hint(Yii::t('backend', 'If you leave this field empty, the slug will be generated automatically'))
-                ->textInput(['maxlength' => 1024]) ?>
+                ->textInput(['maxlength' => 255]) ?>
 
-            <?php echo $form->field($model, 'status')->checkbox() ?>
+            <?php echo $form->field($model, 'status')->dropDownList(ArticleCategory::statuses()) ?>
         </div>
         <div class="card-footer">
             <?php echo Html::submitButton(

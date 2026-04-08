@@ -4,15 +4,25 @@ namespace common\models;
 
 use common\models\base\ArticleCategory as BaseArticleCategory;
 use yii\behaviors\SluggableBehavior;
-use yii\behaviors\TimestampBehavior;
 
 /**
- * This is the model class for table "article_category".
+ * This is the model class for table "t_article_category".
  *
  * @property int             $id
  * @property string          $slug
  * @property string          $title
- * @property int             $status
+ * @property string          $body
+ * @property null|int        $parent_id
+ * @property null|int        $status
+ * @property null|string     $created_at
+ * @property null|string     $updated_at
+ * @property null|int        $created_by
+ * @property null|int        $updated_by
+ * @property null|int        $is_deleted
+ * @property null|string     $deleted_at
+ * @property null|int        $deleted_by
+ * @property null|int        $verlock
+ * @property null|string     $uuid
  * @property Article[]       $articles
  * @property ArticleCategory $parent
  */
@@ -34,36 +44,31 @@ class ArticleCategory extends BaseArticleCategory
 
     public function behaviors(): array
     {
-        return [
-            TimestampBehavior::class,
-            [
-                'class' => SluggableBehavior::class,
-                'attribute' => 'title',
-                'immutable' => true,
-            ],
+        $behaviors = parent::behaviors();
+        $behaviors['slug'] = [
+            'class' => SluggableBehavior::class,
+            'attribute' => 'title',
+            'immutable' => true,
         ];
+
+        return $behaviors;
     }
 
     public function rules(): array
     {
-        return [
-            [['title'], 'required'],
-            [['title'], 'string', 'max' => 512],
-            [['slug'], 'unique'],
-            [['slug'], 'string', 'max' => 255],
-            ['status', 'integer'],
-            ['parent_id', 'exist', 'targetClass' => ArticleCategory::class, 'targetAttribute' => 'id'],
-        ];
+        return array_merge(parent::rules(), [
+            ['parent_id', 'exist',
+                'skipOnError' => true,
+                'targetClass' => self::class,
+                'targetAttribute' => ['parent_id' => 'id']],
+        ]);
     }
 
     public function attributeLabels(): array
     {
-        return [
-            'id' => \Yii::t('common', 'ID'),
-            'slug' => \Yii::t('common', 'Slug'),
-            'title' => \Yii::t('common', 'Title'),
+        return array_merge(parent::attributeLabels(), [
             'parent_id' => \Yii::t('common', 'Parent Category'),
-            'status' => \Yii::t('common', 'Active'),
-        ];
+            'status' => \Yii::t('common', 'Status'),
+        ]);
     }
 }

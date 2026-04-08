@@ -3,6 +3,7 @@
 use common\grid\EnumColumn;
 use common\models\ArticleCategory;
 use yii\grid\GridView;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
 /**
@@ -12,6 +13,8 @@ use yii\helpers\Html;
  * @var $model        ArticleCategory
  * @var $categories   common\models\ArticleCategory[]
  */
+
+$parentFilter = ArrayHelper::map(ArticleCategory::find()->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
 
 $this->title = Yii::t('backend', 'Article Categories');
 $this->params['breadcrumbs'][] = $this->title;
@@ -50,6 +53,13 @@ $this->params['breadcrumbs'][] = $this->title;
                         return Html::a(Html::encode($model->title), ['update', 'id' => $model->id]);
                     },
                     'format' => 'raw',
+                ],
+                [
+                    'attribute' => 'parent_id',
+                    'value' => static function (ArticleCategory $model): ?string {
+                        return $model->parent ? $model->parent->title : null;
+                    },
+                    'filter' => $parentFilter,
                 ],
                 [
                     'class' => EnumColumn::class,
