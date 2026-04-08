@@ -4,16 +4,16 @@ namespace common\models;
 
 use common\models\query\ArticleQuery;
 use trntv\filekit\behaviors\UploadBehavior;
-use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\SluggableBehavior;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "article".
  *
- * @property integer             $id
+ * @property int                 $id
  * @property string              $slug
  * @property string              $title
  * @property string              $body
@@ -21,14 +21,13 @@ use yii\db\ActiveRecord;
  * @property string              $thumbnail_base_url
  * @property string              $thumbnail_path
  * @property array               $attachments
- * @property integer             $category_id
- * @property integer             $status
- * @property integer             $published_at
- * @property integer             $created_by
- * @property integer             $updated_by
- * @property integer             $created_at
- * @property integer             $updated_at
- *
+ * @property int                 $category_id
+ * @property int                 $status
+ * @property int                 $published_at
+ * @property int                 $created_by
+ * @property int                 $updated_by
+ * @property int                 $created_at
+ * @property int                 $updated_at
  * @property User                $author
  * @property User                $updater
  * @property ArticleCategory     $category
@@ -36,8 +35,8 @@ use yii\db\ActiveRecord;
  */
 class Article extends ActiveRecord
 {
-    const STATUS_PUBLISHED = 1;
-    const STATUS_DRAFT     = 0;
+    public const STATUS_PUBLISHED = 1;
+    public const STATUS_DRAFT = 0;
 
     /**
      * @var array
@@ -49,9 +48,6 @@ class Article extends ActiveRecord
      */
     public $thumbnail;
 
-    /**
-     * @inheritdoc
-     */
     public static function tableName()
     {
         return '{{%article}}';
@@ -71,14 +67,11 @@ class Article extends ActiveRecord
     public static function statuses()
     {
         return [
-            self::STATUS_DRAFT => Yii::t('common', 'Draft'),
-            self::STATUS_PUBLISHED => Yii::t('common', 'Published'),
+            self::STATUS_DRAFT => \Yii::t('common', 'Draft'),
+            self::STATUS_PUBLISHED => \Yii::t('common', 'Published'),
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function behaviors()
     {
         return [
@@ -110,9 +103,6 @@ class Article extends ActiveRecord
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
@@ -132,30 +122,27 @@ class Article extends ActiveRecord
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('common', 'ID'),
-            'slug' => Yii::t('common', 'Slug'),
-            'title' => Yii::t('common', 'Title'),
-            'body' => Yii::t('common', 'Body'),
-            'view' => Yii::t('common', 'Article View'),
-            'thumbnail' => Yii::t('common', 'Thumbnail'),
-            'category_id' => Yii::t('common', 'Category'),
-            'status' => Yii::t('common', 'Published'),
-            'published_at' => Yii::t('common', 'Published At'),
-            'created_by' => Yii::t('common', 'Author'),
-            'updated_by' => Yii::t('common', 'Updater'),
-            'created_at' => Yii::t('common', 'Created At'),
-            'updated_at' => Yii::t('common', 'Updated At'),
+            'id' => \Yii::t('common', 'ID'),
+            'slug' => \Yii::t('common', 'Slug'),
+            'title' => \Yii::t('common', 'Title'),
+            'body' => \Yii::t('common', 'Body'),
+            'view' => \Yii::t('common', 'Article View'),
+            'thumbnail' => \Yii::t('common', 'Thumbnail'),
+            'category_id' => \Yii::t('common', 'Category'),
+            'status' => \Yii::t('common', 'Published'),
+            'published_at' => \Yii::t('common', 'Published At'),
+            'created_by' => \Yii::t('common', 'Author'),
+            'updated_by' => \Yii::t('common', 'Updater'),
+            'created_at' => \Yii::t('common', 'Created At'),
+            'updated_at' => \Yii::t('common', 'Updated At'),
         ];
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getAuthor()
     {
@@ -163,7 +150,7 @@ class Article extends ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getUpdater()
     {
@@ -171,7 +158,7 @@ class Article extends ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getCategory()
     {
@@ -179,7 +166,7 @@ class Article extends ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getArticleAttachments()
     {
