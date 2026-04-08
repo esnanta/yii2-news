@@ -33,7 +33,7 @@
   <component name="PhpCodeSniffer">
     <phpcs_settings>
       <PhpCSConfiguration beautifier_path="$PROJECT_DIR$/vendor/bin/phpcbf" tool_path="$PROJECT_DIR$/vendor/bin/phpcs" />
-      <phpcs_by_interpreter asDefaultInterpreter="true" interpreter_id="001a45ec-8294-4446-a323-5cdd734107bc" beautifier_path="$PROJECT_DIR$/vendor/bin/phpcbf" tool_path="/var/www/html/yii2-news/vendor/bin/phpcs" timeout="30000" />
+      <phpcs_by_interpreter asDefaultInterpreter="true" interpreter_id="001a45ec-8294-4446-a323-5cdd734107bc" beautifier_path="$PROJECT_DIR$/vendor/bin/phpcbf" tool_path="/home/cassiopeia/Documents/github/html/yii2-news/vendor/bin/phpcs" timeout="30000" />
     </phpcs_settings>
   </component>
   <component name="PhpIncludePathManager">

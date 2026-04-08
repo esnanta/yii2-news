@@ -10,6 +10,7 @@
 - Nginx routes hostnames to separate PHP-FPM services (`docker/nginx/vhost.conf`): `api.*` -> `api`, `backend.*` -> `backend`, root host -> `frontend`, `storage.*` -> `storage`.
 - API v1 behavior is module-driven in `api/modules/v1/Module.php`: JSON/XML content negotiation, rate limiting, and stateless auth (`enableSession=false`).
 - API routes are explicit in `api/config/_urlManager.php` (currently only `v1/article` for `index`, `view`, `options`).
+- `api/modules/v1/controllers/UserController.php` implements `CompositeAuth` (basic/bearer/header/query-param), but it is not reachable until a matching rule is added to `api/config/_urlManager.php`.
 - Swagger docs come from `api/controllers/SiteController.php` (`site/docs` and `site/json-schema`) scanning `api/modules/v1/controllers` + `api/modules/v1/models`.
 
 ## Shared infrastructure and side effects
@@ -17,9 +18,12 @@
 - User lifecycle emits timeline events from model hooks in `common/models/User.php` (`notifySignup` / `notifyDeletion` via `AddToTimelineCommand`).
 - Backend authorization is enforced globally in `backend/config/web.php` via `as globalAccess` and `common/behaviors/GlobalAccessBehavior.php`.
 - Maintenance mode is bootstrapped in frontend/api (`common/components/maintenance/Maintenance.php`) and toggled by `APP_MAINTENANCE` or key storage flags.
+- Writable runtime/storage targets are centralized in `console/controllers/AppController.php::$writablePaths` (frontend/backend/api runtimes, `frontend/web/assets`, `backend/web/assets`, `storage/*`).
 
 ## Developer workflows
 - Initial setup path: `php console/yii app/setup --interactive=0` (permissions, keys, DB + RBAC migrations; see `console/controllers/AppController.php`).
+- For destructive DB resets, prefer `php console/yii migrate/fresh --interactive=0` followed by `php console/yii rbac-migrate/up --interactive=0` (see root `command-note`).
+- If bind-mounted Docker/Linux permissions drift, re-apply ownership/`775` dir + `664` file modes for `frontend/runtime`, `frontend/web/assets`, `backend/runtime`, and `backend/web/assets` (root `command-note`).
 - Prefer canonical composer scripts in `composer.json`: `composer docker:start`, `composer docker:build`, `composer docker:tests`.
 - Frontend/backend bundles are produced by webpack to `frontend/web/bundle` and `backend/web/bundle` (`webpack.config.js`, `npm run build`).
 - Tests are Codeception per app (`tests/{common,console,backend,frontend,api}` + root `codeception.yml`), with `tests/bin/yii` and `TEST_DB_*` env vars.
@@ -35,4 +39,4 @@
 ## AI and MCP references
 - Root AI guidance present: `README.md`.
 - Console-local AI framework guides exist in `console/.rules`, `console/.cursor/rules/yii2-boost.mdc`, and `console/.ai/guidelines/...` (mostly generic Yii2 guidance).
-- MCP integration exists in `console/.mcp.json` as server `yii2-boost` running `php console/yii boost/mcp`; treat as optional tooling and verify local PHP path compatibility.
+- MCP integration exists in `console/.mcp.json` as server `yii2-boost`; it is currently pinned to `/usr/bin/php8.5` and `/var/www/html/yii2-news/console/yii`, so treat it as optional tooling and verify local PHP/project paths before use.
