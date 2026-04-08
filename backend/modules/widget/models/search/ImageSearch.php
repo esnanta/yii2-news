@@ -11,8 +11,8 @@ class ImageSearch extends WidgetImage
     public function rules()
     {
         return [
-            [['id', 'size', 'sequence'], 'integer'],
-            [['key', 'title', 'mime_type', 'base_url', 'path', 'asset_url', 'link_url', 'alt_text'], 'safe'],
+            [['id', 'size'], 'integer'],
+            [['key', 'title', 'mime_type', 'base_url', 'path', 'link_url', 'alt_text'], 'safe'],
         ];
     }
 
@@ -43,7 +43,6 @@ class ImageSearch extends WidgetImage
         $query->andFilterWhere([
             'id' => $this->id,
             'size' => $this->size,
-            'sequence' => $this->sequence,
         ]);
 
         $query->andFilterWhere(['like', 'key', $this->key])
@@ -51,7 +50,6 @@ class ImageSearch extends WidgetImage
             ->andFilterWhere(['like', 'mime_type', $this->mime_type])
             ->andFilterWhere(['like', 'base_url', $this->base_url])
             ->andFilterWhere(['like', 'path', $this->path])
-            ->andFilterWhere(['like', 'asset_url', $this->asset_url])
             ->andFilterWhere(['like', 'link_url', $this->link_url])
             ->andFilterWhere(['like', 'alt_text', $this->alt_text])
         ;

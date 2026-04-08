@@ -5,7 +5,7 @@ use trntv\filekit\widget\Upload;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
 
-/*
+/**
  * @var yii\web\View $this
  * @var common\models\WidgetImage $model
  */
@@ -39,8 +39,6 @@ use yii\helpers\Html;
             <?php echo $form->field($model, 'link_url')->textInput(['maxlength' => 500]); ?>
 
             <?php echo $form->field($model, 'alt_text')->textInput(['maxlength' => 255]); ?>
-
-            <?php echo $form->field($model, 'sequence')->textInput(); ?>
         </div>
         <div class="card-footer">
             <?php echo Html::submitButton(

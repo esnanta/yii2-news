@@ -45,8 +45,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     'format' => 'raw',
                     'options' => ['style' => 'width: 90px'],
                     'value' => static function ($model) {
-                        $url = $model->asset_url;
-                        if (!$url && $model->base_url && $model->path) {
+                        $url = null;
+                        if ($model->base_url && $model->path) {
                             $url = rtrim($model->base_url, '/') . '/' . ltrim($model->path, '/');
                         }
 
@@ -55,9 +55,12 @@ $this->params['breadcrumbs'][] = $this->title;
                         }
 
                         $alt = $model->alt_text ?: ($model->title ?: $model->key);
+                        $style = 'width:56px;height:56px;object-fit:cover;'
+                            . 'border-radius:4px;border:1px solid #dee2e6;';
+
                         return Html::img($url, [
                             'alt' => $alt,
-                            'style' => 'width:56px;height:56px;object-fit:cover;border-radius:4px;border:1px solid #dee2e6;',
+                            'style' => $style,
                         ]);
                     },
                 ],
@@ -73,10 +76,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'attribute' => 'mime_type',
                     'options' => ['style' => 'width: 12%'],
-                ],
-                [
-                    'attribute' => 'sequence',
-                    'options' => ['style' => 'width: 8%'],
                 ],
                 [
                     'class' => ActionColumn::class,
