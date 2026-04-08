@@ -15,7 +15,7 @@ class DocumentSearch extends Document
     /**
      * @inheritdoc
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['id', 'office_id', 'is_visible', 'category_id', 'size', 'view_count', 'download_count', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
