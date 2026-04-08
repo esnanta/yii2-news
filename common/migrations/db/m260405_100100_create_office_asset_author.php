@@ -72,7 +72,7 @@ class m260405_100100_create_office_asset_author extends Migration
             'uuid' => $this->string(36),
         ]);
 
-        $this->createTable('{{%asset_category}}', [
+        $this->createTable('{{%document_category}}', [
             'id' => $this->primaryKey(),
             'office_id' => $this->integer(),
             'title' => $this->string(200),
@@ -89,21 +89,20 @@ class m260405_100100_create_office_asset_author extends Migration
             'uuid' => $this->string(36),
         ]);
 
-        $this->createTable('{{%asset}}', [
+        $this->createTable('{{%document}}', [
             'id' => $this->primaryKey(),
             'office_id' => $this->integer(),
             'is_visible' => $this->integer(),
-            'asset_type' => $this->integer(),
-            'asset_group' => $this->integer(),
-            'asset_category_id' => $this->integer(),
+            'category_id' => $this->integer(),
             'title' => $this->string(200),
             'date_issued' => $this->date(),
-            'asset_name' => $this->string(100),
-            'asset_url' => $this->string(500),
+            'base_url' => $this->string(255),
+            'path' => $this->string(255),
+            'name' => $this->string(255),
+            'type' => $this->string(255),
             'size' => $this->integer(),
-            'mime_type' => $this->string(100),
-            'view_counter' => $this->integer(),
-            'download_counter' => $this->integer(),
+            'view_count' => $this->integer(),
+            'download_count' => $this->integer(),
             'description' => $this->text(),
             'created_at' => $this->dateTime(),
             'updated_at' => $this->dateTime(),
@@ -123,11 +122,11 @@ class m260405_100100_create_office_asset_author extends Migration
             'title' => $this->string(100),
             'phone_number' => $this->string(50),
             'email' => $this->string(100),
-            'photo_base_url' => $this->string(255),
-            'photo_path' => $this->string(255),
-            'photo_name' => $this->string(255),
-            'photo_type' => $this->string(255),
-            'photo_size' => $this->integer(),
+            'base_url' => $this->string(255),
+            'path' => $this->string(255),
+            'name' => $this->string(255),
+            'type' => $this->string(255),
+            'size' => $this->integer(),
             'address' => 'tinytext',
             'description' => $this->text(),
             'created_at' => $this->dateTime(),
@@ -192,11 +191,11 @@ class m260405_100100_create_office_asset_author extends Migration
             'gender_status' => $this->integer(),
             'active_status' => $this->integer(),
             'address' => 'tinytext',
-            'photo_base_url' => $this->string(255),
-            'photo_path' => $this->string(255),
-            'photo_name' => $this->string(255),
-            'photo_type' => $this->string(255),
-            'photo_size' => $this->integer(),
+            'base_url' => $this->string(255),
+            'path' => $this->string(255),
+            'name' => $this->string(255),
+            'type' => $this->string(255),
+            'size' => $this->integer(),
             'email' => $this->string(100),
             'google_plus' => $this->string(100),
             'instagram' => $this->string(100),
@@ -248,8 +247,8 @@ class m260405_100100_create_office_asset_author extends Migration
         $this->dropTable('{{%employment}}');
         $this->dropTable('{{%author_social_account}}');
         $this->dropTable('{{%author}}');
-        $this->dropTable('{{%asset}}');
-        $this->dropTable('{{%asset_category}}');
+        $this->dropTable('{{%document}}');
+        $this->dropTable('{{%document_category}}');
         $this->dropTable('{{%office_social_account}}');
         $this->dropTable('{{%social_platform}}');
         $this->dropTable('{{%office}}');
