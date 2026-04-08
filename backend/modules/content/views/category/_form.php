@@ -13,6 +13,10 @@ use yii\helpers\Html;
 
 ?>
 
+<?php $formTitle = $model->isNewRecord
+    ? Yii::t('backend', 'Create a new category')
+    : Yii::t('backend', 'Update category'); ?>
+
 <?php $form = ActiveForm::begin([
     'enableClientValidation' => false,
     'enableAjaxValidation' => true,
@@ -20,7 +24,7 @@ use yii\helpers\Html;
     <div class="card card-success">
         <div class="card-header">
             <h3 class="card-title">
-                <?php echo Yii::t('backend', 'Create a new category') ?>
+                <?php echo $formTitle ?>
             </h3>
         </div>
         <div class="card-body">
@@ -37,7 +41,9 @@ use yii\helpers\Html;
         </div>
         <div class="card-footer">
             <?php echo Html::submitButton(
-                $model->isNewRecord? FAS::icon('save').' '.Yii::t('backend', 'Create'):FAS::icon('save').' '. Yii::t('backend', 'Save Changes'),
+                $model->isNewRecord
+                    ? FAS::icon('save').' '.Yii::t('backend', 'Create')
+                    : FAS::icon('save').' '.Yii::t('backend', 'Save Changes'),
                 ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']
             ) ?>
         </div>
