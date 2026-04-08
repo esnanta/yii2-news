@@ -3,6 +3,8 @@
 namespace common\models;
 
 use common\models\query\ArticleQuery;
+use common\models\base\Article as BaseArticle;
+
 use trntv\filekit\behaviors\UploadBehavior;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\SluggableBehavior;
