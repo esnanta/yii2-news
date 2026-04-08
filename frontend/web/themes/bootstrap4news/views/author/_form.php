@@ -3,7 +3,8 @@
 use yii\helpers\Html;
 use kartik\widgets\ActiveForm;
 use kartik\builder\Form;
-use kartik\widgets\FileInput;
+use trntv\filekit\widget\Upload;
+use yii\web\JsExpression;
 
 /**
  * @var yii\web\View $this
@@ -35,11 +36,14 @@ use kartik\widgets\FileInput;
     ]);
 
     
-    // your fileinput widget for single file upload
-    echo $form->field($model, 'image')->widget(FileInput::classname(), [
-        'options'=>['accept'=>'image/*'],
-        'pluginOptions'=>['allowedFileExtensions'=>['jpg','gif','png']
-    ]]);        
+    echo $form->field($model, 'image')->widget(
+        Upload::class,
+        [
+            'url' => ['/file/storage/upload'],
+            'maxFileSize' => 5000000,
+            'acceptFileTypes' => new JsExpression('/(\\.|\\/)(gif|jpe?g|png)$/i'),
+        ]
+    );
     
     // render a delete image button 
     if (!$model->isNewRecord) { 
