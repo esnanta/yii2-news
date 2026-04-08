@@ -15,21 +15,12 @@ class m260405_100000_widget_image extends Migration
             'title' => $this->string(100),
             'base_url' => $this->string(1024),
             'path' => $this->string(1024),
-            'asset_url' => $this->string(1024),
             'mime_type' => $this->string(100),
             'size' => $this->integer(),
             'link_url' => $this->string(500),
             'alt_text' => $this->string(255),
-            'sequence' => $this->integer(),
-            'created_at' => $this->dateTime(),
-            'updated_at' => $this->dateTime(),
-            'created_by' => $this->integer(),
-            'updated_by' => $this->integer(),
-            'is_deleted' => $this->integer(),
-            'deleted_at' => $this->dateTime(),
-            'deleted_by' => $this->integer(),
-            'verlock' => $this->bigInteger(),
-            'uuid' => $this->string(36),
+            'created_at' => $this->integer(),
+            'updated_at' => $this->integer(),
         ]);
 
         $this->createIndex('idx-widget_image-key', '{{%widget_image}}', 'key');
@@ -44,4 +35,3 @@ class m260405_100000_widget_image extends Migration
         $this->dropTable('{{%widget_image}}');
     }
 }
-
