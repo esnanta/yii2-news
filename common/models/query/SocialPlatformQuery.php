@@ -2,16 +2,16 @@
 
 namespace common\models\query;
 
-use common\models\AuthorMedia;
+use common\models\SocialPlatform;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
- * This is the ActiveQuery class for [AuthorMedia].
+ * This is the ActiveQuery class for [SocialPlatform].
  *
- * @see AuthorMedia
+ * @see SocialPlatform
  */
-class AuthorMediaQuery extends ActiveQuery
+class SocialPlatformQuery extends ActiveQuery
 {
     /*public function active()
     {
@@ -21,7 +21,7 @@ class AuthorMediaQuery extends ActiveQuery
 
     /**
      * @inheritdoc
-     * @return AuthorMedia[]|array
+     * @return SocialPlatform[]|array
      */
     public function all($db = null): array
     {

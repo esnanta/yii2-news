@@ -3,12 +3,12 @@
 namespace common\models;
 
 use Yii;
-use \common\models\base\AuthorMedia as BaseAuthorMedia;
+use \common\models\base\Office as BaseOffice;
 
 /**
- * This is the model class for table "t_author_media".
+ * This is the model class for table "t_office".
  */
-class AuthorMedia extends BaseAuthorMedia
+class Office extends BaseOffice
 {
     /**
      * @inheritdoc
@@ -17,10 +17,11 @@ class AuthorMedia extends BaseAuthorMedia
     {
         return array_replace_recursive(parent::rules(),
 	    [
-            [['office_id', 'author_id', 'media_type', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['description'], 'string'],
             [['created_at', 'updated_at', 'deleted_at'], 'safe'],
-            [['title'], 'string', 'max' => 100],
+            [['created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['unique_id'], 'string', 'max' => 15],
+            [['title', 'phone_number', 'fax_number', 'email', 'web', 'address', 'latitude', 'longitude'], 'string', 'max' => 100],
             [['uuid'], 'string', 'max' => 36],
             [['verlock'], 'default', 'value' => '0'],
             [['verlock'], 'mootensai\components\OptimisticLockValidator']

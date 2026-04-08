@@ -9,18 +9,21 @@ use yii\behaviors\BlameableBehavior;
 use mootensai\behaviors\UUIDBehavior;
 use yii\db\ActiveQuery;
 use mootensai\relation\RelationTrait;
-use common\models\query\AuthorMediaQuery;
-use common\models\Author;
+use common\models\query\OfficeSocialAccountQuery;
 use common\models\Office;
+use common\models\SocialPlatform;
 
 /**
- * This is the base model class for table "t_author_media".
+ * This is the base model class for table "t_office_social_account".
  *
  * @property integer $id
  * @property integer $office_id
- * @property integer $author_id
- * @property integer $media_type
- * @property string $title
+ * @property integer $platform_id
+ * @property string $username
+ * @property string $profile_url
+ * @property integer $is_primary
+ * @property integer $is_visible
+ * @property integer $sequence
  * @property string $description
  * @property string $created_at
  * @property string $updated_at
@@ -32,10 +35,10 @@ use common\models\Office;
  * @property integer $verlock
  * @property string $uuid
  *
- * @property Author $author
  * @property Office $office
+ * @property SocialPlatform $platform
  */
-class AuthorMedia extends BaseActiveRecord
+class OfficeSocialAccount extends BaseActiveRecord
 {
     use RelationTrait;
 
@@ -61,8 +64,8 @@ class AuthorMedia extends BaseActiveRecord
     public function relationNames(): array
     {
         return [
-            'author',
-            'office'
+            'office',
+            'platform'
         ];
     }
 
@@ -72,11 +75,13 @@ class AuthorMedia extends BaseActiveRecord
     public function rules(): array
     {
         return [
-            [['office_id', 'author_id', 'media_type', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['office_id', 'platform_id', 'is_primary', 'is_visible', 'sequence', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['description'], 'string'],
             [['created_at', 'updated_at', 'deleted_at'], 'safe'],
-            [['title'], 'string', 'max' => 100],
+            [['username'], 'string', 'max' => 100],
+            [['profile_url'], 'string', 'max' => 500],
             [['uuid'], 'string', 'max' => 36],
+            [['office_id', 'platform_id'], 'unique', 'targetAttribute' => ['office_id', 'platform_id'], 'message' => 'The combination of Office ID and Platform ID has already been taken.'],
             [['verlock'], 'default', 'value' => '0'],
             [['verlock'], 'mootensai\components\OptimisticLockValidator']
         ];
@@ -87,7 +92,7 @@ class AuthorMedia extends BaseActiveRecord
      */
     public static function tableName(): string
     {
-        return 't_author_media';
+        return 't_office_social_account';
     }
 
     /**
@@ -109,9 +114,12 @@ class AuthorMedia extends BaseActiveRecord
         return [
             'id' => Yii::t('common', 'ID'),
             'office_id' => Yii::t('common', 'Office ID'),
-            'author_id' => Yii::t('common', 'Author ID'),
-            'media_type' => Yii::t('common', 'Media Type'),
-            'title' => Yii::t('common', 'Title'),
+            'platform_id' => Yii::t('common', 'Platform ID'),
+            'username' => Yii::t('common', 'Username'),
+            'profile_url' => Yii::t('common', 'Profile Url'),
+            'is_primary' => Yii::t('common', 'Is Primary'),
+            'is_visible' => Yii::t('common', 'Is Visible'),
+            'sequence' => Yii::t('common', 'Sequence'),
             'description' => Yii::t('common', 'Description'),
             'is_deleted' => Yii::t('common', 'Is Deleted'),
             'verlock' => Yii::t('common', 'Verlock'),
@@ -122,17 +130,17 @@ class AuthorMedia extends BaseActiveRecord
     /**
      * @return ActiveQuery
      */
-    public function getAuthor(): ActiveQuery
+    public function getOffice(): ActiveQuery
     {
-        return $this->hasOne(Author::class, ['id' => 'author_id']);
+        return $this->hasOne(Office::class, ['id' => 'office_id']);
     }
         
     /**
      * @return ActiveQuery
      */
-    public function getOffice(): ActiveQuery
+    public function getPlatform(): ActiveQuery
     {
-        return $this->hasOne(Office::class, ['id' => 'office_id']);
+        return $this->hasOne(SocialPlatform::class, ['id' => 'platform_id']);
     }
     
     /**
@@ -184,10 +192,10 @@ class AuthorMedia extends BaseActiveRecord
 
     /**
      * @inheritdoc
-     * @return AuthorMediaQuery the active query used by this AR class.
+     * @return OfficeSocialAccountQuery the active query used by this AR class.
      */
-    public static function find(): AuthorMediaQuery    {
-        $query = new AuthorMediaQuery(get_called_class());
-        return $query->where(['t_author_media.deleted_by' => 0]);
+    public static function find(): OfficeSocialAccountQuery    {
+        $query = new OfficeSocialAccountQuery(get_called_class());
+        return $query->where(['t_office_social_account.deleted_by' => 0]);
     }
 }
