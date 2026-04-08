@@ -1,8 +1,8 @@
 RewriteEngine On
-RewriteBase /yii2-news/
 
 # Canonicalize legacy backend/web URLs to clean backend URLs.
-RewriteRule ^(?:yii2-news/)?backend/web(?:/(.*))?$ /yii2-news/backend/$1 [R=301,L,NE]
+RewriteCond %{THE_REQUEST} \s/+[^\s]*?/backend/web(?:/|\s|\?) [NC]
+RewriteRule ^backend/web/?(.*)$ backend/$1 [R=301,L,NE]
 
 # Canonicalize other old URLs that still contain /web.
 RewriteCond %{THE_REQUEST} \s/+[^\s]*?(frontend|storage)/web(?:/|\s|\?) [NC]
