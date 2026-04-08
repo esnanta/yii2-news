@@ -35,7 +35,7 @@ use yii\db\ActiveRecord;
  * @property ArticleCategory     $category
  * @property ArticleAttachment[] $articleAttachments
  */
-class Article extends ActiveRecord
+class Article extends BaseArticle
 {
     public const STATUS_PUBLISHED = 1;
     public const STATUS_DRAFT = 0;
