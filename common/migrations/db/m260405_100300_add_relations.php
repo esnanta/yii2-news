@@ -64,7 +64,13 @@ class m260405_100300_add_relations extends Migration
         // Add foreign keys after all index artifacts are ready.
         $this->addForeignKey('fk-article-author_id', '{{%article}}', 'author_id', '{{%author}}', 'id');
 
-        $this->addForeignKey('fk-office_social_account-office_id', '{{%office_social_account}}', 'office_id', '{{%office}}', 'id');
+        $this->addForeignKey(
+            'fk-office_social_account-office_id',
+            '{{%office_social_account}}',
+            'office_id',
+            '{{%office}}',
+            'id'
+        );
         $this->addForeignKey(
             'fk-office_social_account-platform_id',
             '{{%office_social_account}}',
@@ -87,8 +93,20 @@ class m260405_100300_add_relations extends Migration
         $this->addForeignKey('fk-author-office_id', '{{%author}}', 'office_id', '{{%office}}', 'id');
         $this->addForeignKey('fk-author-user_id', '{{%author}}', 'user_id', '{{%user}}', 'id');
 
-        $this->addForeignKey('fk-author_social_account-office_id', '{{%author_social_account}}', 'office_id', '{{%office}}', 'id');
-        $this->addForeignKey('fk-author_social_account-author_id', '{{%author_social_account}}', 'author_id', '{{%author}}', 'id');
+        $this->addForeignKey(
+            'fk-author_social_account-office_id',
+            '{{%author_social_account}}',
+            'office_id',
+            '{{%office}}',
+            'id'
+        );
+        $this->addForeignKey(
+            'fk-author_social_account-author_id',
+            '{{%author_social_account}}',
+            'author_id',
+            '{{%author}}',
+            'id'
+        );
         $this->addForeignKey(
             'fk-author_social_account-platform_id',
             '{{%author_social_account}}',
@@ -103,8 +121,20 @@ class m260405_100300_add_relations extends Migration
         $this->addForeignKey('fk-staff-user_id', '{{%staff}}', 'user_id', '{{%user}}', 'id');
         $this->addForeignKey('fk-staff-employment_id', '{{%staff}}', 'employment_id', '{{%employment}}', 'id');
 
-        $this->addForeignKey('fk-staff_social_account-office_id', '{{%staff_social_account}}', 'office_id', '{{%office}}', 'id');
-        $this->addForeignKey('fk-staff_social_account-staff_id', '{{%staff_social_account}}', 'staff_id', '{{%staff}}', 'id');
+        $this->addForeignKey(
+            'fk-staff_social_account-office_id',
+            '{{%staff_social_account}}',
+            'office_id',
+            '{{%office}}',
+            'id'
+        );
+        $this->addForeignKey(
+            'fk-staff_social_account-staff_id',
+            '{{%staff_social_account}}',
+            'staff_id',
+            '{{%staff}}',
+            'id'
+        );
         $this->addForeignKey(
             'fk-staff_social_account-platform_id',
             '{{%staff_social_account}}',
