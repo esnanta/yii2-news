@@ -2,11 +2,10 @@
 
 namespace frontend\models\search;
 
-use yii\base\Model;
-use yii\data\ActiveDataProvider;
 use common\models\Article;
 use common\models\ArticleCategory;
-use yii\db\Expression;
+use yii\base\Model;
+use yii\data\ActiveDataProvider;
 
 /**
  * ArticleSearch represents the model behind the search form about `common\models\Article`.
@@ -16,10 +15,7 @@ class ArticleSearch extends Article
     public $year;
     public $month;
 
-    /**
-     * @inheritdoc
-     */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['id', 'category_id', 'year', 'month'], 'integer'],
@@ -27,9 +23,6 @@ class ArticleSearch extends Article
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function scenarios()
     {
         // bypass scenarios() implementation in the parent class
@@ -37,7 +30,10 @@ class ArticleSearch extends Article
     }
 
     /**
-     * Creates data provider instance with search query applied
+     * Creates data provider instance with search query applied.
+     *
+     * @param mixed $params
+     *
      * @return ActiveDataProvider
      */
     public function search($params)
@@ -45,7 +41,8 @@ class ArticleSearch extends Article
         $query = Article::find()
             ->joinWith('category')
             ->andWhere(['{{%article_category}}.[[status]]' => ArticleCategory::STATUS_ACTIVE])
-            ->published();
+            ->published()
+        ;
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -60,8 +57,8 @@ class ArticleSearch extends Article
             'slug' => $this->slug,
             'category_id' => $this->category_id,
         ]);
-        $query->andFilterWhere(['YEAR(from_unixtime({{%article}}.[[published_at]]))' => $this->year]);
-        $query->andFilterWhere(['MONTH(from_unixtime({{%article}}.[[published_at]]))' => $this->month]);
+        $query->andFilterWhere(['YEAR({{%article}}.[[published_at]])' => $this->year]);
+        $query->andFilterWhere(['MONTH({{%article}}.[[published_at]])' => $this->month]);
 
         $query->andFilterWhere(['like', 'title', $this->title]);
 

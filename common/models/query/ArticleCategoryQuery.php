@@ -1,9 +1,10 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: zein
  * Date: 7/4/14
- * Time: 2:31 PM
+ * Time: 2:31 PM.
  */
 
 namespace common\models\query;
@@ -13,6 +14,9 @@ use common\models\ArticleCategory;
 use yii\db\ActiveQuery;
 use yii\db\Expression;
 
+/**
+ * @property mixed $categoriesUsage
+ */
 class ArticleCategoryQuery extends ActiveQuery
 {
     /**
@@ -40,13 +44,14 @@ class ArticleCategoryQuery extends ActiveQuery
         $this->joinWith('articles');
         $this->select([
             '{{%article_category}}.*',
-            new Expression('COUNT(*) AS [[articlesCount]]')
+            new Expression('COUNT(*) AS [[articlesCount]]'),
         ]);
         $this->andWhere(['{{%article}}.[[status]]' => Article::STATUS_PUBLISHED]);
-        $this->andWhere(['<', '{{%article}}.[[published_at]]', time()]);
+        $this->andWhere(['<=', '{{%article}}.[[published_at]]', date('Y-m-d')]);
         $this->active();
         $this->groupBy('{{%article}}.[[category_id]]');
         $this->orderBy('{{%article_category}}.[[title]] ASC');
+
         return $this;
     }
 }

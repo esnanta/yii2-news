@@ -1,9 +1,10 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: zein
  * Date: 7/4/14
- * Time: 2:31 PM
+ * Time: 2:31 PM.
  */
 
 namespace common\models\query;
@@ -20,7 +21,8 @@ class ArticleQuery extends ActiveQuery
     public function published()
     {
         $this->andWhere(['{{%article}}.[[status]]' => Article::STATUS_PUBLISHED]);
-        $this->andWhere(['<', '{{%article}}.[[published_at]]', time()]);
+        $this->andWhere(['<=', '{{%article}}.[[published_at]]', date('Y-m-d')]);
+
         return $this;
     }
 
@@ -28,14 +30,15 @@ class ArticleQuery extends ActiveQuery
     {
         $this->innerJoin('{{%article_category}}', '{{%article_category}}.[[id]] = {{%article}}.[[category_id]]');
         $this->select([
-            'YEAR(FROM_UNIXTIME({{%article}}.[[published_at]])) AS [[year]]',
-            'MONTH(FROM_UNIXTIME({{%article}}.[[published_at]])) AS [[month]]',
-            'COUNT(*) AS [[count]]'
+            'YEAR({{%article}}.[[published_at]]) AS [[year]]',
+            'MONTH({{%article}}.[[published_at]]) AS [[month]]',
+            'COUNT(*) AS [[count]]',
         ]);
         $this->published();
         $this->andWhere(['{{%article_category}}.[[status]]' => ArticleCategory::STATUS_ACTIVE]);
         $this->groupBy('[[year]], [[month]]');
         $this->orderBy('[[year]] DESC, [[month]] DESC');
+
         return $this;
     }
 }

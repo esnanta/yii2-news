@@ -6,16 +6,17 @@ use backend\modules\content\models\search\ArticleSearch;
 use common\models\Article;
 use common\models\ArticleCategory;
 use common\traits\FormAjaxValidationTrait;
-use Yii;
+use yii\base\ExitException;
+use yii\db\Exception;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 class ArticleController extends Controller
 {
     use FormAjaxValidationTrait;
 
-    /** @inheritdoc */
     public function behaviors()
     {
         return [
@@ -34,7 +35,7 @@ class ArticleController extends Controller
     public function actionIndex()
     {
         $searchModel = new ArticleSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
         $dataProvider->sort = [
             'defaultOrder' => ['published_at' => SORT_DESC],
         ];
@@ -54,7 +55,7 @@ class ArticleController extends Controller
 
         $this->performAjaxValidation($article);
 
-        if ($article->load(Yii::$app->request->post()) && $article->save()) {
+        if ($article->load(\Yii::$app->request->post()) && $article->save()) {
             return $this->redirect(['index']);
         }
 
@@ -65,21 +66,21 @@ class ArticleController extends Controller
     }
 
     /**
-     * @param integer $id
-     *
      * @return mixed
+     *
+     * @throws ExitException
+     * @throws NotFoundHttpException
+     * @throws Exception
      */
-    public function actionUpdate($id)
+    public function actionUpdate(int $id)
     {
         $article = $this->findModel($id);
 
         $this->performAjaxValidation($article);
 
-        if ($article->load(Yii::$app->request->post()) && $article->save()) {
+        if ($article->load(\Yii::$app->request->post()) && $article->save()) {
             return $this->redirect(['index']);
         }
-
-        $article->published_at = date('Y-m-d H:i:s', $article->published_at);
 
         return $this->render('update', [
             'model' => $article,
@@ -88,9 +89,11 @@ class ArticleController extends Controller
     }
 
     /**
-     * @param integer $id
+     * @param int $id
      *
-     * @return mixed
+     * @return Response
+     *
+     * @throws NotFoundHttpException
      */
     public function actionDelete($id)
     {
@@ -100,18 +103,18 @@ class ArticleController extends Controller
     }
 
     /**
-     * @param integer $id
+     * @param int $id
      *
      * @return Article the loaded model
+     *
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected function findModel(int $id): Article
     {
         if (($model = Article::findOne($id)) !== null) {
             return $model;
         }
+
         throw new NotFoundHttpException('The requested page does not exist.');
-
     }
-
 }
