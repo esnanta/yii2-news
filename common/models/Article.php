@@ -43,30 +43,17 @@ class Article extends BaseArticle
     /**
      * @var array
      */
-    public $attachments;
+    public array $attachments;
 
     /**
      * @var array
      */
-    public $thumbnail;
-
-    public static function tableName()
-    {
-        return '{{%article}}';
-    }
-
-    /**
-     * @return ArticleQuery
-     */
-    public static function find()
-    {
-        return new ArticleQuery(get_called_class());
-    }
+    public array $thumbnail;
 
     /**
      * @return array statuses list
      */
-    public static function statuses()
+    public static function statuses(): array
     {
         return [
             self::STATUS_DRAFT => \Yii::t('common', 'Draft'),
@@ -74,7 +61,7 @@ class Article extends BaseArticle
         ];
     }
 
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             TimestampBehavior::class,
@@ -105,7 +92,7 @@ class Article extends BaseArticle
         ];
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             [['title', 'body', 'category_id'], 'required'],
@@ -124,7 +111,7 @@ class Article extends BaseArticle
         ];
     }
 
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => \Yii::t('common', 'ID'),
@@ -141,37 +128,5 @@ class Article extends BaseArticle
             'created_at' => \Yii::t('common', 'Created At'),
             'updated_at' => \Yii::t('common', 'Updated At'),
         ];
-    }
-
-    /**
-     * @return ActiveQuery
-     */
-    public function getAuthor()
-    {
-        return $this->hasOne(User::class, ['id' => 'created_by']);
-    }
-
-    /**
-     * @return ActiveQuery
-     */
-    public function getUpdater()
-    {
-        return $this->hasOne(User::class, ['id' => 'updated_by']);
-    }
-
-    /**
-     * @return ActiveQuery
-     */
-    public function getCategory()
-    {
-        return $this->hasOne(ArticleCategory::class, ['id' => 'category_id']);
-    }
-
-    /**
-     * @return ActiveQuery
-     */
-    public function getArticleAttachments()
-    {
-        return $this->hasMany(ArticleAttachment::class, ['article_id' => 'id']);
     }
 }
