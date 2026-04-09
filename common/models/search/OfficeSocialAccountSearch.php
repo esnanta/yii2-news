@@ -2,18 +2,15 @@
 
 namespace common\models\search;
 
+use common\models\OfficeSocialAccount;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\OfficeSocialAccount;
 
 /**
  * OfficeSocialAccountSearch represents the model behind the search form about `common\models\OfficeSocialAccount`.
  */
 class OfficeSocialAccountSearch extends OfficeSocialAccount
 {
-    /**
-     * @inheritdoc
-     */
     public function rules(): array
     {
         return [
@@ -22,9 +19,6 @@ class OfficeSocialAccountSearch extends OfficeSocialAccount
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function scenarios(): array
     {
         // bypass scenarios() implementation in the parent class
@@ -32,11 +26,7 @@ class OfficeSocialAccountSearch extends OfficeSocialAccount
     }
 
     /**
-     * Creates data provider instance with search query applied
-     *
-     * @param array $params
-     *
-     * @return ActiveDataProvider
+     * Creates data provider instance with search query applied.
      */
     public function search(array $params): ActiveDataProvider
     {
@@ -72,7 +62,8 @@ class OfficeSocialAccountSearch extends OfficeSocialAccount
         $query->andFilterWhere(['like', 'username', $this->username])
             ->andFilterWhere(['like', 'profile_url', $this->profile_url])
             ->andFilterWhere(['like', 'description', $this->description])
-            ->andFilterWhere(['like', 'uuid', $this->uuid]);
+            ->andFilterWhere(['like', 'uuid', $this->uuid])
+        ;
 
         return $dataProvider;
     }

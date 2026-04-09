@@ -2,18 +2,15 @@
 
 namespace common\models\search;
 
+use common\models\Document;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Document;
 
 /**
  * DocumentSearch represents the model behind the search form about `common\models\Document`.
  */
 class DocumentSearch extends Document
 {
-    /**
-     * @inheritdoc
-     */
     public function rules(): array
     {
         return [
@@ -22,9 +19,6 @@ class DocumentSearch extends Document
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function scenarios(): array
     {
         // bypass scenarios() implementation in the parent class
@@ -32,11 +26,7 @@ class DocumentSearch extends Document
     }
 
     /**
-     * Creates data provider instance with search query applied
-     *
-     * @param array $params
-     *
-     * @return ActiveDataProvider
+     * Creates data provider instance with search query applied.
      */
     public function search(array $params): ActiveDataProvider
     {
@@ -77,7 +67,8 @@ class DocumentSearch extends Document
             ->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'type', $this->type])
             ->andFilterWhere(['like', 'description', $this->description])
-            ->andFilterWhere(['like', 'uuid', $this->uuid]);
+            ->andFilterWhere(['like', 'uuid', $this->uuid])
+        ;
 
         return $dataProvider;
     }

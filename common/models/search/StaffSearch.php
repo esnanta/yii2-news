@@ -2,18 +2,15 @@
 
 namespace common\models\search;
 
+use common\models\Staff;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Staff;
 
 /**
  * StaffSearch represents the model behind the search form about `common\models\Staff`.
  */
 class StaffSearch extends Staff
 {
-    /**
-     * @inheritdoc
-     */
     public function rules(): array
     {
         return [
@@ -22,9 +19,6 @@ class StaffSearch extends Staff
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function scenarios(): array
     {
         // bypass scenarios() implementation in the parent class
@@ -32,11 +26,7 @@ class StaffSearch extends Staff
     }
 
     /**
-     * Creates data provider instance with search query applied
-     *
-     * @param array $params
-     *
-     * @return ActiveDataProvider
+     * Creates data provider instance with search query applied.
      */
     public function search(array $params): ActiveDataProvider
     {
@@ -85,7 +75,8 @@ class StaffSearch extends Staff
             ->andFilterWhere(['like', 'facebook', $this->facebook])
             ->andFilterWhere(['like', 'twitter', $this->twitter])
             ->andFilterWhere(['like', 'description', $this->description])
-            ->andFilterWhere(['like', 'uuid', $this->uuid]);
+            ->andFilterWhere(['like', 'uuid', $this->uuid])
+        ;
 
         return $dataProvider;
     }

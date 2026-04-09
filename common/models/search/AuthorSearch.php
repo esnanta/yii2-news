@@ -2,18 +2,15 @@
 
 namespace common\models\search;
 
+use common\models\Author;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Author;
 
 /**
  * AuthorSearch represents the model behind the search form about `common\models\Author`.
  */
 class AuthorSearch extends Author
 {
-    /**
-     * @inheritdoc
-     */
     public function rules(): array
     {
         return [
@@ -22,9 +19,6 @@ class AuthorSearch extends Author
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function scenarios(): array
     {
         // bypass scenarios() implementation in the parent class
@@ -32,11 +26,7 @@ class AuthorSearch extends Author
     }
 
     /**
-     * Creates data provider instance with search query applied
-     *
-     * @param array $params
-     *
-     * @return ActiveDataProvider
+     * Creates data provider instance with search query applied.
      */
     public function search(array $params): ActiveDataProvider
     {
@@ -76,7 +66,8 @@ class AuthorSearch extends Author
             ->andFilterWhere(['like', 'type', $this->type])
             ->andFilterWhere(['like', 'address', $this->address])
             ->andFilterWhere(['like', 'description', $this->description])
-            ->andFilterWhere(['like', 'uuid', $this->uuid]);
+            ->andFilterWhere(['like', 'uuid', $this->uuid])
+        ;
 
         return $dataProvider;
     }

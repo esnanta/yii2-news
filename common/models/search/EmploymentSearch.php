@@ -2,18 +2,15 @@
 
 namespace common\models\search;
 
+use common\models\Employment;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Employment;
 
 /**
  * EmploymentSearch represents the model behind the search form about `common\models\Employment`.
  */
 class EmploymentSearch extends Employment
 {
-    /**
-     * @inheritdoc
-     */
     public function rules(): array
     {
         return [
@@ -22,9 +19,6 @@ class EmploymentSearch extends Employment
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function scenarios(): array
     {
         // bypass scenarios() implementation in the parent class
@@ -32,11 +26,7 @@ class EmploymentSearch extends Employment
     }
 
     /**
-     * Creates data provider instance with search query applied
-     *
-     * @param array $params
-     *
-     * @return ActiveDataProvider
+     * Creates data provider instance with search query applied.
      */
     public function search(array $params): ActiveDataProvider
     {
@@ -68,7 +58,8 @@ class EmploymentSearch extends Employment
 
         $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'description', $this->description])
-            ->andFilterWhere(['like', 'uuid', $this->uuid]);
+            ->andFilterWhere(['like', 'uuid', $this->uuid])
+        ;
 
         return $dataProvider;
     }
