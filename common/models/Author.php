@@ -49,4 +49,9 @@ class Author extends BaseAuthor
             ]
         );
     }
+
+    public function getUrl()
+    {
+        return $this->base_url.'/'.$this->path;
+    }
 }

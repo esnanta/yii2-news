@@ -55,4 +55,9 @@ class Staff extends BaseStaff
             ]
         );
     }
+
+    public function getUrl()
+    {
+        return $this->base_url.'/'.$this->path;
+    }
 }
