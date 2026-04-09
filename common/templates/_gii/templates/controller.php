@@ -26,6 +26,15 @@ $urlParams = $generator->generateUrlParams();
 $actionParams = $generator->generateActionParams();
 $actionParamComments = $generator->generateActionParamComments();
 $permissionPrefix = lcfirst($modelClass);
+$baseControllerClass = ltrim((string) $generator->baseControllerClass, '\\');
+
+if (
+    $baseControllerClass === ''
+    || $baseControllerClass === 'yii\\web\\Controller'
+    || $baseControllerClass === 'Controller'
+) {
+    $baseControllerClass = 'common\\base\\BaseController';
+}
 
 $tableSchema = $class::getTableSchema();
 $phpTypeMap = [
@@ -64,7 +73,7 @@ use <?php echo ltrim($generator->searchModelClass, '\\') . (isset($searchModelAl
 <?php else: ?>
 use yii\data\ActiveDataProvider;
 <?php endif; ?>
-use <?php echo ltrim($generator->baseControllerClass, '\\') ?>;
+use <?php echo $baseControllerClass ?>;
 use yii\db\Exception;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
@@ -74,7 +83,7 @@ use yii\web\Response;
 /**
  * <?php echo $controllerClass ?> implements the CRUD actions for the <?php echo $modelClass ?> model.
  */
-class <?php echo $controllerClass ?> extends <?php echo StringHelper::basename($generator->baseControllerClass) . "\n" ?>
+class <?php echo $controllerClass ?> extends <?php echo StringHelper::basename($baseControllerClass) . "\n" ?>
 {
 
     public function behaviors(): array
