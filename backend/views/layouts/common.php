@@ -249,12 +249,12 @@ $logEntries[] = [
                                     'icon' => FAR::icon('circle', ['class' => ['nav-icon']]),
                                     'active' => 'category' === Yii::$app->controller->id,
                                 ],
-                                    [
-                                            'label' => Yii::t('backend', 'Documents'),
-                                            'url' => ['/content/document/index'],
-                                            'icon' => FAS::icon('file-alt', ['class' => ['nav-icon']]),
-                                            'active' => 'document' === Yii::$app->controller->id,
-                                    ],
+                                [
+                                    'label' => Yii::t('backend', 'Documents'),
+                                    'url' => ['/content/document/index'],
+                                    'icon' => FAS::icon('file-alt', ['class' => ['nav-icon']]),
+                                    'active' => 'document' === Yii::$app->controller->id,
+                                ],
                             ],
                         ],
                         [

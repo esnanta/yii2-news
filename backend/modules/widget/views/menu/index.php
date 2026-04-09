@@ -2,6 +2,7 @@
 
 use common\grid\EnumColumn;
 use common\models\WidgetMenu;
+use common\widgets\ActionColumn;
 use yii\grid\GridView;
 use yii\helpers\Html;
 
@@ -20,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?php echo $this->render('_form', [
     'model' => $model,
-]) ?>
+]); ?>
 
 <div class="card">
     <div class="card-body p-0">
@@ -58,7 +59,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'filter' => WidgetMenu::statuses(),
                 ],
                 [
-                    'class' => \common\widgets\ActionColumn::class,
+                    'class' => ActionColumn::class,
                     'options' => ['style' => 'width: 5%'],
                     'template' => '{update} {delete}',
                 ],
@@ -66,7 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ]); ?>
     </div>
     <div class="card-footer">
-        <?php echo getDataProviderSummary($dataProvider) ?>
+        <?php echo getDataProviderSummary($dataProvider); ?>
     </div>
 </div>
 
