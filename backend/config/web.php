@@ -1,4 +1,12 @@
 <?php
+
+use common\base\BaseController;
+use common\behaviors\GlobalAccessBehavior;
+use common\behaviors\LoginTimestampBehavior;
+use yii\gii\generators\crud\Generator;
+use yii\gii\Module;
+use yii\web\User;
+
 $config = [
     'homeUrl' => Yii::getAlias('@backendUrl'),
     'controllerNamespace' => 'backend\controllers',
@@ -12,11 +20,11 @@ $config = [
             'baseUrl' => env('BACKEND_BASE_URL'),
         ],
         'user' => [
-            'class' => yii\web\User::class,
+            'class' => User::class,
             'identityClass' => common\models\User::class,
             'loginUrl' => ['sign-in/login'],
             'enableAutoLogin' => true,
-            'as afterLogin' => common\behaviors\LoginTimestampBehavior::class,
+            'as afterLogin' => LoginTimestampBehavior::class,
         ],
     ],
     'modules' => [
@@ -41,7 +49,7 @@ $config = [
         ],
     ],
     'as globalAccess' => [
-        'class' => common\behaviors\GlobalAccessBehavior::class,
+        'class' => GlobalAccessBehavior::class,
         'rules' => [
             [
                 'controllers' => ['sign-in'],
@@ -85,12 +93,12 @@ $config = [
 
 if (YII_ENV_DEV) {
     $config['modules']['gii'] = [
-        'class' => yii\gii\Module::class,
+        'class' => Module::class,
         'allowedIPs' => ['*'],
         'generators' => [
             'crud' => [
-                'class' => yii\gii\generators\crud\Generator::class,
-                'baseControllerClass' => common\base\BaseController::class,
+                'class' => Generator::class,
+                'baseControllerClass' => BaseController::class,
                 'templates' => [
                     'common-starter-kit' => '@common/templates/_gii/templates',
                     'backend-starter-kit' => '@backend/views/_gii/templates',
@@ -101,7 +109,7 @@ if (YII_ENV_DEV) {
 
             'mootensai-crud' => [
                 'class' => common\templates\mootensai\crud\Generator::class,
-                'baseControllerClass' => common\base\BaseController::class,
+                'baseControllerClass' => BaseController::class,
                 'templates' => [
                     'default' => '@common/templates/mootensai/crud/default',
                 ],
