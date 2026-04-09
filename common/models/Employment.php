@@ -11,7 +11,7 @@ class Employment extends BaseEmployment
 {
     public function rules(): array
     {
-        return array_replace_recursive(
+        return array_merge(
             parent::rules(),
             [
                 [['office_id', 'sequence', 'created_by', 'updated_by',
