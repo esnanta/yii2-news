@@ -2,8 +2,8 @@
 
 namespace common\models;
 
+use common\models\base\Author as BaseAuthor;
 use trntv\filekit\behaviors\UploadBehavior;
-use \common\models\base\Author as BaseAuthor;
 
 /**
  * This is the model class for table "t_author".
@@ -12,10 +12,8 @@ class Author extends BaseAuthor
 {
     /**
      * Virtual attribute used by filekit upload widget.
-     *
-     * @var array|string|null
      */
-    public $image;
+    public array|string|null $image;
 
     public function behaviors(): array
     {
@@ -23,35 +21,32 @@ class Author extends BaseAuthor
             'photoUpload' => [
                 'class' => UploadBehavior::class,
                 'attribute' => 'image',
-                'pathAttribute' => 'photo_path',
-                'baseUrlAttribute' => 'photo_base_url',
-                'typeAttribute' => 'photo_type',
-                'sizeAttribute' => 'photo_size',
-                'nameAttribute' => 'photo_name',
+                'pathAttribute' => 'path',
+                'baseUrlAttribute' => 'base_url',
+                'typeAttribute' => 'type',
+                'sizeAttribute' => 'size',
+                'nameAttribute' => 'name',
             ],
         ]);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function rules(): array
     {
         return array_replace_recursive(
             parent::rules(),
             [
-                [['office_id', 'user_id', 'photo_size', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+                [['image'], 'safe'],
+                [['office_id', 'user_id', 'size', 'created_by', 'updated_by',
+                    'is_deleted', 'deleted_by', 'verlock'], 'integer'],
                 [['address', 'description'], 'string'],
                 [['created_at', 'updated_at', 'deleted_at'], 'safe'],
                 [['title', 'email'], 'string', 'max' => 100],
-                [['photo_base_url', 'photo_path', 'photo_name', 'photo_type'], 'string', 'max' => 255],
-                [['image'], 'safe'],
                 [['phone_number'], 'string', 'max' => 50],
+                [['base_url', 'path', 'name', 'type'], 'string', 'max' => 255],
                 [['uuid'], 'string', 'max' => 36],
                 [['verlock'], 'default', 'value' => '0'],
                 [['verlock'], 'mootensai\components\OptimisticLockValidator'],
             ]
         );
     }
-
 }
