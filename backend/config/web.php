@@ -90,6 +90,7 @@ if (YII_ENV_DEV) {
         'generators' => [
             'crud' => [
                 'class' => yii\gii\generators\crud\Generator::class,
+                'baseControllerClass' => common\base\BaseController::class,
                 'templates' => [
                     'common-starter-kit' => '@common/templates/_gii/templates',
                     'backend-starter-kit' => '@backend/views/_gii/templates',
@@ -100,6 +101,7 @@ if (YII_ENV_DEV) {
 
             'mootensai-crud' => [
                 'class' => common\templates\mootensai\crud\Generator::class,
+                'baseControllerClass' => common\base\BaseController::class,
                 'templates' => [
                     'default' => '@common/templates/mootensai/crud/default',
                 ],
