@@ -82,8 +82,9 @@ class Author extends BaseActiveRecord
     public function rules(): array
     {
         return [
-            [['office_id', 'user_id', 'size', 'created_by', 'updated_by',
-                'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['office_id', 'user_id', 'size',
+                'created_by', 'updated_by', 'is_deleted',
+                'deleted_by', 'verlock'], 'integer'],
             [['address', 'description'], 'string'],
             [['created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['title', 'email'], 'string', 'max' => 100],
