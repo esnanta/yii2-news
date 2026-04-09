@@ -14,7 +14,8 @@ class Document extends BaseDocument
         return array_replace_recursive(
             parent::rules(),
             [
-                [['office_id', 'is_visible', 'category_id', 'size', 'view_count', 'download_count', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+                [['office_id', 'is_visible', 'category_id', 'size', 'view_count', 'download_count',
+                    'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
                 [['date_issued', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
                 [['description'], 'string'],
                 [['title'], 'string', 'max' => 200],

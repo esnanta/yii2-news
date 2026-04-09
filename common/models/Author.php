@@ -7,6 +7,8 @@ use trntv\filekit\behaviors\UploadBehavior;
 
 /**
  * This is the model class for table "t_author".
+ *
+ * @property string $url
  */
 class Author extends BaseAuthor
 {
