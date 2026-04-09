@@ -269,7 +269,7 @@ $logEntries[] = [
                             'icon' => FAS::icon('sitemap', ['class' => ['nav-icon']]),
                             'options' => ['class' => 'nav-item has-treeview'],
                             'active' => 'content' === Yii::$app->controller->module->id
-                                && in_array(Yii::$app->controller->id, ['employment', 'staff', 'staff-social-account', 'office', 'office-social-account']),
+                                && in_array(Yii::$app->controller->id, ['employment', 'staff', 'staff-social-account', 'social-platform', 'office', 'office-social-account']),
                             'items' => [
                                 [
                                     'label' => Yii::t('backend', 'Employments'),
@@ -288,6 +288,12 @@ $logEntries[] = [
                                     'url' => ['/content/staff-social-account/index'],
                                     'icon' => FAR::icon('circle', ['class' => ['nav-icon']]),
                                     'active' => 'staff-social-account' === Yii::$app->controller->id,
+                                ],
+                                [
+                                    'label' => Yii::t('backend', 'Social Platforms'),
+                                    'url' => ['/content/social-platform/index'],
+                                    'icon' => FAR::icon('circle', ['class' => ['nav-icon']]),
+                                    'active' => 'social-platform' === Yii::$app->controller->id,
                                 ],
                                 [
                                     'label' => Yii::t('backend', 'Offices'),
