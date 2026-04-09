@@ -33,3 +33,5 @@ sudo find /home/cassiopeia/Documents/github/html/yii2-news/backend/runtime -type
 sudo find /home/cassiopeia/Documents/github/html/yii2-news/backend/runtime -type f -exec chmod 664 {} \;
 sudo find /home/cassiopeia/Documents/github/html/yii2-news/backend/web/assets -type d -exec chmod 775 {} \;
 sudo find /home/cassiopeia/Documents/github/html/yii2-news/backend/web/assets -type f -exec chmod 664 {} \;
+
+chmod -R 777 /home/cassiopeia/Documents/github/html/yii2-news/common/models/
