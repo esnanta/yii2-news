@@ -3,18 +3,16 @@
 namespace backend\modules\content\controllers;
 
 use backend\modules\content\models\search\PageSearch;
+use common\base\BaseController;
 use common\models\Page;
 use common\traits\FormAjaxValidationTrait;
-use Yii;
 use yii\filters\VerbFilter;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
-class PageController extends Controller
+class PageController extends BaseController
 {
     use FormAjaxValidationTrait;
 
-    /** @inheritdoc */
     public function behaviors()
     {
         return [
@@ -36,11 +34,11 @@ class PageController extends Controller
 
         $this->performAjaxValidation($page);
 
-        if ($page->load(Yii::$app->request->post()) && $page->save()) {
+        if ($page->load(\Yii::$app->request->post()) && $page->save()) {
             return $this->redirect(['index']);
         }
         $searchModel = new PageSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -58,16 +56,17 @@ class PageController extends Controller
 
         $this->performAjaxValidation($page);
 
-        if ($page->load(Yii::$app->request->post()) && $page->save()) {
+        if ($page->load(\Yii::$app->request->post()) && $page->save()) {
             return $this->redirect(['index']);
         }
+
         return $this->render('create', [
             'model' => $page,
         ]);
     }
 
     /**
-     * @param integer $id
+     * @param int $id
      *
      * @return mixed
      */
@@ -77,7 +76,7 @@ class PageController extends Controller
 
         $this->performAjaxValidation($page);
 
-        if ($page->load(Yii::$app->request->post()) && $page->save()) {
+        if ($page->load(\Yii::$app->request->post()) && $page->save()) {
             return $this->redirect(['index']);
         }
 
@@ -87,7 +86,7 @@ class PageController extends Controller
     }
 
     /**
-     * @param integer $id
+     * @param int $id
      *
      * @return mixed
      */
@@ -99,9 +98,10 @@ class PageController extends Controller
     }
 
     /**
-     * @param integer $id
+     * @param int $id
      *
      * @return Page the loaded model
+     *
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
@@ -109,6 +109,7 @@ class PageController extends Controller
         if (($model = Page::findOne($id)) !== null) {
             return $model;
         }
+
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 }

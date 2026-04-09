@@ -2,6 +2,7 @@
 
 namespace backend\modules\content\controllers;
 
+use common\base\BaseController;
 use backend\modules\content\models\search\ArticleSearch;
 use common\models\Article;
 use common\models\ArticleCategory;
@@ -9,11 +10,10 @@ use common\traits\FormAjaxValidationTrait;
 use yii\base\ExitException;
 use yii\db\Exception;
 use yii\filters\VerbFilter;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
-class ArticleController extends Controller
+class ArticleController extends BaseController
 {
     use FormAjaxValidationTrait;
 

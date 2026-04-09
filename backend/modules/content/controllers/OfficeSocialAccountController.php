@@ -2,22 +2,20 @@
 
 namespace backend\modules\content\controllers;
 
-use Yii;
+use common\base\BaseController;
 use common\models\OfficeSocialAccount;
 use common\models\search\OfficeSocialAccountSearch;
-use yii\web\Controller;
 use yii\db\Exception;
+use yii\filters\VerbFilter;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 use yii\web\Response;
 
 /**
  * OfficeSocialAccountController implements the CRUD actions for the OfficeSocialAccount model.
  */
-class OfficeSocialAccountController extends Controller
+class OfficeSocialAccountController extends BaseController
 {
-
     public function behaviors(): array
     {
         return [
@@ -32,7 +30,7 @@ class OfficeSocialAccountController extends Controller
 
     /**
      * Lists all OfficeSocialAccount models.
-     * @return string
+     *
      * @throws ForbiddenHttpException
      */
     public function actionIndex(): string
@@ -40,7 +38,7 @@ class OfficeSocialAccountController extends Controller
         $this->checkAccess('officeSocialAccount.index');
 
         $searchModel = new OfficeSocialAccountSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -50,8 +48,9 @@ class OfficeSocialAccountController extends Controller
 
     /**
      * Displays a single OfficeSocialAccount model.
+     *
      * @param int $id ID
-     * @return string
+     *
      * @throws ForbiddenHttpException
      * @throws NotFoundHttpException
      */
@@ -67,7 +66,7 @@ class OfficeSocialAccountController extends Controller
     /**
      * Creates a new OfficeSocialAccount model.
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|Response
+     *
      * @throws ForbiddenHttpException
      * @throws Exception
      */
@@ -78,8 +77,8 @@ class OfficeSocialAccountController extends Controller
         $model = new OfficeSocialAccount();
 
         if (
-            $model->loadSafely(Yii::$app->request->post()) &&
-            $model->saveSafely()
+            $model->loadSafely(\Yii::$app->request->post())
+            && $model->saveSafely()
         ) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -92,8 +91,9 @@ class OfficeSocialAccountController extends Controller
     /**
      * Updates an existing OfficeSocialAccount model.
      * If update is successful, the browser will be redirected to the 'view' page.
+     *
      * @param int $id ID
-     * @return Response|string
+     *
      * @throws ForbiddenHttpException
      * @throws NotFoundHttpException
      * @throws Exception
@@ -105,8 +105,8 @@ class OfficeSocialAccountController extends Controller
         $model = $this->findModel($id);
 
         if (
-            $model->loadSafely(Yii::$app->request->post()) &&
-            $model->saveSafely()
+            $model->loadSafely(\Yii::$app->request->post())
+            && $model->saveSafely()
         ) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -119,8 +119,9 @@ class OfficeSocialAccountController extends Controller
     /**
      * Deletes an existing OfficeSocialAccount model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
+     *
      * @param int $id ID
-     * @return Response
+     *
      * @throws ForbiddenHttpException
      * @throws NotFoundHttpException
      */
@@ -136,15 +137,19 @@ class OfficeSocialAccountController extends Controller
     /**
      * Finds the OfficeSocialAccount model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
+     *
      * @param int $id ID
+     *
      * @return OfficeSocialAccount the loaded model
+     *
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel(int $id): OfficeSocialAccount    {
+    protected function findModel(int $id): OfficeSocialAccount
+    {
         if (($model = OfficeSocialAccount::findOne($id)) !== null) {
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(\Yii::t('app', 'The requested page does not exist.'));
     }
 }

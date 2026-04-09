@@ -2,22 +2,20 @@
 
 namespace backend\modules\content\controllers;
 
-use Yii;
+use common\base\BaseController;
 use common\models\Office;
 use common\models\search\OfficeSearch;
-use yii\web\Controller;
 use yii\db\Exception;
+use yii\filters\VerbFilter;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 use yii\web\Response;
 
 /**
  * OfficeController implements the CRUD actions for the Office model.
  */
-class OfficeController extends Controller
+class OfficeController extends BaseController
 {
-
     public function behaviors(): array
     {
         return [
@@ -32,7 +30,7 @@ class OfficeController extends Controller
 
     /**
      * Lists all Office models.
-     * @return string
+     *
      * @throws ForbiddenHttpException
      */
     public function actionIndex(): string
@@ -40,7 +38,7 @@ class OfficeController extends Controller
         $this->checkAccess('office.index');
 
         $searchModel = new OfficeSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -50,8 +48,9 @@ class OfficeController extends Controller
 
     /**
      * Displays a single Office model.
+     *
      * @param int $id ID
-     * @return string
+     *
      * @throws ForbiddenHttpException
      * @throws NotFoundHttpException
      */
@@ -67,7 +66,7 @@ class OfficeController extends Controller
     /**
      * Creates a new Office model.
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|Response
+     *
      * @throws ForbiddenHttpException
      * @throws Exception
      */
@@ -78,8 +77,8 @@ class OfficeController extends Controller
         $model = new Office();
 
         if (
-            $model->loadSafely(Yii::$app->request->post()) &&
-            $model->saveSafely()
+            $model->loadSafely(\Yii::$app->request->post())
+            && $model->saveSafely()
         ) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -92,8 +91,9 @@ class OfficeController extends Controller
     /**
      * Updates an existing Office model.
      * If update is successful, the browser will be redirected to the 'view' page.
+     *
      * @param int $id ID
-     * @return Response|string
+     *
      * @throws ForbiddenHttpException
      * @throws NotFoundHttpException
      * @throws Exception
@@ -105,8 +105,8 @@ class OfficeController extends Controller
         $model = $this->findModel($id);
 
         if (
-            $model->loadSafely(Yii::$app->request->post()) &&
-            $model->saveSafely()
+            $model->loadSafely(\Yii::$app->request->post())
+            && $model->saveSafely()
         ) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -119,8 +119,9 @@ class OfficeController extends Controller
     /**
      * Deletes an existing Office model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
+     *
      * @param int $id ID
-     * @return Response
+     *
      * @throws ForbiddenHttpException
      * @throws NotFoundHttpException
      */
@@ -136,15 +137,19 @@ class OfficeController extends Controller
     /**
      * Finds the Office model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
+     *
      * @param int $id ID
+     *
      * @return Office the loaded model
+     *
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel(int $id): Office    {
+    protected function findModel(int $id): Office
+    {
         if (($model = Office::findOne($id)) !== null) {
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(\Yii::t('app', 'The requested page does not exist.'));
     }
 }

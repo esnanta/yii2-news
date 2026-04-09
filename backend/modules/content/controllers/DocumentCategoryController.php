@@ -2,22 +2,20 @@
 
 namespace backend\modules\content\controllers;
 
-use Yii;
+use common\base\BaseController;
 use common\models\DocumentCategory;
 use common\models\search\DocumentCategorySearch;
-use yii\web\Controller;
 use yii\db\Exception;
+use yii\filters\VerbFilter;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 use yii\web\Response;
 
 /**
  * DocumentCategoryController implements the CRUD actions for the DocumentCategory model.
  */
-class DocumentCategoryController extends Controller
+class DocumentCategoryController extends BaseController
 {
-
     public function behaviors(): array
     {
         return [
@@ -32,7 +30,7 @@ class DocumentCategoryController extends Controller
 
     /**
      * Lists all DocumentCategory models.
-     * @return string
+     *
      * @throws ForbiddenHttpException
      */
     public function actionIndex(): string
@@ -40,7 +38,7 @@ class DocumentCategoryController extends Controller
         $this->checkAccess('documentCategory.index');
 
         $searchModel = new DocumentCategorySearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -50,8 +48,9 @@ class DocumentCategoryController extends Controller
 
     /**
      * Displays a single DocumentCategory model.
+     *
      * @param int $id ID
-     * @return string
+     *
      * @throws ForbiddenHttpException
      * @throws NotFoundHttpException
      */
@@ -67,7 +66,7 @@ class DocumentCategoryController extends Controller
     /**
      * Creates a new DocumentCategory model.
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|Response
+     *
      * @throws ForbiddenHttpException
      * @throws Exception
      */
@@ -78,8 +77,8 @@ class DocumentCategoryController extends Controller
         $model = new DocumentCategory();
 
         if (
-            $model->loadSafely(Yii::$app->request->post()) &&
-            $model->saveSafely()
+            $model->loadSafely(\Yii::$app->request->post())
+            && $model->saveSafely()
         ) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -92,8 +91,9 @@ class DocumentCategoryController extends Controller
     /**
      * Updates an existing DocumentCategory model.
      * If update is successful, the browser will be redirected to the 'view' page.
+     *
      * @param int $id ID
-     * @return Response|string
+     *
      * @throws ForbiddenHttpException
      * @throws NotFoundHttpException
      * @throws Exception
@@ -105,8 +105,8 @@ class DocumentCategoryController extends Controller
         $model = $this->findModel($id);
 
         if (
-            $model->loadSafely(Yii::$app->request->post()) &&
-            $model->saveSafely()
+            $model->loadSafely(\Yii::$app->request->post())
+            && $model->saveSafely()
         ) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -119,8 +119,9 @@ class DocumentCategoryController extends Controller
     /**
      * Deletes an existing DocumentCategory model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
+     *
      * @param int $id ID
-     * @return Response
+     *
      * @throws ForbiddenHttpException
      * @throws NotFoundHttpException
      */
@@ -136,15 +137,19 @@ class DocumentCategoryController extends Controller
     /**
      * Finds the DocumentCategory model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
+     *
      * @param int $id ID
+     *
      * @return DocumentCategory the loaded model
+     *
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel(int $id): DocumentCategory    {
+    protected function findModel(int $id): DocumentCategory
+    {
         if (($model = DocumentCategory::findOne($id)) !== null) {
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(\Yii::t('app', 'The requested page does not exist.'));
     }
 }

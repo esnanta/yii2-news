@@ -2,22 +2,20 @@
 
 namespace backend\modules\content\controllers;
 
-use Yii;
+use common\base\BaseController;
 use common\models\AuthorSocialAccount;
 use common\models\search\AuthorSocialAccountSearch;
-use yii\web\Controller;
 use yii\db\Exception;
+use yii\filters\VerbFilter;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 use yii\web\Response;
 
 /**
  * AuthorSocialAccountController implements the CRUD actions for the AuthorSocialAccount model.
  */
-class AuthorSocialAccountController extends Controller
+class AuthorSocialAccountController extends BaseController
 {
-
     public function behaviors(): array
     {
         return [
@@ -32,7 +30,7 @@ class AuthorSocialAccountController extends Controller
 
     /**
      * Lists all AuthorSocialAccount models.
-     * @return string
+     *
      * @throws ForbiddenHttpException
      */
     public function actionIndex(): string
@@ -40,7 +38,7 @@ class AuthorSocialAccountController extends Controller
         $this->checkAccess('authorSocialAccount.index');
 
         $searchModel = new AuthorSocialAccountSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -50,8 +48,9 @@ class AuthorSocialAccountController extends Controller
 
     /**
      * Displays a single AuthorSocialAccount model.
+     *
      * @param int $id ID
-     * @return string
+     *
      * @throws ForbiddenHttpException
      * @throws NotFoundHttpException
      */
@@ -67,7 +66,7 @@ class AuthorSocialAccountController extends Controller
     /**
      * Creates a new AuthorSocialAccount model.
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|Response
+     *
      * @throws ForbiddenHttpException
      * @throws Exception
      */
@@ -78,8 +77,8 @@ class AuthorSocialAccountController extends Controller
         $model = new AuthorSocialAccount();
 
         if (
-            $model->loadSafely(Yii::$app->request->post()) &&
-            $model->saveSafely()
+            $model->loadSafely(\Yii::$app->request->post())
+            && $model->saveSafely()
         ) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -92,8 +91,9 @@ class AuthorSocialAccountController extends Controller
     /**
      * Updates an existing AuthorSocialAccount model.
      * If update is successful, the browser will be redirected to the 'view' page.
+     *
      * @param int $id ID
-     * @return Response|string
+     *
      * @throws ForbiddenHttpException
      * @throws NotFoundHttpException
      * @throws Exception
@@ -105,8 +105,8 @@ class AuthorSocialAccountController extends Controller
         $model = $this->findModel($id);
 
         if (
-            $model->loadSafely(Yii::$app->request->post()) &&
-            $model->saveSafely()
+            $model->loadSafely(\Yii::$app->request->post())
+            && $model->saveSafely()
         ) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -119,8 +119,9 @@ class AuthorSocialAccountController extends Controller
     /**
      * Deletes an existing AuthorSocialAccount model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
+     *
      * @param int $id ID
-     * @return Response
+     *
      * @throws ForbiddenHttpException
      * @throws NotFoundHttpException
      */
@@ -136,15 +137,19 @@ class AuthorSocialAccountController extends Controller
     /**
      * Finds the AuthorSocialAccount model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
+     *
      * @param int $id ID
+     *
      * @return AuthorSocialAccount the loaded model
+     *
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel(int $id): AuthorSocialAccount    {
+    protected function findModel(int $id): AuthorSocialAccount
+    {
         if (($model = AuthorSocialAccount::findOne($id)) !== null) {
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(\Yii::t('app', 'The requested page does not exist.'));
     }
 }

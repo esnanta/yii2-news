@@ -2,20 +2,18 @@
 
 namespace backend\modules\content\controllers;
 
+use common\base\BaseController;
 use backend\modules\content\models\search\ArticleCategorySearch;
 use common\models\ArticleCategory;
 use common\traits\FormAjaxValidationTrait;
-use Yii;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
-class CategoryController extends Controller
+class CategoryController extends BaseController
 {
     use FormAjaxValidationTrait;
 
-    /** @inheritdoc */
     public function behaviors()
     {
         return [
@@ -37,11 +35,11 @@ class CategoryController extends Controller
 
         $this->performAjaxValidation($category);
 
-        if ($category->load(Yii::$app->request->post()) && $category->save()) {
+        if ($category->load(\Yii::$app->request->post()) && $category->save()) {
             return $this->redirect(['index']);
         }
         $searchModel = new ArticleCategorySearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
 
         $categories = ArticleCategory::find()->noParents()->all();
         $categories = ArrayHelper::map($categories, 'id', 'title');
@@ -55,7 +53,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * @param integer $id
+     * @param int $id
      *
      * @return mixed
      */
@@ -65,7 +63,7 @@ class CategoryController extends Controller
 
         $this->performAjaxValidation($category);
 
-        if ($category->load(Yii::$app->request->post()) && $category->save()) {
+        if ($category->load(\Yii::$app->request->post()) && $category->save()) {
             return $this->redirect(['index']);
         }
         $categories = ArticleCategory::find()->noParents()->andWhere(['not', ['id' => $id]])->all();
@@ -78,7 +76,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * @param integer $id
+     * @param int $id
      *
      * @return mixed
      */
@@ -90,9 +88,10 @@ class CategoryController extends Controller
     }
 
     /**
-     * @param integer $id
+     * @param int $id
      *
      * @return ArticleCategory the loaded model
+     *
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
@@ -100,6 +99,7 @@ class CategoryController extends Controller
         if (($model = ArticleCategory::findOne($id)) !== null) {
             return $model;
         }
+
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 }
