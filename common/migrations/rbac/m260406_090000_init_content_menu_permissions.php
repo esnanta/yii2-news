@@ -12,22 +12,23 @@ class m260406_090000_init_content_menu_permissions extends Migration
 
     /**
      * Resource modules for content menu access.
-     * Note: `artcle` intentionally follows requested permission naming.
      *
      * @var string[]
      */
     private $contentModules = [
-        'artcle',
+        'article',
         'articleAttachment',
         'articleCategory',
         'author',
-        'authorMedia',
-        'asset',
-        'assetCategory',
+        'authorSocialAccount',
+        'document',
+        'documentCategory',
+        'employment',
         'office',
-        'officeMedia',
+        'officeSocialAccount',
+        'socialPlatform',
         'staff',
-        'staffMedia',
+        'staffSocialAccount',
     ];
 
     /* =======================
@@ -46,7 +47,7 @@ class m260406_090000_init_content_menu_permissions extends Migration
      *
      * @var string[]
      */
-    private $actionsReadOnly = ['index', 'view', 'create', 'update'];
+    private $actionsReadOnly = ['index', 'view'];
 
     /**
      * @return bool|void
