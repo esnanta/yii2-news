@@ -11,7 +11,7 @@ class AuthorSocialAccount extends BaseAuthorSocialAccount
 {
     public function rules(): array
     {
-        return array_replace_recursive(
+        return array_merge(
             parent::rules(),
             [
                 [['office_id', 'author_id', 'platform_id',

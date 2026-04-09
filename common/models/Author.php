@@ -32,7 +32,7 @@ class Author extends BaseAuthor
 
     public function rules(): array
     {
-        return array_replace_recursive(
+        return array_merge(
             parent::rules(),
             [
                 [['image'], 'safe'],

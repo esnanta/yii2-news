@@ -11,7 +11,7 @@ class StaffSocialAccount extends BaseStaffSocialAccount
 {
     public function rules(): array
     {
-        return array_replace_recursive(
+        return array_merge(
             parent::rules(),
             [
                 [['office_id', 'staff_id', 'platform_id', 'is_primary', 'is_visible',

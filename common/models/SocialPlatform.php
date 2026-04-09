@@ -11,7 +11,7 @@ class SocialPlatform extends BaseSocialPlatform
 {
     public function rules(): array
     {
-        return array_replace_recursive(
+        return array_merge(
             parent::rules(),
             [
                 [['code', 'name'], 'required'],
