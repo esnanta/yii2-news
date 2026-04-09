@@ -76,8 +76,7 @@ class StaffController extends BaseController
 
         $model = new Staff();
 
-        if (
-            $model->loadSafely(\Yii::$app->request->post())
+        if ($model->loadSafely(\Yii::$app->request->post())
             && $model->saveSafely()
         ) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -104,8 +103,7 @@ class StaffController extends BaseController
 
         $model = $this->findModel($id);
 
-        if (
-            $model->loadSafely(\Yii::$app->request->post())
+        if ($model->loadSafely(\Yii::$app->request->post())
             && $model->saveSafely()
         ) {
             return $this->redirect(['view', 'id' => $model->id]);
