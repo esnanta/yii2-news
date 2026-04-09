@@ -15,7 +15,7 @@ class Author extends BaseAuthor
     /**
      * Virtual attribute used by filekit upload widget.
      */
-    public array|string|null $image;
+    public array|string|null $image = null;
 
     public function behaviors(): array
     {
