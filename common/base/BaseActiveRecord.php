@@ -9,19 +9,8 @@ use yii\db\StaleObjectException;
 
 abstract class BaseActiveRecord extends ActiveRecord
 {
-    protected function hasManagedRelations(): bool
-    {
-        if (in_array(RelationTrait::class, class_uses($this), true)
-            && method_exists($this, 'relationNames')
-        ) {
-            return !empty($this->relationNames());
-        }
-
-        return false;
-    }
-
     /**
-     * Hybrid loader
+     * Hybrid loader.
      */
     public function loadSafely(array $data, ?string $formName = null): bool
     {
@@ -33,7 +22,8 @@ abstract class BaseActiveRecord extends ActiveRecord
     }
 
     /**
-     * Hybrid saver
+     * Hybrid saver.
+     *
      * @throws Exception
      */
     public function saveSafely(): bool
@@ -46,7 +36,7 @@ abstract class BaseActiveRecord extends ActiveRecord
     }
 
     /**
-     * Hybrid delete
+     * Hybrid delete.
      */
     public function deleteSafely(): bool
     {
@@ -56,9 +46,19 @@ abstract class BaseActiveRecord extends ActiveRecord
             }
 
             return (bool) $this->delete();
-
         } catch (StaleObjectException|\Throwable $e) {
             return false;
         }
+    }
+
+    protected function hasManagedRelations(): bool
+    {
+        if (in_array(RelationTrait::class, class_uses($this), true)
+            && method_exists($this, 'relationNames')
+        ) {
+            return !empty($this->relationNames());
+        }
+
+        return false;
     }
 }
