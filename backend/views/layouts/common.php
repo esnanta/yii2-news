@@ -230,12 +230,12 @@ $logEntries[] = [
                             'active' => 'page' === Yii::$app->controller->id,
                         ],
                         [
-                            'label' => Yii::t('backend', 'Articles'),
+                            'label' => Yii::t('backend', 'Editorial'),
                             'url' => '#',
                             'icon' => FAS::icon('newspaper', ['class' => ['nav-icon']]),
                             'options' => ['class' => 'nav-item has-treeview'],
                             'active' => 'content' === Yii::$app->controller->module->id
-                                && ('article' === Yii::$app->controller->id || 'category' === Yii::$app->controller->id),
+                                && in_array(Yii::$app->controller->id, ['article', 'category', 'author', 'author-social-account']),
                             'items' => [
                                 [
                                     'label' => Yii::t('backend', 'Articles'),
@@ -250,9 +250,77 @@ $logEntries[] = [
                                     'active' => 'category' === Yii::$app->controller->id,
                                 ],
                                 [
+                                    'label' => Yii::t('backend', 'Authors'),
+                                    'url' => ['/content/author/index'],
+                                    'icon' => FAR::icon('circle', ['class' => ['nav-icon']]),
+                                    'active' => 'author' === Yii::$app->controller->id,
+                                ],
+                                [
+                                    'label' => Yii::t('backend', 'Author Social Accounts'),
+                                    'url' => ['/content/author-social-account/index'],
+                                    'icon' => FAR::icon('circle', ['class' => ['nav-icon']]),
+                                    'active' => 'author-social-account' === Yii::$app->controller->id,
+                                ],
+                            ],
+                        ],
+                        [
+                            'label' => Yii::t('backend', 'Organization'),
+                            'url' => '#',
+                            'icon' => FAS::icon('sitemap', ['class' => ['nav-icon']]),
+                            'options' => ['class' => 'nav-item has-treeview'],
+                            'active' => 'content' === Yii::$app->controller->module->id
+                                && in_array(Yii::$app->controller->id, ['employment', 'staff', 'staff-social-account', 'office', 'office-social-account']),
+                            'items' => [
+                                [
+                                    'label' => Yii::t('backend', 'Employments'),
+                                    'url' => ['/content/employment/index'],
+                                    'icon' => FAR::icon('circle', ['class' => ['nav-icon']]),
+                                    'active' => 'employment' === Yii::$app->controller->id,
+                                ],
+                                [
+                                    'label' => Yii::t('backend', 'Staff'),
+                                    'url' => ['/content/staff/index'],
+                                    'icon' => FAR::icon('circle', ['class' => ['nav-icon']]),
+                                    'active' => 'staff' === Yii::$app->controller->id,
+                                ],
+                                [
+                                    'label' => Yii::t('backend', 'Staff Social Accounts'),
+                                    'url' => ['/content/staff-social-account/index'],
+                                    'icon' => FAR::icon('circle', ['class' => ['nav-icon']]),
+                                    'active' => 'staff-social-account' === Yii::$app->controller->id,
+                                ],
+                                [
+                                    'label' => Yii::t('backend', 'Offices'),
+                                    'url' => ['/content/office/index'],
+                                    'icon' => FAR::icon('circle', ['class' => ['nav-icon']]),
+                                    'active' => 'office' === Yii::$app->controller->id,
+                                ],
+                                [
+                                    'label' => Yii::t('backend', 'Office Social Accounts'),
+                                    'url' => ['/content/office-social-account/index'],
+                                    'icon' => FAR::icon('circle', ['class' => ['nav-icon']]),
+                                    'active' => 'office-social-account' === Yii::$app->controller->id,
+                                ],
+                            ],
+                        ],
+                        [
+                            'label' => Yii::t('backend', 'Documents'),
+                            'url' => '#',
+                            'icon' => FAS::icon('folder-open', ['class' => ['nav-icon']]),
+                            'options' => ['class' => 'nav-item has-treeview'],
+                            'active' => 'content' === Yii::$app->controller->module->id
+                                && in_array(Yii::$app->controller->id, ['document', 'document-category']),
+                            'items' => [
+                                [
+                                    'label' => Yii::t('backend', 'Categories'),
+                                    'url' => ['/content/document-category/index'],
+                                    'icon' => FAR::icon('circle', ['class' => ['nav-icon']]),
+                                    'active' => 'document-category' === Yii::$app->controller->id,
+                                ],
+                                [
                                     'label' => Yii::t('backend', 'Documents'),
                                     'url' => ['/content/document/index'],
-                                    'icon' => FAS::icon('file-alt', ['class' => ['nav-icon']]),
+                                    'icon' => FAR::icon('circle', ['class' => ['nav-icon']]),
                                     'active' => 'document' === Yii::$app->controller->id,
                                 ],
                             ],
