@@ -1,8 +1,8 @@
 <?php
 
-use yii\helpers\Html;
-use yii\bootstrap4\ActiveForm;
 use kartik\widgets\Select2;
+use yii\bootstrap4\ActiveForm;
+use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
@@ -24,16 +24,19 @@ use kartik\widgets\Select2;
                     'pluginOptions' => [
                         'allowClear' => true,
                     ],
-                ]) ?>
-                <?php echo $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
-                <?php echo $form->field($model, 'phone_number')->textInput(['maxlength' => true]) ?>
-                <?php echo $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
-                <?php echo $form->field($model, 'address')->textarea(['rows' => 6]) ?>
-                <?php echo $form->field($model, 'description')->textarea(['rows' => 6]) ?>
+                ]); ?>
+                <?php echo $form->field($model, 'title')->textInput(['maxlength' => true]); ?>
+                <?php echo $form->field($model, 'phone_number')->textInput(['maxlength' => true]); ?>
+                <?php echo $form->field($model, 'email')->textInput(['maxlength' => true]); ?>
+                <?php echo $form->field($model, 'address')->textarea(['rows' => 6]); ?>
+                <?php echo $form->field($model, 'description')->textarea(['rows' => 6]); ?>
 
             </div>
             <div class="card-footer">
-                <?php echo Html::submitButton($model->isNewRecord ? Yii::t('backend', 'Create') : Yii::t('backend', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                <?php echo Html::submitButton(
+                    $model->isNewRecord ? Yii::t('backend', 'Create') : Yii::t('backend', 'Update'),
+                    ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']
+                ); ?>
             </div>
         </div>
     <?php ActiveForm::end(); ?>
