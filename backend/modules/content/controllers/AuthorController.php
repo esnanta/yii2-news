@@ -5,6 +5,7 @@ namespace backend\modules\content\controllers;
 use common\base\BaseController;
 use common\models\Author;
 use common\models\search\AuthorSearch;
+use common\service\DataListService;
 use yii\db\Exception;
 use yii\filters\VerbFilter;
 use yii\web\ForbiddenHttpException;
@@ -43,6 +44,7 @@ class AuthorController extends BaseController
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'officeOptions' => DataListService::getOffice(),
         ]);
     }
 

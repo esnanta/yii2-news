@@ -1,12 +1,15 @@
 <?php
 
-use yii\helpers\Html;
+use common\widgets\ActionColumn;
+use kartik\widgets\Select2;
 use yii\grid\GridView;
+use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
  * @var common\models\search\AuthorSearch $searchModel
  * @var yii\data\ActiveDataProvider $dataProvider
+ * @var array $officeOptions
  */
 
 $this->title = Yii::t('backend', 'Authors');
@@ -16,12 +19,12 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="card">
         <div class="card-header">
             <?php echo Html::a(Yii::t('backend', 'Create {modelClass}', [
-    'modelClass' => 'Author',
-]), ['create'], ['class' => 'btn btn-success']) ?>
+                'modelClass' => 'Author',
+            ]), ['create'], ['class' => 'btn btn-success']); ?>
         </div>
 
         <div class="card-body p-0">
-            <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+            <?php // echo $this->render('_search', ['model' => $searchModel]);?>
     
             <?php echo GridView::widget([
                 'layout' => "{items}\n{pager}",
@@ -37,7 +40,27 @@ $this->params['breadcrumbs'][] = $this->title;
                     ['class' => 'yii\grid\SerialColumn'],
 
                     'id',
-                    'office_id',
+                    [
+                        'attribute' => 'office_id',
+                        'label' => Yii::t('backend', 'Office'),
+                        'value' => function ($model) {
+                            if ($model->office_id) {
+                                return $model->office->title;
+                            }
+
+                            return null;
+                        },
+                        'filter' => Select2::widget([
+                            'model' => $searchModel,
+                            'attribute' => 'office_id',
+                            'data' => $officeOptions,
+                            'options' => ['placeholder' => Yii::t('backend', '')],
+                            'pluginOptions' => [
+                                'allowClear' => true,
+                            ],
+                        ]),
+                        'contentOptions' => ['style' => 'white-space: normal; word-break: break-word;'],
+                    ],
                     'title',
                     'phone_number',
                     // 'email:email',
@@ -57,14 +80,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     // 'deleted_by',
                     // 'verlock',
                     // 'uuid',
-                    
-                    ['class' => \common\widgets\ActionColumn::class],
+
+                    ['class' => ActionColumn::class],
                 ],
             ]); ?>
     
         </div>
         <div class="card-footer">
-            <?php echo getDataProviderSummary($dataProvider) ?>
+            <?php echo getDataProviderSummary($dataProvider); ?>
         </div>
     </div>
 
