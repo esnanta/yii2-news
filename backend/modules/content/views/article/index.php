@@ -5,6 +5,7 @@ use common\models\Article;
 use common\models\ArticleCategory;
 use common\widgets\ActionColumn;
 use kartik\date\DatePicker;
+use kartik\widgets\Select2;
 use rmrevin\yii\fontawesome\FAS;
 use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
@@ -14,6 +15,7 @@ use yii\helpers\Html;
  * @var yii\web\View $this
  * @var backend\modules\content\models\search\ArticleSearch $searchModel
  * @var yii\data\ActiveDataProvider $dataProvider
+ * @var array $authorOptions
  */
 
 $this->title = Yii::t('backend', 'Articles');
@@ -36,16 +38,19 @@ $this->params['breadcrumbs'][] = $this->title;
                 'class' => ['gridview', 'table-responsive'],
             ],
             'tableOptions' => [
-                'class' => ['table', 'text-nowrap', 'table-striped', 'table-bordered', 'mb-0', 'table-sm'],
+                'class' => ['table', 'table-striped', 'table-bordered', 'mb-0', 'table-sm'],
+                'style' => 'width: 100%; table-layout: fixed;',
             ],
             'columns' => [
                 [
                     'attribute' => 'id',
                     'options' => ['style' => 'width: 5%'],
+                    'contentOptions' => ['style' => 'white-space: nowrap;'],
                 ],
                 [
                     'attribute' => 'slug',
                     'options' => ['style' => 'width: 15%'],
+                    'contentOptions' => ['style' => 'white-space: nowrap; overflow: hidden; text-overflow: ellipsis;'],
                 ],
                 [
                     'attribute' => 'title',
@@ -53,6 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         return Html::a(Html::encode($model->title), ['update', 'id' => $model->id]);
                     },
                     'format' => 'raw',
+                    'contentOptions' => ['style' => 'white-space: normal; word-break: break-word;'],
                 ],
                 [
                     'attribute' => 'category_id',
@@ -61,14 +67,31 @@ $this->params['breadcrumbs'][] = $this->title;
                         return $model->category ? $model->category->title : null;
                     },
                     'filter' => ArrayHelper::map(ArticleCategory::find()->all(), 'id', 'title'),
+                    'contentOptions' => ['style' => 'white-space: normal; word-break: break-word;'],
                 ],
+
                 [
-                    'attribute' => 'created_by',
-                    'options' => ['style' => 'width: 10%'],
+                    'attribute' => 'author_id',
+                    'label' => Yii::t('backend', 'Author'),
                     'value' => function ($model) {
-                        return $model->author->username;
+                        if ($model->author_id) {
+                            return $model->author->title;
+                        }
+
+                        return null;
                     },
+                    'filter' => Select2::widget([
+                        'model' => $searchModel,
+                        'attribute' => 'author_id',
+                        'data' => $authorOptions,
+                        'options' => ['placeholder' => Yii::t('backend', 'Select author')],
+                        'pluginOptions' => [
+                            'allowClear' => true,
+                        ],
+                    ]),
+                    'contentOptions' => ['style' => 'white-space: normal; word-break: break-word;'],
                 ],
+
                 [
                     'class' => EnumColumn::class,
                     'attribute' => 'status',
@@ -80,6 +103,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'published_at',
                     'options' => ['style' => 'width: 10%'],
                     'format' => 'datetime',
+                    'contentOptions' => ['style' => 'white-space: nowrap;'],
                     'filter' => DatePicker::widget([
                         'model' => $searchModel,
                         'attribute' => 'published_at',
@@ -96,6 +120,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'created_at',
                     'options' => ['style' => 'width: 10%'],
                     'format' => 'datetime',
+                    'contentOptions' => ['style' => 'white-space: nowrap;'],
                     'filter' => DatePicker::widget([
                         'model' => $searchModel,
                         'attribute' => 'created_at',
@@ -112,6 +137,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'class' => ActionColumn::class,
                     'options' => ['style' => 'width: 5%'],
                     'template' => '{update} {delete}',
+                    'contentOptions' => ['style' => 'white-space: nowrap;'],
                 ],
             ],
         ]); ?>
