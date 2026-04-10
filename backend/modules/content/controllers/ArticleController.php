@@ -3,10 +3,9 @@
 namespace backend\modules\content\controllers;
 
 use common\base\BaseController;
-// use backend\modules\content\models\search\ArticleSearch;
+use backend\modules\content\models\search\ArticleSearch;
 use common\models\Article;
 use common\models\ArticleCategory;
-use common\models\search\ArticleSearch;
 use common\service\DataListService;
 use common\traits\FormAjaxValidationTrait;
 use yii\base\ExitException;

@@ -11,7 +11,7 @@ use yii\helpers\Html;
 use yii\imperavi\Widget;
 use yii\web\JsExpression;
 
-/*
+/**
  * @var yii\web\View $this
  * @var common\models\Article $model
  * @var common\models\ArticleCategory[] $categories
@@ -39,7 +39,8 @@ use yii\web\JsExpression;
                 echo $form->field($model, 'slug')
                     ->hint(Yii::t('backend', 'If you leave this field empty, the slug will be generated automatically'))
                     ->textInput(['maxlength' => true])
-; ?>
+;
+?>
 
             <?php echo $form->field($model, 'category_id')->dropDownList(ArrayHelper::map(
                 $categories,

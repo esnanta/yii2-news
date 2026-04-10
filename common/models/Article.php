@@ -119,7 +119,7 @@ class Article extends BaseArticle
             'view' => \Yii::t('common', 'Article View'),
             'thumbnail' => \Yii::t('common', 'Thumbnail'),
             'category_id' => \Yii::t('common', 'Category'),
-            'status' => \Yii::t('common', 'Published'),
+            'status' => \Yii::t('common', 'Status'),
             'published_at' => \Yii::t('common', 'Published At'),
             'created_by' => \Yii::t('common', 'Author'),
             'updated_by' => \Yii::t('common', 'Updater'),

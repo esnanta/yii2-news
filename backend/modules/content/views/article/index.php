@@ -97,7 +97,15 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'status',
                     'options' => ['style' => 'width: 10%'],
                     'enum' => Article::statuses(),
-                    'filter' => Article::statuses(),
+                    'filter' => Html::activeDropDownList(
+                        $searchModel,
+                        'status',
+                        [
+                            Article::STATUS_PUBLISHED => Yii::t('common', 'Published'),
+                            Article::STATUS_DRAFT => Yii::t('common', 'Draft'),
+                        ],
+                        ['class' => 'form-control', 'prompt' => Yii::t('backend', 'All')]
+                    ),
                 ],
                 [
                     'attribute' => 'published_at',
