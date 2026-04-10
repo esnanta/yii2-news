@@ -32,17 +32,26 @@ $this->params['breadcrumbs'][] = $this->title;
                     'class' => ['gridview', 'table-responsive'],
                 ],
                 'tableOptions' => [
-                    'class' => ['table', 'text-nowrap', 'table-striped', 'table-bordered', 'mb-0'],
+                    'class' => ['table', 'table-striped', 'table-bordered', 'mb-0', 'table-sm'],
+                    'style' => 'width: 100%; table-layout: fixed;',
                 ],
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
                 'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
-
-                    'id',
+                    [
+                        'class' => 'yii\grid\SerialColumn',
+                        'options' => ['style' => 'width: 5%'],
+                        'contentOptions' => ['style' => 'white-space: nowrap;'],
+                    ],
+//                    [
+//                        'attribute' => 'id',
+//                        'options' => ['style' => 'width: 8%'],
+//                        'contentOptions' => ['style' => 'white-space: nowrap;'],
+//                    ],
                     [
                         'attribute' => 'office_id',
                         'label' => Yii::t('backend', 'Office'),
+                        'options' => ['style' => 'width: 22%'],
                         'value' => function ($model) {
                             if ($model->office_id) {
                                 return $model->office->title;
@@ -54,15 +63,23 @@ $this->params['breadcrumbs'][] = $this->title;
                             'model' => $searchModel,
                             'attribute' => 'office_id',
                             'data' => $officeOptions,
-                            'options' => ['placeholder' => Yii::t('backend', '')],
+                            'options' => ['placeholder' => Yii::t('backend', 'Select office')],
                             'pluginOptions' => [
                                 'allowClear' => true,
                             ],
                         ]),
                         'contentOptions' => ['style' => 'white-space: normal; word-break: break-word;'],
                     ],
-                    'title',
-                    'phone_number',
+                    [
+                        'attribute' => 'title',
+                        'options' => ['style' => 'width: 40%'],
+                        'contentOptions' => ['style' => 'white-space: normal; word-break: break-word;'],
+                    ],
+                    [
+                        'attribute' => 'phone_number',
+                        'options' => ['style' => 'width: 20%'],
+                        'contentOptions' => ['style' => 'white-space: nowrap;'],
+                    ],
                     // 'email:email',
                     // 'base_url:url',
                     // 'path',
@@ -81,7 +98,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     // 'verlock',
                     // 'uuid',
 
-                    ['class' => ActionColumn::class],
+                    [
+                        'class' => ActionColumn::class,
+                        'options' => ['style' => 'width: 5%'],
+                        'contentOptions' => ['style' => 'white-space: nowrap;'],
+                    ],
                 ],
             ]); ?>
     

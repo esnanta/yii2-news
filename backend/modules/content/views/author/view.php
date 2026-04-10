@@ -6,6 +6,7 @@ use yii\widgets\DetailView;
 /**
  * @var yii\web\View $this
  * @var common\models\Author $model
+ * @var array $officeOptions
  */
 
 $this->title = $model->title;
@@ -29,7 +30,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 'model' => $model,
                 'attributes' => [
                     'id',
-                    'office_id',
+                    [
+                        'attribute' => 'office_id',
+                        'label' => Yii::t('backend', 'Office'),
+                        'value' => static function ($model) use ($officeOptions) {
+                            return $officeOptions[$model->office_id] ?? null;
+                        },
+                    ],
                     'title',
                     'phone_number',
                     'email:email',

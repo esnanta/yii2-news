@@ -62,6 +62,7 @@ class AuthorController extends BaseController
 
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'officeOptions' => DataListService::getOffice(),
         ]);
     }
 
@@ -86,6 +87,7 @@ class AuthorController extends BaseController
 
         return $this->render('create', [
             'model' => $model,
+            'officeOptions' => DataListService::getOffice(),
         ]);
     }
 
@@ -113,6 +115,7 @@ class AuthorController extends BaseController
 
         return $this->render('update', [
             'model' => $model,
+            'officeOptions' => DataListService::getOffice(),
         ]);
     }
 
