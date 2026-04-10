@@ -1,13 +1,13 @@
 <?php
 
 use common\models\Article;
-use common\models\ArticleCategory;
 use yii\web\View;
 
 /**
- * @var View              $this
- * @var Article           $model
- * @var ArticleCategory[] $categories
+ * @var View   $this
+ * @var Article $model
+ * @var array  $authorOptions
+ * @var array  $categoryOptions
  */
 $this->title = Yii::t('backend', 'Update {modelClass}: ', [
     'modelClass' => 'Article',
@@ -20,5 +20,6 @@ $this->params['breadcrumbs'][] = Yii::t('backend', 'Update');
 
 <?php echo $this->render('_form', [
     'model' => $model,
-    'categories' => $categories,
+    'authorOptions' => $authorOptions,
+    'categoryOptions' => $categoryOptions,
 ]);

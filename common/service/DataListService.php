@@ -2,8 +2,10 @@
 
 namespace common\service;
 
+use common\models\ArticleCategory;
 use common\models\Author;
 use common\models\Document;
+use common\models\DocumentCategory;
 use common\models\Employment;
 use common\models\Office;
 use common\models\Page;
@@ -24,9 +26,9 @@ class DataListService
             ->asArray()->all(), 'id', 'title');
     }
 
-    public static function getDocument(): array
+    public static function getDocumentCategory(): array
     {
-        return ArrayHelper::map(Document::find()
+        return ArrayHelper::map(DocumentCategory::find()
             ->asArray()->all(), 'id', 'title');
     }
 
@@ -45,6 +47,12 @@ class DataListService
     public static function getPage(): array
     {
         return ArrayHelper::map(Page::find()
+            ->asArray()->all(), 'id', 'title');
+    }
+
+    public static function getArticleCategory(): array
+    {
+        return ArrayHelper::map(ArticleCategory::find()
             ->asArray()->all(), 'id', 'title');
     }
 }
