@@ -2,15 +2,11 @@
 
 namespace common\models;
 
-use common\models\query\ArticleQuery;
 use common\models\base\Article as BaseArticle;
-
 use trntv\filekit\behaviors\UploadBehavior;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\SluggableBehavior;
 use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveQuery;
-use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "article".
@@ -40,15 +36,9 @@ class Article extends BaseArticle
     public const STATUS_PUBLISHED = 1;
     public const STATUS_DRAFT = 0;
 
-    /**
-     * @var array
-     */
-    public array $attachments;
+    public array $attachments = [];
 
-    /**
-     * @var array
-     */
-    public array $thumbnail;
+    public ?array $thumbnail = null;
 
     /**
      * @return array statuses list
@@ -102,19 +92,20 @@ class Article extends BaseArticle
     public function rules(): array
     {
         return [
-            [['title', 'body', 'category_id'], 'required'],
-            [['slug'], 'unique'],
-            [['body'], 'string'],
-            [['published_at'], 'default', 'value' => function () {
-                return date('Y-m-d');
-            }],
-            [['published_at', 'created_at', 'updated_at'], 'safe'],
-            [['category_id'], 'exist', 'targetClass' => ArticleCategory::class, 'targetAttribute' => 'id'],
-            [['author_id', 'status', 'created_by', 'updated_by'], 'integer'],
-            [['thumbnail_base_url', 'thumbnail_path'], 'string', 'max' => 1024],
-            [['title'], 'string', 'max' => 512],
-            [['view', 'slug'], 'string', 'max' => 255],
             [['attachments', 'thumbnail'], 'safe'],
+            [['author_id', 'category_id', 'status',
+                'created_by', 'updated_by', 'is_deleted',
+                'deleted_by', 'verlock'], 'integer'],
+            [['slug', 'title', 'body'], 'required'],
+            [['body'], 'string'],
+            [['created_at', 'updated_at', 'published_at', 'deleted_at'], 'safe'],
+            [['slug', 'view'], 'string', 'max' => 255],
+            [['title'], 'string', 'max' => 512],
+            [['thumbnail_base_url', 'thumbnail_path'], 'string', 'max' => 1024],
+            [['uuid'], 'string', 'max' => 36],
+            [['slug'], 'unique'],
+            [['verlock'], 'default', 'value' => '0'],
+            [['verlock'], 'mootensai\components\OptimisticLockValidator'],
         ];
     }
 
@@ -135,5 +126,22 @@ class Article extends BaseArticle
             'created_at' => \Yii::t('common', 'Created At'),
             'updated_at' => \Yii::t('common', 'Updated At'),
         ];
+    }
+
+    public function setAttributes($values, $safeOnly = true): void
+    {
+        if (is_array($values)) {
+            if (array_key_exists('thumbnail', $values)
+                && ('' === $values['thumbnail'] || null === $values['thumbnail'])) {
+                $values['thumbnail'] = null;
+            }
+
+            if (array_key_exists('attachments', $values)
+                && ('' === $values['attachments'] || null === $values['attachments'])) {
+                $values['attachments'] = [];
+            }
+        }
+
+        parent::setAttributes($values, $safeOnly);
     }
 }
