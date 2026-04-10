@@ -25,16 +25,7 @@ use yii\bootstrap4\ActiveForm;
                 <?php echo $form->field($model, 'is_visible')->textInput() ?>
                 <?php echo $form->field($model, 'sequence')->textInput() ?>
                 <?php echo $form->field($model, 'description')->textarea(['rows' => 6]) ?>
-                <?php echo $form->field($model, 'created_at')->textInput() ?>
-                <?php echo $form->field($model, 'updated_at')->textInput() ?>
-                <?php echo $form->field($model, 'created_by')->textInput() ?>
-                <?php echo $form->field($model, 'updated_by')->textInput() ?>
-                <?php echo $form->field($model, 'is_deleted')->textInput() ?>
-                <?php echo $form->field($model, 'deleted_at')->textInput() ?>
-                <?php echo $form->field($model, 'deleted_by')->textInput() ?>
-                <?php echo $form->field($model, 'verlock')->textInput() ?>
-                <?php echo $form->field($model, 'uuid')->textInput(['maxlength' => true]) ?>
-                
+
             </div>
             <div class="card-footer">
                 <?php echo Html::submitButton($model->isNewRecord ? Yii::t('backend', 'Create') : Yii::t('backend', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
