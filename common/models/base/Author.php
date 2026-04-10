@@ -7,7 +7,6 @@ use common\models\Article;
 use common\models\AuthorSocialAccount;
 use common\models\Office;
 use common\models\query\AuthorQuery;
-use common\models\User;
 use mootensai\behaviors\UUIDBehavior;
 use mootensai\relation\RelationTrait;
 use yii\behaviors\BlameableBehavior;
@@ -19,7 +18,6 @@ use yii\db\ActiveQuery;
  *
  * @property int                   $id
  * @property int                   $office_id
- * @property int                   $user_id
  * @property string                $title
  * @property string                $phone_number
  * @property string                $email
@@ -41,7 +39,6 @@ use yii\db\ActiveQuery;
  * @property string                $uuid
  * @property Article[]             $articles
  * @property Office                $office
- * @property User                  $user
  * @property AuthorSocialAccount[] $authorSocialAccounts
  */
 class Author extends BaseActiveRecord
@@ -74,7 +71,6 @@ class Author extends BaseActiveRecord
         return [
             'articles',
             'office',
-            'user',
             'authorSocialAccounts',
         ];
     }
@@ -82,7 +78,7 @@ class Author extends BaseActiveRecord
     public function rules(): array
     {
         return [
-            [['office_id', 'user_id', 'size',
+            [['office_id', 'size',
                 'created_by', 'updated_by', 'is_deleted',
                 'deleted_by', 'verlock'], 'integer'],
             [['address', 'description'], 'string'],
@@ -116,7 +112,6 @@ class Author extends BaseActiveRecord
         return [
             'id' => \Yii::t('common', 'ID'),
             'office_id' => \Yii::t('common', 'Office ID'),
-            'user_id' => \Yii::t('common', 'User ID'),
             'title' => \Yii::t('common', 'Title'),
             'phone_number' => \Yii::t('common', 'Phone Number'),
             'email' => \Yii::t('common', 'Email'),
@@ -143,10 +138,6 @@ class Author extends BaseActiveRecord
         return $this->hasOne(Office::class, ['id' => 'office_id']);
     }
 
-    public function getUser(): ActiveQuery
-    {
-        return $this->hasOne(User::class, ['id' => 'user_id']);
-    }
 
     public function getAuthorSocialAccounts(): ActiveQuery
     {

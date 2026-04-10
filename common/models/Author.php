@@ -38,7 +38,7 @@ class Author extends BaseAuthor
             parent::rules(),
             [
                 [['image'], 'safe'],
-                [['office_id', 'user_id', 'size', 'created_by', 'updated_by',
+                [['office_id', 'size', 'created_by', 'updated_by',
                     'is_deleted', 'deleted_by', 'verlock'], 'integer'],
                 [['address', 'description'], 'string'],
                 [['created_at', 'updated_at', 'deleted_at'], 'safe'],

@@ -38,7 +38,7 @@ class Staff extends BaseStaff
             parent::rules(),
             [
                 [['image'], 'safe'],
-                [['office_id', 'user_id', 'employment_id',
+                [['office_id', 'employment_id',
                     'gender_status', 'active_status', 'size',
                     'created_by', 'updated_by', 'is_deleted',
                     'deleted_by', 'verlock'], 'integer'],

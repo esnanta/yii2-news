@@ -14,7 +14,7 @@ class StaffSearch extends Staff
     public function rules(): array
     {
         return [
-            [['id', 'office_id', 'user_id', 'employment_id', 'gender_status', 'active_status', 'size', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['id', 'office_id', 'employment_id', 'gender_status', 'active_status', 'size', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['title', 'initial', 'identity_number', 'phone_number', 'address', 'base_url', 'path', 'name', 'type', 'email', 'google_plus', 'instagram', 'facebook', 'twitter', 'description', 'created_at', 'updated_at', 'deleted_at', 'uuid'], 'safe'],
         ];
     }
@@ -45,7 +45,6 @@ class StaffSearch extends Staff
         $query->andFilterWhere([
             'id' => $this->id,
             'office_id' => $this->office_id,
-            'user_id' => $this->user_id,
             'employment_id' => $this->employment_id,
             'gender_status' => $this->gender_status,
             'active_status' => $this->active_status,

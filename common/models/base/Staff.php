@@ -7,7 +7,6 @@ use common\models\Employment;
 use common\models\Office;
 use common\models\query\StaffQuery;
 use common\models\StaffSocialAccount;
-use common\models\User;
 use mootensai\behaviors\UUIDBehavior;
 use mootensai\relation\RelationTrait;
 use yii\behaviors\BlameableBehavior;
@@ -19,7 +18,6 @@ use yii\db\ActiveQuery;
  *
  * @property int                  $id
  * @property int                  $office_id
- * @property int                  $user_id
  * @property int                  $employment_id
  * @property string               $title
  * @property string               $initial
@@ -50,7 +48,6 @@ use yii\db\ActiveQuery;
  * @property string               $uuid
  * @property Employment           $employment
  * @property Office               $office
- * @property User                 $user
  * @property StaffSocialAccount[] $staffSocialAccounts
  */
 class Staff extends BaseActiveRecord
@@ -83,7 +80,6 @@ class Staff extends BaseActiveRecord
         return [
             'employment',
             'office',
-            'user',
             'staffSocialAccounts',
         ];
     }
@@ -91,7 +87,7 @@ class Staff extends BaseActiveRecord
     public function rules(): array
     {
         return [
-            [['office_id', 'user_id', 'employment_id',
+            [['office_id', 'employment_id',
                 'gender_status', 'active_status', 'size',
                 'created_by', 'updated_by', 'is_deleted',
                 'deleted_by', 'verlock'], 'integer'],
@@ -130,7 +126,6 @@ class Staff extends BaseActiveRecord
         return [
             'id' => \Yii::t('common', 'ID'),
             'office_id' => \Yii::t('common', 'Office ID'),
-            'user_id' => \Yii::t('common', 'User ID'),
             'employment_id' => \Yii::t('common', 'Employment ID'),
             'title' => \Yii::t('common', 'Title'),
             'initial' => \Yii::t('common', 'Initial'),
@@ -166,10 +161,6 @@ class Staff extends BaseActiveRecord
         return $this->hasOne(Office::class, ['id' => 'office_id']);
     }
 
-    public function getUser(): ActiveQuery
-    {
-        return $this->hasOne(User::class, ['id' => 'user_id']);
-    }
 
     public function getStaffSocialAccounts(): ActiveQuery
     {

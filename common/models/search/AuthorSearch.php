@@ -14,7 +14,7 @@ class AuthorSearch extends Author
     public function rules(): array
     {
         return [
-            [['id', 'office_id', 'user_id', 'size', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['id', 'office_id', 'size', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['title', 'phone_number', 'email', 'base_url', 'path', 'name', 'type', 'address', 'description', 'created_at', 'updated_at', 'deleted_at', 'uuid'], 'safe'],
         ];
     }
@@ -45,7 +45,6 @@ class AuthorSearch extends Author
         $query->andFilterWhere([
             'id' => $this->id,
             'office_id' => $this->office_id,
-            'user_id' => $this->user_id,
             'size' => $this->size,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
