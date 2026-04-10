@@ -113,20 +113,22 @@ class Article extends BaseArticle
     {
         return [
             'id' => \Yii::t('common', 'ID'),
+            'author_id' => \Yii::t('common', 'Author'),
             'slug' => \Yii::t('common', 'Slug'),
             'title' => \Yii::t('common', 'Title'),
             'body' => \Yii::t('common', 'Body'),
             'view' => \Yii::t('common', 'Article View'),
-            'thumbnail' => \Yii::t('common', 'Thumbnail'),
             'category_id' => \Yii::t('common', 'Category'),
+            'thumbnail_base_url' => \Yii::t('common', 'Thumbnail'),
+            'thumbnail_path' => \Yii::t('common', 'Thumbnail Path'),
             'status' => \Yii::t('common', 'Status'),
             'published_at' => \Yii::t('common', 'Published At'),
-            'created_by' => \Yii::t('common', 'Author'),
-            'updated_by' => \Yii::t('common', 'Updater'),
-            'created_at' => \Yii::t('common', 'Created At'),
-            'updated_at' => \Yii::t('common', 'Updated At'),
+            'is_deleted' => \Yii::t('common', 'Is Deleted'),
+            'verlock' => \Yii::t('common', 'Verlock'),
+            'uuid' => \Yii::t('common', 'Uuid'),
         ];
     }
+
 
     public function setAttributes($values, $safeOnly = true): void
     {
