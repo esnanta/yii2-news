@@ -19,7 +19,6 @@ use yii\bootstrap4\ActiveForm;
 
     <?php echo $form->field($model, 'id') ?>
     <?php echo $form->field($model, 'office_id') ?>
-    <?php echo $form->field($model, 'user_id') ?>
     <?php echo $form->field($model, 'employment_id') ?>
     <?php echo $form->field($model, 'title') ?>
     <?php // echo $form->field($model, 'initial') ?>

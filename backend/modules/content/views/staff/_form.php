@@ -17,7 +17,6 @@ use yii\bootstrap4\ActiveForm;
                 <?php echo $form->errorSummary($model); ?>
 
                 <?php echo $form->field($model, 'office_id')->textInput() ?>
-                <?php echo $form->field($model, 'user_id')->textInput() ?>
                 <?php echo $form->field($model, 'employment_id')->textInput() ?>
                 <?php echo $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
                 <?php echo $form->field($model, 'initial')->textInput(['maxlength' => true]) ?>

@@ -3,11 +3,12 @@
 use common\grid\EnumColumn;
 use common\models\Article;
 use common\models\ArticleCategory;
+use common\widgets\ActionColumn;
 use kartik\date\DatePicker;
+use rmrevin\yii\fontawesome\FAS;
 use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-use rmrevin\yii\fontawesome\FAS;
 
 /**
  * @var yii\web\View $this
@@ -23,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="card-header">
         <?php echo Html::a(FAS::icon('user-plus').' '.Yii::t('backend', 'Add New {modelClass}', [
             'modelClass' => 'Article',
-        ]), ['create'], ['class' => 'btn btn-success']) ?>
+        ]), ['create'], ['class' => 'btn btn-success']); ?>
     </div>
 
     <div class="card-body p-0">
@@ -88,7 +89,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'showMeridian' => true,
                             'todayBtn' => true,
                             'endDate' => '0d',
-                        ]
+                        ],
                     ]),
                 ],
                 [
@@ -104,11 +105,11 @@ $this->params['breadcrumbs'][] = $this->title;
                             'showMeridian' => true,
                             'todayBtn' => true,
                             'endDate' => '0d',
-                        ]
+                        ],
                     ]),
                 ],
                 [
-                    'class' => \common\widgets\ActionColumn::class,
+                    'class' => ActionColumn::class,
                     'options' => ['style' => 'width: 5%'],
                     'template' => '{update} {delete}',
                 ],
@@ -117,7 +118,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 
     <div class="card-footer">
-        <?php echo getDataProviderSummary($dataProvider) ?>
+        <?php echo getDataProviderSummary($dataProvider); ?>
     </div>
 </div>
 
