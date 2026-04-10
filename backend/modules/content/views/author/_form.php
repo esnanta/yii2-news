@@ -1,8 +1,10 @@
 <?php
 
 use kartik\widgets\Select2;
+use trntv\filekit\widget\Upload;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
+use yii\web\JsExpression;
 
 /**
  * @var yii\web\View $this
@@ -30,7 +32,11 @@ use yii\helpers\Html;
                 <?php echo $form->field($model, 'email')->textInput(['maxlength' => true]); ?>
                 <?php echo $form->field($model, 'address')->textarea(['rows' => 6]); ?>
                 <?php echo $form->field($model, 'description')->textarea(['rows' => 6]); ?>
-
+                <?php echo $form->field($model, 'image')->widget(Upload::class, [
+                        'url' => ['/file/storage/upload'],
+                        'maxFileSize' => 5000000,
+                        'acceptFileTypes' => new JsExpression('/(\.|\/)(gif|jpe?g|png)$/i'),
+                ]); ?>
             </div>
             <div class="card-footer">
                 <?php echo Html::submitButton(
