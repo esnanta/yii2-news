@@ -3,9 +3,11 @@
 namespace backend\modules\content\controllers;
 
 use common\base\BaseController;
-use backend\modules\content\models\search\ArticleSearch;
+// use backend\modules\content\models\search\ArticleSearch;
 use common\models\Article;
 use common\models\ArticleCategory;
+use common\models\search\ArticleSearch;
+use common\service\DataListService;
 use common\traits\FormAjaxValidationTrait;
 use yii\base\ExitException;
 use yii\db\Exception;
@@ -43,6 +45,7 @@ class ArticleController extends BaseController
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'authorOptions' => DataListService::getAuthor(),
         ]);
     }
 
@@ -103,8 +106,6 @@ class ArticleController extends BaseController
     }
 
     /**
-     * @param int $id
-     *
      * @return Article the loaded model
      *
      * @throws NotFoundHttpException if the model cannot be found
