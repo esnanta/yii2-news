@@ -29,7 +29,6 @@ class m260405_100300_add_relations extends Migration
         $this->createIndex('idx-document_category-office_id', '{{%document_category}}', 'office_id');
 
         $this->createIndex('idx-author-office_id', '{{%author}}', 'office_id');
-        $this->createIndex('idx-author-user_id', '{{%author}}', 'user_id');
 
         $this->createIndex('idx-author_social_account-office_id', '{{%author_social_account}}', 'office_id');
         $this->createIndex('idx-author_social_account-author_id', '{{%author_social_account}}', 'author_id');
@@ -44,7 +43,6 @@ class m260405_100300_add_relations extends Migration
         $this->createIndex('idx-employment-office_id', '{{%employment}}', 'office_id');
 
         $this->createIndex('idx-staff-office_id', '{{%staff}}', 'office_id');
-        $this->createIndex('idx-staff-user_id', '{{%staff}}', 'user_id');
         $this->createIndex(
             'idx-staff-employment_id',
             '{{%staff}}',
@@ -91,7 +89,6 @@ class m260405_100300_add_relations extends Migration
         $this->addForeignKey('fk-document_category-office_id', '{{%document_category}}', 'office_id', '{{%office}}', 'id');
 
         $this->addForeignKey('fk-author-office_id', '{{%author}}', 'office_id', '{{%office}}', 'id');
-        $this->addForeignKey('fk-author-user_id', '{{%author}}', 'user_id', '{{%user}}', 'id');
 
         $this->addForeignKey(
             'fk-author_social_account-office_id',
@@ -118,7 +115,6 @@ class m260405_100300_add_relations extends Migration
         $this->addForeignKey('fk-employment-office_id', '{{%employment}}', 'office_id', '{{%office}}', 'id');
 
         $this->addForeignKey('fk-staff-office_id', '{{%staff}}', 'office_id', '{{%office}}', 'id');
-        $this->addForeignKey('fk-staff-user_id', '{{%staff}}', 'user_id', '{{%user}}', 'id');
         $this->addForeignKey('fk-staff-employment_id', '{{%staff}}', 'employment_id', '{{%employment}}', 'id');
 
         $this->addForeignKey(
@@ -157,7 +153,6 @@ class m260405_100300_add_relations extends Migration
         $this->dropForeignKey('fk-staff_social_account-office_id', '{{%staff_social_account}}');
 
         $this->dropForeignKey('fk-staff-employment_id', '{{%staff}}');
-        $this->dropForeignKey('fk-staff-user_id', '{{%staff}}');
         $this->dropForeignKey('fk-staff-office_id', '{{%staff}}');
 
         $this->dropForeignKey('fk-employment-office_id', '{{%employment}}');
@@ -166,7 +161,6 @@ class m260405_100300_add_relations extends Migration
         $this->dropForeignKey('fk-author_social_account-author_id', '{{%author_social_account}}');
         $this->dropForeignKey('fk-author_social_account-office_id', '{{%author_social_account}}');
 
-        $this->dropForeignKey('fk-author-user_id', '{{%author}}');
         $this->dropForeignKey('fk-author-office_id', '{{%author}}');
 
         $this->dropForeignKey('fk-document_category-office_id', '{{%document_category}}');
@@ -186,7 +180,6 @@ class m260405_100300_add_relations extends Migration
         $this->dropIndex('idx-staff_social_account-office_id', '{{%staff_social_account}}');
 
         $this->dropIndex('idx-staff-employment_id', '{{%staff}}');
-        $this->dropIndex('idx-staff-user_id', '{{%staff}}');
         $this->dropIndex('idx-staff-office_id', '{{%staff}}');
 
         $this->dropIndex('idx-employment-office_id', '{{%employment}}');
@@ -196,7 +189,6 @@ class m260405_100300_add_relations extends Migration
         $this->dropIndex('idx-author_social_account-author_id', '{{%author_social_account}}');
         $this->dropIndex('idx-author_social_account-office_id', '{{%author_social_account}}');
 
-        $this->dropIndex('idx-author-user_id', '{{%author}}');
         $this->dropIndex('idx-author-office_id', '{{%author}}');
 
         $this->dropIndex('idx-document_category-office_id', '{{%document_category}}');

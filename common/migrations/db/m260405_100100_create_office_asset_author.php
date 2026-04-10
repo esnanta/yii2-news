@@ -118,7 +118,6 @@ class m260405_100100_create_office_asset_author extends Migration
         $this->createTable('{{%author}}', [
             'id' => $this->primaryKey(),
             'office_id' => $this->integer(),
-            'user_id' => $this->integer(),
             'title' => $this->string(100),
             'phone_number' => $this->string(50),
             'email' => $this->string(100),
@@ -182,7 +181,6 @@ class m260405_100100_create_office_asset_author extends Migration
         $this->createTable('{{%staff}}', [
             'id' => $this->primaryKey(),
             'office_id' => $this->integer(),
-            'user_id' => $this->integer(),
             'employment_id' => $this->integer(),
             'title' => $this->string(100),
             'initial' => $this->string(10)->notNull(),
