@@ -16,9 +16,15 @@ class m260405_100200_alter_article_audit_columns extends Migration
         $this->addColumn('{{%article_category}}', 'updated_by', $this->integer());
         $this->addColumn('{{%article_category}}', 'is_deleted', $this->integer());
         $this->addColumn('{{%article_category}}', 'deleted_at', $this->dateTime());
-        $this->addColumn('{{%article_category}}', 'deleted_by', $this->integer());
+        $this->addColumn('{{%article_category}}', 'deleted_by', $this->integer()->defaultValue(0));
         $this->addColumn('{{%article_category}}', 'verlock', $this->bigInteger());
         $this->addColumn('{{%article_category}}', 'uuid', $this->string(36));
+        $this->update('{{%article_category}}', ['deleted_by' => 0], [
+            'and',
+            ['deleted_by' => null],
+            ['or', ['is_deleted' => null], ['is_deleted' => 0]],
+            ['deleted_at' => null],
+        ]);
 
         $this->convertUnixIntToDateTime('{{%article}}', 'created_at');
         $this->convertUnixIntToDateTime('{{%article}}', 'updated_at');
@@ -26,10 +32,16 @@ class m260405_100200_alter_article_audit_columns extends Migration
 
         $this->addColumn('{{%article}}', 'is_deleted', $this->integer());
         $this->addColumn('{{%article}}', 'deleted_at', $this->dateTime());
-        $this->addColumn('{{%article}}', 'deleted_by', $this->integer());
+        $this->addColumn('{{%article}}', 'deleted_by', $this->integer()->defaultValue(0));
         $this->addColumn('{{%article}}', 'verlock', $this->bigInteger());
         $this->addColumn('{{%article}}', 'uuid', $this->string(36));
         $this->addColumn('{{%article}}', 'author_id', $this->integer()->after('id'));
+        $this->update('{{%article}}', ['deleted_by' => 0], [
+            'and',
+            ['deleted_by' => null],
+            ['or', ['is_deleted' => null], ['is_deleted' => 0]],
+            ['deleted_at' => null],
+        ]);
 
         $this->convertUnixIntToDateTime('{{%article_attachment}}', 'created_at');
 
@@ -38,9 +50,15 @@ class m260405_100200_alter_article_audit_columns extends Migration
         $this->addColumn('{{%article_attachment}}', 'updated_by', $this->integer());
         $this->addColumn('{{%article_attachment}}', 'is_deleted', $this->integer());
         $this->addColumn('{{%article_attachment}}', 'deleted_at', $this->dateTime());
-        $this->addColumn('{{%article_attachment}}', 'deleted_by', $this->integer());
+        $this->addColumn('{{%article_attachment}}', 'deleted_by', $this->integer()->defaultValue(0));
         $this->addColumn('{{%article_attachment}}', 'verlock', $this->bigInteger());
         $this->addColumn('{{%article_attachment}}', 'uuid', $this->string(36));
+        $this->update('{{%article_attachment}}', ['deleted_by' => 0], [
+            'and',
+            ['deleted_by' => null],
+            ['or', ['is_deleted' => null], ['is_deleted' => 0]],
+            ['deleted_at' => null],
+        ]);
     }
 
     /**
