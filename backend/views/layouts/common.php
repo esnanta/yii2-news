@@ -224,12 +224,6 @@ $logEntries[] = [
                             'options' => ['class' => 'nav-header'],
                         ],
                         [
-                            'label' => Yii::t('backend', 'Static pages'),
-                            'url' => ['/content/page/index'],
-                            'icon' => FAS::icon('thumbtack', ['class' => ['nav-icon']]),
-                            'active' => 'page' === Yii::$app->controller->id,
-                        ],
-                        [
                             'label' => Yii::t('backend', 'Editorial'),
                             'url' => '#',
                             'icon' => FAS::icon('newspaper', ['class' => ['nav-icon']]),
@@ -332,6 +326,28 @@ $logEntries[] = [
                             ],
                         ],
                         [
+                            'label' => Yii::t('backend', 'Translation'),
+                            'options' => ['class' => 'nav-header'],
+                            'visible' => DbMessageSource::class === Yii::$app->components['i18n']['translations']['*']['class'],
+                        ],
+                        [
+                            'label' => Yii::t('backend', 'Translation'),
+                            'url' => ['/translation/default/index'],
+                            'icon' => FAS::icon('language', ['class' => ['nav-icon']]),
+                            'active' => ('translation' == Yii::$app->controller->module->id),
+                            'visible' => DbMessageSource::class === Yii::$app->components['i18n']['translations']['*']['class'],
+                        ],
+                        [
+                            'label' => Yii::t('backend', 'System'),
+                            'options' => ['class' => 'nav-header'],
+                        ],
+                        [
+                            'label' => Yii::t('backend', 'Static pages'),
+                            'url' => ['/content/page/index'],
+                            'icon' => FAS::icon('thumbtack', ['class' => ['nav-icon']]),
+                            'active' => 'page' === Yii::$app->controller->id,
+                        ],
+                        [
                             'label' => Yii::t('backend', 'Widgets'),
                             'url' => '#',
                             'icon' => FAS::icon('puzzle-piece', ['class' => ['nav-icon']]),
@@ -363,22 +379,6 @@ $logEntries[] = [
                                     'active' => 'image' === Yii::$app->controller->id,
                                 ],
                             ],
-                        ],
-                        [
-                            'label' => Yii::t('backend', 'Translation'),
-                            'options' => ['class' => 'nav-header'],
-                            'visible' => DbMessageSource::class === Yii::$app->components['i18n']['translations']['*']['class'],
-                        ],
-                        [
-                            'label' => Yii::t('backend', 'Translation'),
-                            'url' => ['/translation/default/index'],
-                            'icon' => FAS::icon('language', ['class' => ['nav-icon']]),
-                            'active' => ('translation' == Yii::$app->controller->module->id),
-                            'visible' => DbMessageSource::class === Yii::$app->components['i18n']['translations']['*']['class'],
-                        ],
-                        [
-                            'label' => Yii::t('backend', 'System'),
-                            'options' => ['class' => 'nav-header'],
                         ],
                         [
                             'label' => Yii::t('backend', 'RBAC Rules'),
