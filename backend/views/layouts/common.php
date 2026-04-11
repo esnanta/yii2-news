@@ -249,12 +249,6 @@ $logEntries[] = [
                                     'icon' => FAR::icon('circle', ['class' => ['nav-icon']]),
                                     'active' => 'author' === Yii::$app->controller->id,
                                 ],
-                                [
-                                    'label' => Yii::t('backend', 'Author Social Accounts'),
-                                    'url' => ['/content/author-social-account/index'],
-                                    'icon' => FAR::icon('circle', ['class' => ['nav-icon']]),
-                                    'active' => 'author-social-account' === Yii::$app->controller->id,
-                                ],
                             ],
                         ],
                         [
@@ -278,12 +272,6 @@ $logEntries[] = [
                                     'active' => 'staff' === Yii::$app->controller->id,
                                 ],
                                 [
-                                    'label' => Yii::t('backend', 'Staff Social Accounts'),
-                                    'url' => ['/content/staff-social-account/index'],
-                                    'icon' => FAR::icon('circle', ['class' => ['nav-icon']]),
-                                    'active' => 'staff-social-account' === Yii::$app->controller->id,
-                                ],
-                                [
                                     'label' => Yii::t('backend', 'Social Platforms'),
                                     'url' => ['/content/social-platform/index'],
                                     'icon' => FAR::icon('circle', ['class' => ['nav-icon']]),
@@ -294,12 +282,6 @@ $logEntries[] = [
                                     'url' => ['/content/office/index'],
                                     'icon' => FAR::icon('circle', ['class' => ['nav-icon']]),
                                     'active' => 'office' === Yii::$app->controller->id,
-                                ],
-                                [
-                                    'label' => Yii::t('backend', 'Office Social Accounts'),
-                                    'url' => ['/content/office-social-account/index'],
-                                    'icon' => FAR::icon('circle', ['class' => ['nav-icon']]),
-                                    'active' => 'office-social-account' === Yii::$app->controller->id,
                                 ],
                             ],
                         ],
