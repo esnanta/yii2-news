@@ -33,6 +33,17 @@ class Article extends BaseArticle
         ];
     }
 
+    /**
+     * @return array pinning options
+     */
+    public static function pinnedOptions(): array
+    {
+        return [
+            1 => \Yii::t('common', 'Yes'),
+            0 => \Yii::t('common', 'No'),
+        ];
+    }
+
     public function behaviors(): array
     {
         return [
@@ -76,12 +87,13 @@ class Article extends BaseArticle
         return [
             [['attachments', 'thumbnail'], 'safe'],
             [['author_id', 'category_id', 'status',
-                'created_by', 'updated_by', 'is_deleted',
+                'created_by', 'updated_by', 'is_pinned', 'is_deleted',
                 'deleted_by', 'verlock'], 'integer'],
             [['slug', 'title', 'body'], 'required'],
             [['body'], 'string'],
             [['created_at', 'updated_at', 'deleted_at'], 'safe'],
-            [['published_at'], 'date', 'format' => 'php:Y-m-d'],
+            [['published_at'], 'filter', 'filter' => fn ($value) => $this->normalizeDateTimeInput($value)],
+            [['published_at'], 'date', 'format' => 'php:Y-m-d H:i:s'],
             [['slug', 'view'], 'string', 'max' => 255],
             [['title'], 'string', 'max' => 512],
             [['thumbnail_base_url', 'thumbnail_path'], 'string', 'max' => 1024],
@@ -104,8 +116,9 @@ class Article extends BaseArticle
             'category_id' => \Yii::t('common', 'Category'),
             'thumbnail_base_url' => \Yii::t('common', 'Thumbnail'),
             'thumbnail_path' => \Yii::t('common', 'Thumbnail Path'),
-            'status' => \Yii::t('common', 'Status'),
+            'status' => \Yii::t('common', 'Published'),
             'published_at' => \Yii::t('common', 'Published At'),
+            'is_pinned' => \Yii::t('common', 'Pinned'),
             'is_deleted' => \Yii::t('common', 'Is Deleted'),
             'verlock' => \Yii::t('common', 'Verlock'),
             'uuid' => \Yii::t('common', 'Uuid'),
@@ -124,14 +137,15 @@ class Article extends BaseArticle
                 && ('' === $values['attachments'] || null === $values['attachments'])) {
                 $values['attachments'] = [];
             }
+
+            if (array_key_exists('published_at', $values)) {
+                $values['published_at'] = $this->normalizeDateTimeInput($values['published_at']);
+            }
         }
 
         parent::setAttributes($values, $safeOnly);
     }
 
-    /**
-     * @return ActiveQuery
-     */
     public function getUpdater(): ActiveQuery
     {
         return $this->getUpdatedBy();
@@ -145,5 +159,22 @@ class Article extends BaseArticle
         $query = new ArticleQuery(get_called_class());
 
         return $query->where(['t_article.is_deleted' => 0]);
+    }
+
+    /**
+     * Normalizes datetime input coming from HTML datetime-local fields.
+     */
+    private function normalizeDateTimeInput(?string $value): ?string
+    {
+        if (null === $value || '' === $value) {
+            return $value;
+        }
+
+        $normalized = str_replace('T', ' ', trim($value));
+        if (1 === preg_match('/^\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}$/', $normalized)) {
+            $normalized .= ':00';
+        }
+
+        return $normalized;
     }
 }

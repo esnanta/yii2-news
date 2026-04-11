@@ -1,6 +1,6 @@
 <?php
 
-use kartik\date\DatePicker;
+use kartik\datetime\DateTimePicker;
 use kartik\widgets\Select2;
 use rmrevin\yii\fontawesome\FAS;
 use trntv\filekit\widget\Upload;
@@ -9,7 +9,7 @@ use yii\helpers\Html;
 use yii\imperavi\Widget;
 use yii\web\JsExpression;
 
-/**
+/*
  * @var yii\web\View $this
  * @var common\models\Article $model
  * @var array $authorOptions
@@ -37,7 +37,8 @@ use yii\web\JsExpression;
 
             <?php echo $form->field($model, 'slug')
                 ->hint(Yii::t('backend', 'If you leave this field empty, the slug will be generated automatically'))
-                ->textInput(['maxlength' => true]); ?>
+                ->textInput(['maxlength' => true])
+; ?>
 
             <?php echo $form->field($model, 'category_id')->dropDownList(
                 $categoryOptions,
@@ -58,6 +59,10 @@ use yii\web\JsExpression;
                     ],
                 ]
             ); ?>
+
+            <?php echo $form->field($model, 'status')->checkbox(); ?>
+
+            <?php echo $form->field($model, 'is_pinned')->checkbox(); ?>
 
             <?php echo $form->field($model, 'thumbnail')->widget(
                 Upload::class,
@@ -80,17 +85,15 @@ use yii\web\JsExpression;
 
             <?php echo $form->field($model, 'view')->textInput(['maxlength' => true]); ?>
 
-            <?php echo $form->field($model, 'status')->checkbox(); ?>
-
             <div class="border border-secondary rounded p-1" style="width:320px">
                 <?php echo $form->field($model, 'published_at')->widget(
-                    DatePicker::class,
+                    DateTimePicker::class,
                     [
-                        'type' => DatePicker::TYPE_INLINE,
+                        'type' => DateTimePicker::TYPE_INLINE,
                         'pluginOptions' => [
-                            'format' => 'yyyy-mm-dd',
-                            'todayHighlight' => true,
-                            'autoclose' => true,
+                            'format' => 'yyyy-mm-dd hh:ii',
+                            'showMeridian' => true,
+                            'todayBtn' => true,
                         ],
                     ]
                 ); ?>

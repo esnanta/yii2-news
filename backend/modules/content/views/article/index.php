@@ -108,23 +108,24 @@ $this->params['breadcrumbs'][] = $this->title;
                     ),
                 ],
                 [
+                    'class' => EnumColumn::class,
+                    'attribute' => 'is_pinned',
+                    'options' => ['style' => 'width: 8%'],
+                    'enum' => Article::pinnedOptions(),
+                    'filter' => Html::activeDropDownList(
+                        $searchModel,
+                        'is_pinned',
+                        Article::pinnedOptions(),
+                        ['class' => 'form-control', 'prompt' => Yii::t('backend', 'All')]
+                    ),
+                ],
+                [
                     'attribute' => 'published_at',
                     'options' => ['style' => 'width: 12%'],
-                    'format' => ['date', 'php:d-m-Y'],
+                    'format' => ['datetime', 'php:d-m-Y H:i'],
                     'contentOptions' => ['style' => 'white-space: nowrap;'],
-                    'filter' => DatePicker::widget([
-                        'model' => $searchModel,
-                        'attribute' => 'published_at',
-                        'type' => DatePicker::TYPE_INPUT,
-                        'options' => [
-                            'placeholder' => Yii::t('backend', 'Date'),
-                        ],
-                        'pluginOptions' => [
-                            'format' => 'dd-mm-yyyy',
-                            'todayHighlight' => true,
-                            'autoclose' => true,
-                            'endDate' => '0d',
-                        ],
+                    'filter' => Html::activeInput('datetime-local', $searchModel, 'published_at', [
+                        'class' => 'form-control',
                     ]),
                 ],
                 [

@@ -37,7 +37,7 @@ class ArticleController extends BaseController
         $searchModel = new ArticleSearch();
         $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
         $dataProvider->sort = [
-            'defaultOrder' => ['published_at' => SORT_DESC],
+            'defaultOrder' => ['is_pinned' => SORT_DESC, 'published_at' => SORT_DESC],
         ];
 
         return $this->render('index', [

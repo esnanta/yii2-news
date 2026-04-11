@@ -3,12 +3,13 @@
 namespace frontend\controllers;
 
 use common\models\Article;
-use common\models\ArticleCategory;
 use common\models\ArticleAttachment;
+use common\models\ArticleCategory;
 use frontend\models\search\ArticleSearch;
-use Yii;
 use yii\web\Controller;
+use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 /**
  * @author Eugene Terentev <eugene@terentev.net>
@@ -24,12 +25,12 @@ class ArticleController extends Controller
     public function actionIndex()
     {
         $searchModel = new ArticleSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
         $dataProvider->sort = [
-            'defaultOrder' => ['published_at' => SORT_DESC]
+            'defaultOrder' => ['is_pinned' => SORT_DESC, 'published_at' => SORT_DESC],
         ];
         $dataProvider->pagination = [
-            'pageSize' => self::POSTS_PER_PAGE
+            'pageSize' => self::POSTS_PER_PAGE,
         ];
 
         return $this->render('index', [
@@ -41,18 +42,23 @@ class ArticleController extends Controller
     }
 
     /**
-     * @param $slug
      * @return string
+     *
      * @throws NotFoundHttpException
      */
     public function actionView($slug)
     {
         $model = Article::find()->published()->andWhere(['slug' => $slug])->one();
         if (!$model) {
-            throw new NotFoundHttpException;
+            throw new NotFoundHttpException();
         }
 
+        // Keep this atomic to avoid race conditions on concurrent reads.
+        $model->updateCounters(['view_count' => 1]);
+        ++$model->view_count;
+
         $viewFile = $model->view ?: 'view';
+
         return $this->render($viewFile, [
             'model' => $model,
             'archive' => Article::find()->getFullArchive()->limit(self::ARCHIVE_MONTHS_COUNT)->asArray()->all(),
@@ -61,20 +67,18 @@ class ArticleController extends Controller
     }
 
     /**
-     * @param $id
-     * @return string
      * @throws NotFoundHttpException
-     * @throws \yii\web\HttpException
+     * @throws HttpException
      */
-    public function actionAttachmentDownload($id)
+    public function actionAttachmentDownload($id): Response
     {
         $model = ArticleAttachment::findOne($id);
         if (!$model) {
-            throw new NotFoundHttpException;
+            throw new NotFoundHttpException();
         }
 
-        return Yii::$app->response->sendStreamAsFile(
-            Yii::$app->fileStorage->getFilesystem()->readStream($model->path),
+        return \Yii::$app->response->sendStreamAsFile(
+            \Yii::$app->fileStorage->getFilesystem()->readStream($model->path),
             $model->name
         );
     }

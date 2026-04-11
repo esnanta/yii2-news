@@ -47,7 +47,7 @@ class ArticleCategoryQuery extends ActiveQuery
             new Expression('COUNT(*) AS [[articlesCount]]'),
         ]);
         $this->andWhere(['{{%article}}.[[status]]' => Article::STATUS_PUBLISHED]);
-        $this->andWhere(['<=', '{{%article}}.[[published_at]]', date('Y-m-d')]);
+        $this->andWhere(['<=', '{{%article}}.[[published_at]]', date('Y-m-d H:i:s')]);
         $this->active();
         $this->groupBy('{{%article}}.[[category_id]]');
         $this->orderBy('{{%article_category}}.[[title]] ASC');

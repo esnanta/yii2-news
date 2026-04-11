@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <p class="lead">
             <?php echo Yii::t('frontend', 'by {author} on {published_at} in {category}', [
-                'published_at' => Yii::$app->formatter->asDate($model->published_at),
+                'published_at' => Yii::$app->formatter->asDatetime($model->published_at, 'php:d M Y H:i'),
                 'author' => $model->author->getPublicIdentity(),
                 'category' => Html::a(
                     Html::encode($model->category->title),
@@ -66,8 +66,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     <li>
                         <?php echo Html::a(
                             Html::encode($attachment->name),
-                            ['attachment-download', 'id' => $attachment->id]);
-                    ?>
+                            ['attachment-download', 'id' => $attachment->id]
+                        ); ?>
                         (<?php echo Yii::$app->formatter->asSize($attachment->size); ?>)
                     </li>
                 <?php } ?>
