@@ -33,10 +33,6 @@ use yii\bootstrap4\ActiveForm;
     <?php // echo $form->field($model, 'type') ?>
     <?php // echo $form->field($model, 'size') ?>
     <?php // echo $form->field($model, 'email') ?>
-    <?php // echo $form->field($model, 'google_plus') ?>
-    <?php // echo $form->field($model, 'instagram') ?>
-    <?php // echo $form->field($model, 'facebook') ?>
-    <?php // echo $form->field($model, 'twitter') ?>
     <?php // echo $form->field($model, 'description') ?>
     <?php // echo $form->field($model, 'created_at') ?>
     <?php // echo $form->field($model, 'updated_at') ?>

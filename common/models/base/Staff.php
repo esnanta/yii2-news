@@ -32,10 +32,6 @@ use yii\db\ActiveQuery;
  * @property string               $type
  * @property int                  $size
  * @property string               $email
- * @property string               $google_plus
- * @property string               $instagram
- * @property string               $facebook
- * @property string               $twitter
  * @property string               $description
  * @property string               $created_at
  * @property string               $updated_at
@@ -94,9 +90,7 @@ class Staff extends BaseActiveRecord
             [['initial'], 'required'],
             [['address', 'description'], 'string'],
             [['created_at', 'updated_at', 'deleted_at'], 'safe'],
-            [['title', 'identity_number', 'email',
-                'google_plus', 'instagram', 'facebook',
-                'twitter'], 'string', 'max' => 100],
+            [['title', 'identity_number', 'email'], 'string', 'max' => 100],
             [['initial'], 'string', 'max' => 10],
             [['phone_number'], 'string', 'max' => 50],
             [['base_url', 'path', 'name', 'type'], 'string', 'max' => 255],
@@ -140,10 +134,6 @@ class Staff extends BaseActiveRecord
             'type' => \Yii::t('common', 'Type'),
             'size' => \Yii::t('common', 'Size'),
             'email' => \Yii::t('common', 'Email'),
-            'google_plus' => \Yii::t('common', 'Google Plus'),
-            'instagram' => \Yii::t('common', 'Instagram'),
-            'facebook' => \Yii::t('common', 'Facebook'),
-            'twitter' => \Yii::t('common', 'Twitter'),
             'description' => \Yii::t('common', 'Description'),
             'is_deleted' => \Yii::t('common', 'Is Deleted'),
             'verlock' => \Yii::t('common', 'Verlock'),

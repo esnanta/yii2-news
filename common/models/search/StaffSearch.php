@@ -15,7 +15,7 @@ class StaffSearch extends Staff
     {
         return [
             [['id', 'office_id', 'employment_id', 'gender_status', 'active_status', 'size', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
-            [['title', 'initial', 'identity_number', 'phone_number', 'address', 'base_url', 'path', 'name', 'type', 'email', 'google_plus', 'instagram', 'facebook', 'twitter', 'description', 'created_at', 'updated_at', 'deleted_at', 'uuid'], 'safe'],
+            [['title', 'initial', 'identity_number', 'phone_number', 'address', 'base_url', 'path', 'name', 'type', 'email', 'description', 'created_at', 'updated_at', 'deleted_at', 'uuid'], 'safe'],
         ];
     }
 
@@ -69,10 +69,6 @@ class StaffSearch extends Staff
             ->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'type', $this->type])
             ->andFilterWhere(['like', 'email', $this->email])
-            ->andFilterWhere(['like', 'google_plus', $this->google_plus])
-            ->andFilterWhere(['like', 'instagram', $this->instagram])
-            ->andFilterWhere(['like', 'facebook', $this->facebook])
-            ->andFilterWhere(['like', 'twitter', $this->twitter])
             ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'uuid', $this->uuid])
         ;
