@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                     [
                         'attribute' => 'employment_id',
-                        'label' => Yii::t('backend', 'Employment'),
+                        'label' => Yii::t('backend', 'JobTitle'),
                         'value' => static function ($model) use ($employmentOptions) {
                             return $employmentOptions[$model->employment_id] ?? '-';
                         },

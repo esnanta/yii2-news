@@ -7,7 +7,7 @@ use common\models\Author;
 use common\models\AuthorSocialAccount;
 use common\models\Document;
 use common\models\DocumentCategory;
-use common\models\Employment;
+use common\models\JobTitle;
 use common\models\OfficeSocialAccount;
 use common\models\query\OfficeQuery;
 use common\models\Staff;
@@ -45,7 +45,7 @@ use yii\db\ActiveQuery;
  * @property AuthorSocialAccount[] $authorSocialAccounts
  * @property Document[]            $documents
  * @property DocumentCategory[]    $documentCategories
- * @property Employment[]          $employments
+ * @property JobTitle[]          $employments
  * @property OfficeSocialAccount[] $officeSocialAccounts
  * @property Staff[]               $staff
  * @property StaffSocialAccount[]  $staffSocialAccounts
@@ -161,7 +161,7 @@ class Office extends BaseActiveRecord
 
     public function getEmployments(): ActiveQuery
     {
-        return $this->hasMany(Employment::class, ['office_id' => 'id']);
+        return $this->hasMany(JobTitle::class, ['office_id' => 'id']);
     }
 
     public function getOfficeSocialAccounts(): ActiveQuery

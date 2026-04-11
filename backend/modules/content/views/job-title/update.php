@@ -2,12 +2,12 @@
 
 /**
  * @var yii\web\View $this
- * @var common\models\Employment $model
+ * @var common\models\JobTitle $model
  * @var array $officeOptions
  */
 
 $this->title = Yii::t('backend', 'Update {modelClass}: ', [
-    'modelClass' => 'Employment',
+    'modelClass' => 'JobTitle',
 ]) . ' ' . $model->title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Employments'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];

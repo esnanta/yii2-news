@@ -5,7 +5,7 @@ use yii\bootstrap4\ActiveForm;
 
 /**
  * @var yii\web\View $this
- * @var common\models\Employment $model
+ * @var common\models\JobTitle $model
  * @var array $officeOptions
  * @var yii\bootstrap4\ActiveForm $form
  */

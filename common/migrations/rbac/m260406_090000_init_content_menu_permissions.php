@@ -23,7 +23,7 @@ class m260406_090000_init_content_menu_permissions extends Migration
         'authorSocialAccount',
         'document',
         'documentCategory',
-        'employment',
+        'jobTitle',
         'office',
         'officeSocialAccount',
         'socialPlatform',

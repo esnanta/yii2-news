@@ -2,16 +2,16 @@
 
 namespace common\models\query;
 
-use common\models\Employment;
+use common\models\JobTitle;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
- * This is the ActiveQuery class for [Employment].
+ * This is the ActiveQuery class for [JobTitle].
  *
- * @see Employment
+ * @see JobTitle
  */
-class EmploymentQuery extends ActiveQuery
+class JobTitleQuery extends ActiveQuery
 {
     /*public function active()
     {
@@ -20,8 +20,7 @@ class EmploymentQuery extends ActiveQuery
     }*/
 
     /**
-     * @inheritdoc
-     * @return Employment[]|array
+     * @return array|JobTitle[]
      */
     public function all($db = null): array
     {
@@ -29,8 +28,7 @@ class EmploymentQuery extends ActiveQuery
     }
 
     /**
-     * @inheritdoc
-     * @return array|ActiveRecord|null
+     * @return null|ActiveRecord|array
      */
     public function one($db = null)
     {

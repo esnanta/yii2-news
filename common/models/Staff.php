@@ -89,7 +89,7 @@ class Staff extends BaseStaff
         return [
             'id' => \Yii::t('common', 'ID'),
             'office_id' => \Yii::t('common', 'Office'),
-            'employment_id' => \Yii::t('common', 'Employment'),
+            'employment_id' => \Yii::t('common', 'JobTitle'),
             'title' => \Yii::t('common', 'Title'),
             'initial' => \Yii::t('common', 'Initial'),
             'identity_number' => \Yii::t('common', 'Identity Number'),

@@ -5,7 +5,7 @@ namespace common\service;
 use common\models\ArticleCategory;
 use common\models\Author;
 use common\models\DocumentCategory;
-use common\models\Employment;
+use common\models\JobTitle;
 use common\models\Office;
 use common\models\Page;
 use common\models\SocialPlatform;
@@ -40,7 +40,7 @@ class DataListService
 
     public static function getEmployment(): array
     {
-        return ArrayHelper::map(Employment::find()
+        return ArrayHelper::map(JobTitle::find()
             ->asArray()->all(), 'id', 'title');
     }
 

@@ -6,7 +6,7 @@ use rmrevin\yii\fontawesome\FAS;
 
 /**
  * @var yii\web\View $this
- * @var common\models\search\EmploymentSearch $searchModel
+ * @var common\models\search\JobTitleSearch $searchModel
  * @var yii\data\ActiveDataProvider $dataProvider
  * @var array $officeOptions
  */
@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="card">
         <div class="card-header">
             <?php echo Html::a(FAS::icon('user-plus').' '.Yii::t('backend', 'Add New {modelClass}', [
-                'modelClass' => 'Employment',
+                'modelClass' => 'JobTitle',
             ]), ['create'], ['class' => 'btn btn-success']); ?>
         </div>
 

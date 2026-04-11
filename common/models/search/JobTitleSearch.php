@@ -2,14 +2,14 @@
 
 namespace common\models\search;
 
-use common\models\Employment;
+use common\models\JobTitle;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * EmploymentSearch represents the model behind the search form about `common\models\Employment`.
+ * JobTitleSearch represents the model behind the search form about `common\models\JobTitle`.
  */
-class EmploymentSearch extends Employment
+class JobTitleSearch extends JobTitle
 {
     public function rules(): array
     {
@@ -30,7 +30,7 @@ class EmploymentSearch extends Employment
      */
     public function search(array $params): ActiveDataProvider
     {
-        $query = Employment::find();
+        $query = JobTitle::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

@@ -2,13 +2,13 @@
 
 namespace common\models;
 
-use common\models\base\Employment as BaseEmployment;
-use common\models\query\EmploymentQuery;
+use common\models\base\JobTitle as BaseEmployment;
+use common\models\query\JobTitleQuery;
 
 /**
  * This is the model class for table "t_employment".
  */
-class Employment extends BaseEmployment
+class JobTitle extends BaseEmployment
 {
     public function rules(): array
     {
@@ -40,11 +40,11 @@ class Employment extends BaseEmployment
         ];
     }
     /**
-     * @return EmploymentQuery the active query used by this AR class
+     * @return JobTitleQuery the active query used by this AR class
      */
-    public static function find(): EmploymentQuery
+    public static function find(): JobTitleQuery
     {
-        $query = new EmploymentQuery(get_called_class());
+        $query = new JobTitleQuery(get_called_class());
 
         return $query->where(['t_employment.is_deleted' => 0]);
     }

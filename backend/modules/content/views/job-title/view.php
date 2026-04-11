@@ -5,14 +5,14 @@ use yii\widgets\DetailView;
 
 /**
  * @var yii\web\View $this
- * @var common\models\Employment $model
+ * @var common\models\JobTitle $model
  */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Employments'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Job Titles'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="employment-view">
+<div class="job-title-view">
     <div class="card">
         <div class="card-header">
             <?php echo Html::a(Yii::t('backend', 'Update'), ['update', 'id' => $model->id], [

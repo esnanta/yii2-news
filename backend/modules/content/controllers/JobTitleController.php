@@ -3,8 +3,8 @@
 namespace backend\modules\content\controllers;
 
 use common\base\BaseController;
-use common\models\Employment;
-use common\models\search\EmploymentSearch;
+use common\models\JobTitle;
+use common\models\search\JobTitleSearch;
 use common\service\DataListService;
 use yii\db\Exception;
 use yii\filters\VerbFilter;
@@ -13,9 +13,9 @@ use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 /**
- * EmploymentController implements the CRUD actions for the Employment model.
+ * JobTitleController implements the CRUD actions for the JobTitle model.
  */
-class EmploymentController extends BaseController
+class JobTitleController extends BaseController
 {
     public function behaviors(): array
     {
@@ -30,15 +30,15 @@ class EmploymentController extends BaseController
     }
 
     /**
-     * Lists all Employment models.
+     * Lists all JobTitle models.
      *
      * @throws ForbiddenHttpException
      */
     public function actionIndex(): string
     {
-        $this->checkAccess('employment.index');
+        $this->checkAccess('jobTitle.index');
 
-        $searchModel = new EmploymentSearch();
+        $searchModel = new JobTitleSearch();
         $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -49,7 +49,7 @@ class EmploymentController extends BaseController
     }
 
     /**
-     * Displays a single Employment model.
+     * Displays a single JobTitle model.
      *
      * @param int $id ID
      *
@@ -58,7 +58,7 @@ class EmploymentController extends BaseController
      */
     public function actionView(int $id): string
     {
-        $this->checkAccess('employment.view');
+        $this->checkAccess('jobTitle.view');
 
         return $this->render('view', [
             'model' => $this->findModel($id),
@@ -67,7 +67,7 @@ class EmploymentController extends BaseController
     }
 
     /**
-     * Creates a new Employment model.
+     * Creates a new JobTitle model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      *
      * @throws ForbiddenHttpException
@@ -75,9 +75,9 @@ class EmploymentController extends BaseController
      */
     public function actionCreate(): Response|string
     {
-        $this->checkAccess('employment.create');
+        $this->checkAccess('jobTitle.create');
 
-        $model = new Employment();
+        $model = new JobTitle();
 
         if ($model->loadSafely(\Yii::$app->request->post())
             && $model->saveSafely()
@@ -92,7 +92,7 @@ class EmploymentController extends BaseController
     }
 
     /**
-     * Updates an existing Employment model.
+     * Updates an existing JobTitle model.
      * If update is successful, the browser will be redirected to the 'view' page.
      *
      * @param int $id ID
@@ -103,7 +103,7 @@ class EmploymentController extends BaseController
      */
     public function actionUpdate(int $id): Response|string
     {
-        $this->checkAccess('employment.update');
+        $this->checkAccess('jobTitle.update');
 
         $model = $this->findModel($id);
 
@@ -120,7 +120,7 @@ class EmploymentController extends BaseController
     }
 
     /**
-     * Deletes an existing Employment model.
+     * Deletes an existing JobTitle model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      *
      * @param int $id ID
@@ -131,25 +131,25 @@ class EmploymentController extends BaseController
     public function actionDelete(int $id): Response
     {
         $model = $this->findModel($id);
-        $this->checkAccess('employment.delete');
+        $this->checkAccess('jobTitle.delete');
         $model->deleteSafely();
 
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Employment model based on its primary key value.
+     * Finds the JobTitle model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      *
      * @param int $id ID
      *
-     * @return Employment the loaded model
+     * @return JobTitle the loaded model
      *
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel(int $id): Employment
+    protected function findModel(int $id): JobTitle
     {
-        if (($model = Employment::findOne($id)) !== null) {
+        if (($model = JobTitle::findOne($id)) !== null) {
             return $model;
         }
 

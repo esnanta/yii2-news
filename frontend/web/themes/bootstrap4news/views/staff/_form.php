@@ -35,7 +35,7 @@ use yii\web\JsExpression;
             ],            
             
             'employment_id' => ['type' => Form::INPUT_DROPDOWN_LIST, 
-                'options' => ['id' => 'employment_id', 'prompt' => 'Select Employment...'],
+                'options' => ['id' => 'employment_id', 'prompt' => 'Select JobTitle...'],
                 'items' => $employmentList,
             ],                 
             

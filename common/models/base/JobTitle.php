@@ -4,7 +4,7 @@ namespace common\models\base;
 
 use common\base\BaseActiveRecord;
 use common\models\Office;
-use common\models\query\EmploymentQuery;
+use common\models\query\JobTitleQuery;
 use common\models\Staff;
 use mootensai\behaviors\UUIDBehavior;
 use mootensai\relation\RelationTrait;
@@ -32,7 +32,7 @@ use yii\db\ActiveQuery;
  * @property Office  $office
  * @property Staff[] $staff
  */
-class Employment extends BaseActiveRecord
+class JobTitle extends BaseActiveRecord
 {
     use RelationTrait;
 
@@ -164,11 +164,11 @@ class Employment extends BaseActiveRecord
      */
 
     /**
-     * @return EmploymentQuery the active query used by this AR class
+     * @return JobTitleQuery the active query used by this AR class
      */
-    public static function find(): EmploymentQuery
+    public static function find(): JobTitleQuery
     {
-        $query = new EmploymentQuery(get_called_class());
+        $query = new JobTitleQuery(get_called_class());
 
         return $query->where(['t_employment.deleted_by' => 0]);
     }

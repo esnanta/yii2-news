@@ -3,7 +3,7 @@
 namespace common\models\base;
 
 use common\base\BaseActiveRecord;
-use common\models\Employment;
+use common\models\JobTitle;
 use common\models\Office;
 use common\models\query\StaffQuery;
 use common\models\StaffSocialAccount;
@@ -42,7 +42,7 @@ use yii\db\ActiveQuery;
  * @property int                  $deleted_by
  * @property int                  $verlock
  * @property string               $uuid
- * @property Employment           $employment
+ * @property JobTitle           $job-title
  * @property Office               $office
  * @property StaffSocialAccount[] $staffSocialAccounts
  */
@@ -74,7 +74,7 @@ class Staff extends BaseActiveRecord
     public function relationNames(): array
     {
         return [
-            'employment',
+            'job-title',
             'office',
             'staffSocialAccounts',
         ];
@@ -120,7 +120,7 @@ class Staff extends BaseActiveRecord
         return [
             'id' => \Yii::t('common', 'ID'),
             'office_id' => \Yii::t('common', 'Office ID'),
-            'employment_id' => \Yii::t('common', 'Employment ID'),
+            'employment_id' => \Yii::t('common', 'JobTitle ID'),
             'title' => \Yii::t('common', 'Title'),
             'initial' => \Yii::t('common', 'Initial'),
             'identity_number' => \Yii::t('common', 'Identity Number'),
@@ -143,7 +143,7 @@ class Staff extends BaseActiveRecord
 
     public function getEmployment(): ActiveQuery
     {
-        return $this->hasOne(Employment::class, ['id' => 'employment_id']);
+        return $this->hasOne(JobTitle::class, ['id' => 'employment_id']);
     }
 
     public function getOffice(): ActiveQuery
