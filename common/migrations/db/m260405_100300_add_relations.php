@@ -9,6 +9,8 @@ class m260405_100300_add_relations extends Migration
      */
     public function safeUp()
     {
+        $this->dropLegacySocialPlatformOfficeRelation();
+
         // Add indexes first to support foreign-key creation.
         $this->createIndex('idx-article-author_id', '{{%article}}', 'author_id');
 
@@ -138,6 +140,25 @@ class m260405_100300_add_relations extends Migration
             '{{%social_platform}}',
             'id'
         );
+    }
+
+    /**
+     * Removes legacy `office_id` ownership from social_platform if it exists in older schemas.
+     */
+    private function dropLegacySocialPlatformOfficeRelation(): void
+    {
+        $tableSchema = $this->db->schema->getTableSchema('{{%social_platform}}', true);
+        if ($tableSchema === null || !isset($tableSchema->columns['office_id'])) {
+            return;
+        }
+
+        foreach ($tableSchema->foreignKeys as $name => $foreignKey) {
+            if (is_string($name) && is_array($foreignKey) && array_key_exists('office_id', $foreignKey)) {
+                $this->dropForeignKey($name, '{{%social_platform}}');
+            }
+        }
+
+        $this->dropColumn('{{%social_platform}}', 'office_id');
     }
 
     /**

@@ -33,6 +33,7 @@ class m260405_100100_create_office_asset_author extends Migration
             'uuid' => $this->string(36),
         ]);
 
+        // `social_platform` is a global master table (no direct `office_id` ownership).
         $this->createTable('{{%social_platform}}', [
             'id' => $this->primaryKey(),
             'code' => $this->string(50)->notNull(),
