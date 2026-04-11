@@ -1,6 +1,7 @@
 <?php
 
 use trntv\filekit\widget\Upload;
+use common\models\Staff;
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
 use yii\web\JsExpression;
@@ -22,7 +23,7 @@ use yii\web\JsExpression;
 
                 <?php echo $form->field($model, 'office_id')->dropDownList(
                     $officeOptions,
-                    ['prompt' => Yii::t('backend', 'Select office')]
+                    ['prompt' => Yii::t('backend', '')]
                 ); ?>
                 <?php echo $form->field($model, 'employment_id')->dropDownList(
                     $employmentOptions,
@@ -32,8 +33,14 @@ use yii\web\JsExpression;
                 <?php echo $form->field($model, 'initial')->textInput(['maxlength' => true]) ?>
                 <?php echo $form->field($model, 'identity_number')->textInput(['maxlength' => true]) ?>
                 <?php echo $form->field($model, 'phone_number')->textInput(['maxlength' => true]) ?>
-                <?php echo $form->field($model, 'gender_status')->textInput() ?>
-                <?php echo $form->field($model, 'active_status')->textInput() ?>
+                <?php echo $form->field($model, 'gender')->dropDownList(
+                    Staff::genders(),
+                    ['prompt' => Yii::t('backend', '')]
+                ) ?>
+                <?php echo $form->field($model, 'status')->dropDownList(
+                    Staff::statuses(),
+                    ['prompt' => Yii::t('backend', '')]
+                ) ?>
                 <?php echo $form->field($model, 'address')->textarea(['rows' => 6]) ?>
                 <?php echo $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
                 <?php echo $form->field($model, 'description')->textarea(['rows' => 6]) ?>

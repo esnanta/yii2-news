@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Staff;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use common\service\FileDisplayService;
@@ -50,8 +51,18 @@ $this->params['breadcrumbs'][] = $this->title;
                     'initial',
                     'identity_number',
                     'phone_number',
-                    'gender_status',
-                    'active_status',
+                    [
+                        'attribute' => 'gender',
+                        'value' => static function ($model) {
+                            return Staff::genders()[$model->gender] ?? '-';
+                        },
+                    ],
+                    [
+                        'attribute' => 'status',
+                        'value' => static function ($model) {
+                            return Staff::statuses()[$model->status] ?? '-';
+                        },
+                    ],
                     'address:ntext',
                     [
                         'label' => Yii::t('backend', 'Photo'),

@@ -67,7 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'gender',
                         'value' => function ($model) {
-                            return $model->genders()[$model->status] ?? '';
+                            return $model->genders()[$model->gender] ?? '';
                         },
                         'filter' => Staff::genders(),
                     ],
