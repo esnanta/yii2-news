@@ -28,7 +28,7 @@ class m260405_100200_alter_article_audit_columns extends Migration
 
         $this->convertUnixIntToDateTime('{{%article}}', 'created_at');
         $this->convertUnixIntToDateTime('{{%article}}', 'updated_at');
-        $this->convertUnixIntToDate('{{%article}}', 'published_at');
+        $this->convertUnixIntToDateTime('{{%article}}', 'published_at');
 
         $this->addColumn('{{%article}}', 'is_deleted', $this->integer()->notNull()->defaultValue(0));
         $this->addColumn('{{%article}}', 'deleted_at', $this->dateTime());
@@ -85,7 +85,7 @@ class m260405_100200_alter_article_audit_columns extends Migration
         $this->dropColumn('{{%article}}', 'is_deleted');
         $this->dropColumn('{{%article}}', 'author_id');
 
-        $this->convertDateToUnixInt('{{%article}}', 'published_at');
+        $this->convertDateTimeToUnixInt('{{%article}}', 'published_at');
         $this->convertDateTimeToUnixInt('{{%article}}', 'updated_at');
         $this->convertDateTimeToUnixInt('{{%article}}', 'created_at');
 
