@@ -43,15 +43,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         'options' => ['style' => 'width: 5%'],
                         'contentOptions' => ['style' => 'white-space: nowrap;'],
                     ],
-//                    [
-//                        'attribute' => 'id',
-//                        'options' => ['style' => 'width: 8%'],
-//                        'contentOptions' => ['style' => 'white-space: nowrap;'],
-//                    ],
                     [
                         'attribute' => 'office_id',
                         'label' => Yii::t('backend', 'Office'),
-                        'options' => ['style' => 'width: 22%'],
+                        'options' => ['style' => 'width: 25%'],
                         'value' => function ($model) {
                             if ($model->office_id) {
                                 return $model->office->title;
@@ -72,7 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                     [
                         'attribute' => 'title',
-                        'options' => ['style' => 'width: 40%'],
+                        'options' => ['style' => 'width: 45%'],
                         'contentOptions' => ['style' => 'white-space: normal; word-break: break-word;'],
                     ],
                     [

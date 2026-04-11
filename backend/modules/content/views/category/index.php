@@ -36,16 +36,19 @@ $this->params['breadcrumbs'][] = $this->title;
                 'class' => ['gridview', 'table-responsive'],
             ],
             'tableOptions' => [
-                'class' => ['table', 'text-nowrap', 'table-striped', 'table-bordered', 'mb-0'],
+                'class' => ['table', 'table-striped', 'table-bordered', 'mb-0', 'table-sm'],
+                'style' => 'width: 100%; table-layout: fixed;',
             ],
             'columns' => [
                 [
                     'attribute' => 'id',
                     'options' => ['style' => 'width: 5%'],
+                    'contentOptions' => ['style' => 'white-space: nowrap;'],
                 ],
                 [
                     'attribute' => 'slug',
                     'options' => ['style' => 'width: 15%'],
+                    'contentOptions' => ['style' => 'white-space: nowrap; overflow: hidden; text-overflow: ellipsis;'],
                 ],
                 [
                     'attribute' => 'title',
@@ -53,13 +56,16 @@ $this->params['breadcrumbs'][] = $this->title;
                         return Html::a(Html::encode($model->title), ['update', 'id' => $model->id]);
                     },
                     'format' => 'raw',
+                    'contentOptions' => ['style' => 'white-space: normal; word-break: break-word;'],
                 ],
                 [
                     'attribute' => 'parent_id',
+                    'options' => ['style' => 'width: 20%'],
                     'value' => static function (ArticleCategory $model): ?string {
                         return $model->parent ? $model->parent->title : null;
                     },
                     'filter' => $parentFilter,
+                    'contentOptions' => ['style' => 'white-space: normal; word-break: break-word;'],
                 ],
                 [
                     'class' => EnumColumn::class,
@@ -67,11 +73,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     'options' => ['style' => 'width: 10%'],
                     'enum' => ArticleCategory::statuses(),
                     'filter' => ArticleCategory::statuses(),
+                    'contentOptions' => ['style' => 'white-space: nowrap;'],
                 ],
                 [
                     'class' => \common\widgets\ActionColumn::class,
                     'options' => ['style' => 'width: 5%'],
                     'template' => '{update} {delete}',
+                    'contentOptions' => ['style' => 'white-space: nowrap;'],
                 ],
             ],
         ]); ?>

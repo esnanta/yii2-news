@@ -29,18 +29,41 @@ $this->params['breadcrumbs'][] = $this->title;
                     'class' => ['gridview', 'table-responsive'],
                 ],
                 'tableOptions' => [
-                    'class' => ['table', 'text-nowrap', 'table-striped', 'table-bordered', 'mb-0'],
+                    'class' => ['table', 'table-striped', 'table-bordered', 'mb-0', 'table-sm'],
+                    'style' => 'width: 100%; table-layout: fixed;',
                 ],
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
                 'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
-
-                    'id',
-                    'office_id',
-                    'is_visible',
-                    'category_id',
-                    'title',
+                    [
+                        'class' => 'yii\grid\SerialColumn',
+                        'options' => ['style' => 'width: 5%'],
+                        'contentOptions' => ['style' => 'white-space: nowrap;'],
+                    ],
+                    [
+                        'attribute' => 'id',
+                        'options' => ['style' => 'width: 8%'],
+                        'contentOptions' => ['style' => 'white-space: nowrap;'],
+                    ],
+                    [
+                        'attribute' => 'office_id',
+                        'options' => ['style' => 'width: 12%'],
+                        'contentOptions' => ['style' => 'white-space: nowrap;'],
+                    ],
+                    [
+                        'attribute' => 'is_visible',
+                        'options' => ['style' => 'width: 10%'],
+                        'contentOptions' => ['style' => 'white-space: nowrap;'],
+                    ],
+                    [
+                        'attribute' => 'category_id',
+                        'options' => ['style' => 'width: 12%'],
+                        'contentOptions' => ['style' => 'white-space: nowrap;'],
+                    ],
+                    [
+                        'attribute' => 'title',
+                        'contentOptions' => ['style' => 'white-space: normal; word-break: break-word;'],
+                    ],
                     // 'date_issued',
                     // 'base_url:url',
                     // 'path',
@@ -60,7 +83,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     // 'verlock',
                     // 'uuid',
                     
-                    ['class' => \common\widgets\ActionColumn::class],
+                    [
+                        'class' => \common\widgets\ActionColumn::class,
+                        'options' => ['style' => 'width: 8%'],
+                        'contentOptions' => ['style' => 'white-space: nowrap;'],
+                    ],
                 ],
             ]); ?>
     
