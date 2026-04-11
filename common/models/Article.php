@@ -8,6 +8,7 @@ use trntv\filekit\behaviors\UploadBehavior;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\SluggableBehavior;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
 
 /**
  * This is the model class for table "article".
@@ -131,7 +132,6 @@ class Article extends BaseArticle
         ];
     }
 
-
     public function setAttributes($values, $safeOnly = true): void
     {
         if (is_array($values)) {
@@ -147,6 +147,14 @@ class Article extends BaseArticle
         }
 
         parent::setAttributes($values, $safeOnly);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getUpdater()
+    {
+        return $this->getUpdatedBy();
     }
 
     /**
