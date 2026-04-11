@@ -13,10 +13,38 @@ use trntv\filekit\behaviors\UploadBehavior;
  */
 class Staff extends BaseStaff
 {
+    public const STATUS_ACTIVE = 1;
+    public const STATUS_NOT_ACTIVE = 2;
+
+    public const GENDER_MALE = 1;
+    public const GENDER_FEMALE = 2;
+
     /**
      * Virtual attribute used by filekit upload widget.
      */
     public array|string|null $image = null;
+
+    /**
+     * @return array statuses list
+     */
+    public static function statuses(): array
+    {
+        return [
+            self::STATUS_NOT_ACTIVE => \Yii::t('common', 'Not Active'),
+            self::STATUS_ACTIVE => \Yii::t('common', 'Active'),
+        ];
+    }
+
+    /**
+     * @return array gender list
+     */
+    public static function genders(): array
+    {
+        return [
+            self::GENDER_MALE => \Yii::t('common', 'Male'),
+            self::GENDER_FEMALE => \Yii::t('common', 'Female'),
+        ];
+    }
 
     public function behaviors(): array
     {

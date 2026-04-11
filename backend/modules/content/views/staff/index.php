@@ -1,10 +1,12 @@
 <?php
 
-use yii\helpers\Html;
-use yii\grid\GridView;
+use common\models\Staff;
+use common\widgets\ActionColumn;
 use rmrevin\yii\fontawesome\FAS;
+use yii\grid\GridView;
+use yii\helpers\Html;
 
-/**
+/*
  * @var yii\web\View $this
  * @var common\models\search\StaffSearch $searchModel
  * @var yii\data\ActiveDataProvider $dataProvider
@@ -24,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
 
         <div class="card-body p-0">
-            <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+            <?php // echo $this->render('_search', ['model' => $searchModel]);?>
     
             <?php echo GridView::widget([
                 'layout' => "{items}\n{pager}",
@@ -61,31 +63,23 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute' => 'title',
                         'contentOptions' => ['style' => 'white-space: normal; word-break: break-word;'],
                     ],
-                    // 'initial',
-                    // 'identity_number',
-                    // 'phone_number',
-                    // 'gender_status',
-                    // 'active_status',
-                    // 'address:ntext',
-                    // 'base_url:url',
-                    // 'path',
-                    // 'name',
-                    // 'type',
-                    // 'size',
-                    // 'email:email',
-                    // 'description:ntext',
-                    // 'created_at',
-                    // 'updated_at',
-                    // 'created_by',
-                    // 'updated_by',
-                    // 'is_deleted',
-                    // 'deleted_at',
-                    // 'deleted_by',
-                    // 'verlock',
-                    // 'uuid',
-                    
+                    'initial',
                     [
-                        'class' => \common\widgets\ActionColumn::class,
+                        'attribute' => 'gender',
+                        'value' => function ($model) {
+                            return $model->genders()[$model->status] ?? '';
+                        },
+                        'filter' => Staff::genders(),
+                    ],
+                    [
+                        'attribute' => 'status',
+                        'value' => function ($model) {
+                            return $model->statuses()[$model->status] ?? '';
+                        },
+                        'filter' => Staff::statuses(),
+                    ],
+                    [
+                        'class' => ActionColumn::class,
                         'options' => ['style' => 'width: 8%'],
                         'contentOptions' => ['style' => 'white-space: nowrap;'],
                     ],
@@ -94,7 +88,7 @@ $this->params['breadcrumbs'][] = $this->title;
     
         </div>
         <div class="card-footer">
-            <?php echo getDataProviderSummary($dataProvider) ?>
+            <?php echo getDataProviderSummary($dataProvider); ?>
         </div>
     </div>
 
