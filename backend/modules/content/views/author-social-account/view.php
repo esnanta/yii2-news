@@ -6,6 +6,9 @@ use yii\widgets\DetailView;
 /**
  * @var yii\web\View $this
  * @var common\models\AuthorSocialAccount $model
+ * @var array $officeOptions
+ * @var array $authorOptions
+ * @var array $platformOptions
  */
 
 $this->title = $model->id;
@@ -15,7 +18,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="author-social-account-view">
     <div class="card">
         <div class="card-header">
-            <?php echo Html::a(Yii::t('backend', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+            <?php echo Html::a(
+                Yii::t('backend', 'Update'),
+                ['update', 'id' => $model->id],
+                ['class' => 'btn btn-primary']
+            ) ?>
             <?php echo Html::a(Yii::t('backend', 'Delete'), ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
                 'data' => [
@@ -29,9 +36,18 @@ $this->params['breadcrumbs'][] = $this->title;
                 'model' => $model,
                 'attributes' => [
                     'id',
-                    'office_id',
-                    'author_id',
-                    'platform_id',
+                    [
+                        'attribute' => 'office_id',
+                        'value' => $officeOptions[$model->office_id] ?? '-',
+                    ],
+                    [
+                        'attribute' => 'author_id',
+                        'value' => $authorOptions[$model->author_id] ?? '-',
+                    ],
+                    [
+                        'attribute' => 'platform_id',
+                        'value' => $platformOptions[$model->platform_id] ?? '-',
+                    ],
                     'username',
                     'profile_url:url',
                     'is_primary',
