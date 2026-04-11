@@ -23,8 +23,8 @@ use yii\db\ActiveQuery;
  * @property string               $initial
  * @property string               $identity_number
  * @property string               $phone_number
- * @property int                  $gender_status
- * @property int                  $active_status
+ * @property int                  $gender
+ * @property int                  $active
  * @property string               $address
  * @property string               $base_url
  * @property string               $path
@@ -125,8 +125,8 @@ class Staff extends BaseActiveRecord
             'initial' => \Yii::t('common', 'Initial'),
             'identity_number' => \Yii::t('common', 'Identity Number'),
             'phone_number' => \Yii::t('common', 'Phone Number'),
-            'gender_status' => \Yii::t('common', 'Gender Status'),
-            'active_status' => \Yii::t('common', 'Active Status'),
+            'gender' => \Yii::t('common', 'Gender'),
+            'active' => \Yii::t('common', 'Active'),
             'address' => \Yii::t('common', 'Address'),
             'base_url' => \Yii::t('common', 'Base Url'),
             'path' => \Yii::t('common', 'Path'),

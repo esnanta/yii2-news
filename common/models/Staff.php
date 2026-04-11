@@ -84,6 +84,32 @@ class Staff extends BaseStaff
         );
     }
 
+    public function attributeLabels(): array
+    {
+        return [
+            'id' => \Yii::t('common', 'ID'),
+            'office_id' => \Yii::t('common', 'Office'),
+            'employment_id' => \Yii::t('common', 'Employment'),
+            'title' => \Yii::t('common', 'Title'),
+            'initial' => \Yii::t('common', 'Initial'),
+            'identity_number' => \Yii::t('common', 'Identity Number'),
+            'phone_number' => \Yii::t('common', 'Phone Number'),
+            'gender' => \Yii::t('common', 'Gender'),
+            'active' => \Yii::t('common', 'Active'),
+            'address' => \Yii::t('common', 'Address'),
+            'base_url' => \Yii::t('common', 'Base Url'),
+            'path' => \Yii::t('common', 'Path'),
+            'name' => \Yii::t('common', 'Name'),
+            'type' => \Yii::t('common', 'Type'),
+            'size' => \Yii::t('common', 'Size'),
+            'email' => \Yii::t('common', 'Email'),
+            'description' => \Yii::t('common', 'Description'),
+            'is_deleted' => \Yii::t('common', 'Is Deleted'),
+            'verlock' => \Yii::t('common', 'Verlock'),
+            'uuid' => \Yii::t('common', 'Uuid'),
+        ];
+    }
+
     public function getUrl()
     {
         return $this->base_url.'/'.$this->path;

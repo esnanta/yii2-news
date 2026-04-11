@@ -26,7 +26,19 @@ class Employment extends BaseEmployment
             ]
         );
     }
-
+    public function attributeLabels(): array
+    {
+        return [
+            'id' => \Yii::t('common', 'ID'),
+            'office_id' => \Yii::t('common', 'Office'),
+            'title' => \Yii::t('common', 'Title'),
+            'description' => \Yii::t('common', 'Description'),
+            'sequence' => \Yii::t('common', 'Sequence'),
+            'is_deleted' => \Yii::t('common', 'Is Deleted'),
+            'verlock' => \Yii::t('common', 'Verlock'),
+            'uuid' => \Yii::t('common', 'Uuid'),
+        ];
+    }
     /**
      * @return EmploymentQuery the active query used by this AR class
      */
