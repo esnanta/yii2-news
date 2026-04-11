@@ -19,6 +19,11 @@ class m260409_100400_seed_office_social_platform_document_category extends Migra
         ['title' => 'Laporan', 'sequence' => 20, 'description' => 'Laporan kegiatan dan kinerja kantor.'],
         ['title' => 'Publikasi', 'sequence' => 30, 'description' => 'Materi publikasi dan informasi umum.'],
     ];
+    private const DEFAULT_JOB_TITLES = [
+        ['title' => 'Manager', 'sequence' => 10, 'description' => 'Manajerial.'],
+        ['title' => 'Supervisor', 'sequence' => 20, 'description' => 'Pengawas.'],
+        ['title' => 'Staff', 'sequence' => 30, 'description' => 'Staf Pelaksana.'],
+    ];
 
     /**
      * @return bool|void
@@ -30,6 +35,7 @@ class m260409_100400_seed_office_social_platform_document_category extends Migra
         $this->seedDefaultOffice($now);
         $this->seedSocialPlatforms($now);
         $this->seedDocumentCategories($now);
+        $this->seedJobTitles($now);
     }
 
     /**
@@ -37,6 +43,11 @@ class m260409_100400_seed_office_social_platform_document_category extends Migra
      */
     public function safeDown()
     {
+        $this->delete('{{%job_title}}', [
+            'office_id' => self::DEFAULT_OFFICE_ID,
+            'title' => array_column(self::DEFAULT_JOB_TITLES, 'title'),
+        ]);
+
         $this->delete('{{%document_category}}', [
             'office_id' => self::DEFAULT_OFFICE_ID,
             'title' => array_column(self::DEFAULT_DOCUMENT_CATEGORIES, 'title'),
@@ -133,5 +144,33 @@ class m260409_100400_seed_office_social_platform_document_category extends Migra
             ]);
         }
     }
-}
 
+    private function seedJobTitles(string $now): void
+    {
+        foreach (self::DEFAULT_JOB_TITLES as $jobTitle) {
+            $exists = (new Query())
+                ->from('{{%job_title}}')
+                ->where([
+                    'office_id' => self::DEFAULT_OFFICE_ID,
+                    'title' => $jobTitle['title'],
+                ])
+                ->exists($this->db);
+
+            if ($exists) {
+                continue;
+            }
+
+            $this->insert('{{%job_title}}', [
+                'office_id' => self::DEFAULT_OFFICE_ID,
+                'title' => $jobTitle['title'],
+                'sequence' => $jobTitle['sequence'],
+                'description' => $jobTitle['description'],
+                'is_deleted' => 0,
+                'deleted_by' => 0,
+                'verlock' => 0,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ]);
+        }
+    }
+}

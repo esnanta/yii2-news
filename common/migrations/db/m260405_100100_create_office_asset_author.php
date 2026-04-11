@@ -162,11 +162,11 @@ class m260405_100100_create_office_asset_author extends Migration
             'uuid' => $this->string(36),
         ]);
 
-        $this->createTable('{{%employment}}', [
+        $this->createTable('{{%job_title}}', [
             'id' => $this->primaryKey(),
             'office_id' => $this->integer(),
             'title' => $this->string(100),
-            'description' => $this->text(),
+            'description' => 'tinytext',
             'sequence' => $this->tinyInteger(),
             'created_at' => $this->dateTime(),
             'updated_at' => $this->dateTime(),
@@ -182,7 +182,7 @@ class m260405_100100_create_office_asset_author extends Migration
         $this->createTable('{{%staff}}', [
             'id' => $this->primaryKey(),
             'office_id' => $this->integer(),
-            'employment_id' => $this->integer(),
+            'job_title_id' => $this->integer(),
             'title' => $this->string(100),
             'initial' => $this->string(10)->notNull(),
             'identity_number' => $this->string(100),
@@ -239,7 +239,7 @@ class m260405_100100_create_office_asset_author extends Migration
         // Drop in reverse dependency order.
         $this->dropTable('{{%staff_social_account}}');
         $this->dropTable('{{%staff}}');
-        $this->dropTable('{{%employment}}');
+        $this->dropTable('{{%job_title}}');
         $this->dropTable('{{%author_social_account}}');
         $this->dropTable('{{%author}}');
         $this->dropTable('{{%document}}');
