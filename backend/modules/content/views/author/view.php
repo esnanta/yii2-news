@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use common\service\FileDisplayService;
 
 /**
  * @var yii\web\View $this
@@ -16,20 +17,19 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="author-view">
     <div class="card">
         <div class="card-header">
-            <?php echo Html::a(Yii::t('backend', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+            <?php echo Html::a(Yii::t('backend', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']); ?>
             <?php echo Html::a(Yii::t('backend', 'Delete'), ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
                 'data' => [
                     'confirm' => Yii::t('backend', 'Are you sure you want to delete this item?'),
                     'method' => 'post',
                 ],
-            ]) ?>
+            ]); ?>
         </div>
         <div class="card-body">
             <?php echo DetailView::widget([
                 'model' => $model,
                 'attributes' => [
-
                     [
                         'attribute' => 'office_id',
                         'label' => Yii::t('backend', 'Office'),
@@ -40,16 +40,24 @@ $this->params['breadcrumbs'][] = $this->title;
                     'title',
                     'phone_number',
                     'email:email',
-                    'base_url:url',
-                    'path',
-                    'name',
-                    'type',
-                    'size',
                     'address:ntext',
-                    'description:ntext'
-                    
+                    'description:ntext',
+                    [
+                        'label' => Yii::t('backend', 'Photo'),
+                        'format' => 'raw',
+                        'value' => static fn ($model) => FileDisplayService::renderImageOrFallback(
+                            $model->title,
+                            $model->base_url,
+                            $model->path,
+                            Yii::t('backend', 'No photo')
+                        ),
+                    ],
+                    [
+                        'attribute' => 'size',
+                        'value' => static fn ($model) => FileDisplayService::formatSizeInKbOrMb($model->size),
+                    ],
                 ],
-            ]) ?>
+            ]); ?>
         </div>
     </div>
 </div>

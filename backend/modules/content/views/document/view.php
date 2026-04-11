@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use common\service\FileDisplayService;
 
 /**
  * @var yii\web\View $this
@@ -38,7 +39,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     'path',
                     'name',
                     'type',
-                    'size',
+                    [
+                        'attribute' => 'size',
+                        'value' => static fn ($model) => FileDisplayService::formatSizeInKbOrMb($model->size),
+                    ],
                     'view_count',
                     'download_count',
                     'description:ntext',
