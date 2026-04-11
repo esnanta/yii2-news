@@ -2,6 +2,7 @@
 
 use common\widgets\ActionColumn;
 use kartik\widgets\Select2;
+use rmrevin\yii\fontawesome\FAS;
 use yii\grid\GridView;
 use yii\helpers\Html;
 
@@ -18,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="author-index">
     <div class="card">
         <div class="card-header">
-            <?php echo Html::a(Yii::t('backend', 'Create {modelClass}', [
+            <?php echo Html::a(FAS::icon('user-plus').' '.Yii::t('backend', 'Add New {modelClass}', [
                 'modelClass' => 'Author',
             ]), ['create'], ['class' => 'btn btn-success']); ?>
         </div>

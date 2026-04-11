@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use rmrevin\yii\fontawesome\FAS;
 
 /**
  * @var yii\web\View $this
@@ -15,9 +16,9 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="office-social-account-index">
     <div class="card">
         <div class="card-header">
-            <?php echo Html::a(Yii::t('backend', 'Create {modelClass}', [
-    'modelClass' => 'Office Social Account',
-]), ['create'], ['class' => 'btn btn-success']) ?>
+            <?php echo Html::a(FAS::icon('user-plus').' '.Yii::t('backend', 'Add New {modelClass}', [
+                'modelClass' => 'Office Social Account',
+            ]), ['create'], ['class' => 'btn btn-success']); ?>
         </div>
 
         <div class="card-body p-0">
