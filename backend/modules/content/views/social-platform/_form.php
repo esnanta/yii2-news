@@ -1,7 +1,8 @@
 <?php
 
-use yii\helpers\Html;
+use common\models\SocialPlatform;
 use yii\bootstrap4\ActiveForm;
+use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
@@ -16,15 +17,19 @@ use yii\bootstrap4\ActiveForm;
             <div class="card-body">
                 <?php echo $form->errorSummary($model); ?>
 
-                <?php echo $form->field($model, 'code')->textInput(['maxlength' => true]) ?>
-                <?php echo $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-                <?php echo $form->field($model, 'base_url')->textInput(['maxlength' => true]) ?>
-                <?php echo $form->field($model, 'is_active')->textInput() ?>
-                <?php echo $form->field($model, 'sequence')->textInput() ?>
+                <?php echo $form->field($model, 'code')->textInput(['maxlength' => true]); ?>
+                <?php echo $form->field($model, 'name')->textInput(['maxlength' => true]); ?>
+                <?php echo $form->field($model, 'base_url')->textInput(['maxlength' => true]); ?>
+                <?php echo $form->field($model, 'is_active')->dropDownList(SocialPlatform::getIsActiveOptions()); ?>
+                <?php echo $form->field($model, 'sequence')->textInput(); ?>
 
             </div>
             <div class="card-footer">
-                <?php echo Html::submitButton($model->isNewRecord ? Yii::t('backend', 'Create') : Yii::t('backend', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                <?php echo Html::submitButton(
+                    $model->isNewRecord ? Yii::t('backend', 'Create')
+                        : Yii::t('backend', 'Update'),
+                    ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']
+                ); ?>
             </div>
         </div>
     <?php ActiveForm::end(); ?>

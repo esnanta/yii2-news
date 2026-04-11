@@ -10,6 +10,24 @@ use common\models\query\SocialPlatformQuery;
  */
 class SocialPlatform extends BaseSocialPlatform
 {
+    public const STATUS_INACTIVE = 0;
+    public const STATUS_ACTIVE = 1;
+
+    public static function getIsActiveOptions(): array
+    {
+        return [
+            self::STATUS_ACTIVE => \Yii::t('backend', 'Active'),
+            self::STATUS_INACTIVE => \Yii::t('backend', 'Inactive'),
+        ];
+    }
+
+    public function getIsActiveLabel(): string
+    {
+        $options = self::getIsActiveOptions();
+
+        return $options[(int) $this->is_active] ?? \Yii::t('backend', 'Inactive');
+    }
+
     public function rules(): array
     {
         return array_merge(

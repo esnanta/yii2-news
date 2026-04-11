@@ -4,7 +4,6 @@ namespace common\models\base;
 
 use common\base\BaseActiveRecord;
 use common\models\AuthorSocialAccount;
-use common\models\OfficeSocialAccount;
 use common\models\query\SocialPlatformQuery;
 use common\models\StaffSocialAccount;
 use mootensai\behaviors\UUIDBehavior;
@@ -32,7 +31,6 @@ use yii\db\ActiveQuery;
  * @property int                   $verlock
  * @property string                $uuid
  * @property AuthorSocialAccount[] $authorSocialAccounts
- * @property OfficeSocialAccount[] $officeSocialAccounts
  * @property StaffSocialAccount[]  $staffSocialAccounts
  */
 class SocialPlatform extends BaseActiveRecord
@@ -64,7 +62,6 @@ class SocialPlatform extends BaseActiveRecord
     {
         return [
             'authorSocialAccounts',
-            'officeSocialAccounts',
             'staffSocialAccounts',
         ];
     }
@@ -120,10 +117,6 @@ class SocialPlatform extends BaseActiveRecord
         return $this->hasMany(AuthorSocialAccount::class, ['platform_id' => 'id']);
     }
 
-    public function getOfficeSocialAccounts(): ActiveQuery
-    {
-        return $this->hasMany(OfficeSocialAccount::class, ['platform_id' => 'id']);
-    }
 
     public function getStaffSocialAccounts(): ActiveQuery
     {

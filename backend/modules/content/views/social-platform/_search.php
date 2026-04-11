@@ -5,7 +5,7 @@ use yii\bootstrap4\ActiveForm;
 
 /**
  * @var yii\web\View $this
- * @var common\models\SocialPlatform $model
+ * @var common\models\search\SocialPlatformSearch $model
  * @var yii\bootstrap4\ActiveForm $form
  */
 ?>

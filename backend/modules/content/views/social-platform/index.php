@@ -1,8 +1,10 @@
 <?php
 
-use yii\helpers\Html;
-use yii\grid\GridView;
+use common\models\SocialPlatform;
+use common\widgets\ActionColumn;
 use rmrevin\yii\fontawesome\FAS;
+use yii\grid\GridView;
+use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
@@ -22,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
 
         <div class="card-body p-0">
-            <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+            <?php // echo $this->render('_search', ['model' => $searchModel]);?>
     
             <?php echo GridView::widget([
                 'layout' => "{items}\n{pager}",
@@ -42,11 +44,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         'contentOptions' => ['style' => 'white-space: nowrap;'],
                     ],
                     [
-                        'attribute' => 'id',
-                        'options' => ['style' => 'width: 8%'],
-                        'contentOptions' => ['style' => 'white-space: nowrap;'],
-                    ],
-                    [
                         'attribute' => 'code',
                         'options' => ['style' => 'width: 12%'],
                         'contentOptions' => ['style' => 'white-space: nowrap;'],
@@ -63,22 +60,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                     [
                         'attribute' => 'is_active',
+                        'value' => 'isActiveLabel',
+                        'filter' => SocialPlatform::getIsActiveOptions(),
                         'options' => ['style' => 'width: 10%'],
                         'contentOptions' => ['style' => 'white-space: nowrap;'],
                     ],
-                    // 'sequence',
-                    // 'created_at',
-                    // 'updated_at',
-                    // 'created_by',
-                    // 'updated_by',
-                    // 'is_deleted',
-                    // 'deleted_at',
-                    // 'deleted_by',
-                    // 'verlock',
-                    // 'uuid',
-                    
                     [
-                        'class' => \common\widgets\ActionColumn::class,
+                        'class' => ActionColumn::class,
                         'options' => ['style' => 'width: 8%'],
                         'contentOptions' => ['style' => 'white-space: nowrap;'],
                     ],
@@ -87,7 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
     
         </div>
         <div class="card-footer">
-            <?php echo getDataProviderSummary($dataProvider) ?>
+            <?php echo getDataProviderSummary($dataProvider); ?>
         </div>
     </div>
 
