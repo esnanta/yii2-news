@@ -170,6 +170,6 @@ class JobTitle extends BaseActiveRecord
     {
         $query = new JobTitleQuery(get_called_class());
 
-        return $query->where(['t_employment.deleted_by' => 0]);
+        return $query->where(['t_job_title.deleted_by' => 0]);
     }
 }

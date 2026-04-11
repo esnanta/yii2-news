@@ -46,6 +46,6 @@ class JobTitle extends BaseEmployment
     {
         $query = new JobTitleQuery(get_called_class());
 
-        return $query->where(['t_employment.is_deleted' => 0]);
+        return $query->where(['t_job_title.is_deleted' => 0]);
     }
 }
