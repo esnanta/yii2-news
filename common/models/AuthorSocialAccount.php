@@ -10,6 +10,21 @@ use common\models\query\AuthorSocialAccountQuery;
  */
 class AuthorSocialAccount extends BaseAuthorSocialAccount
 {
+    /**
+     * Returns consistent checkbox post values for integer-flag attributes.
+     */
+    public function getCheckboxInputOptions(string $attribute): array
+    {
+        if (in_array($attribute, ['is_primary', 'is_visible'], true)) {
+            return [
+                'value' => 1,
+                'uncheck' => 0,
+            ];
+        }
+
+        return [];
+    }
+
     public function rules(): array
     {
         return array_merge(

@@ -33,14 +33,8 @@ use yii\helpers\Html;
                 ); ?>
                 <?php echo $form->field($model, 'username')->textInput(['maxlength' => true]); ?>
                 <?php echo $form->field($model, 'profile_url')->textInput(['maxlength' => true]); ?>
-                <?php echo $form->field($model, 'is_primary')->checkbox([
-                    'value' => 1,
-                    'uncheck' => 0,
-                ]); ?>
-                <?php echo $form->field($model, 'is_visible')->checkbox([
-                    'value' => 1,
-                    'uncheck' => 0,
-                ]); ?>
+                <?php echo $form->field($model, 'is_primary')->checkbox($model->getCheckboxInputOptions('is_primary')); ?>
+                <?php echo $form->field($model, 'is_visible')->checkbox($model->getCheckboxInputOptions('is_visible')); ?>
                 <?php echo $form->field($model, 'sequence')->textInput(); ?>
                 <?php echo $form->field($model, 'description')->textarea(['rows' => 6]); ?>
 
