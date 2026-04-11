@@ -20,7 +20,6 @@ use yii\helpers\Html;
                 <?php echo $form->field($model, 'code')->textInput(['maxlength' => true]); ?>
                 <?php echo $form->field($model, 'name')->textInput(['maxlength' => true]); ?>
                 <?php echo $form->field($model, 'base_url')->textInput(['maxlength' => true]); ?>
-                <?php echo $form->field($model, 'is_active')->dropDownList(SocialPlatform::getIsActiveOptions()); ?>
                 <?php echo $form->field($model, 'sequence')->textInput(); ?>
 
             </div>
