@@ -6,6 +6,7 @@ use yii\bootstrap4\ActiveForm;
 /**
  * @var yii\web\View $this
  * @var common\models\DocumentCategory $model
+ * @var array $officeOptions
  * @var yii\bootstrap4\ActiveForm $form
  */
 ?>
@@ -16,7 +17,10 @@ use yii\bootstrap4\ActiveForm;
             <div class="card-body">
                 <?php echo $form->errorSummary($model); ?>
 
-                <?php echo $form->field($model, 'office_id')->textInput() ?>
+                <?php echo $form->field($model, 'office_id')->dropDownList(
+                    $officeOptions,
+                    ['prompt' => Yii::t('backend', 'Select office')]
+                ); ?>
                 <?php echo $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
                 <?php echo $form->field($model, 'sequence')->textInput() ?>
                 <?php echo $form->field($model, 'description')->textarea(['rows' => 6]) ?>

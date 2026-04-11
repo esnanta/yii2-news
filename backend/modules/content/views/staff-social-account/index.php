@@ -8,6 +8,9 @@ use rmrevin\yii\fontawesome\FAS;
  * @var yii\web\View $this
  * @var common\models\search\StaffSocialAccountSearch $searchModel
  * @var yii\data\ActiveDataProvider $dataProvider
+ * @var array $officeOptions
+ * @var array $staffOptions
+ * @var array $platformOptions
  */
 
 $this->title = Yii::t('backend', 'Staff Social Accounts');
@@ -42,22 +45,23 @@ $this->params['breadcrumbs'][] = $this->title;
                         'contentOptions' => ['style' => 'white-space: nowrap;'],
                     ],
                     [
-                        'attribute' => 'id',
-                        'options' => ['style' => 'width: 8%'],
-                        'contentOptions' => ['style' => 'white-space: nowrap;'],
-                    ],
-                    [
                         'attribute' => 'office_id',
+                        'filter' => $officeOptions,
+                        'value' => static fn ($model): string => $officeOptions[$model->office_id] ?? '-',
                         'options' => ['style' => 'width: 12%'],
                         'contentOptions' => ['style' => 'white-space: nowrap;'],
                     ],
                     [
                         'attribute' => 'staff_id',
+                        'filter' => $staffOptions,
+                        'value' => static fn ($model): string => $staffOptions[$model->staff_id] ?? '-',
                         'options' => ['style' => 'width: 12%'],
                         'contentOptions' => ['style' => 'white-space: nowrap;'],
                     ],
                     [
                         'attribute' => 'platform_id',
+                        'filter' => $platformOptions,
+                        'value' => static fn ($model): string => $platformOptions[$model->platform_id] ?? '-',
                         'options' => ['style' => 'width: 12%'],
                         'contentOptions' => ['style' => 'white-space: nowrap;'],
                     ],

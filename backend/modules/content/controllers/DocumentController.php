@@ -5,6 +5,7 @@ namespace backend\modules\content\controllers;
 use common\base\BaseController;
 use common\models\Document;
 use common\models\search\DocumentSearch;
+use common\service\DataListService;
 use yii\db\Exception;
 use yii\filters\VerbFilter;
 use yii\web\ForbiddenHttpException;
@@ -43,6 +44,8 @@ class DocumentController extends BaseController
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'officeOptions' => DataListService::getOffice(),
+            'documentCategoryOptions' => DataListService::getDocumentCategory(),
         ]);
     }
 
@@ -60,6 +63,8 @@ class DocumentController extends BaseController
 
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'officeOptions' => DataListService::getOffice(),
+            'documentCategoryOptions' => DataListService::getDocumentCategory(),
         ]);
     }
 
@@ -84,6 +89,8 @@ class DocumentController extends BaseController
 
         return $this->render('create', [
             'model' => $model,
+            'officeOptions' => DataListService::getOffice(),
+            'documentCategoryOptions' => DataListService::getDocumentCategory(),
         ]);
     }
 
@@ -111,6 +118,8 @@ class DocumentController extends BaseController
 
         return $this->render('update', [
             'model' => $model,
+            'officeOptions' => DataListService::getOffice(),
+            'documentCategoryOptions' => DataListService::getDocumentCategory(),
         ]);
     }
 

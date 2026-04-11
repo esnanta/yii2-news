@@ -35,14 +35,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     'sequence',
                     'created_at',
                     'updated_at',
-                    'created_by',
-                    'updated_by',
-                    'is_deleted',
-                    'deleted_at',
-                    'deleted_by',
-                    'verlock',
-                    'uuid',
-                    
                 ],
             ]) ?>
         </div>

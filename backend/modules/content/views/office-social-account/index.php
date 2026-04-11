@@ -8,6 +8,8 @@ use rmrevin\yii\fontawesome\FAS;
  * @var yii\web\View $this
  * @var common\models\search\OfficeSocialAccountSearch $searchModel
  * @var yii\data\ActiveDataProvider $dataProvider
+ * @var array $officeOptions
+ * @var array $socialPlatformOptions
  */
 
 $this->title = Yii::t('backend', 'Office Social Accounts');
@@ -42,17 +44,16 @@ $this->params['breadcrumbs'][] = $this->title;
                         'contentOptions' => ['style' => 'white-space: nowrap;'],
                     ],
                     [
-                        'attribute' => 'id',
-                        'options' => ['style' => 'width: 8%'],
-                        'contentOptions' => ['style' => 'white-space: nowrap;'],
-                    ],
-                    [
                         'attribute' => 'office_id',
+                        'filter' => $officeOptions,
+                        'value' => static fn ($model): string => $officeOptions[$model->office_id] ?? '-',
                         'options' => ['style' => 'width: 12%'],
                         'contentOptions' => ['style' => 'white-space: nowrap;'],
                     ],
                     [
                         'attribute' => 'platform_id',
+                        'filter' => $socialPlatformOptions,
+                        'value' => static fn ($model): string => $socialPlatformOptions[$model->platform_id] ?? '-',
                         'options' => ['style' => 'width: 12%'],
                         'contentOptions' => ['style' => 'white-space: nowrap;'],
                     ],

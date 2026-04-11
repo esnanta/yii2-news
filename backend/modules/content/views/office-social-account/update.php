@@ -3,6 +3,8 @@
 /**
  * @var yii\web\View $this
  * @var common\models\OfficeSocialAccount $model
+ * @var array $officeOptions
+ * @var array $socialPlatformOptions
  */
 
 $this->title = Yii::t('backend', 'Update {modelClass}: ', [
@@ -16,6 +18,8 @@ $this->params['breadcrumbs'][] = Yii::t('backend', 'Update');
 
     <?php echo $this->render('_form', [
         'model' => $model,
+        'officeOptions' => $officeOptions,
+        'socialPlatformOptions' => $socialPlatformOptions,
     ]) ?>
 
 </div>

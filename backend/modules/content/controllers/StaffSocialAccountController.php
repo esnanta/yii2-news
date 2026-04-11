@@ -5,6 +5,7 @@ namespace backend\modules\content\controllers;
 use common\base\BaseController;
 use common\models\search\StaffSocialAccountSearch;
 use common\models\StaffSocialAccount;
+use common\service\DataListService;
 use yii\db\Exception;
 use yii\filters\VerbFilter;
 use yii\web\ForbiddenHttpException;
@@ -43,6 +44,9 @@ class StaffSocialAccountController extends BaseController
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'officeOptions' => DataListService::getOffice(),
+            'staffOptions' => DataListService::getStaff(),
+            'platformOptions' => DataListService::getSocialPlatform(),
         ]);
     }
 
@@ -60,6 +64,9 @@ class StaffSocialAccountController extends BaseController
 
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'officeOptions' => DataListService::getOffice(),
+            'staffOptions' => DataListService::getStaff(),
+            'platformOptions' => DataListService::getSocialPlatform(),
         ]);
     }
 
@@ -84,6 +91,9 @@ class StaffSocialAccountController extends BaseController
 
         return $this->render('create', [
             'model' => $model,
+            'officeOptions' => DataListService::getOffice(),
+            'staffOptions' => DataListService::getStaff(),
+            'platformOptions' => DataListService::getSocialPlatform(),
         ]);
     }
 
@@ -111,6 +121,9 @@ class StaffSocialAccountController extends BaseController
 
         return $this->render('update', [
             'model' => $model,
+            'officeOptions' => DataListService::getOffice(),
+            'staffOptions' => DataListService::getStaff(),
+            'platformOptions' => DataListService::getSocialPlatform(),
         ]);
     }
 
