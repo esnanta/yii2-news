@@ -1,8 +1,8 @@
 <?php
 
+use common\service\FileDisplayService;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-use common\service\FileDisplayService;
 
 /**
  * @var yii\web\View $this
@@ -37,11 +37,6 @@ $this->params['breadcrumbs'][] = $this->title;
                             return $officeOptions[$model->office_id] ?? null;
                         },
                     ],
-                    'title',
-                    'phone_number',
-                    'email:email',
-                    'address:ntext',
-                    'description:ntext',
                     [
                         'label' => Yii::t('backend', 'Photo'),
                         'format' => 'raw',
@@ -56,6 +51,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute' => 'size',
                         'value' => static fn ($model) => FileDisplayService::formatSizeInKbOrMb($model->size),
                     ],
+                    'title',
+                    'phone_number',
+                    'email:email',
+                    'address:ntext',
+                    'description:ntext',
                 ],
             ]); ?>
         </div>

@@ -1,15 +1,17 @@
 <?php
 
+use common\models\Staff;
+use yii\web\View;
+
 /**
- * @var yii\web\View $this
- * @var common\models\Staff $model
+ * @var View  $this
+ * @var Staff $model
  * @var array $officeOptions
  * @var array $jobTitleOptions
  */
-
 $this->title = Yii::t('backend', 'Update {modelClass}: ', [
     'modelClass' => 'Staff',
-]) . ' ' . $model->title;
+]).' '.$model->title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Staff'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('backend', 'Update');
@@ -19,7 +21,7 @@ $this->params['breadcrumbs'][] = Yii::t('backend', 'Update');
     <?php echo $this->render('_form', [
         'model' => $model,
         'officeOptions' => $officeOptions,
-        'employmentOptions' => $jobTitleOptions,
-    ]) ?>
+        'jobTitleOptions' => $jobTitleOptions,
+    ]); ?>
 
 </div>

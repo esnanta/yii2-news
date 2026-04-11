@@ -84,7 +84,7 @@ class Staff extends BaseActiveRecord
     {
         return [
             [['office_id', 'job_title_id',
-                'gender_status', 'active_status', 'size',
+                'gender', 'status', 'size',
                 'created_by', 'updated_by', 'is_deleted',
                 'deleted_by', 'verlock'], 'integer'],
             [['initial'], 'required'],

@@ -1,12 +1,14 @@
 <?php
 
+use common\models\Staff;
+use yii\web\View;
+
 /**
- * @var yii\web\View $this
- * @var common\models\Staff $model
+ * @var View  $this
+ * @var Staff $model
  * @var array $officeOptions
  * @var array $jobTitleOptions
  */
-
 $this->title = Yii::t('backend', 'Create {modelClass}', [
     'modelClass' => 'Staff',
 ]);
@@ -18,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php echo $this->render('_form', [
         'model' => $model,
         'officeOptions' => $officeOptions,
-        'employmentOptions' => $jobTitleOptions,
-    ]) ?>
+        'jobTitleOptions' => $jobTitleOptions,
+    ]); ?>
 
 </div>
