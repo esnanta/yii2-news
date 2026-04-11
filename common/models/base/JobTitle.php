@@ -80,7 +80,7 @@ class JobTitle extends BaseActiveRecord
 
     public static function tableName(): string
     {
-        return 't_employment';
+        return 't_job_title';
     }
 
     /**
