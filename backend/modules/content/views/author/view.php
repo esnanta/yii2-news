@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php echo DetailView::widget([
                 'model' => $model,
                 'attributes' => [
-                    'id',
+
                     [
                         'attribute' => 'office_id',
                         'label' => Yii::t('backend', 'Office'),
@@ -46,16 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'type',
                     'size',
                     'address:ntext',
-                    'description:ntext',
-                    'created_at',
-                    'updated_at',
-                    'created_by',
-                    'updated_by',
-                    'is_deleted',
-                    'deleted_at',
-                    'deleted_by',
-                    'verlock',
-                    'uuid',
+                    'description:ntext'
                     
                 ],
             ]) ?>
