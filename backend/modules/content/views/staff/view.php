@@ -9,7 +9,7 @@ use common\service\FileDisplayService;
  * @var yii\web\View $this
  * @var common\models\Staff $model
  * @var array $officeOptions
- * @var array $employmentOptions
+ * @var array $jobTitleOptions
  */
 
 $this->title = $model->title;
@@ -41,10 +41,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         },
                     ],
                     [
-                        'attribute' => 'employment_id',
+                        'attribute' => 'job_title_id',
                         'label' => Yii::t('backend', 'JobTitle'),
-                        'value' => static function ($model) use ($employmentOptions) {
-                            return $employmentOptions[$model->employment_id] ?? '-';
+                        'value' => static function ($model) use ($jobTitleOptions) {
+                            return $jobTitleOptions[$model->job_title_id] ?? '-';
                         },
                     ],
                     'title',

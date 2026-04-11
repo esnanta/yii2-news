@@ -20,8 +20,7 @@ class StaffQuery extends ActiveQuery
     }*/
 
     /**
-     * @inheritdoc
-     * @return Staff[]|array
+     * @return array|Staff[]
      */
     public function all($db = null): array
     {
@@ -29,8 +28,7 @@ class StaffQuery extends ActiveQuery
     }
 
     /**
-     * @inheritdoc
-     * @return array|ActiveRecord|null
+     * @return null|ActiveRecord|array
      */
     public function one($db = null)
     {

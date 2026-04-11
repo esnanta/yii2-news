@@ -67,7 +67,7 @@ class Staff extends BaseStaff
             parent::rules(),
             [
                 [['image'], 'safe'],
-                [['office_id', 'employment_id', 'gender', 'status', 'size',
+                [['office_id', 'job_title_id', 'gender', 'status', 'size',
                     'created_by', 'updated_by', 'is_deleted',
                     'deleted_by', 'verlock'], 'integer'],
                 [['initial'], 'required'],
@@ -89,7 +89,7 @@ class Staff extends BaseStaff
         return [
             'id' => \Yii::t('common', 'ID'),
             'office_id' => \Yii::t('common', 'Office'),
-            'employment_id' => \Yii::t('common', 'JobTitle'),
+            'job_title_id' => \Yii::t('common', 'JobTitle'),
             'title' => \Yii::t('common', 'Title'),
             'initial' => \Yii::t('common', 'Initial'),
             'identity_number' => \Yii::t('common', 'Identity Number'),

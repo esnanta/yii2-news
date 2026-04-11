@@ -10,7 +10,7 @@ use yii\web\JsExpression;
  * @var yii\web\View $this
  * @var common\models\Staff $model
  * @var array $officeOptions
- * @var array $employmentOptions
+ * @var array $jobTitleOptions
  * @var yii\bootstrap4\ActiveForm $form
  */
 ?>
@@ -25,8 +25,8 @@ use yii\web\JsExpression;
                     $officeOptions,
                     ['prompt' => Yii::t('backend', '')]
                 ); ?>
-                <?php echo $form->field($model, 'employment_id')->dropDownList(
-                    $employmentOptions,
+                <?php echo $form->field($model, 'job_title_id')->dropDownList(
+                    $jobTitleOptions,
                     ['prompt' => Yii::t('backend', '')]
                 ); ?>
                 <?php echo $form->field($model, 'title')->textInput(['maxlength' => true]); ?>

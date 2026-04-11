@@ -45,7 +45,7 @@ class StaffController extends BaseController
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'officeOptions' => DataListService::getOffice(),
-            'employmentOptions' => DataListService::getEmployment(),
+            'jobTitleOptions' => DataListService::getJobTitle(),
         ]);
     }
 
@@ -64,7 +64,7 @@ class StaffController extends BaseController
         return $this->render('view', [
             'model' => $this->findModel($id),
             'officeOptions' => DataListService::getOffice(),
-            'employmentOptions' => DataListService::getEmployment(),
+            'jobTitleOptions' => DataListService::getJobTitle(),
         ]);
     }
 
@@ -90,7 +90,7 @@ class StaffController extends BaseController
         return $this->render('create', [
             'model' => $model,
             'officeOptions' => DataListService::getOffice(),
-            'employmentOptions' => DataListService::getEmployment(),
+            'jobTitleOptions' => DataListService::getJobTitle(),
         ]);
     }
 
@@ -119,7 +119,7 @@ class StaffController extends BaseController
         return $this->render('update', [
             'model' => $model,
             'officeOptions' => DataListService::getOffice(),
-            'employmentOptions' => DataListService::getEmployment(),
+            'jobTitleOptions' => DataListService::getJobTitle(),
         ]);
     }
 

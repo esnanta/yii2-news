@@ -38,7 +38,7 @@ class DataListService
             ->asArray()->all(), 'id', 'title');
     }
 
-    public static function getEmployment(): array
+    public static function getJobTitle(): array
     {
         return ArrayHelper::map(JobTitle::find()
             ->asArray()->all(), 'id', 'title');

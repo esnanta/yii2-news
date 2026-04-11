@@ -42,7 +42,7 @@ use yii\db\ActiveQuery;
  * @property int                  $deleted_by
  * @property int                  $verlock
  * @property string               $uuid
- * @property JobTitle           $job-title
+ * @property JobTitle             $job_title
  * @property Office               $office
  * @property StaffSocialAccount[] $staffSocialAccounts
  */
@@ -83,7 +83,7 @@ class Staff extends BaseActiveRecord
     public function rules(): array
     {
         return [
-            [['office_id', 'employment_id',
+            [['office_id', 'job_title_id',
                 'gender_status', 'active_status', 'size',
                 'created_by', 'updated_by', 'is_deleted',
                 'deleted_by', 'verlock'], 'integer'],
@@ -120,7 +120,7 @@ class Staff extends BaseActiveRecord
         return [
             'id' => \Yii::t('common', 'ID'),
             'office_id' => \Yii::t('common', 'Office ID'),
-            'employment_id' => \Yii::t('common', 'JobTitle ID'),
+            'job_title_id' => \Yii::t('common', 'JobTitle ID'),
             'title' => \Yii::t('common', 'Title'),
             'initial' => \Yii::t('common', 'Initial'),
             'identity_number' => \Yii::t('common', 'Identity Number'),
@@ -141,9 +141,9 @@ class Staff extends BaseActiveRecord
         ];
     }
 
-    public function getEmployment(): ActiveQuery
+    public function getJobTitle(): ActiveQuery
     {
-        return $this->hasOne(JobTitle::class, ['id' => 'employment_id']);
+        return $this->hasOne(JobTitle::class, ['id' => 'job_title_id']);
     }
 
     public function getOffice(): ActiveQuery

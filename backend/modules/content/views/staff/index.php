@@ -6,12 +6,12 @@ use rmrevin\yii\fontawesome\FAS;
 use yii\grid\GridView;
 use yii\helpers\Html;
 
-/*
+/**
  * @var yii\web\View $this
  * @var common\models\search\StaffSearch $searchModel
  * @var yii\data\ActiveDataProvider $dataProvider
  * @var array $officeOptions
- * @var array $employmentOptions
+ * @var array $jobTitleOptions
  */
 
 $this->title = Yii::t('backend', 'Staff');
@@ -53,9 +53,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         'contentOptions' => ['style' => 'white-space: nowrap;'],
                     ],
                     [
-                        'attribute' => 'employment_id',
-                        'filter' => $employmentOptions,
-                        'value' => static fn ($model): string => $employmentOptions[$model->employment_id] ?? '-',
+                        'attribute' => 'job_title_id',
+                        'filter' => $jobTitleOptions,
+                        'value' => static fn ($model): string => $jobTitleOptions[$model->job_title_id] ?? '-',
                         'options' => ['style' => 'width: 12%'],
                         'contentOptions' => ['style' => 'white-space: nowrap;'],
                     ],
