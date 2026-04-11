@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\models\base\Staff as BaseStaff;
+use common\models\query\StaffQuery;
 use trntv\filekit\behaviors\UploadBehavior;
 
 /**
@@ -61,5 +62,15 @@ class Staff extends BaseStaff
     public function getUrl()
     {
         return $this->base_url.'/'.$this->path;
+    }
+
+    /**
+     * @return StaffQuery the active query used by this AR class
+     */
+    public static function find(): StaffQuery
+    {
+        $query = new StaffQuery(get_called_class());
+
+        return $query->where(['t_staff.is_deleted' => 0]);
     }
 }

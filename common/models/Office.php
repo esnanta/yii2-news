@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\models\base\Office as BaseOffice;
+use common\models\query\OfficeQuery;
 
 /**
  * This is the model class for table "t_office".
@@ -25,5 +26,15 @@ class Office extends BaseOffice
                 [['verlock'], 'mootensai\components\OptimisticLockValidator'],
             ]
         );
+    }
+
+    /**
+     * @return OfficeQuery the active query used by this AR class
+     */
+    public static function find(): OfficeQuery
+    {
+        $query = new OfficeQuery(get_called_class());
+
+        return $query->where(['t_office.is_deleted' => 0]);
     }
 }

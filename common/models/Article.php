@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\models\base\Article as BaseArticle;
+use common\models\query\ArticleQuery;
 use trntv\filekit\behaviors\UploadBehavior;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\SluggableBehavior;
@@ -145,5 +146,15 @@ class Article extends BaseArticle
         }
 
         parent::setAttributes($values, $safeOnly);
+    }
+
+    /**
+     * @return ArticleQuery the active query used by this AR class
+     */
+    public static function find(): ArticleQuery
+    {
+        $query = new ArticleQuery(get_called_class());
+
+        return $query->where(['t_article.is_deleted' => 0]);
     }
 }

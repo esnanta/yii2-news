@@ -50,7 +50,7 @@ class ArticleAttachment extends ActiveRecord
     {
         return [
             'id' => \Yii::t('common', 'ID'),
-            'article_id' => \Yii::t('common', 'Article ID'),
+            'article_id' => \Yii::t('common', 'Article'),
             'base_url' => \Yii::t('common', 'Base Url'),
             'path' => \Yii::t('common', 'Path'),
             'size' => \Yii::t('common', 'Size'),

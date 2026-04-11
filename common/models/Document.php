@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\models\base\Document as BaseDocument;
+use common\models\query\DocumentQuery;
 
 /**
  * This is the model class for table "t_document".
@@ -25,5 +26,15 @@ class Document extends BaseDocument
                 [['verlock'], 'mootensai\components\OptimisticLockValidator'],
             ]
         );
+    }
+
+    /**
+     * @return DocumentQuery the active query used by this AR class
+     */
+    public static function find(): DocumentQuery
+    {
+        $query = new DocumentQuery(get_called_class());
+
+        return $query->where(['t_document.is_deleted' => 0]);
     }
 }

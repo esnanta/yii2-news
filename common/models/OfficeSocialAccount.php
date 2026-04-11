@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\models\base\OfficeSocialAccount as BaseOfficeSocialAccount;
+use common\models\query\OfficeSocialAccountQuery;
 
 /**
  * This is the model class for table "t_office_social_account".
@@ -29,5 +30,15 @@ class OfficeSocialAccount extends BaseOfficeSocialAccount
                 [['verlock'], 'mootensai\components\OptimisticLockValidator'],
             ]
         );
+    }
+
+    /**
+     * @return OfficeSocialAccountQuery the active query used by this AR class
+     */
+    public static function find(): OfficeSocialAccountQuery
+    {
+        $query = new OfficeSocialAccountQuery(get_called_class());
+
+        return $query->where(['t_office_social_account.is_deleted' => 0]);
     }
 }

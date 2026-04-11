@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\models\base\Employment as BaseEmployment;
+use common\models\query\EmploymentQuery;
 
 /**
  * This is the model class for table "t_employment".
@@ -24,5 +25,15 @@ class Employment extends BaseEmployment
                 [['verlock'], 'mootensai\components\OptimisticLockValidator'],
             ]
         );
+    }
+
+    /**
+     * @return EmploymentQuery the active query used by this AR class
+     */
+    public static function find(): EmploymentQuery
+    {
+        $query = new EmploymentQuery(get_called_class());
+
+        return $query->where(['t_employment.is_deleted' => 0]);
     }
 }

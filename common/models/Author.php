@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\models\base\Author as BaseAuthor;
+use common\models\query\AuthorQuery;
 use trntv\filekit\behaviors\UploadBehavior;
 
 /**
@@ -52,8 +53,39 @@ class Author extends BaseAuthor
         );
     }
 
+    public function attributeLabels(): array
+    {
+        return [
+            'id' => \Yii::t('common', 'ID'),
+            'office_id' => \Yii::t('common', 'Office'),
+            'title' => \Yii::t('common', 'Title'),
+            'phone_number' => \Yii::t('common', 'Phone Number'),
+            'email' => \Yii::t('common', 'Email'),
+            'base_url' => \Yii::t('common', 'Base Url'),
+            'path' => \Yii::t('common', 'Path'),
+            'name' => \Yii::t('common', 'Name'),
+            'type' => \Yii::t('common', 'Type'),
+            'size' => \Yii::t('common', 'Size'),
+            'address' => \Yii::t('common', 'Address'),
+            'description' => \Yii::t('common', 'Description'),
+            'is_deleted' => \Yii::t('common', 'Is Deleted'),
+            'verlock' => \Yii::t('common', 'Verlock'),
+            'uuid' => \Yii::t('common', 'Uuid'),
+        ];
+    }
+
     public function getUrl()
     {
         return $this->base_url.'/'.$this->path;
+    }
+
+    /**
+     * @return AuthorQuery the active query used by this AR class
+     */
+    public static function find(): AuthorQuery
+    {
+        $query = new AuthorQuery(get_called_class());
+
+        return $query->where(['t_author.is_deleted' => 0]);
     }
 }

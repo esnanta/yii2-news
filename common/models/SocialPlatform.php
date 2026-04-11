@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\models\base\SocialPlatform as BaseSocialPlatform;
+use common\models\query\SocialPlatformQuery;
 
 /**
  * This is the model class for table "t_social_platform".
@@ -27,5 +28,15 @@ class SocialPlatform extends BaseSocialPlatform
                 [['verlock'], 'mootensai\components\OptimisticLockValidator'],
             ]
         );
+    }
+
+    /**
+     * @return SocialPlatformQuery the active query used by this AR class
+     */
+    public static function find(): SocialPlatformQuery
+    {
+        $query = new SocialPlatformQuery(get_called_class());
+
+        return $query->where(['t_social_platform.is_deleted' => 0]);
     }
 }

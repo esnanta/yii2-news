@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\models\base\StaffSocialAccount as BaseStaffSocialAccount;
+use common\models\query\StaffSocialAccountQuery;
 
 /**
  * This is the model class for table "t_staff_social_account".
@@ -29,5 +30,15 @@ class StaffSocialAccount extends BaseStaffSocialAccount
                 [['verlock'], 'mootensai\components\OptimisticLockValidator'],
             ]
         );
+    }
+
+    /**
+     * @return StaffSocialAccountQuery the active query used by this AR class
+     */
+    public static function find(): StaffSocialAccountQuery
+    {
+        $query = new StaffSocialAccountQuery(get_called_class());
+
+        return $query->where(['t_staff_social_account.is_deleted' => 0]);
     }
 }

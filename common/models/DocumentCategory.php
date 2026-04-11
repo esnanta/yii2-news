@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\models\base\DocumentCategory as BaseDocumentCategory;
+use common\models\query\DocumentCategoryQuery;
 
 /**
  * This is the model class for table "t_document_category".
@@ -24,5 +25,15 @@ class DocumentCategory extends BaseDocumentCategory
                 [['verlock'], 'mootensai\components\OptimisticLockValidator'],
             ]
         );
+    }
+
+    /**
+     * @return DocumentCategoryQuery the active query used by this AR class
+     */
+    public static function find(): DocumentCategoryQuery
+    {
+        $query = new DocumentCategoryQuery(get_called_class());
+
+        return $query->where(['t_document_category.is_deleted' => 0]);
     }
 }

@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\models\base\ArticleCategory as BaseArticleCategory;
+use common\models\query\ArticleCategoryQuery;
 use yii\behaviors\SluggableBehavior;
 
 /**
@@ -70,5 +71,15 @@ class ArticleCategory extends BaseArticleCategory
             'parent_id' => \Yii::t('common', 'Parent Category'),
             'status' => \Yii::t('common', 'Status'),
         ]);
+    }
+
+    /**
+     * @return ArticleCategoryQuery the active query used by this AR class
+     */
+    public static function find(): ArticleCategoryQuery
+    {
+        $query = new ArticleCategoryQuery(get_called_class());
+
+        return $query->where(['t_article_category.is_deleted' => 0]);
     }
 }

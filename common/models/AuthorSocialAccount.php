@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\models\base\AuthorSocialAccount as BaseAuthorSocialAccount;
+use common\models\query\AuthorSocialAccountQuery;
 
 /**
  * This is the model class for table "t_author_social_account".
@@ -30,5 +31,15 @@ class AuthorSocialAccount extends BaseAuthorSocialAccount
                 [['verlock'], 'mootensai\components\OptimisticLockValidator'],
             ]
         );
+    }
+
+    /**
+     * @return AuthorSocialAccountQuery the active query used by this AR class
+     */
+    public static function find(): AuthorSocialAccountQuery
+    {
+        $query = new AuthorSocialAccountQuery(get_called_class());
+
+        return $query->where(['t_author_social_account.is_deleted' => 0]);
     }
 }
