@@ -33,6 +33,26 @@ class AuthorSocialAccount extends BaseAuthorSocialAccount
         );
     }
 
+    public function attributeLabels(): array
+    {
+        return [
+            'id' => \Yii::t('common', 'ID'),
+            'office_id' => \Yii::t('common', 'Office'),
+            'author_id' => \Yii::t('common', 'Author'),
+            'platform_id' => \Yii::t('common', 'Platform'),
+            'username' => \Yii::t('common', 'Username'),
+            'profile_url' => \Yii::t('common', 'Profile Url'),
+            'is_primary' => \Yii::t('common', 'Is Primary'),
+            'is_visible' => \Yii::t('common', 'Is Visible'),
+            'sequence' => \Yii::t('common', 'Sequence'),
+            'description' => \Yii::t('common', 'Description'),
+            'is_deleted' => \Yii::t('common', 'Is Deleted'),
+            'verlock' => \Yii::t('common', 'Verlock'),
+            'uuid' => \Yii::t('common', 'Uuid'),
+        ];
+    }
+
+
     /**
      * @return AuthorSocialAccountQuery the active query used by this AR class
      */
