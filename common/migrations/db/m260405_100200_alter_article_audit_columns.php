@@ -30,6 +30,8 @@ class m260405_100200_alter_article_audit_columns extends Migration
         $this->convertUnixIntToDateTime('{{%article}}', 'updated_at');
         $this->convertUnixIntToDateTime('{{%article}}', 'published_at');
 
+        $this->addColumn('{{%article}}', 'is_pinned', $this->integer()->notNull()->defaultValue(0));
+        $this->addColumn('{{%article}}', 'view_count', $this->integer()->notNull()->defaultValue(0));
         $this->addColumn('{{%article}}', 'is_deleted', $this->integer()->notNull()->defaultValue(0));
         $this->addColumn('{{%article}}', 'deleted_at', $this->dateTime());
         $this->addColumn('{{%article}}', 'deleted_by', $this->integer()->defaultValue(0));
@@ -78,6 +80,8 @@ class m260405_100200_alter_article_audit_columns extends Migration
 
         $this->convertDateTimeToUnixInt('{{%article_attachment}}', 'created_at');
 
+        $this->dropColumn('{{%article}}', 'is_pinned');
+        $this->dropColumn('{{%article}}', 'view_count');
         $this->dropColumn('{{%article}}', 'uuid');
         $this->dropColumn('{{%article}}', 'verlock');
         $this->dropColumn('{{%article}}', 'deleted_by');
