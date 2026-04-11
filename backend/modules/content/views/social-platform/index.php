@@ -59,13 +59,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         'contentOptions' => ['style' => 'white-space: normal; word-break: break-word;'],
                     ],
                     [
-                        'attribute' => 'is_active',
-                        'value' => 'isActiveLabel',
-                        'filter' => SocialPlatform::getIsActiveOptions(),
-                        'options' => ['style' => 'width: 10%'],
-                        'contentOptions' => ['style' => 'white-space: nowrap;'],
-                    ],
-                    [
                         'class' => ActionColumn::class,
                         'options' => ['style' => 'width: 8%'],
                         'contentOptions' => ['style' => 'white-space: nowrap;'],

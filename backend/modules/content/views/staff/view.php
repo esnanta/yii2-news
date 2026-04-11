@@ -46,20 +46,20 @@ $this->params['breadcrumbs'][] = $this->title;
                             return $jobTitleOptions[$model->job_title_id] ?? '-';
                         },
                     ],
-                        [
-                                'label' => Yii::t('backend', 'Photo'),
-                                'format' => 'raw',
-                                'value' => static fn ($model) => FileDisplayService::renderImageOrFallback(
-                                        $model->title,
-                                        $model->base_url,
-                                        $model->path,
-                                        Yii::t('backend', 'No photo')
-                                ),
-                        ],
-                        [
-                                'attribute' => 'size',
-                                'value' => static fn ($model) => FileDisplayService::formatSizeInKbOrMb($model->size),
-                        ],
+                    [
+                        'label' => Yii::t('backend', 'Photo'),
+                        'format' => 'raw',
+                        'value' => static fn ($model) => FileDisplayService::renderImageOrFallback(
+                            $model->title,
+                            $model->base_url,
+                            $model->path,
+                            Yii::t('backend', 'No photo')
+                        ),
+                    ],
+                    [
+                        'attribute' => 'size',
+                        'value' => static fn ($model) => FileDisplayService::formatSizeInKbOrMb($model->size),
+                    ],
                     'title',
                     'initial',
                     'identity_number',

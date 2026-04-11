@@ -105,7 +105,6 @@ class m260409_100400_seed_office_social_platform_document_category extends Migra
                 'code' => $platform['code'],
                 'name' => $platform['name'],
                 'base_url' => $platform['base_url'],
-                'is_active' => 1,
                 'sequence' => $platform['sequence'],
                 'is_deleted' => 0,
                 'deleted_by' => 0,

@@ -14,7 +14,7 @@ class SocialPlatformSearch extends SocialPlatform
     public function rules(): array
     {
         return [
-            [['id', 'is_active', 'sequence', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['id', 'sequence', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['code', 'name', 'base_url', 'created_at', 'updated_at', 'deleted_at', 'uuid'], 'safe'],
         ];
     }
@@ -44,7 +44,6 @@ class SocialPlatformSearch extends SocialPlatform
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'is_active' => $this->is_active,
             'sequence' => $this->sequence,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

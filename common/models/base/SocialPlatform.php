@@ -19,7 +19,6 @@ use yii\db\ActiveQuery;
  * @property string                $code
  * @property string                $name
  * @property string                $base_url
- * @property int                   $is_active
  * @property int                   $sequence
  * @property string                $created_at
  * @property string                $updated_at
@@ -70,7 +69,7 @@ class SocialPlatform extends BaseActiveRecord
     {
         return [
             [['code', 'name'], 'required'],
-            [['is_active', 'sequence', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['sequence', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['code'], 'string', 'max' => 50],
             [['name'], 'string', 'max' => 100],
@@ -104,7 +103,6 @@ class SocialPlatform extends BaseActiveRecord
             'code' => \Yii::t('common', 'Code'),
             'name' => \Yii::t('common', 'Name'),
             'base_url' => \Yii::t('common', 'Base Url'),
-            'is_active' => \Yii::t('common', 'Is Active'),
             'sequence' => \Yii::t('common', 'Sequence'),
             'is_deleted' => \Yii::t('common', 'Is Deleted'),
             'verlock' => \Yii::t('common', 'Verlock'),

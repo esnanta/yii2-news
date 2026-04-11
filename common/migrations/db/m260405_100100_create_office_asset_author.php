@@ -39,7 +39,6 @@ class m260405_100100_create_office_asset_author extends Migration
             'code' => $this->string(50)->notNull(),
             'name' => $this->string(100)->notNull(),
             'base_url' => $this->string(255),
-            'is_active' => $this->tinyInteger()->defaultValue(1),
             'sequence' => $this->integer()->defaultValue(0),
             'created_at' => $this->dateTime(),
             'updated_at' => $this->dateTime(),

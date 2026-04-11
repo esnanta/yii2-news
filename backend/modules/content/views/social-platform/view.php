@@ -31,10 +31,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     'code',
                     'name',
                     'base_url:url',
-                    [
-                        'attribute' => 'is_active',
-                        'value' => $model->isActiveLabel,
-                    ],
                     'sequence',
                 ],
             ]); ?>
