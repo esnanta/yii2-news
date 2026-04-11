@@ -24,6 +24,12 @@ class m260409_100400_seed_office_social_platform_document_category extends Migra
         ['title' => 'Supervisor', 'sequence' => 20, 'description' => 'Pengawas.'],
         ['title' => 'Staff', 'sequence' => 30, 'description' => 'Staf Pelaksana.'],
     ];
+    private const DEFAULT_AUTHORS = [
+        ['title' => 'John Doe', 'email' => 'john.doe@example.com', 'phone_number' => '123456789'],
+    ];
+    private const DEFAULT_STAFF = [
+        ['title' => 'Jane Smith', 'initial' => 'JS', 'identity_number' => '12345', 'job_title' => 'Staff'],
+    ];
 
     /**
      * @return bool|void
@@ -36,6 +42,8 @@ class m260409_100400_seed_office_social_platform_document_category extends Migra
         $this->seedSocialPlatforms($now);
         $this->seedDocumentCategories($now);
         $this->seedJobTitles($now);
+        $this->seedAuthors($now);
+        $this->seedStaff($now);
     }
 
     /**
@@ -43,6 +51,16 @@ class m260409_100400_seed_office_social_platform_document_category extends Migra
      */
     public function safeDown()
     {
+        $this->delete('{{%staff}}', [
+            'office_id' => self::DEFAULT_OFFICE_ID,
+            'title' => array_column(self::DEFAULT_STAFF, 'title'),
+        ]);
+
+        $this->delete('{{%author}}', [
+            'office_id' => self::DEFAULT_OFFICE_ID,
+            'title' => array_column(self::DEFAULT_AUTHORS, 'title'),
+        ]);
+
         $this->delete('{{%job_title}}', [
             'office_id' => self::DEFAULT_OFFICE_ID,
             'title' => array_column(self::DEFAULT_JOB_TITLES, 'title'),
@@ -164,6 +182,76 @@ class m260409_100400_seed_office_social_platform_document_category extends Migra
                 'title' => $jobTitle['title'],
                 'sequence' => $jobTitle['sequence'],
                 'description' => $jobTitle['description'],
+                'is_deleted' => 0,
+                'deleted_by' => 0,
+                'verlock' => 0,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ]);
+        }
+    }
+
+    private function seedAuthors(string $now): void
+    {
+        foreach (self::DEFAULT_AUTHORS as $author) {
+            $exists = (new Query())
+                ->from('{{%author}}')
+                ->where([
+                    'office_id' => self::DEFAULT_OFFICE_ID,
+                    'title' => $author['title'],
+                ])
+                ->exists($this->db);
+
+            if ($exists) {
+                continue;
+            }
+
+            $this->insert('{{%author}}', [
+                'office_id' => self::DEFAULT_OFFICE_ID,
+                'title' => $author['title'],
+                'email' => $author['email'],
+                'phone_number' => $author['phone_number'],
+                'is_deleted' => 0,
+                'deleted_by' => 0,
+                'verlock' => 0,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ]);
+        }
+    }
+
+    private function seedStaff(string $now): void
+    {
+        foreach (self::DEFAULT_STAFF as $staff) {
+            $exists = (new Query())
+                ->from('{{%staff}}')
+                ->where([
+                    'office_id' => self::DEFAULT_OFFICE_ID,
+                    'title' => $staff['title'],
+                ])
+                ->exists($this->db);
+
+            if ($exists) {
+                continue;
+            }
+
+            $jobTitleId = (new Query())
+                ->select('id')
+                ->from('{{%job_title}}')
+                ->where(['title' => $staff['job_title'], 'office_id' => self::DEFAULT_OFFICE_ID])
+                ->scalar($this->db);
+
+            if (!$jobTitleId) {
+                echo "Skipping staff member {$staff['title']} because job title '{$staff['job_title']}' was not found.\n";
+                continue;
+            }
+
+            $this->insert('{{%staff}}', [
+                'office_id' => self::DEFAULT_OFFICE_ID,
+                'job_title_id' => $jobTitleId,
+                'title' => $staff['title'],
+                'initial' => $staff['initial'],
+                'identity_number' => $staff['identity_number'],
                 'is_deleted' => 0,
                 'deleted_by' => 0,
                 'verlock' => 0,
