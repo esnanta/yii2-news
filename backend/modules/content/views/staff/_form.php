@@ -1,9 +1,9 @@
 <?php
 
-use trntv\filekit\widget\Upload;
 use common\models\Staff;
-use yii\helpers\Html;
+use trntv\filekit\widget\Upload;
 use yii\bootstrap4\ActiveForm;
+use yii\helpers\Html;
 use yii\web\JsExpression;
 
 /**
@@ -27,23 +27,23 @@ use yii\web\JsExpression;
                 ); ?>
                 <?php echo $form->field($model, 'employment_id')->dropDownList(
                     $employmentOptions,
-                    ['prompt' => Yii::t('backend', 'Select employment')]
+                    ['prompt' => Yii::t('backend', '')]
                 ); ?>
-                <?php echo $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
-                <?php echo $form->field($model, 'initial')->textInput(['maxlength' => true]) ?>
-                <?php echo $form->field($model, 'identity_number')->textInput(['maxlength' => true]) ?>
-                <?php echo $form->field($model, 'phone_number')->textInput(['maxlength' => true]) ?>
+                <?php echo $form->field($model, 'title')->textInput(['maxlength' => true]); ?>
+                <?php echo $form->field($model, 'initial')->textInput(['maxlength' => true]); ?>
+                <?php echo $form->field($model, 'identity_number')->textInput(['maxlength' => true]); ?>
+                <?php echo $form->field($model, 'phone_number')->textInput(['maxlength' => true]); ?>
+                <?php echo $form->field($model, 'email')->textInput(['maxlength' => true]); ?>
                 <?php echo $form->field($model, 'gender')->dropDownList(
                     Staff::genders(),
                     ['prompt' => Yii::t('backend', '')]
-                ) ?>
+                ); ?>
                 <?php echo $form->field($model, 'status')->dropDownList(
                     Staff::statuses(),
                     ['prompt' => Yii::t('backend', '')]
-                ) ?>
-                <?php echo $form->field($model, 'address')->textarea(['rows' => 6]) ?>
-                <?php echo $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
-                <?php echo $form->field($model, 'description')->textarea(['rows' => 6]) ?>
+                ); ?>
+                <?php echo $form->field($model, 'address')->textarea(['rows' => 6]); ?>
+                <?php echo $form->field($model, 'description')->textarea(['rows' => 6]); ?>
                 <?php echo $form->field($model, 'image')->widget(Upload::class, [
                     'url' => ['/file/storage/upload'],
                     'uploadPath' => 'staff',
@@ -53,7 +53,12 @@ use yii\web\JsExpression;
 
             </div>
             <div class="card-footer">
-                <?php echo Html::submitButton($model->isNewRecord ? Yii::t('backend', 'Create') : Yii::t('backend', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                <?php echo Html::submitButton(
+                    $model->isNewRecord
+                        ? Yii::t('backend', 'Create')
+                        : Yii::t('backend', 'Update'),
+                    ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']
+                ); ?>
             </div>
         </div>
     <?php ActiveForm::end(); ?>
