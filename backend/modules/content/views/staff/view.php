@@ -7,6 +7,8 @@ use common\service\FileDisplayService;
 /**
  * @var yii\web\View $this
  * @var common\models\Staff $model
+ * @var array $officeOptions
+ * @var array $employmentOptions
  */
 
 $this->title = $model->title;
@@ -30,8 +32,20 @@ $this->params['breadcrumbs'][] = $this->title;
                 'model' => $model,
                 'attributes' => [
                     'id',
-                    'office_id',
-                    'employment_id',
+                    [
+                        'attribute' => 'office_id',
+                        'label' => Yii::t('backend', 'Office'),
+                        'value' => static function ($model) use ($officeOptions) {
+                            return $officeOptions[$model->office_id] ?? '-';
+                        },
+                    ],
+                    [
+                        'attribute' => 'employment_id',
+                        'label' => Yii::t('backend', 'Employment'),
+                        'value' => static function ($model) use ($employmentOptions) {
+                            return $employmentOptions[$model->employment_id] ?? '-';
+                        },
+                    ],
                     'title',
                     'initial',
                     'identity_number',
@@ -39,10 +53,16 @@ $this->params['breadcrumbs'][] = $this->title;
                     'gender_status',
                     'active_status',
                     'address:ntext',
-                    'base_url:url',
-                    'path',
-                    'name',
-                    'type',
+                    [
+                        'label' => Yii::t('backend', 'Photo'),
+                        'format' => 'raw',
+                        'value' => static fn ($model) => FileDisplayService::renderImageOrFallback(
+                            $model->title,
+                            $model->base_url,
+                            $model->path,
+                            Yii::t('backend', 'No photo')
+                        ),
+                    ],
                     [
                         'attribute' => 'size',
                         'value' => static fn ($model) => FileDisplayService::formatSizeInKbOrMb($model->size),

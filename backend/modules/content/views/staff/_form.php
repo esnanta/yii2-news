@@ -1,7 +1,9 @@
 <?php
 
+use trntv\filekit\widget\Upload;
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
+use yii\web\JsExpression;
 
 /**
  * @var yii\web\View $this
@@ -33,17 +35,18 @@ use yii\bootstrap4\ActiveForm;
                 <?php echo $form->field($model, 'gender_status')->textInput() ?>
                 <?php echo $form->field($model, 'active_status')->textInput() ?>
                 <?php echo $form->field($model, 'address')->textarea(['rows' => 6]) ?>
-                <?php echo $form->field($model, 'base_url')->textInput(['maxlength' => true]) ?>
-                <?php echo $form->field($model, 'path')->textInput(['maxlength' => true]) ?>
-                <?php echo $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-                <?php echo $form->field($model, 'type')->textInput(['maxlength' => true]) ?>
-                <?php echo $form->field($model, 'size')->textInput() ?>
                 <?php echo $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
                 <?php echo $form->field($model, 'google_plus')->textInput(['maxlength' => true]) ?>
                 <?php echo $form->field($model, 'instagram')->textInput(['maxlength' => true]) ?>
                 <?php echo $form->field($model, 'facebook')->textInput(['maxlength' => true]) ?>
                 <?php echo $form->field($model, 'twitter')->textInput(['maxlength' => true]) ?>
                 <?php echo $form->field($model, 'description')->textarea(['rows' => 6]) ?>
+                <?php echo $form->field($model, 'image')->widget(Upload::class, [
+                    'url' => ['/file/storage/upload'],
+                    'uploadPath' => 'staff',
+                    'maxFileSize' => 5000000,
+                    'acceptFileTypes' => new JsExpression('/(\.|\/)(gif|jpe?g|png)$/i'),
+                ]); ?>
 
             </div>
             <div class="card-footer">
