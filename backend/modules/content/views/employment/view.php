@@ -29,7 +29,13 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php echo DetailView::widget([
                 'model' => $model,
                 'attributes' => [
-                    'office_id',
+                    [
+                        'attribute' => 'office_id',
+                        'label' => Yii::t('backend', 'Office'),
+                        'value' => static function ($model) use ($officeOptions) {
+                            return $officeOptions[$model->office_id] ?? null;
+                        },
+                    ],
                     'title',
                     'description:ntext',
                     'sequence',

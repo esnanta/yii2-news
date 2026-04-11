@@ -1,10 +1,10 @@
 <?php
 
+use common\service\FileDisplayService;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-use common\service\FileDisplayService;
 
-/**
+/*
  * @var yii\web\View $this
  * @var common\models\Document $model
  */
@@ -16,29 +16,36 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="document-view">
     <div class="card">
         <div class="card-header">
-            <?php echo Html::a(Yii::t('backend', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+            <?php echo Html::a(Yii::t('backend', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']); ?>
             <?php echo Html::a(Yii::t('backend', 'Delete'), ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
                 'data' => [
                     'confirm' => Yii::t('backend', 'Are you sure you want to delete this item?'),
                     'method' => 'post',
                 ],
-            ]) ?>
+            ]); ?>
         </div>
         <div class="card-body">
             <?php echo DetailView::widget([
                 'model' => $model,
                 'attributes' => [
-                    'id',
-                    'office_id',
+                    [
+                        'attribute' => 'office_id',
+                        'label' => Yii::t('backend', 'Office'),
+                        'value' => static function ($model) use ($officeOptions) {
+                            return $officeOptions[$model->office_id] ?? null;
+                        },
+                    ],
                     'is_visible',
-                    'category_id',
+                    [
+                        'attribute' => 'category_id',
+                        'label' => Yii::t('backend', 'Category'),
+                        'value' => static function ($model) use ($categoryOptions) {
+                            return $categoryOptions[$model->category_id] ?? null;
+                        },
+                    ],
                     'title',
                     'date_issued',
-                    'base_url:url',
-                    'path',
-                    'name',
-                    'type',
                     [
                         'attribute' => 'size',
                         'value' => static fn ($model) => FileDisplayService::formatSizeInKbOrMb($model->size),
@@ -55,9 +62,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     'deleted_by',
                     'verlock',
                     'uuid',
-                    
                 ],
-            ]) ?>
+            ]); ?>
         </div>
     </div>
 </div>
