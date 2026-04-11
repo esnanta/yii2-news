@@ -11,27 +11,7 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 
 /**
- * This is the model class for table "article".
- *
- * @property int                 $id
- * @property string              $slug
- * @property string              $title
- * @property string              $body
- * @property string              $view
- * @property string              $thumbnail_base_url
- * @property string              $thumbnail_path
- * @property array               $attachments
- * @property int                 $category_id
- * @property int                 $status
- * @property string              $published_at
- * @property int                 $created_by
- * @property int                 $updated_by
- * @property string              $created_at
- * @property string              $updated_at
- * @property User                $author
- * @property User                $updater
- * @property ArticleCategory     $category
- * @property ArticleAttachment[] $articleAttachments
+ * @property ActiveQuery $updater
  */
 class Article extends BaseArticle
 {
@@ -152,7 +132,7 @@ class Article extends BaseArticle
     /**
      * @return ActiveQuery
      */
-    public function getUpdater()
+    public function getUpdater(): ActiveQuery
     {
         return $this->getUpdatedBy();
     }

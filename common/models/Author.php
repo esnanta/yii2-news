@@ -9,6 +9,7 @@ use trntv\filekit\behaviors\UploadBehavior;
 /**
  * This is the model class for table "t_author".
  *
+ * @property mixed  $publicIdentity
  * @property string $url
  */
 class Author extends BaseAuthor
@@ -89,7 +90,7 @@ class Author extends BaseAuthor
         return $query->where(['t_author.is_deleted' => 0]);
     }
 
-    public function getPublicIdentity()
+    public function getPublicIdentity(): string
     {
         if ($this->title) {
             return $this->title;
