@@ -41,7 +41,8 @@ class ArticleSearch extends Article
         $query = Article::find()
             ->joinWith('category')
             ->andWhere(['{{%article_category}}.[[status]]' => ArticleCategory::STATUS_ACTIVE])
-            ->published()
+            ->andWhere(['{{%article}}.[[status]]' => Article::STATUS_PUBLISHED])
+            ->andWhere(['<=', '{{%article}}.[[published_at]]', date('Y-m-d')])
         ;
 
         $dataProvider = new ActiveDataProvider([

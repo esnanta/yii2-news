@@ -88,4 +88,13 @@ class Author extends BaseAuthor
 
         return $query->where(['t_author.is_deleted' => 0]);
     }
+
+    public function getPublicIdentity()
+    {
+        if ($this->title) {
+            return $this->title;
+        }
+
+        return $this->email;
+    }
 }
