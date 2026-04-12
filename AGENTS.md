@@ -2,8 +2,9 @@
 
 ## Core architecture (read first)
 - This is a Yii2 advanced-style multi-app repo: `frontend/`, `backend/`, `api/`, `console/`, shared logic in `common/`, file serving in `storage/`.
-- App boot order is consistent: `common/config/base.php` + common web/console config + app `config/base.php` + app `config/web.php` (see `frontend/web/index.php`, `backend/web/index.php`, `api/web/index.php`, `console/yii`).
-- Aliases are centralized in `common/config/bootstrap.php` (`@frontend`, `@backend`, `@api`, `@storage`, plus `@frontendUrl`/`@backendUrl`/`@apiUrl`/`@storageUrl`).
+- Web app boot order is consistent: `common/config/base.php` + `common/config/web.php` + app `config/base.php` + app `config/web.php` (see `frontend/web/index.php`, `backend/web/index.php`, `api/web/index.php`).
+- Console boot order is: `common/config/base.php` + `common/config/console.php` + `console/config/console.php` (see `console/yii`).
+- Aliases are centralized in `common/config/bootstrap.php` (`@frontend`, `@backend`, `@api`, `@storage`, `@tests`, plus `@frontendUrl`/`@backendUrl`/`@apiUrl`/`@storageUrl`).
 - Environment must come from `.env` via `common/env.php` and `env()` in `common/helpers.php` (avoid raw `getenv()` in app code).
 
 ## Runtime boundaries and request flow
@@ -39,4 +40,5 @@
 ## AI and MCP references
 - Root AI guidance present: `README.md`.
 - Console-local AI framework guides exist in `console/.rules`, `console/.cursor/rules/yii2-boost.mdc`, and `console/.ai/guidelines/...` (mostly generic Yii2 guidance).
+- `codechap/yii2-ai-boost` is installed in `composer.json` (`require-dev`) and provides `boost/*` console tooling (see MCP command `boost/mcp` in `console/.mcp.json`).
 - MCP integration exists in `console/.mcp.json` as server `yii2-boost`; it is currently pinned to `/usr/bin/php8.5` and `/var/www/html/yii2-news/console/yii`, so treat it as optional tooling and verify local PHP/project paths before use.
