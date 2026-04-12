@@ -44,6 +44,15 @@ $config = [
                 ],
             ],
         ],
+        'view' => [
+            'theme' => [
+                'pathMap' => [
+                    '@frontend/views' => '@frontend/web/themes/bootstrap4news/views',
+                ],
+                'basePath' => '@frontend/web/themes/bootstrap4news',
+                'baseUrl' => '@web/themes/bootstrap4news',
+            ],
+        ],
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
