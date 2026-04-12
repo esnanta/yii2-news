@@ -1,6 +1,6 @@
 <?php
 
-namespace common\helper;
+namespace common\helpers;
 
 use common\service\LayoutService;
 use yii\web\View;
