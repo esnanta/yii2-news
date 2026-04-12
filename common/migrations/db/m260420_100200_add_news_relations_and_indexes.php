@@ -111,25 +111,6 @@ class m260420_100200_add_news_relations_and_indexes extends Migration
     }
 
     /**
-     * Removes legacy office ownership from social_platform if it exists.
-     */
-    private function dropLegacySocialPlatformOfficeRelation(): void
-    {
-        $tableSchema = $this->db->schema->getTableSchema('{{%social_platform}}', true);
-        if ($tableSchema === null || !isset($tableSchema->columns['office_id'])) {
-            return;
-        }
-
-        foreach ($tableSchema->foreignKeys as $name => $foreignKey) {
-            if (is_string($name) && is_array($foreignKey) && array_key_exists('office_id', $foreignKey)) {
-                $this->dropForeignKey($name, '{{%social_platform}}');
-            }
-        }
-
-        $this->dropColumn('{{%social_platform}}', 'office_id');
-    }
-
-    /**
      * @return bool|void
      */
     public function safeDown()
@@ -199,5 +180,23 @@ class m260420_100200_add_news_relations_and_indexes extends Migration
 
         $this->dropIndex('idx-social_platform-code', '{{%social_platform}}');
     }
-}
 
+    /**
+     * Removes legacy office ownership from social_platform if it exists.
+     */
+    private function dropLegacySocialPlatformOfficeRelation(): void
+    {
+        $tableSchema = $this->db->schema->getTableSchema('{{%social_platform}}', true);
+        if (null === $tableSchema || !isset($tableSchema->columns['office_id'])) {
+            return;
+        }
+
+        foreach ($tableSchema->foreignKeys as $name => $foreignKey) {
+            if (is_string($name) && is_array($foreignKey) && array_key_exists('office_id', $foreignKey)) {
+                $this->dropForeignKey($name, '{{%social_platform}}');
+            }
+        }
+
+        $this->dropColumn('{{%social_platform}}', 'office_id');
+    }
+}

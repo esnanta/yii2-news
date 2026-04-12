@@ -10,7 +10,7 @@ class m260420_100500_backfill_article_category_deleted_by extends Migration
     public function safeUp()
     {
         $tableSchema = $this->db->schema->getTableSchema('{{%article_category}}', true);
-        if ($tableSchema === null) {
+        if (null === $tableSchema) {
             return;
         }
 
@@ -36,4 +36,3 @@ class m260420_100500_backfill_article_category_deleted_by extends Migration
         // Backfill migration is intentionally irreversible.
     }
 }
-

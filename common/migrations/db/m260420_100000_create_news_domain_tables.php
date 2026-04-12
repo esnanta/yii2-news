@@ -5,24 +5,6 @@ use yii\db\Migration;
 class m260420_100000_create_news_domain_tables extends Migration
 {
     /**
-     * Shared audit and soft-delete columns for news-domain tables.
-     */
-    private function auditColumns(): array
-    {
-        return [
-            'created_at' => $this->dateTime(),
-            'updated_at' => $this->dateTime(),
-            'created_by' => $this->integer(),
-            'updated_by' => $this->integer(),
-            'is_deleted' => $this->integer()->defaultValue(0),
-            'deleted_at' => $this->dateTime(),
-            'deleted_by' => $this->integer(),
-            'verlock' => $this->bigInteger(),
-            'uuid' => $this->string(36),
-        ];
-    }
-
-    /**
      * @return bool|void
      */
     public function safeUp()
@@ -188,5 +170,22 @@ class m260420_100000_create_news_domain_tables extends Migration
         $this->dropTable('{{%social_platform}}');
         $this->dropTable('{{%office}}');
     }
-}
 
+    /**
+     * Shared audit and soft-delete columns for news-domain tables.
+     */
+    private function auditColumns(): array
+    {
+        return [
+            'created_at' => $this->dateTime(),
+            'updated_at' => $this->dateTime(),
+            'created_by' => $this->integer(),
+            'updated_by' => $this->integer(),
+            'is_deleted' => $this->integer()->defaultValue(0),
+            'deleted_at' => $this->dateTime(),
+            'deleted_by' => $this->integer(),
+            'verlock' => $this->bigInteger(),
+            'uuid' => $this->string(36),
+        ];
+    }
+}

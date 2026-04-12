@@ -94,7 +94,8 @@ class m260420_100300_seed_news_domain_defaults extends Migration
                 'id' => self::DEFAULT_OFFICE_ID,
                 'unique_id' => self::DEFAULT_OFFICE_UNIQUE_ID,
             ])
-            ->exists($this->db);
+            ->exists($this->db)
+        ;
 
         if ($exists) {
             return;
@@ -118,7 +119,8 @@ class m260420_100300_seed_news_domain_defaults extends Migration
             $exists = (new Query())
                 ->from('{{%social_platform}}')
                 ->where(['code' => $platform['code']])
-                ->exists($this->db);
+                ->exists($this->db)
+            ;
 
             if ($exists) {
                 continue;
@@ -147,7 +149,8 @@ class m260420_100300_seed_news_domain_defaults extends Migration
                     'office_id' => self::DEFAULT_OFFICE_ID,
                     'title' => $category['title'],
                 ])
-                ->exists($this->db);
+                ->exists($this->db)
+            ;
 
             if ($exists) {
                 continue;
@@ -176,7 +179,8 @@ class m260420_100300_seed_news_domain_defaults extends Migration
                     'office_id' => self::DEFAULT_OFFICE_ID,
                     'title' => $jobTitle['title'],
                 ])
-                ->exists($this->db);
+                ->exists($this->db)
+            ;
 
             if ($exists) {
                 continue;
@@ -205,7 +209,8 @@ class m260420_100300_seed_news_domain_defaults extends Migration
                     'office_id' => self::DEFAULT_OFFICE_ID,
                     'title' => $author['title'],
                 ])
-                ->exists($this->db);
+                ->exists($this->db)
+            ;
 
             if ($exists) {
                 continue;
@@ -234,7 +239,8 @@ class m260420_100300_seed_news_domain_defaults extends Migration
                     'office_id' => self::DEFAULT_OFFICE_ID,
                     'title' => $staff['title'],
                 ])
-                ->exists($this->db);
+                ->exists($this->db)
+            ;
 
             if ($exists) {
                 continue;
@@ -247,10 +253,12 @@ class m260420_100300_seed_news_domain_defaults extends Migration
                     'title' => $staff['job_title'],
                     'office_id' => self::DEFAULT_OFFICE_ID,
                 ])
-                ->scalar($this->db);
+                ->scalar($this->db)
+            ;
 
             if (!$jobTitleId) {
                 echo "Skipping staff member {$staff['title']} because job title '{$staff['job_title']}' was not found.\n";
+
                 continue;
             }
 
@@ -269,4 +277,3 @@ class m260420_100300_seed_news_domain_defaults extends Migration
         }
     }
 }
-
