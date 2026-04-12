@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use yii\base\InvalidConfigException;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\SluggableBehavior;
 use yii\behaviors\TimestampBehavior;
@@ -52,6 +53,9 @@ class Tag extends ActiveRecord
         ];
     }
 
+    /**
+     * @throws InvalidConfigException
+     */
     public function getArticles(): ActiveQuery
     {
         return $this->hasMany(Article::class, ['id' => 'article_id'])
@@ -60,7 +64,7 @@ class Tag extends ActiveRecord
     }
 
     /**
-     * Returns most used tags with usage count calculated from pivot table.
+     * Returns most used tags with a usage count calculated from the pivot table.
      */
     public static function findTagWeights(int $limit = 8): array
     {
