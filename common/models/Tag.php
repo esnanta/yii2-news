@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\models\query\TagQuery;
 use yii\base\InvalidConfigException;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\SluggableBehavior;
@@ -11,6 +12,11 @@ use yii\db\ActiveRecord;
 
 class Tag extends ActiveRecord
 {
+    public static function find(): TagQuery
+    {
+        return new TagQuery(static::class);
+    }
+
     public static function tableName(): string
     {
         return '{{%tags}}';
@@ -69,16 +75,13 @@ class Tag extends ActiveRecord
     public static function findTagWeights(int $limit = 8): array
     {
         return static::find()
+            ->notDeleted()
+            ->withPublishedArticles()
             ->select([
                 '{{%tags}}.[[title]]',
                 '{{%tags}}.[[slug]]',
                 'COUNT({{%article_tag}}.[[article_id]]) AS [[weight]]',
             ])
-            ->innerJoin('{{%article_tag}}', '{{%article_tag}}.[[tag_id]] = {{%tags}}.[[id]]')
-            ->innerJoin('{{%article}}', '{{%article}}.[[id]] = {{%article_tag}}.[[article_id]]')
-            ->andWhere(['{{%tags}}.[[is_deleted]]' => 0])
-            ->andWhere(['{{%article}}.[[is_deleted]]' => 0, '{{%article}}.[[status]]' => Article::STATUS_PUBLISHED])
-            ->andWhere(['<=', '{{%article}}.[[published_at]]', date('Y-m-d H:i:s')])
             ->groupBy(['{{%tags}}.[[id]]', '{{%tags}}.[[title]]', '{{%tags}}.[[slug]]'])
             ->orderBy(['weight' => SORT_DESC, '{{%tags}}.[[title]]' => SORT_ASC])
             ->limit($limit)

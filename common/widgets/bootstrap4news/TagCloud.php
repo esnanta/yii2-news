@@ -22,7 +22,17 @@ class TagCloud extends Widget
 
     public function run()
     {
-        $tags = Tag::findTagWeights($this->maxTags);
+        $cacheKey = [__CLASS__, 'weights', (int) $this->maxTags];
+        if (\Yii::$app->has('cache')) {
+            $tags = \Yii::$app->cache->getOrSet(
+                $cacheKey,
+                fn (): array => Tag::findTagWeights($this->maxTags),
+                120
+            );
+        } else {
+            $tags = Tag::findTagWeights($this->maxTags);
+        }
+
         $str = '';
         foreach ($tags as $tagData) {
             $title = (string) ($tagData['title'] ?? '');
