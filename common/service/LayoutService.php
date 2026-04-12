@@ -2,7 +2,10 @@
 
 namespace common\service;
 
+use common\models\ArticleCategory;
 use common\models\KeyStorageItem;
+use common\models\Office;
+use common\models\OfficeSocialAccount;
 use common\models\Page;
 use common\models\WidgetImage;
 use yii\db\ActiveRecord;
@@ -10,6 +13,24 @@ use yii\helpers\Html;
 
 class LayoutService
 {
+    public static function getLayoutData(
+        string $logo1Width = '200px',
+        string $logo1Height = '60px',
+        string $logo2Width = '500px',
+        string $logo2Height = '90px'
+    ): array {
+        $office = self::getOffice();
+        $officeId = $office?->id;
+
+        return [
+            'office' => $office,
+            'categories' => self::getCategories($officeId),
+            'officeMedias' => self::getSocialLinks($officeId),
+            'logo1Image' => self::getLogo1($logo1Width, $logo1Height),
+            'logo2Image' => self::getLogo2($logo2Width, $logo2Height),
+        ];
+    }
+
     public static function getLogo1(
         string $width = '100px',
         string $height = '40px',
@@ -58,6 +79,59 @@ class LayoutService
         return Page::find()->where(['slug' => 'about'])->one();
     }
 
+    public static function getOffice(): ?Office
+    {
+        $office = Office::find()->orderBy(['id' => SORT_ASC])->one();
+
+        return $office instanceof Office ? $office : null;
+    }
+
+    public static function getCategories(?int $officeId): array
+    {
+        if (null === $officeId) {
+            return [];
+        }
+
+        return ArticleCategory::find()
+            ->where([
+                'office_id' => $officeId,
+                'status' => ArticleCategory::STATUS_ACTIVE,
+            ])
+            ->orderBy(['sequence' => SORT_ASC])
+            ->all();
+    }
+
+    /**
+     * Returns link/icon objects to keep legacy header view contract.
+     */
+    public static function getSocialLinks(?int $officeId): array
+    {
+        if (null === $officeId) {
+            return [];
+        }
+
+        $accounts = OfficeSocialAccount::find()
+            ->with('platform')
+            ->where(['office_id' => $officeId, 'is_visible' => 1])
+            ->orderBy(['sequence' => SORT_ASC, 'id' => SORT_ASC])
+            ->all();
+
+        $items = [];
+        foreach ($accounts as $account) {
+            $url = trim((string) ($account->profile_url ?: $account->description));
+            if ('' === $url) {
+                continue;
+            }
+
+            $items[] = (object) [
+                'title' => self::resolveSocialIconClass($account),
+                'description' => $url,
+            ];
+        }
+
+        return $items;
+    }
+
     /**
      * Render widget image by key as tag <img>.
      */
@@ -95,5 +169,23 @@ class LayoutService
         $model = WidgetImage::find()->where(['key' => $key])->one();
 
         return $model instanceof WidgetImage ? $model : null;
+    }
+
+    private static function resolveSocialIconClass(OfficeSocialAccount $account): string
+    {
+        $code = strtolower((string) ($account->platform->code ?? ''));
+        $map = [
+            'facebook' => 'fab fa-facebook-f',
+            'twitter' => 'fab fa-twitter',
+            'x' => 'fab fa-x-twitter',
+            'instagram' => 'fab fa-instagram',
+            'linkedin' => 'fab fa-linkedin-in',
+            'youtube' => 'fab fa-youtube',
+            'tiktok' => 'fab fa-tiktok',
+            'telegram' => 'fab fa-telegram-plane',
+            'whatsapp' => 'fab fa-whatsapp',
+        ];
+
+        return $map[$code] ?? 'fas fa-link';
     }
 }

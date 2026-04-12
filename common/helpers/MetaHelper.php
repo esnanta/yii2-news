@@ -3,6 +3,7 @@
 namespace common\helper;
 
 use common\service\LayoutService;
+use yii\web\View;
 
 class MetaHelper
 {
@@ -21,6 +22,66 @@ class MetaHelper
 
         // Optional: keep normalized map for future loop-based registration.
         \Yii::$app->params['metaTagsResolved'] = $metaTags;
+    }
+
+    /**
+     * Returns normalized meta tags ready for registration in views.
+     */
+    public static function getResolvedMetaTags(array $overrides = []): array
+    {
+        self::setMetaTags($overrides);
+
+        $resolvedMetaTags = \Yii::$app->params['metaTagsResolved']
+            ?? \Yii::$app->params['metaTags']
+            ?? [];
+
+        if ([] !== $resolvedMetaTags) {
+            return $resolvedMetaTags;
+        }
+
+        // Last fallback for legacy flat params shape.
+        $legacyMetaKeys = [
+            'meta_author',
+            'meta_description',
+            'meta_keywords',
+            'og_site_name',
+            'og_title',
+            'og_description',
+            'og_type',
+            'og_url',
+            'og_image',
+            'og_width',
+            'og_height',
+            'og_updated_time',
+            'twitter_title',
+            'twitter_description',
+            'twitter_card',
+            'twitter_url',
+            'twitter_image',
+            'googleplus_name',
+            'googleplus_description',
+            'googleplus_image',
+        ];
+
+        foreach ($legacyMetaKeys as $metaKey) {
+            if (isset(\Yii::$app->params[$metaKey]) && is_array(\Yii::$app->params[$metaKey])) {
+                $resolvedMetaTags[$metaKey] = \Yii::$app->params[$metaKey];
+            }
+        }
+
+        return $resolvedMetaTags;
+    }
+
+    /**
+     * Registers all resolved meta tags to provided view.
+     */
+    public static function registerMetaTags(View $view, array $overrides = []): void
+    {
+        foreach (self::getResolvedMetaTags($overrides) as $metaKey => $metaConfig) {
+            if (is_array($metaConfig) && isset($metaConfig['content'])) {
+                $view->registerMetaTag($metaConfig, (string) $metaKey);
+            }
+        }
     }
 
     private static function dynamicOverrides(): array
