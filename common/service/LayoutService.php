@@ -47,9 +47,6 @@ class LayoutService
         return self::renderWidgetImageByKey('logo_bottom', $width, $height, $options);
     }
 
-    /**
-     * Jika nanti dibutuhkan URL mentah (misalnya untuk meta tag og:image).
-     */
     public static function getLogoUrl(string $key = 'logo_top'): ?string
     {
         $model = self::getWidgetImageByKey($key);
@@ -98,11 +95,12 @@ class LayoutService
                 'status' => ArticleCategory::STATUS_ACTIVE,
             ])
             ->orderBy(['sequence' => SORT_ASC])
-            ->all();
+            ->all()
+        ;
     }
 
     /**
-     * Returns link/icon objects to keep legacy header view contract.
+     * Returns link/icon objects to keep a legacy header view contract.
      */
     public static function getSocialLinks(?int $officeId): array
     {
@@ -114,7 +112,8 @@ class LayoutService
             ->with('platform')
             ->where(['office_id' => $officeId, 'is_visible' => 1])
             ->orderBy(['sequence' => SORT_ASC, 'id' => SORT_ASC])
-            ->all();
+            ->all()
+        ;
 
         $items = [];
         foreach ($accounts as $account) {
