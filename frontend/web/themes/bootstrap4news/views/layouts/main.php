@@ -8,7 +8,7 @@ use common\models\ArticleCategory;
 use common\models\Office;
 use common\models\OfficeMedia;
 use common\service\CacheService;
-use common\service\PageService;
+use common\service\LayoutService;
 use common\widgets\Alert;
 use common\widgets\AlertBootstrap4;
 use frontend\assets\Bootstrap4news;
@@ -61,8 +61,8 @@ $officeMedias = OfficeMedia::find()
     ->where(['office_id' => $officeId, 'media_type' => MediaTypeHelper::getSocial()])
     ->all();
 
-$logo1Image = PageService::getLogo1('200px','60px');
-$logo2Image = PageService::getLogo2('500px','90px');
+$logo1Image = LayoutService::getLogo1('200px','60px');
+$logo2Image = LayoutService::getLogo2('500px','90px');
 
 Bootstrap4news::register($this);
 ?>

@@ -324,6 +324,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/jeremykendall/php-domain-parser" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/yiisoft/yii2-coding-standards" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-php84" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/ergebnis/agent-detector" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

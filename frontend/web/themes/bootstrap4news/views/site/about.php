@@ -3,12 +3,12 @@
 /* @var $this yii\web\View */
 
 use common\helper\MetaHelper;
-use common\service\PageService;
+use common\service\LayoutService;
 
 $this->title = 'About';
 
 MetaHelper::setMetaTags();
-$model = PageService::getAbout();
+$model = LayoutService::getAbout();
 ?>
 
 
