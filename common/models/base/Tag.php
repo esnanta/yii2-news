@@ -81,7 +81,7 @@ class Tag extends BaseActiveRecord
 
     public static function tableName(): string
     {
-        return 't_tags';
+        return 't_tag';
     }
 
     /**

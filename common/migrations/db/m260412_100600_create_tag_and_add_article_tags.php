@@ -2,14 +2,14 @@
 
 use yii\db\Migration;
 
-class m260412_100600_create_tags_and_add_article_tags extends Migration
+class m260412_100600_create_tag_and_add_article_tag extends Migration
 {
     /**
      * @return bool|void
      */
     public function safeUp()
     {
-        $this->createTable('{{%tags}}', [
+        $this->createTable('{{%tag}}', [
             'id' => $this->primaryKey(),
             'title' => $this->string(150)->notNull(),
             'slug' => $this->string(100),
@@ -25,8 +25,8 @@ class m260412_100600_create_tags_and_add_article_tags extends Migration
             'uuid' => $this->string(36),
         ]);
 
-        $this->createIndex('idx-tags-title', '{{%tags}}', 'title');
-        $this->createIndex('uq-tags-slug', '{{%tags}}', 'slug', true);
+        $this->createIndex('idx-tag-title', '{{%tag}}', 'title');
+        $this->createIndex('uq-tag-slug', '{{%tag}}', 'slug', true);
 
         $this->createTable('{{%article_tag}}', [
             'article_id' => $this->integer()->notNull(),
@@ -50,7 +50,7 @@ class m260412_100600_create_tags_and_add_article_tags extends Migration
             'fk-article_tag-tag_id',
             '{{%article_tag}}',
             'tag_id',
-            '{{%tags}}',
+            '{{%tag}}',
             'id',
             'CASCADE',
             'CASCADE'
@@ -70,9 +70,9 @@ class m260412_100600_create_tags_and_add_article_tags extends Migration
         $this->dropPrimaryKey('pk-article_tag', '{{%article_tag}}');
         $this->dropTable('{{%article_tag}}');
 
-        $this->dropIndex('uq-tags-slug', '{{%tags}}');
-        $this->dropIndex('idx-tags-title', '{{%tags}}');
-        $this->dropTable('{{%tags}}');
+        $this->dropIndex('uq-tag-slug', '{{%tag}}');
+        $this->dropIndex('idx-tag-title', '{{%tag}}');
+        $this->dropTable('{{%tag}}');
     }
 }
 
