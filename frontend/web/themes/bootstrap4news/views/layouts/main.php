@@ -4,7 +4,7 @@
  * @var string $content
  */
 
-use common\helper\MetaHelper;
+use common\helpers\MetaHelper;
 use common\service\LayoutService;
 use frontend\assets\FrontendAsset;
 use yii\helpers\Html;
