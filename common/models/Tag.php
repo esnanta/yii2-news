@@ -2,24 +2,19 @@
 
 namespace common\models;
 
+use common\models\base\Tag as BaseTag;
 use common\models\query\TagQuery;
 use yii\base\InvalidConfigException;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\SluggableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
-use yii\db\ActiveRecord;
 
-class Tag extends ActiveRecord
+class Tag extends BaseTag
 {
     public static function find(): TagQuery
     {
         return new TagQuery(static::class);
-    }
-
-    public static function tableName(): string
-    {
-        return '{{%tags}}';
     }
 
     public function rules(): array

@@ -127,7 +127,7 @@ class Article extends BaseArticle
             'category_id' => \Yii::t('common', 'Category'),
             'thumbnail_base_url' => \Yii::t('common', 'Thumbnail'),
             'thumbnail_path' => \Yii::t('common', 'Thumbnail Path'),
-            'status' => \Yii::t('common', 'Published'),
+            'status' => \Yii::t('common', 'Status'),
             'published_at' => \Yii::t('common', 'Published At'),
             'is_pinned' => \Yii::t('common', 'Pinned'),
             'is_deleted' => \Yii::t('common', 'Is Deleted'),
