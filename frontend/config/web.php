@@ -1,4 +1,14 @@
 <?php
+
+use common\behaviors\LoginTimestampBehavior;
+use common\components\maintenance\Maintenance;
+use yii\authclient\clients\Facebook;
+use yii\authclient\clients\GitHub;
+use yii\authclient\Collection;
+use yii\gii\generators\crud\Generator;
+use yii\gii\Module;
+use yii\web\User;
+
 $config = [
     'homeUrl' => Yii::getAlias('@frontendUrl'),
     'controllerNamespace' => 'frontend\controllers',
@@ -13,15 +23,15 @@ $config = [
     ],
     'components' => [
         'authClientCollection' => [
-            'class' => yii\authclient\Collection::class,
+            'class' => Collection::class,
             'clients' => [
                 'github' => [
-                    'class' => yii\authclient\clients\GitHub::class,
+                    'class' => GitHub::class,
                     'clientId' => env('GITHUB_CLIENT_ID'),
-                    'clientSecret' => env('GITHUB_CLIENT_SECRET')
+                    'clientSecret' => env('GITHUB_CLIENT_SECRET'),
                 ],
                 'facebook' => [
-                    'class' => yii\authclient\clients\Facebook::class,
+                    'class' => Facebook::class,
                     'clientId' => env('FACEBOOK_CLIENT_ID'),
                     'clientSecret' => env('FACEBOOK_CLIENT_SECRET'),
                     'scope' => 'email,public_profile',
@@ -30,44 +40,45 @@ $config = [
                         'email',
                         'first_name',
                         'last_name',
-                    ]
-                ]
-            ]
+                    ],
+                ],
+            ],
         ],
         'errorHandler' => [
-            'errorAction' => 'site/error'
+            'errorAction' => 'site/error',
         ],
         'maintenance' => [
-            'class' => common\components\maintenance\Maintenance::class,
+            'class' => Maintenance::class,
             'enabled' => function ($app) {
-                if (env('APP_MAINTENANCE') === '1') {
+                if ('1' === env('APP_MAINTENANCE')) {
                     return true;
                 }
-                return $app->keyStorage->get('frontend.maintenance') === 'enabled';
-            }
+
+                return 'enabled' === $app->keyStorage->get('frontend.maintenance');
+            },
         ],
         'request' => [
-            'cookieValidationKey' => env('FRONTEND_COOKIE_VALIDATION_KEY')
+            'cookieValidationKey' => env('FRONTEND_COOKIE_VALIDATION_KEY'),
         ],
         'user' => [
-            'class' => yii\web\User::class,
+            'class' => User::class,
             'identityClass' => common\models\User::class,
             'loginUrl' => ['/user/sign-in/login'],
             'enableAutoLogin' => true,
-            'as afterLogin' => common\behaviors\LoginTimestampBehavior::class
-        ]
-    ]
+            'as afterLogin' => LoginTimestampBehavior::class,
+        ],
+    ],
 ];
 
 if (YII_ENV_DEV) {
     $config['modules']['gii'] = [
-        'class' => yii\gii\Module::class,
+        'class' => Module::class,
         'generators' => [
             'crud' => [
-                'class' => yii\gii\generators\crud\Generator::class,
-                'messageCategory' => 'frontend'
-            ]
-        ]
+                'class' => Generator::class,
+                'messageCategory' => 'frontend',
+            ],
+        ],
     ];
 }
 
