@@ -30,6 +30,7 @@ class ArticleSearch extends Article
      * @param mixed $params
      *
      * @return ActiveDataProvider
+     * @throws \Exception
      */
     public function search($params)
     {
@@ -45,7 +46,15 @@ class ArticleSearch extends Article
             return $dataProvider;
         }
 
-        $publishedAt = $this->normalizeDateTime($this->published_at);
+        $publishedAt = $this->normalizeDate($this->published_at); // hasil: Y-m-d atau null
+        if (null !== $publishedAt) {
+            $start = $publishedAt.' 00:00:00';
+            $end = (new \DateTime($publishedAt))->modify('+1 day')->format('Y-m-d').' 00:00:00';
+
+            $query->andWhere(['>=', '{{%article}}.[[published_at]]', $start]);
+            $query->andWhere(['<', '{{%article}}.[[published_at]]', $end]);
+        }
+
         $createdAt = $this->normalizeDate($this->created_at);
         $updatedAt = $this->normalizeDate($this->updated_at);
 
@@ -59,7 +68,7 @@ class ArticleSearch extends Article
             'is_pinned' => $this->is_pinned,
         ]);
 
-        $query->andFilterWhere(['{{%article}}.[[published_at]]' => $publishedAt]);
+        $query->andFilterWhere(['DATE({{%article}}.[[published_at]])' => $publishedAt]);
         $query->andFilterWhere(['DATE({{%article}}.[[created_at]])' => $createdAt]);
         $query->andFilterWhere(['DATE({{%article}}.[[updated_at]])' => $updatedAt]);
 
@@ -91,29 +100,5 @@ class ArticleSearch extends Article
         $parsed = \DateTime::createFromFormat('d-m-Y', $normalizedDate);
 
         return $parsed ? $parsed->format('Y-m-d') : $date;
-    }
-
-    private function normalizeDateTime(?string $dateTime): ?string
-    {
-        if (empty($dateTime)) {
-            return null;
-        }
-
-        $normalized = str_replace('T', ' ', $dateTime);
-        if (1 === preg_match('/^\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}$/', $normalized)) {
-            $normalized .= ':00';
-        }
-
-        $withSeconds = \DateTime::createFromFormat('Y-m-d H:i:s', $normalized);
-        if (false !== $withSeconds) {
-            return $withSeconds->format('Y-m-d H:i:s');
-        }
-
-        $withoutSeconds = \DateTime::createFromFormat('Y-m-d H:i', $normalized);
-        if (false !== $withoutSeconds) {
-            return $withoutSeconds->format('Y-m-d H:i:s');
-        }
-
-        return $dateTime;
     }
 }
