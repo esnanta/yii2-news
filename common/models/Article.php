@@ -11,6 +11,7 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 
 /**
+ * @property string      $tagKeywordString
  * @property ActiveQuery $updater
  */
 class Article extends BaseArticle
@@ -21,6 +22,13 @@ class Article extends BaseArticle
     public array $attachments = [];
 
     public ?array $thumbnail = null;
+
+    /**
+     * Editable tag input from form. Pivot table remains the single source of truth.
+     *
+     * @var array<int, string>
+     */
+    public array $tagTitles = [];
 
     /**
      * @return array statuses list
@@ -86,6 +94,8 @@ class Article extends BaseArticle
     {
         return [
             [['attachments', 'thumbnail'], 'safe'],
+            [['tagTitles'], 'default', 'value' => []],
+            [['tagTitles'], 'each', 'rule' => ['string', 'max' => 150]],
             [['author_id', 'category_id', 'status',
                 'created_by', 'updated_by', 'is_pinned', 'is_deleted',
                 'deleted_by', 'verlock'], 'integer'],
@@ -111,6 +121,7 @@ class Article extends BaseArticle
             'author_id' => \Yii::t('common', 'Author'),
             'slug' => \Yii::t('common', 'Slug'),
             'title' => \Yii::t('common', 'Title'),
+            'tagTitles' => \Yii::t('common', 'Tags'),
             'body' => \Yii::t('common', 'Body'),
             'view' => \Yii::t('common', 'Article View'),
             'category_id' => \Yii::t('common', 'Category'),
@@ -146,6 +157,23 @@ class Article extends BaseArticle
         parent::setAttributes($values, $safeOnly);
     }
 
+    public function afterFind(): void
+    {
+        parent::afterFind();
+
+        $this->tagTitles = array_values(array_unique(array_filter(array_map(
+            static fn (Tag $tag): string => trim((string) $tag->title),
+            $this->tags
+        ))));
+    }
+
+    public function afterSave($insert, $changedAttributes): void
+    {
+        parent::afterSave($insert, $changedAttributes);
+
+        $this->syncTagRelations();
+    }
+
     public function getUpdater(): ActiveQuery
     {
         return $this->getUpdatedBy();
@@ -159,6 +187,11 @@ class Article extends BaseArticle
         $query = new ArticleQuery(get_called_class());
 
         return $query->where(['t_article.is_deleted' => 0]);
+    }
+
+    public function getTagKeywordString(): string
+    {
+        return implode(', ', $this->tagTitles);
     }
 
     /**
@@ -176,5 +209,56 @@ class Article extends BaseArticle
         }
 
         return $normalized;
+    }
+
+    private function syncTagRelations(): void
+    {
+        $titles = [];
+        foreach ($this->tagTitles as $tagTitle) {
+            $normalized = trim((string) $tagTitle);
+            if ('' !== $normalized) {
+                $titles[$normalized] = $normalized;
+            }
+        }
+
+        $titles = array_values($titles);
+        $db = static::getDb();
+
+        $db->createCommand()->delete('{{%article_tag}}', ['article_id' => $this->id])->execute();
+
+        if ([] === $titles) {
+            return;
+        }
+
+        $existingTags = Tag::find()->where(['title' => $titles])->indexBy('title')->all();
+        $tagIds = [];
+
+        foreach ($titles as $title) {
+            if (!isset($existingTags[$title])) {
+                $tag = new Tag(['title' => $title]);
+                if (!$tag->save()) {
+                    continue;
+                }
+
+                $existingTags[$title] = $tag;
+            }
+
+            $tagIds[] = (int) $existingTags[$title]->id;
+        }
+
+        $tagIds = array_values(array_unique($tagIds));
+        if ([] === $tagIds) {
+            return;
+        }
+
+        $rows = array_map(fn (int $tagId): array => [$this->id, $tagId], $tagIds);
+        $db->createCommand()
+            ->batchInsert('{{%article_tag}}', ['article_id', 'tag_id'], $rows)
+            ->execute()
+        ;
+
+        // Keep in-memory relation and helper output consistent after save.
+        $this->populateRelation('tags', array_values($existingTags));
+        $this->tagTitles = $titles;
     }
 }

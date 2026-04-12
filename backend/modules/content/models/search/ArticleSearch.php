@@ -8,12 +8,14 @@ use yii\data\ActiveDataProvider;
 
 class ArticleSearch extends Article
 {
+    public $tag;
+
     public function rules(): array
     {
         return [
             [['id', 'author_id', 'category_id', 'created_by', 'updated_by', 'is_pinned'], 'integer'],
             ['status', 'in', 'range' => array_keys(Article::statuses())],
-            [['published_at', 'created_at', 'updated_at', 'slug', 'title', 'body'], 'safe'],
+            [['published_at', 'created_at', 'updated_at', 'slug', 'title', 'body', 'tag'], 'safe'],
         ];
     }
 
@@ -24,6 +26,8 @@ class ArticleSearch extends Article
 
     /**
      * Creates data provider instance with search query applied.
+     *
+     * @param mixed $params
      *
      * @return ActiveDataProvider
      */
@@ -61,7 +65,18 @@ class ArticleSearch extends Article
 
         $query->andFilterWhere(['like', 'slug', $this->slug])
             ->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'body', $this->body]);
+            ->andFilterWhere(['like', 'body', $this->body])
+        ;
+
+        if (!empty($this->tag)) {
+            $query->joinWith('tags');
+            $query->andWhere([
+                'or',
+                ['like', '{{%tags}}.[[title]]', $this->tag],
+                ['like', '{{%tags}}.[[slug]]', $this->tag],
+            ]);
+            $query->groupBy('{{%article}}.[[id]]');
+        }
 
         return $dataProvider;
     }
@@ -85,17 +100,17 @@ class ArticleSearch extends Article
         }
 
         $normalized = str_replace('T', ' ', $dateTime);
-        if (preg_match('/^\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}$/', $normalized) === 1) {
+        if (1 === preg_match('/^\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}$/', $normalized)) {
             $normalized .= ':00';
         }
 
         $withSeconds = \DateTime::createFromFormat('Y-m-d H:i:s', $normalized);
-        if ($withSeconds !== false) {
+        if (false !== $withSeconds) {
             return $withSeconds->format('Y-m-d H:i:s');
         }
 
         $withoutSeconds = \DateTime::createFromFormat('Y-m-d H:i', $normalized);
-        if ($withoutSeconds !== false) {
+        if (false !== $withoutSeconds) {
             return $withoutSeconds->format('Y-m-d H:i:s');
         }
 

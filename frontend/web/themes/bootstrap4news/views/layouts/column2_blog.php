@@ -5,7 +5,7 @@ $this->beginContent('@app/views/layouts/main.php');
 use common\helper\MediaTypeHelper;
 use common\models\OfficeMedia;
 
-use common\widgets\bootstrap4news\RecentBlogs;
+use common\widgets\bootstrap4news\RecentArticles;
 use common\widgets\bootstrap4news\TagCloud;
 
 
@@ -45,7 +45,7 @@ $siteLinks = OfficeMedia::find()->where(['media_type' => MediaTypeHelper::getLin
                             <h2 class="sw-title">In This Category</h2>
                             <div class="news-list">
                                 <?=
-                                RecentBlogs::widget([
+                                RecentArticles::widget([
                                     'title' => 'Recent Posts',
                                     'maxData' => 8,
                                 ])

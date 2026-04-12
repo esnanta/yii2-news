@@ -10,6 +10,7 @@ use common\models\Office;
 use common\models\Page;
 use common\models\SocialPlatform;
 use common\models\Staff;
+use common\models\Tag;
 use yii\helpers\ArrayHelper;
 
 class DataListService
@@ -60,5 +61,14 @@ class DataListService
     {
         return ArrayHelper::map(ArticleCategory::find()
             ->asArray()->all(), 'id', 'title');
+    }
+
+    public static function getTag(): array
+    {
+        return ArrayHelper::map(
+            Tag::find()->orderBy(['title' => SORT_ASC])->asArray()->all(),
+            'title',
+            'title'
+        );
     }
 }

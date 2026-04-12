@@ -56,7 +56,7 @@ use bajadev\ckeditor\CKEditor;
 
     ]);
   
-    echo $form->field($model, 'tags')->widget(Select2::classname(), [
+    echo $form->field($model, 'tagTitles')->widget(Select2::classname(), [
         'data' => $tagList,
         'maintainOrder' => true,
         'options' => ['placeholder' => 'Use comma as separator', 'multiple' => true],

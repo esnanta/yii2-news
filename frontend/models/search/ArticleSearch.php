@@ -14,12 +14,13 @@ class ArticleSearch extends Article
 {
     public $year;
     public $month;
+    public $tag;
 
     public function rules(): array
     {
         return [
             [['id', 'category_id', 'year', 'month'], 'integer'],
-            [['slug', 'title'], 'safe'],
+            [['slug', 'title', 'tag'], 'safe'],
         ];
     }
 
@@ -60,6 +61,16 @@ class ArticleSearch extends Article
         ]);
         $query->andFilterWhere(['YEAR({{%article}}.[[published_at]])' => $this->year]);
         $query->andFilterWhere(['MONTH({{%article}}.[[published_at]])' => $this->month]);
+
+        if (!empty($this->tag)) {
+            $query->joinWith('tags');
+            $query->andWhere([
+                'or',
+                ['{{%tags}}.[[slug]]' => $this->tag],
+                ['{{%tags}}.[[title]]' => $this->tag],
+            ]);
+            $query->groupBy('{{%article}}.[[id]]');
+        }
 
         $query->andFilterWhere(['like', 'title', $this->title]);
 

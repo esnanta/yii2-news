@@ -1,0 +1,85 @@
+<?php
+
+namespace common\models;
+
+use yii\behaviors\BlameableBehavior;
+use yii\behaviors\SluggableBehavior;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
+
+class Tag extends ActiveRecord
+{
+    public static function tableName(): string
+    {
+        return '{{%tags}}';
+    }
+
+    public function rules(): array
+    {
+        return [
+            [['title'], 'required'],
+            [['frequency', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['created_at', 'updated_at', 'deleted_at'], 'safe'],
+            [['title'], 'string', 'max' => 150],
+            [['slug'], 'string', 'max' => 100],
+            [['uuid'], 'string', 'max' => 36],
+            [['slug'], 'unique'],
+        ];
+    }
+
+    public function behaviors(): array
+    {
+        return [
+            'timestamp' => [
+                'class' => TimestampBehavior::class,
+                'createdAtAttribute' => 'created_at',
+                'updatedAtAttribute' => 'updated_at',
+                'value' => static fn (): string => date('Y-m-d H:i:s'),
+            ],
+            'blameable' => [
+                'class' => BlameableBehavior::class,
+                'createdByAttribute' => 'created_by',
+                'updatedByAttribute' => 'updated_by',
+            ],
+            'slug' => [
+                'class' => SluggableBehavior::class,
+                'attribute' => 'title',
+                'slugAttribute' => 'slug',
+                'immutable' => true,
+                'ensureUnique' => true,
+            ],
+        ];
+    }
+
+    public function getArticles(): ActiveQuery
+    {
+        return $this->hasMany(Article::class, ['id' => 'article_id'])
+            ->viaTable('{{%article_tag}}', ['tag_id' => 'id'])
+        ;
+    }
+
+    /**
+     * Returns most used tags with usage count calculated from pivot table.
+     */
+    public static function findTagWeights(int $limit = 8): array
+    {
+        return static::find()
+            ->select([
+                '{{%tags}}.[[title]]',
+                '{{%tags}}.[[slug]]',
+                'COUNT({{%article_tag}}.[[article_id]]) AS [[weight]]',
+            ])
+            ->innerJoin('{{%article_tag}}', '{{%article_tag}}.[[tag_id]] = {{%tags}}.[[id]]')
+            ->innerJoin('{{%article}}', '{{%article}}.[[id]] = {{%article_tag}}.[[article_id]]')
+            ->andWhere(['{{%tags}}.[[is_deleted]]' => 0])
+            ->andWhere(['{{%article}}.[[is_deleted]]' => 0, '{{%article}}.[[status]]' => Article::STATUS_PUBLISHED])
+            ->andWhere(['<=', '{{%article}}.[[published_at]]', date('Y-m-d H:i:s')])
+            ->groupBy(['{{%tags}}.[[id]]', '{{%tags}}.[[title]]', '{{%tags}}.[[slug]]'])
+            ->orderBy(['weight' => SORT_DESC, '{{%tags}}.[[title]]' => SORT_ASC])
+            ->limit($limit)
+            ->asArray()
+            ->all()
+        ;
+    }
+}

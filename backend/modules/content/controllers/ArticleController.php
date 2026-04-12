@@ -64,6 +64,7 @@ class ArticleController extends BaseController
             'model' => $article,
             'authorOptions' => DataListService::getAuthor(),
             'categoryOptions' => DataListService::getArticleCategory(),
+            'tagOptions' => DataListService::getTag(),
         ]);
     }
 
@@ -88,6 +89,7 @@ class ArticleController extends BaseController
             'model' => $article,
             'authorOptions' => DataListService::getAuthor(),
             'categoryOptions' => DataListService::getArticleCategory(),
+            'tagOptions' => DataListService::getTag(),
         ]);
     }
 

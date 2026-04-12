@@ -9,11 +9,12 @@ use yii\helpers\Html;
 use yii\imperavi\Widget;
 use yii\web\JsExpression;
 
-/*
+/**
  * @var yii\web\View $this
  * @var common\models\Article $model
  * @var array $authorOptions
  * @var array $categoryOptions
+ * @var array $tagOptions
  */
 ?>
 
@@ -34,6 +35,18 @@ use yii\web\JsExpression;
             ]); ?>
 
             <?php echo $form->field($model, 'title')->textInput(['maxlength' => true]); ?>
+
+            <?php echo $form->field($model, 'tagTitles')->widget(Select2::class, [
+                'data' => $tagOptions,
+                'options' => [
+                    'placeholder' => Yii::t('backend', 'Tambahkan tag'),
+                    'multiple' => true,
+                ],
+                'pluginOptions' => [
+                    'tags' => true,
+                    'tokenSeparators' => [','],
+                ],
+            ])->hint(Yii::t('backend', 'Tekan Enter atau koma untuk menambah tag baru')); ?>
 
             <?php echo $form->field($model, 'slug')
                 ->hint(Yii::t('backend', 'If you leave this field empty, the slug will be generated automatically'))

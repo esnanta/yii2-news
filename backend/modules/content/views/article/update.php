@@ -8,6 +8,7 @@ use yii\web\View;
  * @var Article $model
  * @var array  $authorOptions
  * @var array  $categoryOptions
+ * @var array  $tagOptions
  */
 $this->title = Yii::t('backend', 'Update {modelClass}: ', [
     'modelClass' => 'Article',
@@ -22,4 +23,5 @@ $this->params['breadcrumbs'][] = Yii::t('backend', 'Update');
     'model' => $model,
     'authorOptions' => $authorOptions,
     'categoryOptions' => $categoryOptions,
+    'tagOptions' => $tagOptions,
 ]);

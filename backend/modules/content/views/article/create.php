@@ -1,10 +1,14 @@
 <?php
 
+use common\models\Article;
+use yii\web\View;
+
 /**
- * @var yii\web\View          $this
- * @var common\models\Article $model
- * @var array                  $authorOptions
- * @var array                  $categoryOptions
+ * @var View    $this
+ * @var Article $model
+ * @var array   $authorOptions
+ * @var array   $categoryOptions
+ * @var array   $tagOptions
  */
 $this->title = Yii::t('backend', 'Create {modelClass}', [
     'modelClass' => 'Article',
@@ -19,4 +23,5 @@ $this->params['breadcrumbs'][] = $this->title;
     'model' => $model,
     'authorOptions' => $authorOptions,
     'categoryOptions' => $categoryOptions,
+    'tagOptions' => $tagOptions,
 ]);

@@ -61,6 +61,18 @@ $this->params['breadcrumbs'][] = $this->title;
                     'contentOptions' => ['style' => 'white-space: normal; word-break: break-word;'],
                 ],
                 [
+                    'attribute' => 'tag',
+                    'label' => Yii::t('backend', 'Tags'),
+                    'value' => static function (Article $model): string {
+                        return implode(', ', array_map(static fn ($tag): string => (string) $tag->title, $model->tags));
+                    },
+                    'filter' => Html::activeTextInput($searchModel, 'tag', [
+                        'class' => 'form-control',
+                        'placeholder' => Yii::t('backend', 'Tag'),
+                    ]),
+                    'contentOptions' => ['style' => 'white-space: normal; word-break: break-word;'],
+                ],
+                [
                     'attribute' => 'category_id',
                     'options' => ['style' => 'width: 10%'],
                     'value' => function ($model) {

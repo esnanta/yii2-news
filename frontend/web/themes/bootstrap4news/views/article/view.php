@@ -4,7 +4,6 @@ namespace frontend\web\themes\unify263blog\views\blog;
 
 use common\helper\ContentHelper;
 use common\helper\IconHelper;
-use common\models\Tag;
 use Yii;
 use yii\helpers\Html;
 use kartik\social\TwitterPlugin;
@@ -58,8 +57,8 @@ $newContent = str_replace('%09', '', $dom->saveHtml());
 <?php
     Yii::$app->params['meta_author']['content']             = (!empty($model->author_id)) ? $model->author->title:'-';
     Yii::$app->params['meta_description']['content']        = $model->description;
-    Yii::$app->params['meta_keywords']['content']           = $model->tags;
-    
+    Yii::$app->params['meta_keywords']['content']           = $model->getTagKeywordString();
+
 //FACEBOOK
     Yii::$app->params['og_site_name']['content']    = Yii::$app->name;
     Yii::$app->params['og_title']['content']        = $model->title;
@@ -141,9 +140,16 @@ $newContent = str_replace('%09', '', $dom->saveHtml());
                 <strong class="mr-2">Tags:</strong>
                 <?php
                 $styleClass = 'badge badge-primary mr-2';
-                $tags = $model->tags;
+                $tagLinks = [];
+                foreach ($model->tags as $tagModel) {
+                    $tagLinks[] = Html::a(
+                        Html::encode($tagModel->title),
+                        ['article/index', 'tag' => !empty($tagModel->slug) ? $tagModel->slug : $tagModel->title],
+                        ['class' => $styleClass]
+                    );
+                }
 
-                echo implode(' ', Tag::getTagLinks($tags, $styleClass));
+                echo implode(' ', $tagLinks);
                 ?>
             </h6>
         </div>

@@ -13,8 +13,28 @@ class Article extends \common\models\Article implements Linkable
 {
     public function fields()
     {
-        return ['id', 'slug', 'thumbnail_base_url', 'thumbnail_path', 'title', 'body', 'status',
-            'published_at', 'created_by', 'updated_by', 'created_at', 'updated_at', 'category', 'articleAttachments'];
+        return [
+            'id',
+            'slug',
+            'thumbnail_base_url',
+            'thumbnail_path',
+            'title',
+            'tags' => static function (self $model): array {
+                return array_map(static fn ($tag): array => [
+                    'title' => $tag->title,
+                    'slug' => $tag->slug,
+                ], $model->tags);
+            },
+            'body',
+            'status',
+            'published_at',
+            'created_by',
+            'updated_by',
+            'created_at',
+            'updated_at',
+            'category',
+            'articleAttachments',
+        ];
     }
 
     public function extraFields()
