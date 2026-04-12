@@ -9,24 +9,30 @@ class m260412_100600_create_tag_and_add_article_tag extends Migration
      */
     public function safeUp()
     {
-        $this->createTable('{{%tag}}', [
-            'id' => $this->primaryKey(),
-            'title' => $this->string(150)->notNull(),
-            'slug' => $this->string(100),
-            'frequency' => $this->integer()->notNull()->defaultValue(0),
-            'created_at' => $this->dateTime(),
-            'updated_at' => $this->dateTime(),
-            'created_by' => $this->integer(),
-            'updated_by' => $this->integer(),
-            'is_deleted' => $this->integer()->defaultValue(0),
-            'deleted_at' => $this->dateTime(),
-            'deleted_by' => $this->integer(),
-            'verlock' => $this->bigInteger(),
-            'uuid' => $this->string(36),
-        ]);
+        // Compatibility path:
+        // - fresh install: artifacts already created by older timestamped migrations
+        // - incremental install: create missing artifacts only
+        if ($this->db->schema->getTableSchema('{{%tag}}', true) === null) {
+            $this->createTable('{{%tag}}', [
+                'id' => $this->primaryKey(),
+                'title' => $this->string(150)->notNull(),
+                'slug' => $this->string(100),
+                'frequency' => $this->integer()->notNull()->defaultValue(0),
+                'created_at' => $this->dateTime(),
+                'updated_at' => $this->dateTime(),
+                'created_by' => $this->integer(),
+                'updated_by' => $this->integer(),
+                'is_deleted' => $this->integer()->defaultValue(0),
+                'deleted_at' => $this->dateTime(),
+                'deleted_by' => $this->integer(),
+                'verlock' => $this->bigInteger(),
+                'uuid' => $this->string(36),
+            ]);
+        }
 
-        $this->createIndex('idx-tag-title', '{{%tag}}', 'title');
-        $this->createIndex('uq-tag-slug', '{{%tag}}', 'slug', true);
+        if ($this->db->schema->getTableSchema('{{%article_tag}}', true) !== null) {
+            return;
+        }
 
         $this->createTable('{{%article_tag}}', [
             'article_id' => $this->integer()->notNull(),
@@ -62,17 +68,7 @@ class m260412_100600_create_tag_and_add_article_tag extends Migration
      */
     public function safeDown()
     {
-        $this->dropForeignKey('fk-article_tag-tag_id', '{{%article_tag}}');
-        $this->dropForeignKey('fk-article_tag-article_id', '{{%article_tag}}');
-
-        $this->dropIndex('idx-article_tag-tag_id', '{{%article_tag}}');
-        $this->dropIndex('idx-article_tag-article_id', '{{%article_tag}}');
-        $this->dropPrimaryKey('pk-article_tag', '{{%article_tag}}');
-        $this->dropTable('{{%article_tag}}');
-
-        $this->dropIndex('uq-tag-slug', '{{%tag}}');
-        $this->dropIndex('idx-tag-title', '{{%tag}}');
-        $this->dropTable('{{%tag}}');
+        // No-op rollback: tag and article_tag are now owned by earlier core news migrations.
     }
 }
 

@@ -16,6 +16,12 @@ class m260405_100300_add_relations extends Migration
 
         $this->createIndex('idx-social_platform-code', '{{%social_platform}}', 'code', true);
 
+        $this->createIndex('idx-tag-title', '{{%tag}}', 'title');
+        $this->createIndex('uq-tag-slug', '{{%tag}}', 'slug', true);
+
+        $this->createIndex('idx-article_tag-article_id', '{{%article_tag}}', 'article_id');
+        $this->createIndex('idx-article_tag-tag_id', '{{%article_tag}}', 'tag_id');
+
         $this->createIndex('idx-office_social_account-office_id', '{{%office_social_account}}', 'office_id');
         $this->createIndex('idx-office_social_account-platform_id', '{{%office_social_account}}', 'platform_id');
         $this->createIndex(
@@ -63,6 +69,25 @@ class m260405_100300_add_relations extends Migration
 
         // Add foreign keys after all index artifacts are ready.
         $this->addForeignKey('fk-article-author_id', '{{%article}}', 'author_id', '{{%author}}', 'id');
+
+        $this->addForeignKey(
+            'fk-article_tag-article_id',
+            '{{%article_tag}}',
+            'article_id',
+            '{{%article}}',
+            'id',
+            'CASCADE',
+            'CASCADE'
+        );
+        $this->addForeignKey(
+            'fk-article_tag-tag_id',
+            '{{%article_tag}}',
+            'tag_id',
+            '{{%tag}}',
+            'id',
+            'CASCADE',
+            'CASCADE'
+        );
 
         $this->addForeignKey(
             'fk-office_social_account-office_id',
@@ -169,6 +194,9 @@ class m260405_100300_add_relations extends Migration
         // Roll back constraints first, then supporting indexes.
         $this->dropForeignKey('fk-article-author_id', '{{%article}}');
 
+        $this->dropForeignKey('fk-article_tag-tag_id', '{{%article_tag}}');
+        $this->dropForeignKey('fk-article_tag-article_id', '{{%article_tag}}');
+
         $this->dropForeignKey('fk-staff_social_account-platform_id', '{{%staff_social_account}}');
         $this->dropForeignKey('fk-staff_social_account-staff_id', '{{%staff_social_account}}');
         $this->dropForeignKey('fk-staff_social_account-office_id', '{{%staff_social_account}}');
@@ -193,6 +221,12 @@ class m260405_100300_add_relations extends Migration
         $this->dropForeignKey('fk-office_social_account-office_id', '{{%office_social_account}}');
 
         $this->dropIndex('idx-article-author_id', '{{%article}}');
+
+        $this->dropIndex('idx-article_tag-tag_id', '{{%article_tag}}');
+        $this->dropIndex('idx-article_tag-article_id', '{{%article_tag}}');
+
+        $this->dropIndex('uq-tag-slug', '{{%tag}}');
+        $this->dropIndex('idx-tag-title', '{{%tag}}');
 
 
         $this->dropIndex('uq-staff_social_account-staff_id-platform_id', '{{%staff_social_account}}');

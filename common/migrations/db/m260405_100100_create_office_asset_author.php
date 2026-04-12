@@ -5,12 +5,30 @@ use yii\db\Migration;
 class m260405_100100_create_office_asset_author extends Migration
 {
     /**
+     * Shared audit/soft-delete columns used by news-domain tables.
+     */
+    private function auditColumns(): array
+    {
+        return [
+            'created_at' => $this->dateTime(),
+            'updated_at' => $this->dateTime(),
+            'created_by' => $this->integer(),
+            'updated_by' => $this->integer(),
+            'is_deleted' => $this->integer()->defaultValue(0),
+            'deleted_at' => $this->dateTime(),
+            'deleted_by' => $this->integer(),
+            'verlock' => $this->bigInteger(),
+            'uuid' => $this->string(36),
+        ];
+    }
+
+    /**
      * @return bool|void
      */
     public function safeUp()
     {
-        // Create/alter tables first; indexes and foreign keys are added in the next migration.
-        $this->createTable('{{%office}}', [
+        // Create all news tables here; indexes and foreign keys are handled in a dedicated relation migration.
+        $this->createTable('{{%office}}', array_merge([
             'id' => $this->primaryKey(),
             'unique_id' => $this->string(15),
             'title' => $this->string(100),
@@ -22,36 +40,18 @@ class m260405_100100_create_office_asset_author extends Migration
             'latitude' => $this->string(100),
             'longitude' => $this->string(100),
             'description' => 'tinytext',
-            'created_at' => $this->dateTime(),
-            'updated_at' => $this->dateTime(),
-            'created_by' => $this->integer(),
-            'updated_by' => $this->integer(),
-            'is_deleted' => $this->integer()->defaultValue(0),
-            'deleted_at' => $this->dateTime(),
-            'deleted_by' => $this->integer(),
-            'verlock' => $this->bigInteger(),
-            'uuid' => $this->string(36),
-        ]);
+        ], $this->auditColumns()));
 
         // `social_platform` is a global master table (no direct `office_id` ownership).
-        $this->createTable('{{%social_platform}}', [
+        $this->createTable('{{%social_platform}}', array_merge([
             'id' => $this->primaryKey(),
             'code' => $this->string(50)->notNull(),
             'name' => $this->string(100)->notNull(),
             'base_url' => $this->string(255),
             'sequence' => $this->integer()->defaultValue(0),
-            'created_at' => $this->dateTime(),
-            'updated_at' => $this->dateTime(),
-            'created_by' => $this->integer(),
-            'updated_by' => $this->integer(),
-            'is_deleted' => $this->integer()->defaultValue(0),
-            'deleted_at' => $this->dateTime(),
-            'deleted_by' => $this->integer(),
-            'verlock' => $this->bigInteger(),
-            'uuid' => $this->string(36),
-        ]);
+        ], $this->auditColumns()));
 
-        $this->createTable('{{%office_social_account}}', [
+        $this->createTable('{{%office_social_account}}', array_merge([
             'id' => $this->primaryKey(),
             'office_id' => $this->integer(),
             'platform_id' => $this->integer(),
@@ -61,35 +61,17 @@ class m260405_100100_create_office_asset_author extends Migration
             'is_visible' => $this->tinyInteger()->defaultValue(1),
             'sequence' => $this->integer()->defaultValue(0),
             'description' => 'longtext',
-            'created_at' => $this->dateTime(),
-            'updated_at' => $this->dateTime(),
-            'created_by' => $this->integer(),
-            'updated_by' => $this->integer(),
-            'is_deleted' => $this->integer()->defaultValue(0),
-            'deleted_at' => $this->dateTime(),
-            'deleted_by' => $this->integer(),
-            'verlock' => $this->bigInteger(),
-            'uuid' => $this->string(36),
-        ]);
+        ], $this->auditColumns()));
 
-        $this->createTable('{{%document_category}}', [
+        $this->createTable('{{%document_category}}', array_merge([
             'id' => $this->primaryKey(),
             'office_id' => $this->integer(),
             'title' => $this->string(200),
             'sequence' => $this->integer(),
             'description' => $this->text(),
-            'created_at' => $this->dateTime(),
-            'updated_at' => $this->dateTime(),
-            'created_by' => $this->integer(),
-            'updated_by' => $this->integer(),
-            'is_deleted' => $this->integer()->defaultValue(0),
-            'deleted_at' => $this->dateTime(),
-            'deleted_by' => $this->integer(),
-            'verlock' => $this->bigInteger(),
-            'uuid' => $this->string(36),
-        ]);
+        ], $this->auditColumns()));
 
-        $this->createTable('{{%document}}', [
+        $this->createTable('{{%document}}', array_merge([
             'id' => $this->primaryKey(),
             'office_id' => $this->integer(),
             'is_visible' => $this->integer(),
@@ -104,18 +86,9 @@ class m260405_100100_create_office_asset_author extends Migration
             'view_count' => $this->integer(),
             'download_count' => $this->integer(),
             'description' => $this->text(),
-            'created_at' => $this->dateTime(),
-            'updated_at' => $this->dateTime(),
-            'created_by' => $this->integer(),
-            'updated_by' => $this->integer(),
-            'is_deleted' => $this->integer()->defaultValue(0),
-            'deleted_at' => $this->dateTime(),
-            'deleted_by' => $this->integer(),
-            'verlock' => $this->bigInteger(),
-            'uuid' => $this->string(36),
-        ]);
+        ], $this->auditColumns()));
 
-        $this->createTable('{{%author}}', [
+        $this->createTable('{{%author}}', array_merge([
             'id' => $this->primaryKey(),
             'office_id' => $this->integer(),
             'title' => $this->string(100),
@@ -128,18 +101,9 @@ class m260405_100100_create_office_asset_author extends Migration
             'size' => $this->integer(),
             'address' => 'tinytext',
             'description' => $this->text(),
-            'created_at' => $this->dateTime(),
-            'updated_at' => $this->dateTime(),
-            'created_by' => $this->integer(),
-            'updated_by' => $this->integer(),
-            'is_deleted' => $this->integer()->defaultValue(0),
-            'deleted_at' => $this->dateTime(),
-            'deleted_by' => $this->integer(),
-            'verlock' => $this->bigInteger(),
-            'uuid' => $this->string(36),
-        ]);
+        ], $this->auditColumns()));
 
-        $this->createTable('{{%author_social_account}}', [
+        $this->createTable('{{%author_social_account}}', array_merge([
             'id' => $this->primaryKey(),
             'office_id' => $this->integer(),
             'author_id' => $this->integer(),
@@ -150,35 +114,17 @@ class m260405_100100_create_office_asset_author extends Migration
             'is_visible' => $this->tinyInteger()->defaultValue(1),
             'sequence' => $this->integer()->defaultValue(0),
             'description' => 'longtext',
-            'created_at' => $this->dateTime(),
-            'updated_at' => $this->dateTime(),
-            'created_by' => $this->integer(),
-            'updated_by' => $this->integer(),
-            'is_deleted' => $this->integer()->defaultValue(0),
-            'deleted_at' => $this->dateTime(),
-            'deleted_by' => $this->integer(),
-            'verlock' => $this->bigInteger(),
-            'uuid' => $this->string(36),
-        ]);
+        ], $this->auditColumns()));
 
-        $this->createTable('{{%job_title}}', [
+        $this->createTable('{{%job_title}}', array_merge([
             'id' => $this->primaryKey(),
             'office_id' => $this->integer(),
             'title' => $this->string(100),
             'description' => 'tinytext',
             'sequence' => $this->tinyInteger(),
-            'created_at' => $this->dateTime(),
-            'updated_at' => $this->dateTime(),
-            'created_by' => $this->integer(),
-            'updated_by' => $this->integer(),
-            'is_deleted' => $this->integer()->defaultValue(0),
-            'deleted_at' => $this->dateTime(),
-            'deleted_by' => $this->integer(),
-            'verlock' => $this->bigInteger(),
-            'uuid' => $this->string(36),
-        ]);
+        ], $this->auditColumns()));
 
-        $this->createTable('{{%staff}}', [
+        $this->createTable('{{%staff}}', array_merge([
             'id' => $this->primaryKey(),
             'office_id' => $this->integer(),
             'job_title_id' => $this->integer(),
@@ -196,18 +142,9 @@ class m260405_100100_create_office_asset_author extends Migration
             'size' => $this->integer(),
             'email' => $this->string(100),
             'description' => 'tinytext',
-            'created_at' => $this->dateTime(),
-            'updated_at' => $this->dateTime(),
-            'created_by' => $this->integer(),
-            'updated_by' => $this->integer(),
-            'is_deleted' => $this->integer()->defaultValue(0),
-            'deleted_at' => $this->dateTime(),
-            'deleted_by' => $this->integer(),
-            'verlock' => $this->bigInteger(),
-            'uuid' => $this->string(36),
-        ]);
+        ], $this->auditColumns()));
 
-        $this->createTable('{{%staff_social_account}}', [
+        $this->createTable('{{%staff_social_account}}', array_merge([
             'id' => $this->primaryKey(),
             'office_id' => $this->integer(),
             'staff_id' => $this->integer(),
@@ -218,16 +155,21 @@ class m260405_100100_create_office_asset_author extends Migration
             'is_visible' => $this->tinyInteger()->defaultValue(1),
             'sequence' => $this->integer()->defaultValue(0),
             'description' => 'longtext',
-            'created_at' => $this->dateTime(),
-            'updated_at' => $this->dateTime(),
-            'created_by' => $this->integer(),
-            'updated_by' => $this->integer(),
-            'is_deleted' => $this->integer()->defaultValue(0),
-            'deleted_at' => $this->dateTime(),
-            'deleted_by' => $this->integer(),
-            'verlock' => $this->bigInteger(),
-            'uuid' => $this->string(36),
+        ], $this->auditColumns()));
+
+        $this->createTable('{{%tag}}', array_merge([
+            'id' => $this->primaryKey(),
+            'title' => $this->string(150)->notNull(),
+            'slug' => $this->string(100),
+            'frequency' => $this->integer()->notNull()->defaultValue(0),
+        ], $this->auditColumns()));
+
+        $this->createTable('{{%article_tag}}', [
+            'article_id' => $this->integer()->notNull(),
+            'tag_id' => $this->integer()->notNull(),
         ]);
+
+        $this->addPrimaryKey('pk-article_tag', '{{%article_tag}}', ['article_id', 'tag_id']);
     }
 
     /**
@@ -236,6 +178,8 @@ class m260405_100100_create_office_asset_author extends Migration
     public function safeDown()
     {
         // Drop in reverse dependency order.
+        $this->dropTable('{{%article_tag}}');
+        $this->dropTable('{{%tag}}');
         $this->dropTable('{{%staff_social_account}}');
         $this->dropTable('{{%staff}}');
         $this->dropTable('{{%job_title}}');

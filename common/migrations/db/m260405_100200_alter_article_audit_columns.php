@@ -9,6 +9,23 @@ class m260405_100200_alter_article_audit_columns extends Migration
      */
     public function safeUp()
     {
+        $this->upgradeArticleCategory();
+        $this->upgradeArticle();
+        $this->upgradeArticleAttachment();
+    }
+
+    /**
+     * @return bool|void
+     */
+    public function safeDown()
+    {
+        $this->downgradeArticleAttachment();
+        $this->downgradeArticle();
+        $this->downgradeArticleCategory();
+    }
+
+    private function upgradeArticleCategory(): void
+    {
         $this->convertUnixIntToDateTime('{{%article_category}}', 'created_at');
         $this->convertUnixIntToDateTime('{{%article_category}}', 'updated_at');
 
@@ -19,13 +36,12 @@ class m260405_100200_alter_article_audit_columns extends Migration
         $this->addColumn('{{%article_category}}', 'deleted_by', $this->integer()->defaultValue(0));
         $this->addColumn('{{%article_category}}', 'verlock', $this->bigInteger());
         $this->addColumn('{{%article_category}}', 'uuid', $this->string(36));
-        $this->update('{{%article_category}}', ['deleted_by' => 0], [
-            'and',
-            ['deleted_by' => null],
-            ['is_deleted' => 0],
-            ['deleted_at' => null],
-        ]);
 
+        $this->backfillActiveDeletedBy('{{%article_category}}');
+    }
+
+    private function upgradeArticle(): void
+    {
         $this->convertUnixIntToDateTime('{{%article}}', 'created_at');
         $this->convertUnixIntToDateTime('{{%article}}', 'updated_at');
         $this->convertUnixIntToDateTime('{{%article}}', 'published_at');
@@ -38,13 +54,12 @@ class m260405_100200_alter_article_audit_columns extends Migration
         $this->addColumn('{{%article}}', 'verlock', $this->bigInteger());
         $this->addColumn('{{%article}}', 'uuid', $this->string(36));
         $this->addColumn('{{%article}}', 'author_id', $this->integer()->after('id'));
-        $this->update('{{%article}}', ['deleted_by' => 0], [
-            'and',
-            ['deleted_by' => null],
-            ['is_deleted' => 0],
-            ['deleted_at' => null],
-        ]);
 
+        $this->backfillActiveDeletedBy('{{%article}}');
+    }
+
+    private function upgradeArticleAttachment(): void
+    {
         $this->convertUnixIntToDateTime('{{%article_attachment}}', 'created_at');
 
         $this->addColumn('{{%article_attachment}}', 'updated_at', $this->dateTime());
@@ -55,20 +70,12 @@ class m260405_100200_alter_article_audit_columns extends Migration
         $this->addColumn('{{%article_attachment}}', 'deleted_by', $this->integer()->defaultValue(0));
         $this->addColumn('{{%article_attachment}}', 'verlock', $this->bigInteger());
         $this->addColumn('{{%article_attachment}}', 'uuid', $this->string(36));
-        $this->update('{{%article_attachment}}', ['deleted_by' => 0], [
-            'and',
-            ['deleted_by' => null],
-            ['is_deleted' => 0],
-            ['deleted_at' => null],
-        ]);
+
+        $this->backfillActiveDeletedBy('{{%article_attachment}}');
     }
 
-    /**
-     * @return bool|void
-     */
-    public function safeDown()
+    private function downgradeArticleAttachment(): void
     {
-
         $this->dropColumn('{{%article_attachment}}', 'uuid');
         $this->dropColumn('{{%article_attachment}}', 'verlock');
         $this->dropColumn('{{%article_attachment}}', 'deleted_by');
@@ -79,7 +86,10 @@ class m260405_100200_alter_article_audit_columns extends Migration
         $this->dropColumn('{{%article_attachment}}', 'updated_at');
 
         $this->convertDateTimeToUnixInt('{{%article_attachment}}', 'created_at');
+    }
 
+    private function downgradeArticle(): void
+    {
         $this->dropColumn('{{%article}}', 'is_pinned');
         $this->dropColumn('{{%article}}', 'view_count');
         $this->dropColumn('{{%article}}', 'uuid');
@@ -92,7 +102,10 @@ class m260405_100200_alter_article_audit_columns extends Migration
         $this->convertDateTimeToUnixInt('{{%article}}', 'published_at');
         $this->convertDateTimeToUnixInt('{{%article}}', 'updated_at');
         $this->convertDateTimeToUnixInt('{{%article}}', 'created_at');
+    }
 
+    private function downgradeArticleCategory(): void
+    {
         $this->dropColumn('{{%article_category}}', 'uuid');
         $this->dropColumn('{{%article_category}}', 'verlock');
         $this->dropColumn('{{%article_category}}', 'deleted_by');
@@ -105,6 +118,16 @@ class m260405_100200_alter_article_audit_columns extends Migration
         $this->convertDateTimeToUnixInt('{{%article_category}}', 'created_at');
     }
 
+    private function backfillActiveDeletedBy(string $table): void
+    {
+        $this->update($table, ['deleted_by' => 0], [
+            'and',
+            ['deleted_by' => null],
+            ['is_deleted' => 0],
+            ['deleted_at' => null],
+        ]);
+    }
+
     private function convertUnixIntToDateTime($table, $column)
     {
         $temporaryColumn = $column.'_tmp_datetime';
@@ -114,25 +137,7 @@ class m260405_100200_alter_article_audit_columns extends Migration
         $this->renameColumn($table, $temporaryColumn, $column);
     }
 
-    private function convertUnixIntToDate($table, $column)
-    {
-        $temporaryColumn = $column.'_tmp_date';
-        $this->addColumn($table, $temporaryColumn, $this->date());
-        $this->execute("UPDATE {$table} SET [[{$temporaryColumn}]] = DATE(FROM_UNIXTIME([[{$column}]])) WHERE [[{$column}]] IS NOT NULL");
-        $this->dropColumn($table, $column);
-        $this->renameColumn($table, $temporaryColumn, $column);
-    }
-
     private function convertDateTimeToUnixInt($table, $column)
-    {
-        $temporaryColumn = $column.'_tmp_integer';
-        $this->addColumn($table, $temporaryColumn, $this->integer());
-        $this->execute("UPDATE {$table} SET [[{$temporaryColumn}]] = UNIX_TIMESTAMP([[{$column}]]) WHERE [[{$column}]] IS NOT NULL");
-        $this->dropColumn($table, $column);
-        $this->renameColumn($table, $temporaryColumn, $column);
-    }
-
-    private function convertDateToUnixInt($table, $column)
     {
         $temporaryColumn = $column.'_tmp_integer';
         $this->addColumn($table, $temporaryColumn, $this->integer());
