@@ -1,6 +1,6 @@
 <?php
 
-use common\helper\ContentHelper;
+use common\helpers\ContentHelper;
 use yii\helpers\Html;
 
 $articleCover = ContentHelper::getCover($model->content);

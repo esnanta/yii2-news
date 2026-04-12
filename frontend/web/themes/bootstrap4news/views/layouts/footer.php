@@ -4,8 +4,8 @@
  * @var common\models\OfficeMedia $officeMedias
  */
 
-use common\helper\IconHelper;
-use common\helper\MediaTypeHelper;
+use common\helpers\IconHelper;
+use common\helpers\MediaTypeHelper;
 use common\models\OfficeMedia;
 
 $siteLinks = OfficeMedia::find()->where(['media_type'=>MediaTypeHelper::getLink()])->limit(6)

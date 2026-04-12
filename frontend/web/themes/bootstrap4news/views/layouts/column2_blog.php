@@ -2,7 +2,7 @@
 
 $this->beginContent('@app/views/layouts/main.php');
 
-use common\helper\MediaTypeHelper;
+use common\helpers\MediaTypeHelper;
 use common\models\OfficeMedia;
 
 use common\widgets\bootstrap4news\RecentArticles;

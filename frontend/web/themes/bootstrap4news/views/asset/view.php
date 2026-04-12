@@ -1,8 +1,8 @@
 <?php
 
-use common\helper\IconHelper;
-use common\helper\MessageHelper;
-use common\helper\SpreadsheetHelper;
+use common\helpers\IconHelper;
+use common\helpers\MessageHelper;
+use common\helpers\SpreadsheetHelper;
 use common\models\Asset;
 use lesha724\documentviewer\ViewerJsDocumentViewer;
 use yii\helpers\Html;

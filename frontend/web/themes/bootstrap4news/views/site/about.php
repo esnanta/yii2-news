@@ -2,7 +2,7 @@
 
 /* @var $this yii\web\View */
 
-use common\helper\MetaHelper;
+use common\helpers\MetaHelper;
 use common\service\LayoutService;
 
 $this->title = 'About';

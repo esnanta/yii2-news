@@ -2,8 +2,8 @@
 
 namespace frontend\web\themes\unify263blog\views\blog;
 
-use common\helper\ContentHelper;
-use common\helper\IconHelper;
+use common\helpers\ContentHelper;
+use common\helpers\IconHelper;
 use Yii;
 use yii\helpers\Html;
 use kartik\social\TwitterPlugin;

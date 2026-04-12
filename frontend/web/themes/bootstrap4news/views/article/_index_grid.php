@@ -1,7 +1,7 @@
 <?php
 
-use common\helper\ContentHelper;
-use common\helper\IconHelper;
+use common\helpers\ContentHelper;
+use common\helpers\IconHelper;
 use yii\helpers\Html;
 
 $unset = '#NA';

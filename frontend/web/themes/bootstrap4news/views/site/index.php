@@ -1,7 +1,7 @@
 <?php
 
-use common\helper\ContentHelper;
-use common\helper\MetaHelper;
+use common\helpers\ContentHelper;
+use common\helpers\MetaHelper;
 use common\service\ArticleService;
 use yii\helpers\Html;
 

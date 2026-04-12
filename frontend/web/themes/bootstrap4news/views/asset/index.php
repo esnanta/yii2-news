@@ -1,6 +1,6 @@
 <?php
 
-use common\helper\MetaHelper;
+use common\helpers\MetaHelper;
 use yii\widgets\ListView;
 
 /**

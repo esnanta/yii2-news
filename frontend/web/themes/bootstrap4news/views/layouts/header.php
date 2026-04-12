@@ -6,7 +6,7 @@
  * @var String $logo2Image
  */
 
-use common\helper\IconHelper;
+use common\helpers\IconHelper;
 use yii\helpers\Html;
 
 ?>
