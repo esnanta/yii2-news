@@ -3,10 +3,11 @@
 use yii\db\Migration;
 use yii\db\Query;
 
-class m260409_100400_seed_office_social_platform_document_category extends Migration
+class m260420_100300_seed_news_domain_defaults extends Migration
 {
     private const DEFAULT_OFFICE_ID = 1;
     private const DEFAULT_OFFICE_UNIQUE_ID = 'moi';
+
     private const DEFAULT_SOCIAL_PLATFORMS = [
         ['code' => 'facebook', 'name' => 'Facebook', 'base_url' => 'https://www.facebook.com/', 'sequence' => 10],
         ['code' => 'instagram', 'name' => 'Instagram', 'base_url' => 'https://www.instagram.com/', 'sequence' => 20],
@@ -14,19 +15,23 @@ class m260409_100400_seed_office_social_platform_document_category extends Migra
         ['code' => 'youtube', 'name' => 'YouTube', 'base_url' => 'https://www.youtube.com/', 'sequence' => 40],
         ['code' => 'linkedin', 'name' => 'LinkedIn', 'base_url' => 'https://www.linkedin.com/', 'sequence' => 50],
     ];
+
     private const DEFAULT_DOCUMENT_CATEGORIES = [
         ['title' => 'Regulasi', 'sequence' => 10, 'description' => 'Kumpulan peraturan dan pedoman resmi.'],
         ['title' => 'Laporan', 'sequence' => 20, 'description' => 'Laporan kegiatan dan kinerja kantor.'],
         ['title' => 'Publikasi', 'sequence' => 30, 'description' => 'Materi publikasi dan informasi umum.'],
     ];
+
     private const DEFAULT_JOB_TITLES = [
         ['title' => 'Manager', 'sequence' => 10, 'description' => 'Manajerial.'],
         ['title' => 'Supervisor', 'sequence' => 20, 'description' => 'Pengawas.'],
         ['title' => 'Staff', 'sequence' => 30, 'description' => 'Staf Pelaksana.'],
     ];
+
     private const DEFAULT_AUTHORS = [
         ['title' => 'John Doe', 'email' => 'john.doe@example.com', 'phone_number' => '123456789'],
     ];
+
     private const DEFAULT_STAFF = [
         ['title' => 'Jane Smith', 'initial' => 'JS', 'identity_number' => '12345', 'job_title' => 'Staff'],
     ];
@@ -89,8 +94,7 @@ class m260409_100400_seed_office_social_platform_document_category extends Migra
                 'id' => self::DEFAULT_OFFICE_ID,
                 'unique_id' => self::DEFAULT_OFFICE_UNIQUE_ID,
             ])
-            ->exists($this->db)
-        ;
+            ->exists($this->db);
 
         if ($exists) {
             return;
@@ -114,8 +118,7 @@ class m260409_100400_seed_office_social_platform_document_category extends Migra
             $exists = (new Query())
                 ->from('{{%social_platform}}')
                 ->where(['code' => $platform['code']])
-                ->exists($this->db)
-            ;
+                ->exists($this->db);
 
             if ($exists) {
                 continue;
@@ -144,8 +147,7 @@ class m260409_100400_seed_office_social_platform_document_category extends Migra
                     'office_id' => self::DEFAULT_OFFICE_ID,
                     'title' => $category['title'],
                 ])
-                ->exists($this->db)
-            ;
+                ->exists($this->db);
 
             if ($exists) {
                 continue;
@@ -174,8 +176,7 @@ class m260409_100400_seed_office_social_platform_document_category extends Migra
                     'office_id' => self::DEFAULT_OFFICE_ID,
                     'title' => $jobTitle['title'],
                 ])
-                ->exists($this->db)
-            ;
+                ->exists($this->db);
 
             if ($exists) {
                 continue;
@@ -204,8 +205,7 @@ class m260409_100400_seed_office_social_platform_document_category extends Migra
                     'office_id' => self::DEFAULT_OFFICE_ID,
                     'title' => $author['title'],
                 ])
-                ->exists($this->db)
-            ;
+                ->exists($this->db);
 
             if ($exists) {
                 continue;
@@ -234,8 +234,7 @@ class m260409_100400_seed_office_social_platform_document_category extends Migra
                     'office_id' => self::DEFAULT_OFFICE_ID,
                     'title' => $staff['title'],
                 ])
-                ->exists($this->db)
-            ;
+                ->exists($this->db);
 
             if ($exists) {
                 continue;
@@ -244,13 +243,14 @@ class m260409_100400_seed_office_social_platform_document_category extends Migra
             $jobTitleId = (new Query())
                 ->select('id')
                 ->from('{{%job_title}}')
-                ->where(['title' => $staff['job_title'], 'office_id' => self::DEFAULT_OFFICE_ID])
-                ->scalar($this->db)
-            ;
+                ->where([
+                    'title' => $staff['job_title'],
+                    'office_id' => self::DEFAULT_OFFICE_ID,
+                ])
+                ->scalar($this->db);
 
             if (!$jobTitleId) {
                 echo "Skipping staff member {$staff['title']} because job title '{$staff['job_title']}' was not found.\n";
-
                 continue;
             }
 
@@ -269,3 +269,4 @@ class m260409_100400_seed_office_social_platform_document_category extends Migra
         }
     }
 }
+

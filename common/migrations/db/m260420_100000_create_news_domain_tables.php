@@ -2,10 +2,10 @@
 
 use yii\db\Migration;
 
-class m260405_100100_create_office_asset_author extends Migration
+class m260420_100000_create_news_domain_tables extends Migration
 {
     /**
-     * Shared audit/soft-delete columns used by news-domain tables.
+     * Shared audit and soft-delete columns for news-domain tables.
      */
     private function auditColumns(): array
     {
@@ -27,7 +27,6 @@ class m260405_100100_create_office_asset_author extends Migration
      */
     public function safeUp()
     {
-        // Create all news tables here; indexes and foreign keys are handled in a dedicated relation migration.
         $this->createTable('{{%office}}', array_merge([
             'id' => $this->primaryKey(),
             'unique_id' => $this->string(15),
@@ -42,7 +41,6 @@ class m260405_100100_create_office_asset_author extends Migration
             'description' => 'tinytext',
         ], $this->auditColumns()));
 
-        // `social_platform` is a global master table (no direct `office_id` ownership).
         $this->createTable('{{%social_platform}}', array_merge([
             'id' => $this->primaryKey(),
             'code' => $this->string(50)->notNull(),
@@ -177,7 +175,6 @@ class m260405_100100_create_office_asset_author extends Migration
      */
     public function safeDown()
     {
-        // Drop in reverse dependency order.
         $this->dropTable('{{%article_tag}}');
         $this->dropTable('{{%tag}}');
         $this->dropTable('{{%staff_social_account}}');
@@ -192,3 +189,4 @@ class m260405_100100_create_office_asset_author extends Migration
         $this->dropTable('{{%office}}');
     }
 }
+

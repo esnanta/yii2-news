@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 
-class m260410_110000_backfill_article_category_deleted_by extends Migration
+class m260420_100500_backfill_article_category_deleted_by extends Migration
 {
     /**
      * @return bool|void
@@ -14,8 +14,7 @@ class m260410_110000_backfill_article_category_deleted_by extends Migration
             return;
         }
 
-        $requiredColumns = ['deleted_by', 'is_deleted', 'deleted_at'];
-        foreach ($requiredColumns as $column) {
+        foreach (['deleted_by', 'is_deleted', 'deleted_at'] as $column) {
             if (!isset($tableSchema->columns[$column])) {
                 return;
             }
@@ -34,7 +33,7 @@ class m260410_110000_backfill_article_category_deleted_by extends Migration
      */
     public function safeDown()
     {
-        // Data backfill migration is intentionally irreversible.
+        // Backfill migration is intentionally irreversible.
     }
 }
 

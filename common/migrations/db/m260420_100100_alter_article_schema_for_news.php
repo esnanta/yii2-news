@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 
-class m260405_100200_alter_article_audit_columns extends Migration
+class m260420_100100_alter_article_schema_for_news extends Migration
 {
     /**
      * @return bool|void
@@ -128,21 +128,22 @@ class m260405_100200_alter_article_audit_columns extends Migration
         ]);
     }
 
-    private function convertUnixIntToDateTime($table, $column)
+    private function convertUnixIntToDateTime(string $table, string $column): void
     {
-        $temporaryColumn = $column.'_tmp_datetime';
+        $temporaryColumn = $column . '_tmp_datetime';
         $this->addColumn($table, $temporaryColumn, $this->dateTime());
         $this->execute("UPDATE {$table} SET [[{$temporaryColumn}]] = FROM_UNIXTIME([[{$column}]]) WHERE [[{$column}]] IS NOT NULL");
         $this->dropColumn($table, $column);
         $this->renameColumn($table, $temporaryColumn, $column);
     }
 
-    private function convertDateTimeToUnixInt($table, $column)
+    private function convertDateTimeToUnixInt(string $table, string $column): void
     {
-        $temporaryColumn = $column.'_tmp_integer';
+        $temporaryColumn = $column . '_tmp_integer';
         $this->addColumn($table, $temporaryColumn, $this->integer());
         $this->execute("UPDATE {$table} SET [[{$temporaryColumn}]] = UNIX_TIMESTAMP([[{$column}]]) WHERE [[{$column}]] IS NOT NULL");
         $this->dropColumn($table, $column);
         $this->renameColumn($table, $temporaryColumn, $column);
     }
 }
+

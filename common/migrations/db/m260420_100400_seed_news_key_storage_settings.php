@@ -3,7 +3,7 @@
 use yii\db\Migration;
 use yii\db\Query;
 
-class m260409_100500_seed_key_storage_settings extends Migration
+class m260420_100400_seed_news_key_storage_settings extends Migration
 {
     private const DEFAULT_SETTINGS = [
         'frontend.meta.description' => [
@@ -25,8 +25,7 @@ class m260409_100500_seed_key_storage_settings extends Migration
             $exists = (new Query())
                 ->from('{{%key_storage_item}}')
                 ->where(['key' => $key])
-                ->exists($this->db)
-            ;
+                ->exists($this->db);
 
             if ($exists) {
                 continue;
@@ -50,3 +49,4 @@ class m260409_100500_seed_key_storage_settings extends Migration
         ]);
     }
 }
+

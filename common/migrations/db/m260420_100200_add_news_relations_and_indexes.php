@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 
-class m260405_100300_add_relations extends Migration
+class m260420_100200_add_news_relations_and_indexes extends Migration
 {
     /**
      * @return bool|void
@@ -11,8 +11,9 @@ class m260405_100300_add_relations extends Migration
     {
         $this->dropLegacySocialPlatformOfficeRelation();
 
-        // Add indexes first to support foreign-key creation.
+        // Indexes first.
         $this->createIndex('idx-article-author_id', '{{%article}}', 'author_id');
+        $this->createIndex('idx-article-visibility-published', '{{%article}}', ['is_deleted', 'status', 'published_at']);
 
         $this->createIndex('idx-social_platform-code', '{{%social_platform}}', 'code', true);
 
@@ -51,11 +52,7 @@ class m260405_100300_add_relations extends Migration
         $this->createIndex('idx-job_title-office_id', '{{%job_title}}', 'office_id');
 
         $this->createIndex('idx-staff-office_id', '{{%staff}}', 'office_id');
-        $this->createIndex(
-            'idx-staff-job_title_id',
-            '{{%staff}}',
-            'job_title_id'
-        );
+        $this->createIndex('idx-staff-job_title_id', '{{%staff}}', 'job_title_id');
 
         $this->createIndex('idx-staff_social_account-office_id', '{{%staff_social_account}}', 'office_id');
         $this->createIndex('idx-staff_social_account-staff_id', '{{%staff_social_account}}', 'staff_id');
@@ -67,7 +64,7 @@ class m260405_100300_add_relations extends Migration
             true
         );
 
-        // Add foreign keys after all index artifacts are ready.
+        // Foreign keys after indexes.
         $this->addForeignKey('fk-article-author_id', '{{%article}}', 'author_id', '{{%author}}', 'id');
 
         $this->addForeignKey(
@@ -89,86 +86,32 @@ class m260405_100300_add_relations extends Migration
             'CASCADE'
         );
 
-        $this->addForeignKey(
-            'fk-office_social_account-office_id',
-            '{{%office_social_account}}',
-            'office_id',
-            '{{%office}}',
-            'id'
-        );
-        $this->addForeignKey(
-            'fk-office_social_account-platform_id',
-            '{{%office_social_account}}',
-            'platform_id',
-            '{{%social_platform}}',
-            'id'
-        );
+        $this->addForeignKey('fk-office_social_account-office_id', '{{%office_social_account}}', 'office_id', '{{%office}}', 'id');
+        $this->addForeignKey('fk-office_social_account-platform_id', '{{%office_social_account}}', 'platform_id', '{{%social_platform}}', 'id');
 
         $this->addForeignKey('fk-document-office_id', '{{%document}}', 'office_id', '{{%office}}', 'id');
-        $this->addForeignKey(
-            'fk-document-document_category_id',
-            '{{%document}}',
-            'category_id',
-            '{{%document_category}}',
-            'id'
-        );
+        $this->addForeignKey('fk-document-document_category_id', '{{%document}}', 'category_id', '{{%document_category}}', 'id');
 
         $this->addForeignKey('fk-document_category-office_id', '{{%document_category}}', 'office_id', '{{%office}}', 'id');
 
         $this->addForeignKey('fk-author-office_id', '{{%author}}', 'office_id', '{{%office}}', 'id');
 
-        $this->addForeignKey(
-            'fk-author_social_account-office_id',
-            '{{%author_social_account}}',
-            'office_id',
-            '{{%office}}',
-            'id'
-        );
-        $this->addForeignKey(
-            'fk-author_social_account-author_id',
-            '{{%author_social_account}}',
-            'author_id',
-            '{{%author}}',
-            'id'
-        );
-        $this->addForeignKey(
-            'fk-author_social_account-platform_id',
-            '{{%author_social_account}}',
-            'platform_id',
-            '{{%social_platform}}',
-            'id'
-        );
+        $this->addForeignKey('fk-author_social_account-office_id', '{{%author_social_account}}', 'office_id', '{{%office}}', 'id');
+        $this->addForeignKey('fk-author_social_account-author_id', '{{%author_social_account}}', 'author_id', '{{%author}}', 'id');
+        $this->addForeignKey('fk-author_social_account-platform_id', '{{%author_social_account}}', 'platform_id', '{{%social_platform}}', 'id');
 
         $this->addForeignKey('fk-job_title-office_id', '{{%job_title}}', 'office_id', '{{%office}}', 'id');
 
         $this->addForeignKey('fk-staff-office_id', '{{%staff}}', 'office_id', '{{%office}}', 'id');
         $this->addForeignKey('fk-staff-job_title_id', '{{%staff}}', 'job_title_id', '{{%job_title}}', 'id');
 
-        $this->addForeignKey(
-            'fk-staff_social_account-office_id',
-            '{{%staff_social_account}}',
-            'office_id',
-            '{{%office}}',
-            'id'
-        );
-        $this->addForeignKey(
-            'fk-staff_social_account-staff_id',
-            '{{%staff_social_account}}',
-            'staff_id',
-            '{{%staff}}',
-            'id'
-        );
-        $this->addForeignKey(
-            'fk-staff_social_account-platform_id',
-            '{{%staff_social_account}}',
-            'platform_id',
-            '{{%social_platform}}',
-            'id'
-        );
+        $this->addForeignKey('fk-staff_social_account-office_id', '{{%staff_social_account}}', 'office_id', '{{%office}}', 'id');
+        $this->addForeignKey('fk-staff_social_account-staff_id', '{{%staff_social_account}}', 'staff_id', '{{%staff}}', 'id');
+        $this->addForeignKey('fk-staff_social_account-platform_id', '{{%staff_social_account}}', 'platform_id', '{{%social_platform}}', 'id');
     }
 
     /**
-     * Removes legacy `office_id` ownership from social_platform if it exists in older schemas.
+     * Removes legacy office ownership from social_platform if it exists.
      */
     private function dropLegacySocialPlatformOfficeRelation(): void
     {
@@ -191,7 +134,6 @@ class m260405_100300_add_relations extends Migration
      */
     public function safeDown()
     {
-        // Roll back constraints first, then supporting indexes.
         $this->dropForeignKey('fk-article-author_id', '{{%article}}');
 
         $this->dropForeignKey('fk-article_tag-tag_id', '{{%article_tag}}');
@@ -220,6 +162,7 @@ class m260405_100300_add_relations extends Migration
         $this->dropForeignKey('fk-office_social_account-platform_id', '{{%office_social_account}}');
         $this->dropForeignKey('fk-office_social_account-office_id', '{{%office_social_account}}');
 
+        $this->dropIndex('idx-article-visibility-published', '{{%article}}');
         $this->dropIndex('idx-article-author_id', '{{%article}}');
 
         $this->dropIndex('idx-article_tag-tag_id', '{{%article_tag}}');
@@ -227,7 +170,6 @@ class m260405_100300_add_relations extends Migration
 
         $this->dropIndex('uq-tag-slug', '{{%tag}}');
         $this->dropIndex('idx-tag-title', '{{%tag}}');
-
 
         $this->dropIndex('uq-staff_social_account-staff_id-platform_id', '{{%staff_social_account}}');
         $this->dropIndex('idx-staff_social_account-platform_id', '{{%staff_social_account}}');
@@ -254,6 +196,8 @@ class m260405_100300_add_relations extends Migration
         $this->dropIndex('uq-office_social_account-office_id-platform_id', '{{%office_social_account}}');
         $this->dropIndex('idx-office_social_account-platform_id', '{{%office_social_account}}');
         $this->dropIndex('idx-office_social_account-office_id', '{{%office_social_account}}');
+
         $this->dropIndex('idx-social_platform-code', '{{%social_platform}}');
     }
 }
+
