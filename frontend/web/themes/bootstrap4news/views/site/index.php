@@ -18,6 +18,18 @@ $articlesPopular = $articleService->getPopularArticles(4, 5);
 $articlesLatest = $articleService->getLatestArticlesByOffset(4, 8);
 $articlesPinned = $articleService->getPinnedArticles(4);
 $articlesRandom = $articleService->getRandomArticles(9);
+
+$defaultCoverUrl = Yii::getAlias('@web/themes/bootstrap4news/assets/img/news-350x223-1.jpg');
+$resolveArticleCover = static function ($article) use ($defaultCoverUrl): string {
+    $bodyHtml = $article->body ?? $article->content ?? null;
+
+    return ContentHelper::resolveCoverUrl(
+        $article->thumbnail_base_url ?? null,
+        $article->thumbnail_path ?? null,
+        $bodyHtml,
+        $defaultCoverUrl
+    ) ?? $defaultCoverUrl;
+};
 ?>
 
 
@@ -30,7 +42,10 @@ $articlesRandom = $articleService->getRandomArticles(9);
                     <?php foreach ($articlesSlider as $i => $article) { ?>
                         <div class="col-md-6">
                             <div class="tn-img">
-                                <?php echo Html::img(ContentHelper::getCover($article->content, $article->cover), ['width' => '450', 'height' => '350']); ?>
+                                <?php echo Html::img(
+                                    $resolveArticleCover($article),
+                                    ['width' => '450', 'height' => '350']
+                                ); ?>
                                 <div class="tn-title">
                                     <?php echo Html::a($article->title, $article->getUrl()); ?>
                                 </div>
@@ -45,7 +60,10 @@ $articlesRandom = $articleService->getRandomArticles(9);
                     <?php foreach ($articlesPromo as $i => $article) { ?>
                         <div class="col-md-6">
                             <div class="tn-img">
-                                <?php echo Html::img(ContentHelper::getCover($article->content, $article->cover), ['width' => '350px', 'height' => '175px']); ?>
+                                <?php echo Html::img(
+                                    $resolveArticleCover($article),
+                                    ['width' => '350px', 'height' => '175px']
+                                ); ?>
                                 <div class="tn-title">
                                     <?php echo Html::a($article->title, $article->getUrl()); ?>
                                 </div>
@@ -85,7 +103,11 @@ $articlesRandom = $articleService->getRandomArticles(9);
                         <?php foreach ($articlesPopular as $i => $article) { ?>
                             <div class="tn-news">
                                 <div class="tn-img">
-                                    <?php echo Html::img(ContentHelper::getCover($article->content, $article->cover), ['width' => '150px', 'height' => '95px']); ?>
+                                    <?php echo Html::img(
+                                        $resolveArticleCover($article),
+                                        ['width' => '150px', 'height' => '95px']
+                                    );
+                                    ?>
                                 </div>
                                 <div class="tn-title">
                                     <?php echo Html::a($article->title, $article->getUrl()); ?>
@@ -97,7 +119,10 @@ $articlesRandom = $articleService->getRandomArticles(9);
                         <?php foreach ($articlesLatest as $i => $article) { ?>
                             <div class="tn-news">
                                 <div class="tn-img">
-                                    <?php echo Html::img(ContentHelper::getCover($article->content, $article->cover), ['width' => '150px', 'height' => '95px']); ?>
+                                    <?php echo Html::img(
+                                        $resolveArticleCover($article),
+                                        ['width' => '150px', 'height' => '95px']
+                                    ); ?>
                                 </div>
                                 <div class="tn-title">
                                     <?php echo Html::a($article->title, $article->getUrl()); ?>
@@ -122,7 +147,11 @@ $articlesRandom = $articleService->getRandomArticles(9);
                         <?php foreach ($articlesPinned as $i => $article) { ?>
                             <div class="tn-news">
                                 <div class="tn-img">
-                                    <?php echo Html::img(ContentHelper::getCover($article->content, $article->cover), ['width' => '150px', 'height' => '95px']); ?>
+                                    <?php
+                                    echo Html::img(
+                                        $resolveArticleCover($article),
+                                        ['width' => '150px', 'height' => '95px']
+                                    ); ?>
                                 </div>
                                 <div class="tn-title">
                                     <?php echo Html::a($article->title, $article->getUrl()); ?>
@@ -149,7 +178,12 @@ $articlesRandom = $articleService->getRandomArticles(9);
                     <?php foreach ($articlesRandom as $i => $article) { ?>
                         <div class="col-md-4">
                             <div class="mn-img">
-                                <?php echo Html::img(ContentHelper::getCover($article->content, $article->cover), ['width' => '255px', 'height' => '160px']); ?>
+                                <?php
+                                echo Html::img(
+                                    $resolveArticleCover($article),
+                                    ['width' => '255px', 'height' => '160px']
+                                );
+                                ?>
                                 <div class="mn-title">
                                     <?php echo Html::a($article->title, $article->getUrl()); ?>
                                 </div>

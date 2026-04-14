@@ -8,8 +8,14 @@ $unset = '#NA';
 ?>
 
 <?php
-$content = $model->content;
-$articleCover = ContentHelper::getCover($model->content, $model->cover);
+$content = $model->body ?? $model->content ?? '';
+$defaultCoverUrl = \Yii::getAlias('@web/themes/bootstrap4news/assets/img/news-350x223-1.jpg');
+$articleCover = ContentHelper::resolveCoverUrl(
+    $model->thumbnail_base_url ?? null,
+    $model->thumbnail_path ?? null,
+    $content,
+    $defaultCoverUrl
+) ?? $defaultCoverUrl;
 $vid = '';
 
 if (false !== strpos($articleCover, 'iframe')) {

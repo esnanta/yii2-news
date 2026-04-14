@@ -67,6 +67,25 @@ class ContentHelper
      * 2) first image dari body
      * 3) fallback
      */
+    public static function getCover(
+        ?string $bodyHtml = null,
+        ?string $cover = null,
+        ?string $fallbackUrl = null
+    ): ?string {
+        $normalizedCover = trim((string) $cover);
+        if ('' !== $normalizedCover && self::isAbsoluteOrDataUrl($normalizedCover)) {
+            return $normalizedCover;
+        }
+
+        return self::resolveCoverUrl(null, $cover, $bodyHtml, $fallbackUrl);
+    }
+
+    /**
+     * Cover resolver baru:
+     * 1) thumbnail article (base_url + path)
+     * 2) first image dari body
+     * 3) fallback
+     */
     public static function resolveCoverUrl(
         ?string $thumbnailBaseUrl,
         ?string $thumbnailPath,

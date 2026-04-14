@@ -1,13 +1,19 @@
 <?php
 /**
- * @var common\models\Office $office
- * @var common\models\OfficeMedia $officeMedias
- * @var String $logo1Image
- * @var String $logo2Image
+ * @var Office      $office
+ * @var OfficeMedia $officeMedias
+ * @var string      $logo1Image
+ * @var string      $logo2Image
  */
 
+use common\models\Office;
+use common\models\OfficeMedia;
 use rmrevin\yii\fontawesome\FAS;
 use yii\helpers\Html;
+
+$backendBaseUrl = rtrim(Yii::getAlias('@backendUrl'), '/');
+$backendLoginUrl = $backendBaseUrl.'/user/sign-in/login';
+$backendDashboardUrl = $backendBaseUrl.'/site/index';
 
 ?>
 
@@ -17,8 +23,8 @@ use yii\helpers\Html;
         <div class="row">
             <div class="col-md-6">
                 <div class="tb-contact">
-                    <p><i class="fas fa-envelope"></i><?= $office->email; ?></p>
-                    <p><i class="fas fa-phone-alt"></i><?= $office->phone_number; ?></p>
+                    <p><i class="fas fa-envelope"></i><?php echo $office->email; ?></p>
+                    <p><i class="fas fa-phone-alt"></i><?php echo $office->phone_number; ?></p>
                 </div>
             </div>
             <div class="col-md-6">
@@ -27,13 +33,13 @@ use yii\helpers\Html;
                 if (Yii::$app->user->getIsGuest()) {
                     echo Yii::$app->user->identity;
                     echo '<li>';
-                    echo str_replace('user/user/', '', Html::a(FAS::icon('user'), ['admin/user/login'], ['class' => 'd-block g-color-secondary-dark-v1 g-color-primary--hover g-text-underline--none--hover g-py-5 g-px-20']));
+                    echo str_replace('user/user/', '', Html::a(FAS::icon('user'), $backendLoginUrl, ['class' => 'd-block g-color-secondary-dark-v1 g-color-primary--hover g-text-underline--none--hover g-py-5 g-px-20']));
                     echo '</li>';
                 } else {
                     $signOut = Html::a(FAS::icon('sign-out-alt').' Sign Out', ['user/security/logout'], ['data-method' => 'POST', 'class' => 'g-color-secondary-dark-v1 g-color-primary--hover g-text-underline--none--hover g-py-5 g-px-20']);
-                    if (Yii::$app->user->identity->isAdmin == true) {
+                    if (true == Yii::$app->user->identity->isAdmin) {
                         echo '<li>';
-                        $admin = Html::a(FAS::icon('user').' Admin', ['/backend/web/site/index'], ['class' => 'g-color-secondary-dark-v1 g-color-primary--hover g-text-underline--none--hover g-py-5 g-px-20']);
+                        $admin = Html::a(FAS::icon('user').' Admin', $backendDashboardUrl, ['class' => 'g-color-secondary-dark-v1 g-color-primary--hover g-text-underline--none--hover g-py-5 g-px-20']);
                         echo $admin.' | '.$signOut;
                         echo '</li>';
                     } else {
@@ -56,12 +62,12 @@ use yii\helpers\Html;
         <div class="row align-items-center">
             <div class="col-lg-3 col-md-4">
                 <div class="b-logo">
-                    <?= str_replace('user/', '', Html::a($logo1Image, ['site/index'])); ?>
+                    <?php echo str_replace('user/', '', Html::a($logo1Image, ['site/index'])); ?>
                 </div>
             </div>
             <div class="col-lg-6 col-md-4">
                 <div class="b-ads">
-                    <?= str_replace('user/', '', Html::a($logo2Image, ['site/index'])); ?>
+                    <?php echo str_replace('user/', '', Html::a($logo2Image, ['site/index'])); ?>
                 </div>
             </div>
             <div class="col-lg-3 col-md-4">
@@ -86,36 +92,37 @@ use yii\helpers\Html;
             <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                 <div class="navbar-nav mr-auto">
 
-                    <?= str_replace('user/', '', Html::a(Yii::t('app', 'Home'), ['site/index'], ['id' => 'nav-link--pages', 'class' => 'nav-item nav-link'])) ?>
-                    <?= str_replace('user/', '', Html::a(Yii::t('app', 'Article'), ['article/index'], ['id' => 'nav-link--pages', 'class' => 'nav-item nav-link'])) ?>
-                    <?= str_replace('user/', '', Html::a(Yii::t('app', 'Download'), ['asset/index'], ['id' => 'nav-link--pages', 'class' => 'nav-item nav-link'])) ?>
-                    <?= str_replace('user/', '', Html::a(Yii::t('app', 'Staff'), ['staff/index'], ['id' => 'nav-link--pages', 'class' => 'nav-item nav-link'])) ?>
-                    <?= str_replace('user/', '', Html::a(Yii::t('app', 'About'), ['site/about'], ['id' => 'nav-link--pages', 'class' => 'nav-item nav-link'])) ?>
+                    <?php echo str_replace('user/', '', Html::a(Yii::t('app', 'Home'), ['site/index'], ['id' => 'nav-link--pages', 'class' => 'nav-item nav-link'])); ?>
+                    <?php echo str_replace('user/', '', Html::a(Yii::t('app', 'Article'), ['article/index'], ['id' => 'nav-link--pages', 'class' => 'nav-item nav-link'])); ?>
+                    <?php echo str_replace('user/', '', Html::a(Yii::t('app', 'Download'), ['asset/index'], ['id' => 'nav-link--pages', 'class' => 'nav-item nav-link'])); ?>
+                    <?php echo str_replace('user/', '', Html::a(Yii::t('app', 'Staff'), ['staff/index'], ['id' => 'nav-link--pages', 'class' => 'nav-item nav-link'])); ?>
+                    <?php echo str_replace('user/', '', Html::a(Yii::t('app', 'About'), ['site/about'], ['id' => 'nav-link--pages', 'class' => 'nav-item nav-link'])); ?>
 
-                    <?php if(!empty($categories)) : ?>
+                    <?php if (!empty($categories)) { ?>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                            <?=Yii::t('app', 'Category');?>
+                            <?php echo Yii::t('app', 'Category'); ?>
                         </a>
                         <div class="dropdown-menu">
                             <?php foreach ($categories as $categoryModel) { ?>
-                                <?php
-                                echo Html::a($categoryModel->title,
+                                <?php echo Html::a(
+                                    $categoryModel->title,
                                     ['/article/index', 'cat' => $categoryModel->id, 'title' => $categoryModel->title],
-                                    ['class' => 'dropdown-item']);
+                                    ['class' => 'dropdown-item']
+                                );
                                 ?>
                             <?php } ?>
                         </div>
                     </div>
-                    <?php endif; ?>
+                    <?php } ?>
 
                 </div>
                 <div class="social ml-auto">
                     <?php foreach ($officeMedias as $officeMediaItem) {  ?>
-                        <a href="<?= $officeMediaItem->description; ?>">
-                            <i class="<?= $officeMediaItem->title; ?>"></i>
+                        <a href="<?php echo $officeMediaItem->description; ?>">
+                            <i class="<?php echo $officeMediaItem->title; ?>"></i>
                         </a>
-                    <?php }; ?>
+                    <?php } ?>
                 </div>
             </div>
         </nav>

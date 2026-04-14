@@ -3,11 +3,17 @@
 use common\helpers\ContentHelper;
 use yii\helpers\Html;
 
-$articleCover = ContentHelper::getCover($model->content);
+$defaultCoverUrl = \Yii::getAlias('@web/themes/bootstrap4news/assets/img/news-350x223-1.jpg');
+$articleCover = ContentHelper::resolveCoverUrl(
+    $model->thumbnail_base_url ?? null,
+    $model->thumbnail_path ?? null,
+    $model->body ?? $model->content ?? null,
+    $defaultCoverUrl
+) ?? $defaultCoverUrl;
 
 $vid = '';
 if (strpos($articleCover, 'iframe') !== false) {
-    echo $vid = $scr;
+    echo $vid = '';
 }
 ?>
 

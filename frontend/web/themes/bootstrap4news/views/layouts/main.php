@@ -6,7 +6,7 @@
 
 use common\helpers\MetaHelper;
 use common\service\LayoutService;
-use frontend\assets\FrontendAsset;
+use frontend\assets\Bootstrap4news;
 use yii\helpers\Html;
 use yii\web\View;
 
@@ -19,7 +19,7 @@ $officeMedias = $layoutData['officeMedias'];
 $logo1Image = $layoutData['logo1Image'];
 $logo2Image = $layoutData['logo2Image'];
 
-FrontendAsset::register($this);
+Bootstrap4news::register($this);
 ?>
 <?php $this->beginPage(); ?>
 <!DOCTYPE html>
