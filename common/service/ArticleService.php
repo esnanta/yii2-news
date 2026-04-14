@@ -32,7 +32,7 @@ class ArticleService
     public function getPopularArticles(int $limit = 2, int $counter = 100): array
     {
         return Article::find()->published()->limit($limit)
-            ->andWhere(['>', 'view_counter', $counter])
+            ->andWhere(['>', 'view_count', $counter])
             // ->andWhere(['between','view_counter','10','199'])
             ->orderBy(['published_at' => SORT_DESC, 'id' => SORT_DESC])->all()
         ;

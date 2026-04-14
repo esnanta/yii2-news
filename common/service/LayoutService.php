@@ -91,10 +91,9 @@ class LayoutService
 
         return ArticleCategory::find()
             ->where([
-                'office_id' => $officeId,
                 'status' => ArticleCategory::STATUS_ACTIVE,
             ])
-            ->orderBy(['sequence' => SORT_ASC])
+            ->orderBy(['id' => SORT_ASC])
             ->all()
         ;
     }
