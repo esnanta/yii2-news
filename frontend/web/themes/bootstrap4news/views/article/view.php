@@ -3,7 +3,7 @@
 namespace frontend\web\themes\unify263blog\views\blog;
 
 use common\helpers\ContentHelper;
-use common\helpers\IconHelper;
+use rmrevin\yii\fontawesome\FAS;
 use Yii;
 use yii\helpers\Html;
 use kartik\social\TwitterPlugin;
@@ -133,7 +133,7 @@ $newContent = str_replace('%09', '', $dom->saveHtml());
         <hr class="my-3">
 
         <div class="mb-4">
-            <strong class="mr-2"> <?= IconHelper::getUser(). ' by: ' ?> </strong>
+            <strong class="mr-2"> <?= FAS::icon('user'). ' by: ' ?> </strong>
             <?= empty($model->author_id) ? $unset : Html::a($model->author->title, $model->author->getUrl(), ['class' => 'text-dark font-weight-bold']); ?>
 
             <h6 class="text-muted float-right float-end">

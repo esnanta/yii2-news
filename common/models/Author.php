@@ -5,6 +5,7 @@ namespace common\models;
 use common\models\base\Author as BaseAuthor;
 use common\models\query\AuthorQuery;
 use trntv\filekit\behaviors\UploadBehavior;
+use Yii;
 
 /**
  * This is the model class for table "t_author".
@@ -75,11 +76,14 @@ class Author extends BaseAuthor
         ];
     }
 
-    public function getUrl()
+    public function getUrl(): string
     {
         return $this->base_url.'/'.$this->path;
     }
-
+//    public function getUrl()
+//    {
+//        return Yii::$app->getUrlManager()->createUrl(['author/view', 'id' => $this->id, 'title' => $this->title]);
+//    }
     /**
      * @return AuthorQuery the active query used by this AR class
      */

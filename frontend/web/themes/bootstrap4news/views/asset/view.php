@@ -1,10 +1,10 @@
 <?php
 
-use common\helpers\IconHelper;
 use common\helpers\MessageHelper;
 use common\helpers\SpreadsheetHelper;
 use common\models\Asset;
 use lesha724\documentviewer\ViewerJsDocumentViewer;
+use rmrevin\yii\fontawesome\FAS;
 use yii\helpers\Html;
 use kartik\detail\DetailView;
 
@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <?php
-$downloadLinkTmp = Html::a(IconHelper::getDownload().' Download', ['asset/download','id'=>$model->id,'title'=>$model->title],['class'=>'float-right']);
+$downloadLinkTmp = Html::a(FAS::icon('download').' Download', ['asset/download','id'=>$model->id,'title'=>$model->title],['class'=>'float-right']);
 $downloadLink = str_replace('frontend', 'backend', $downloadLinkTmp);
 ?>
     <?= DetailView::widget([

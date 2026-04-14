@@ -1,10 +1,10 @@
 <?php
 
-use common\helpers\IconHelper;
 use common\helpers\MessageHelper;
 use common\helpers\SpreadsheetHelper;
 use common\models\Asset;
 use lesha724\documentviewer\ViewerJsDocumentViewer;
+use rmrevin\yii\fontawesome\FAS;
 use yii\helpers\Html;
 
 /**
@@ -58,7 +58,7 @@ if (!empty($currentFile)) {
         <?= Html::a($model->title, $model->getUrl()) ?>
 
         <span class="float-right">
-            <?= IconHelper::getDownload();?>
+            <?= FAS::icon('download');?>
             <?= (empty($model->download_counter)) ? 0 : $model->download_counter; ?>
         </span>
     </div>

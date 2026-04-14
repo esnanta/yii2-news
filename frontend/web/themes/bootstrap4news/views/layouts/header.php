@@ -6,7 +6,7 @@
  * @var String $logo2Image
  */
 
-use common\helpers\IconHelper;
+use rmrevin\yii\fontawesome\FAS;
 use yii\helpers\Html;
 
 ?>
@@ -27,13 +27,13 @@ use yii\helpers\Html;
                 if (Yii::$app->user->getIsGuest()) {
                     echo Yii::$app->user->identity;
                     echo '<li>';
-                    echo str_replace('user/user/', '', Html::a(IconHelper::getUser(), ['admin/user/login'], ['class' => 'd-block g-color-secondary-dark-v1 g-color-primary--hover g-text-underline--none--hover g-py-5 g-px-20']));
+                    echo str_replace('user/user/', '', Html::a(FAS::icon('user'), ['admin/user/login'], ['class' => 'd-block g-color-secondary-dark-v1 g-color-primary--hover g-text-underline--none--hover g-py-5 g-px-20']));
                     echo '</li>';
                 } else {
-                    $signOut = Html::a(IconHelper::getSignOut().' Sign Out', ['user/security/logout'], ['data-method' => 'POST', 'class' => 'g-color-secondary-dark-v1 g-color-primary--hover g-text-underline--none--hover g-py-5 g-px-20']);
+                    $signOut = Html::a(FAS::icon('sign-out-alt').' Sign Out', ['user/security/logout'], ['data-method' => 'POST', 'class' => 'g-color-secondary-dark-v1 g-color-primary--hover g-text-underline--none--hover g-py-5 g-px-20']);
                     if (Yii::$app->user->identity->isAdmin == true) {
                         echo '<li>';
-                        $admin = Html::a(IconHelper::getUser().' Admin', ['/backend/web/site/index'], ['class' => 'g-color-secondary-dark-v1 g-color-primary--hover g-text-underline--none--hover g-py-5 g-px-20']);
+                        $admin = Html::a(FAS::icon('user').' Admin', ['/backend/web/site/index'], ['class' => 'g-color-secondary-dark-v1 g-color-primary--hover g-text-underline--none--hover g-py-5 g-px-20']);
                         echo $admin.' | '.$signOut;
                         echo '</li>';
                     } else {

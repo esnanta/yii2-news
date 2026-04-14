@@ -4,9 +4,9 @@
  * @var common\models\OfficeMedia $officeMedias
  */
 
-use common\helpers\IconHelper;
 use common\helpers\MediaTypeHelper;
 use common\models\OfficeMedia;
+use rmrevin\yii\fontawesome\FAS;
 
 $siteLinks = OfficeMedia::find()->where(['media_type'=>MediaTypeHelper::getLink()])->limit(6)
     ->orderBy(['id'=>SORT_ASC])->all();
@@ -83,7 +83,7 @@ $siteLinks = OfficeMedia::find()->where(['media_type'=>MediaTypeHelper::getLink(
     <div class="container">
         <div class="row">
             <div class="col-md-6 copyright">
-                <p><?= IconHelper::getGlobe()?> <a href="https://daraspace.com"> DARASPACE</a> | Some Rights Reserved</p>
+                <p><?= FAS::icon('globe')?> <a href="https://daraspace.com"> DARASPACE</a> | Some Rights Reserved</p>
             </div>
 
             <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
