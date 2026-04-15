@@ -5,6 +5,7 @@ use yii\helpers\Html;
 /**
  * @var yii\web\View $this
  * @var common\models\Staff $model
+ * @var yii\data\ActiveDataProvider $dataProviderSocial
  */
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Staff', 'url' => ['index']];
@@ -18,6 +19,10 @@ $img = Html::img(str_replace('frontend', 'backend', $model->getAssetUrl()), [
 ?>
 
 <div class="container mt-4">
+    <div class="mb-3 text-right">
+        <?= Html::a('Edit Profile', ['update', 'id' => $model->id], ['class' => 'btn btn-primary btn-sm']) ?>
+    </div>
+
     <div class="row">
         <!-- Profile Image -->
         <div class="col-md-3 text-center mb-4">
