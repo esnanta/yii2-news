@@ -26,25 +26,21 @@ class ArticleController extends Controller
      */
     public function actionIndex()
     {
-//        $searchModel = new ArticleSearch();
-//        $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
-//        $dataProvider->sort = [
-//            'defaultOrder' => ['is_pinned' => SORT_DESC, 'published_at' => SORT_DESC],
-//        ];
-//        $dataProvider->pagination = [
-//            'pageSize' => self::POSTS_PER_PAGE,
-//        ];
-//
-//        return $this->render('index', [
-//            'searchModel' => $searchModel,
-//            'dataProvider' => $dataProvider,
-//            'archive' => Article::find()->getFullArchive()->limit(self::ARCHIVE_MONTHS_COUNT)->asArray()->all(),
-//            'categories' => ArticleCategory::find()->getCategoriesUsage()->asArray()->all(),
-//        ]);
+        $searchModel = new ArticleSearch();
+        $params = Yii::$app->request->queryParams;
 
-        $searchModel = new ArticleSearch;
-        $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
-        $dataProvider->query->andWhere('t_article.status = '.Article::STATUS_PUBLISHED);
+        // Support legacy query params while keeping filtering centralized in ArticleSearch.
+        $tag = trim((string) Yii::$app->request->get('tag', ''));
+        if ('' !== $tag) {
+            $params[$searchModel->formName()]['tag'] = $tag;
+        }
+
+        $cat = Yii::$app->request->get('cat');
+        if (null !== $cat && '' !== (string) $cat) {
+            $params[$searchModel->formName()]['category_id'] = (int) $cat;
+        }
+
+        $dataProvider = $searchModel->search($params);
         $dataProvider->pagination->pageSize = self::POSTS_PER_PAGE;
         $dataProvider->setSort([
             'defaultOrder' => [
@@ -52,19 +48,11 @@ class ArticleController extends Controller
             ]
         ]);
 
-        if (!empty($cat)) {
-            $dataProvider->query->andWhere('article_category_id = '.$cat);
-        }
-
-        if (Yii::$app->request->get('tag')) {
-            $dataProvider->query->andFilterWhere([
-                'like', 'tag', Yii::$app->request->get('tag'),
-            ]);
-        }
-
         return $this->render('index', [
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'searchModel'=>$searchModel
+            'archive' => Article::find()->getFullArchive()->limit(self::ARCHIVE_MONTHS_COUNT)->asArray()->all(),
+            'categories' => ArticleCategory::find()->getCategoriesUsage()->asArray()->all(),
         ]);
     }
 
