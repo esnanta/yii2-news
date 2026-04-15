@@ -7,7 +7,6 @@ use common\models\search\StaffSearch;
 use common\models\search\StaffSocialAccountSearch;
 use common\models\Staff;
 use common\models\StaffSocialAccount;
-use common\service\DataListService;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -69,27 +68,6 @@ class StaffController extends Controller
             'dataProviderSocial' => $dataProviderSocial,
         ]);
     }
-
-    /**
-     * Updates an existing Staff model.
-     *
-     * @throws NotFoundHttpException
-     */
-    public function actionUpdate(int $id): Response|string
-    {
-        $model = $this->findModel($id);
-
-        if ($model->load(\Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('update', [
-            'model' => $model,
-            'employmentList' => DataListService::getJobTitle(),
-            'genderList' => Staff::genders(),
-        ]);
-    }
-
 
 
     /**
