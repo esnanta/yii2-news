@@ -56,6 +56,7 @@ class m260420_100000_create_news_domain_tables extends Migration
             'office_id' => $this->integer(),
             'is_visible' => $this->integer(),
             'category_id' => $this->integer(),
+            'document_type' => $this->integer(),
             'title' => $this->string(200),
             'date_issued' => $this->date(),
             'base_url' => $this->string(255),
