@@ -14,8 +14,10 @@ class DocumentSearch extends Document
     public function rules(): array
     {
         return [
-            [['id', 'office_id', 'is_visible', 'category_id', 'size', 'view_count', 'download_count', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
-            [['title', 'date_issued', 'base_url', 'path', 'name', 'type', 'description', 'created_at', 'updated_at', 'deleted_at', 'uuid'], 'safe'],
+            [['id', 'office_id', 'is_visible', 'category_id', 'size', 'view_count', 'download_count',
+                'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['title', 'date_issued', 'base_url', 'path', 'name', 'type', 'description',
+                'created_at', 'updated_at', 'deleted_at', 'uuid'], 'safe'],
         ];
     }
 
