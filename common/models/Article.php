@@ -16,8 +16,11 @@ use yii\db\ActiveQuery;
  */
 class Article extends BaseArticle
 {
+    public const FLAG_NO = 2;
+    public const FLAG_YES = 1;
+
     public const STATUS_PUBLISHED = 1;
-    public const STATUS_DRAFT = 0;
+    public const STATUS_DRAFT = 2;
 
     public array $attachments = [];
 
@@ -47,8 +50,8 @@ class Article extends BaseArticle
     public static function pinnedOptions(): array
     {
         return [
-            1 => \Yii::t('common', 'Yes'),
-            0 => \Yii::t('common', 'No'),
+            self::FLAG_NO => \Yii::t('common', 'No'),
+            self::FLAG_YES => \Yii::t('common', 'Yes'),
         ];
     }
 

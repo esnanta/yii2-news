@@ -15,6 +15,8 @@ use yii\web\JsExpression;
  * @var array $authorOptions
  * @var array $categoryOptions
  * @var array $tagOptions
+ * @var array $statusOptions
+ * @var array $pinnedOptions
  */
 ?>
 
@@ -26,6 +28,13 @@ use yii\web\JsExpression;
         <div class="card-body">
             <?php echo $form->errorSummary($model); ?>
 
+            <?php echo $form->field($model, 'title')->textInput(['maxlength' => true]); ?>
+
+            <?php echo $form->field($model, 'category_id')->dropDownList(
+                $categoryOptions,
+                ['prompt' => '']
+            ); ?>
+
             <?php echo $form->field($model, 'author_id')->widget(Select2::class, [
                 'data' => $authorOptions,
                 'options' => ['placeholder' => Yii::t('backend', '')],
@@ -34,29 +43,22 @@ use yii\web\JsExpression;
                 ],
             ]); ?>
 
-            <?php echo $form->field($model, 'title')->textInput(['maxlength' => true]); ?>
-
             <?php echo $form->field($model, 'tagTitles')->widget(Select2::class, [
                 'data' => $tagOptions,
                 'options' => [
-                    'placeholder' => Yii::t('backend', 'Tambahkan tag'),
+                    'placeholder' => Yii::t('backend', ''),
                     'multiple' => true,
                 ],
                 'pluginOptions' => [
                     'tags' => true,
                     'tokenSeparators' => [','],
                 ],
-            ])->hint(Yii::t('backend', 'Tekan Enter atau koma untuk menambah tag baru')); ?>
+            ])->hint(Yii::t('backend', 'Press enter or comma to add a new tag.')); ?>
 
             <?php echo $form->field($model, 'slug')
                 ->hint(Yii::t('backend', 'If you leave this field empty, the slug will be generated automatically'))
                 ->textInput(['maxlength' => true])
-; ?>
-
-            <?php echo $form->field($model, 'category_id')->dropDownList(
-                $categoryOptions,
-                ['prompt' => '']
-            ); ?>
+            ; ?>
 
             <?php echo $form->field($model, 'body')->widget(
                 Widget::class,
@@ -73,9 +75,9 @@ use yii\web\JsExpression;
                 ]
             ); ?>
 
-            <?php echo $form->field($model, 'status')->checkbox(); ?>
+            <?php echo $form->field($model, 'status')->dropDownList($statusOptions); ?>
 
-            <?php echo $form->field($model, 'is_pinned')->checkbox(); ?>
+            <?php echo $form->field($model, 'is_pinned')->dropDownList($pinnedOptions); ?>
 
             <?php echo $form->field($model, 'thumbnail')->widget(
                 Upload::class,

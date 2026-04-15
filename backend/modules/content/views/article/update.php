@@ -9,6 +9,8 @@ use yii\web\View;
  * @var array  $authorOptions
  * @var array  $categoryOptions
  * @var array  $tagOptions
+ * @var array  $statusOptions
+ * @var array  $pinnedOptions
  */
 $this->title = Yii::t('backend', 'Update {modelClass}: ', [
     'modelClass' => 'Article',
@@ -24,4 +26,6 @@ $this->params['breadcrumbs'][] = Yii::t('backend', 'Update');
     'authorOptions' => $authorOptions,
     'categoryOptions' => $categoryOptions,
     'tagOptions' => $tagOptions,
+    'statusOptions' => $statusOptions,
+    'pinnedOptions' => $pinnedOptions,
 ]);

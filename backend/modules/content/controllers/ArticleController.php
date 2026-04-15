@@ -65,6 +65,8 @@ class ArticleController extends BaseController
             'authorOptions' => DataListService::getAuthor(),
             'categoryOptions' => DataListService::getArticleCategory(),
             'tagOptions' => DataListService::getTag(),
+            'statusOptions' => Article::statuses(),
+            'pinnedOptions' => Article::pinnedOptions(),
         ]);
     }
 
@@ -90,6 +92,8 @@ class ArticleController extends BaseController
             'authorOptions' => DataListService::getAuthor(),
             'categoryOptions' => DataListService::getArticleCategory(),
             'tagOptions' => DataListService::getTag(),
+            'statusOptions' => Article::statuses(),
+            'pinnedOptions' => Article::pinnedOptions(),
         ]);
     }
 
