@@ -51,4 +51,22 @@ class Document extends BaseDocument
 
         return $query->where(['t_document.is_deleted' => 0]);
     }
+
+    public function downloadFile($path): void
+    {
+        if (!empty($path)) {
+            // header("Content-type:application/pdf"); //for pdf file
+
+            header('Content-Type:text/plain; charset=ISO-8859-15');
+            // if you want to read text file using text/plain header
+            header('Content-Disposition: attachment; filename="'.basename($path).'"');
+            header('Content-Length: '.filesize($path));
+            readfile($path);
+
+            $this->download_count = $this->download_count + 1;
+            $this->save();
+
+            \Yii::app()->end();
+        }
+    }
 }
