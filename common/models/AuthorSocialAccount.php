@@ -10,19 +10,29 @@ use common\models\query\AuthorSocialAccountQuery;
  */
 class AuthorSocialAccount extends BaseAuthorSocialAccount
 {
-    /**
-     * Returns consistent checkbox post values for integer-flag attributes.
-     */
-    public function getCheckboxInputOptions(string $attribute): array
-    {
-        if (in_array($attribute, ['is_primary', 'is_visible'], true)) {
-            return [
-                'value' => 1,
-                'uncheck' => 0,
-            ];
-        }
+    public const FLAG_NO = 0;
+    public const FLAG_YES = 1;
 
-        return [];
+    /**
+     * @return array options for is_primary dropdown
+     */
+    public static function primaryOptions(): array
+    {
+        return [
+            self::FLAG_NO => \Yii::t('common', 'No'),
+            self::FLAG_YES => \Yii::t('common', 'Yes'),
+        ];
+    }
+
+    /**
+     * @return array options for is_visible dropdown
+     */
+    public static function visibleOptions(): array
+    {
+        return [
+            self::FLAG_NO => \Yii::t('common', 'No'),
+            self::FLAG_YES => \Yii::t('common', 'Yes'),
+        ];
     }
 
     public function rules(): array
@@ -66,7 +76,6 @@ class AuthorSocialAccount extends BaseAuthorSocialAccount
             'uuid' => \Yii::t('common', 'Uuid'),
         ];
     }
-
 
     /**
      * @return AuthorSocialAccountQuery the active query used by this AR class

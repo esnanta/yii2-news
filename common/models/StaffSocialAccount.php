@@ -10,6 +10,31 @@ use common\models\query\StaffSocialAccountQuery;
  */
 class StaffSocialAccount extends BaseStaffSocialAccount
 {
+    public const FLAG_NO = 0;
+    public const FLAG_YES = 1;
+
+    /**
+     * @return array options for is_primary dropdown
+     */
+    public static function primaryOptions(): array
+    {
+        return [
+            self::FLAG_NO => \Yii::t('common', 'No'),
+            self::FLAG_YES => \Yii::t('common', 'Yes'),
+        ];
+    }
+
+    /**
+     * @return array options for is_visible dropdown
+     */
+    public static function visibleOptions(): array
+    {
+        return [
+            self::FLAG_NO => \Yii::t('common', 'No'),
+            self::FLAG_YES => \Yii::t('common', 'Yes'),
+        ];
+    }
+
     public function rules(): array
     {
         return array_merge(

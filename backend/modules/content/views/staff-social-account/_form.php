@@ -33,8 +33,14 @@ use yii\bootstrap4\ActiveForm;
                 ); ?>
                 <?php echo $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
                 <?php echo $form->field($model, 'profile_url')->textInput(['maxlength' => true]) ?>
-                <?php echo $form->field($model, 'is_primary')->textInput() ?>
-                <?php echo $form->field($model, 'is_visible')->textInput() ?>
+                <?php echo $form->field($model, 'is_primary')->dropDownList(
+                    $model::primaryOptions(),
+                    ['prompt' => Yii::t('backend', '')]
+                ); ?>
+                <?php echo $form->field($model, 'is_visible')->dropDownList(
+                    $model::visibleOptions(),
+                    ['prompt' => Yii::t('backend', '')]
+                ); ?>
                 <?php echo $form->field($model, 'sequence')->textInput() ?>
                 <?php echo $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 
