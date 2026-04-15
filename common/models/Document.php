@@ -10,6 +10,20 @@ use common\models\query\DocumentQuery;
  */
 class Document extends BaseDocument
 {
+    public const FLAG_NO = 2;
+    public const FLAG_YES = 1;
+
+    /**
+     * @return array options for is_visible dropdown
+     */
+    public static function visibleOptions(): array
+    {
+        return [
+            self::FLAG_NO => \Yii::t('common', 'No'),
+            self::FLAG_YES => \Yii::t('common', 'Yes'),
+        ];
+    }
+
     public function rules(): array
     {
         return array_replace_recursive(

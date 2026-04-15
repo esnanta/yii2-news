@@ -10,7 +10,7 @@ use common\models\query\AuthorSocialAccountQuery;
  */
 class AuthorSocialAccount extends BaseAuthorSocialAccount
 {
-    public const FLAG_NO = 0;
+    public const FLAG_NO = 2;
     public const FLAG_YES = 1;
 
     /**

@@ -11,7 +11,7 @@ use common\models\query\OfficeSocialAccountQuery;
 class OfficeSocialAccount extends BaseOfficeSocialAccount
 {
 
-    public const FLAG_NO = 0;
+    public const FLAG_NO = 2;
     public const FLAG_YES = 1;
 
     /**
