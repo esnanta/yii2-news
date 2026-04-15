@@ -4,9 +4,11 @@ use common\service\FileDisplayService;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
-/*
+/**
  * @var yii\web\View $this
  * @var common\models\Document $model
+ * @var array $officeOptions
+ * @var array $documentCategoryOptions
  */
 
 $this->title = $model->title;
@@ -16,7 +18,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="document-view">
     <div class="card">
         <div class="card-header">
-            <?php echo Html::a(Yii::t('backend', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']); ?>
+            <?php echo Html::a(
+                Yii::t('backend', 'Update'),
+                ['update', 'id' => $model->id],
+                ['class' => 'btn btn-primary']
+            ); ?>
             <?php echo Html::a(Yii::t('backend', 'Delete'), ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
                 'data' => [
@@ -24,6 +30,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     'method' => 'post',
                 ],
             ]); ?>
+            <?php if (!empty($model->path)) : ?>
+                <?php echo Html::a(
+                    Yii::t('backend', 'Download'),
+                    ['download', 'id' => $model->id],
+                    ['class' => 'btn btn-secondary']
+                ); ?>
+            <?php endif; ?>
         </div>
         <div class="card-body">
             <?php echo DetailView::widget([
@@ -40,8 +53,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'category_id',
                         'label' => Yii::t('backend', 'Category'),
-                        'value' => static function ($model) use ($categoryOptions) {
-                            return $categoryOptions[$model->category_id] ?? null;
+                        'value' => static function ($model) use ($documentCategoryOptions) {
+                            return $documentCategoryOptions[$model->category_id] ?? null;
                         },
                     ],
                     'title',

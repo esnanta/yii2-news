@@ -24,6 +24,7 @@ class DocumentController extends BaseController
                 'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['post'],
+                    'download' => ['get'],
                 ],
             ],
         ];
@@ -66,6 +67,38 @@ class DocumentController extends BaseController
             'officeOptions' => DataListService::getOffice(),
             'documentCategoryOptions' => DataListService::getDocumentCategory(),
         ]);
+    }
+
+    /**
+     * Downloads document file from storage.
+     *
+     * @param int $id ID
+     *
+     * @throws ForbiddenHttpException
+     * @throws NotFoundHttpException
+     */
+    public function actionDownload(int $id): Response
+    {
+        $this->checkAccess('document.view');
+
+        $model = $this->findModel($id);
+        $filePath = $model->getStorageFilePath();
+        if (null === $filePath) {
+            throw new NotFoundHttpException(\Yii::t('backend', 'Document file was not found.'));
+        }
+
+        $model->updateCounters(['download_count' => 1]);
+
+        $options = ['inline' => false];
+        if (!empty($model->type)) {
+            $options['mimeType'] = $model->type;
+        }
+
+        return \Yii::$app->response->sendFile(
+            $filePath,
+            !empty($model->name) ? $model->name : basename($filePath),
+            $options
+        );
     }
 
     /**

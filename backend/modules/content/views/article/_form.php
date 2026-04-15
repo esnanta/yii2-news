@@ -81,6 +81,7 @@ use yii\web\JsExpression;
                 Upload::class,
                 [
                     'url' => ['/file/storage/upload'],
+                    'uploadPath' => 'article',
                     'maxFileSize' => 5000000, // 5 MiB,
                     'acceptFileTypes' => new JsExpression('/(\.|\/)(gif|jpe?g|png)$/i'),
                 ]

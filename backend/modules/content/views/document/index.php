@@ -87,6 +87,24 @@ $this->params['breadcrumbs'][] = $this->title;
                     
                     [
                         'class' => \common\widgets\ActionColumn::class,
+                        'template' => '{view} {update} {download} {delete}',
+                        'buttons' => [
+                            'download' => static function ($url, $model): string {
+                                return Html::a(
+                                    FAS::icon('download', ['aria' => ['hidden' => true], 'class' => ['fa-fw']]),
+                                    ['download', 'id' => $model->id],
+                                    [
+                                        'class' => ['btn', 'btn-secondary', 'btn-xs'],
+                                        'title' => Yii::t('backend', 'Download'),
+                                        'aria-label' => Yii::t('backend', 'Download'),
+                                        'data-pjax' => '0',
+                                    ]
+                                );
+                            },
+                        ],
+                        'visibleButtons' => [
+                            'download' => static fn ($model): bool => !empty($model->path),
+                        ],
                         'options' => ['style' => 'width: 8%'],
                         'contentOptions' => ['style' => 'white-space: nowrap;'],
                     ],
