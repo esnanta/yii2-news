@@ -6,6 +6,7 @@ use common\models\Article;
 use common\models\ArticleAttachment;
 use common\models\ArticleCategory;
 use frontend\models\search\ArticleSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
@@ -16,6 +17,7 @@ use yii\web\Response;
  */
 class ArticleController extends Controller
 {
+    public $layout = "/column2_blog";
     private const POSTS_PER_PAGE = 3;
     private const ARCHIVE_MONTHS_COUNT = 12;
 
@@ -24,20 +26,45 @@ class ArticleController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new ArticleSearch();
-        $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
-        $dataProvider->sort = [
-            'defaultOrder' => ['is_pinned' => SORT_DESC, 'published_at' => SORT_DESC],
-        ];
-        $dataProvider->pagination = [
-            'pageSize' => self::POSTS_PER_PAGE,
-        ];
+//        $searchModel = new ArticleSearch();
+//        $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
+//        $dataProvider->sort = [
+//            'defaultOrder' => ['is_pinned' => SORT_DESC, 'published_at' => SORT_DESC],
+//        ];
+//        $dataProvider->pagination = [
+//            'pageSize' => self::POSTS_PER_PAGE,
+//        ];
+//
+//        return $this->render('index', [
+//            'searchModel' => $searchModel,
+//            'dataProvider' => $dataProvider,
+//            'archive' => Article::find()->getFullArchive()->limit(self::ARCHIVE_MONTHS_COUNT)->asArray()->all(),
+//            'categories' => ArticleCategory::find()->getCategoriesUsage()->asArray()->all(),
+//        ]);
+
+        $searchModel = new ArticleSearch;
+        $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
+        $dataProvider->query->andWhere('t_article.status = '.Article::STATUS_PUBLISHED);
+        $dataProvider->pagination->pageSize = self::POSTS_PER_PAGE;
+        $dataProvider->setSort([
+            'defaultOrder' => [
+                'published_at' => SORT_DESC,
+            ]
+        ]);
+
+        if (!empty($cat)) {
+            $dataProvider->query->andWhere('article_category_id = '.$cat);
+        }
+
+        if (Yii::$app->request->get('tag')) {
+            $dataProvider->query->andFilterWhere([
+                'like', 'tag', Yii::$app->request->get('tag'),
+            ]);
+        }
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'archive' => Article::find()->getFullArchive()->limit(self::ARCHIVE_MONTHS_COUNT)->asArray()->all(),
-            'categories' => ArticleCategory::find()->getCategoriesUsage()->asArray()->all(),
+            'searchModel'=>$searchModel
         ]);
     }
 

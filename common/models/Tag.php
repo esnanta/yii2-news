@@ -73,12 +73,12 @@ class Tag extends BaseTag
             ->notDeleted()
             ->withPublishedArticles()
             ->select([
-                '{{%tags}}.[[title]]',
-                '{{%tags}}.[[slug]]',
+                '{{%tag}}.[[title]]',
+                '{{%tag}}.[[slug]]',
                 'COUNT({{%article_tag}}.[[article_id]]) AS [[weight]]',
             ])
-            ->groupBy(['{{%tags}}.[[id]]', '{{%tags}}.[[title]]', '{{%tags}}.[[slug]]'])
-            ->orderBy(['weight' => SORT_DESC, '{{%tags}}.[[title]]' => SORT_ASC])
+            ->groupBy(['{{%tag}}.[[id]]', '{{%tag}}.[[title]]', '{{%tag}}.[[slug]]'])
+            ->orderBy(['weight' => SORT_DESC, '{{%tag}}.[[title]]' => SORT_ASC])
             ->limit($limit)
             ->asArray()
             ->all()

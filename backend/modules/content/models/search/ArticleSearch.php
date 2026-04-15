@@ -81,8 +81,8 @@ class ArticleSearch extends Article
             $query->joinWith('tags');
             $query->andWhere([
                 'or',
-                ['like', '{{%tags}}.[[title]]', $this->tag],
-                ['like', '{{%tags}}.[[slug]]', $this->tag],
+                ['like', '{{%tag}}.[[title]]', $this->tag],
+                ['like', '{{%tag}}.[[slug]]', $this->tag],
             ]);
             $query->groupBy('{{%article}}.[[id]]');
         }

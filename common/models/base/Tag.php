@@ -13,7 +13,7 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 
 /**
- * This is the base model class for table "t_tags".
+ * This is the base model class for table "t_tag".
  *
  * @property int          $id
  * @property string       $title
@@ -170,6 +170,6 @@ class Tag extends BaseActiveRecord
     {
         $query = new TagQuery(get_called_class());
 
-        return $query->where(['t_tags.deleted_by' => 0]);
+        return $query->where(['t_tag.deleted_by' => 0]);
     }
 }

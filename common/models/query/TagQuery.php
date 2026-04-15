@@ -15,13 +15,13 @@ class TagQuery extends ActiveQuery
 {
     public function notDeleted(): self
     {
-        return $this->andWhere(['{{%tags}}.[[is_deleted]]' => 0]);
+        return $this->andWhere(['{{%tag}}.[[is_deleted]]' => 0]);
     }
 
     public function withPublishedArticles(): self
     {
         return $this
-            ->innerJoin('{{%article_tag}}', '{{%article_tag}}.[[tag_id]] = {{%tags}}.[[id]]')
+            ->innerJoin('{{%article_tag}}', '{{%article_tag}}.[[tag_id]] = {{%tag}}.[[id]]')
             ->innerJoin('{{%article}}', '{{%article}}.[[id]] = {{%article_tag}}.[[article_id]]')
             ->andWhere([
                 '{{%article}}.[[is_deleted]]' => 0,
