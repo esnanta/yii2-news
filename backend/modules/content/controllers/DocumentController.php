@@ -66,6 +66,7 @@ class DocumentController extends BaseController
             'model' => $this->findModel($id),
             'officeOptions' => DataListService::getOffice(),
             'documentCategoryOptions' => DataListService::getDocumentCategory(),
+            'visibleOptions' => Document::visibleOptions(),
         ]);
     }
 

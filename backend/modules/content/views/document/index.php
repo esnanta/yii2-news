@@ -66,6 +66,22 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute' => 'title',
                         'contentOptions' => ['style' => 'white-space: normal; word-break: break-word;'],
                     ],
+                    [
+                        'label' => Yii::t('backend', 'Ext'),
+                        'value' => static function ($model): string {
+                            $fileName = !empty($model->name) ? (string) $model->name : (string) $model->path;
+                            $extension = strtolower((string) pathinfo($fileName, PATHINFO_EXTENSION));
+
+                            if ('' === $extension && !empty($model->type) && str_contains((string) $model->type, '/')) {
+                                [, $mimeSuffix] = explode('/', (string) $model->type, 2);
+                                $extension = strtolower(trim($mimeSuffix));
+                            }
+
+                            return '' !== $extension ? strtoupper($extension) : '-';
+                        },
+                        'options' => ['style' => 'width: 8%'],
+                        'contentOptions' => ['style' => 'white-space: nowrap; text-align: center;'],
+                    ],
                     // 'date_issued',
                     // 'base_url:url',
                     // 'path',

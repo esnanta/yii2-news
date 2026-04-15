@@ -19,6 +19,7 @@ use yii\db\ActiveQuery;
  * @property int              $office_id
  * @property int              $is_visible
  * @property int              $category_id
+ * @property int              $document_type
  * @property string           $title
  * @property string           $date_issued
  * @property string           $base_url
@@ -77,8 +78,7 @@ class Document extends BaseActiveRecord
     public function rules(): array
     {
         return [
-            [['office_id', 'is_visible', 'category_id', 'size', 'view_count', 'download_count',
-                'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['office_id', 'is_visible', 'category_id', 'document_type', 'size', 'view_count', 'download_count', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['date_issued', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['description'], 'string'],
             [['title'], 'string', 'max' => 200],
@@ -111,6 +111,7 @@ class Document extends BaseActiveRecord
             'office_id' => \Yii::t('common', 'Office ID'),
             'is_visible' => \Yii::t('common', 'Is Visible'),
             'category_id' => \Yii::t('common', 'Category ID'),
+            'document_type' => \Yii::t('common', 'Document Type'),
             'title' => \Yii::t('common', 'Title'),
             'date_issued' => \Yii::t('common', 'Date Issued'),
             'base_url' => \Yii::t('common', 'Base Url'),

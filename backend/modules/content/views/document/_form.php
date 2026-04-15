@@ -23,32 +23,36 @@ use yii\web\JsExpression;
 
                 <?php echo $form->field($model, 'office_id')->dropDownList(
                     $officeOptions,
-                    ['prompt' => Yii::t('backend', 'Select office')]
+                    ['prompt' => Yii::t('backend', '')]
                 ); ?>
                 <?php echo $form->field($model, 'is_visible')->dropDownList(
                     Document::visibleOptions(),
-                    ['prompt' => Yii::t('backend', 'Select visibility')]
+                    ['prompt' => Yii::t('backend', '')]
                 ); ?>
                 <?php echo $form->field($model, 'category_id')->dropDownList(
                     $documentCategoryOptions,
-                    ['prompt' => Yii::t('backend', 'Select document category')]
+                    ['prompt' => Yii::t('backend', '')]
                 ); ?>
-                <?php echo $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
-                <?php echo $form->field($model, 'date_issued')->textInput() ?>
+                <?php echo $form->field($model, 'document_type')->dropDownList(
+                    Document::documentTypeOptions(),
+                    ['prompt' => Yii::t('backend', '')]
+                ); ?>
+                <?php echo $form->field($model, 'title')->textInput(['maxlength' => true]); ?>
+                <?php echo $form->field($model, 'date_issued')->input('date'); ?>
                 <?php echo $form->field($model, 'documentFile')->widget(Upload::class, [
                     'url' => ['/file/storage/upload'],
                     'uploadPath' => 'document',
-                    'maxFileSize' => 10000000,
+                    'maxFileSize' => 5000000,
                     'acceptFileTypes' => new JsExpression(Document::uploadAcceptFileTypesRegex()),
                 ]); ?>
-                <?php echo $form->field($model, 'description')->textarea(['rows' => 6]) ?>
+                <?php echo $form->field($model, 'description')->textarea(['rows' => 6]); ?>
 
             </div>
             <div class="card-footer">
                 <?php echo Html::submitButton(
                     $model->isNewRecord ? Yii::t('backend', 'Create') : Yii::t('backend', 'Update'),
                     ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']
-                ) ?>
+                ); ?>
             </div>
         </div>
     <?php ActiveForm::end(); ?>
