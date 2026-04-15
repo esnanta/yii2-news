@@ -82,7 +82,7 @@ use yii\web\JsExpression;
                 [
                     'url' => ['/file/storage/upload'],
                     'uploadPath' => 'article',
-                    'maxFileSize' => 5000000, // 5 MiB,
+                    'maxFileSize' => 500000, // 500 KB,
                     'acceptFileTypes' => new JsExpression('/(\.|\/)(gif|jpe?g|png)$/i'),
                 ]
             ); ?>
@@ -92,8 +92,8 @@ use yii\web\JsExpression;
                 [
                     'url' => ['/file/storage/upload'],
                     'sortable' => true,
-                    'maxFileSize' => 10000000, // 10 MiB
-                    'maxNumberOfFiles' => 10,
+                    'maxFileSize' => 1000000, // 1 MiB
+                    'maxNumberOfFiles' => 2,
                 ]
             ); ?>
 
