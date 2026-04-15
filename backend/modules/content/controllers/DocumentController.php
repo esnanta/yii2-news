@@ -47,6 +47,8 @@ class DocumentController extends BaseController
             'dataProvider' => $dataProvider,
             'officeOptions' => DataListService::getOffice(),
             'documentCategoryOptions' => DataListService::getDocumentCategory(),
+            'visibleOptions' => Document::visibleOptions(),
+            'documentTypeOptions' => Document::documentTypeOptions(),
         ]);
     }
 

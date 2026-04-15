@@ -25,16 +25,16 @@ use yii\web\JsExpression;
                     $officeOptions,
                     ['prompt' => Yii::t('backend', '')]
                 ); ?>
-                <?php echo $form->field($model, 'is_visible')->dropDownList(
-                    Document::visibleOptions(),
-                    ['prompt' => Yii::t('backend', '')]
-                ); ?>
                 <?php echo $form->field($model, 'category_id')->dropDownList(
                     $documentCategoryOptions,
                     ['prompt' => Yii::t('backend', '')]
                 ); ?>
                 <?php echo $form->field($model, 'document_type')->dropDownList(
                     Document::documentTypeOptions(),
+                    ['prompt' => Yii::t('backend', '')]
+                ); ?>
+                <?php echo $form->field($model, 'is_visible')->dropDownList(
+                    Document::visibleOptions(),
                     ['prompt' => Yii::t('backend', '')]
                 ); ?>
                 <?php echo $form->field($model, 'title')->textInput(['maxlength' => true]); ?>

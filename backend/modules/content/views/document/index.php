@@ -1,8 +1,9 @@
 <?php
 
-use yii\helpers\Html;
-use yii\grid\GridView;
+use common\widgets\ActionColumn;
 use rmrevin\yii\fontawesome\FAS;
+use yii\grid\GridView;
+use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
@@ -10,6 +11,8 @@ use rmrevin\yii\fontawesome\FAS;
  * @var yii\data\ActiveDataProvider $dataProvider
  * @var array $officeOptions
  * @var array $documentCategoryOptions
+ * @var array $visibleOptions
+ * @var array $documentTypeOptions
  */
 
 $this->title = Yii::t('backend', 'Documents');
@@ -24,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
 
         <div class="card-body p-0">
-            <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+            <?php // echo $this->render('_search', ['model' => $searchModel]);?>
     
             <?php echo GridView::widget([
                 'layout' => "{items}\n{pager}",
@@ -33,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 'tableOptions' => [
                     'class' => ['table', 'table-striped', 'table-bordered', 'mb-0', 'table-sm'],
-                    'style' => 'width: 100%; table-layout: fixed;',
+                    'style' => 'width: 100%;',
                 ],
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
@@ -47,63 +50,33 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute' => 'office_id',
                         'filter' => $officeOptions,
                         'value' => static fn ($model): string => $officeOptions[$model->office_id] ?? '-',
-                        'options' => ['style' => 'width: 12%'],
-                        'contentOptions' => ['style' => 'white-space: nowrap;'],
-                    ],
-                    [
-                        'attribute' => 'is_visible',
-                        'options' => ['style' => 'width: 10%'],
-                        'contentOptions' => ['style' => 'white-space: nowrap;'],
+                        'options' => ['style' => 'min-width: 120px;'],
                     ],
                     [
                         'attribute' => 'category_id',
                         'filter' => $documentCategoryOptions,
                         'value' => static fn ($model): string => $documentCategoryOptions[$model->category_id] ?? '-',
-                        'options' => ['style' => 'width: 12%'],
-                        'contentOptions' => ['style' => 'white-space: nowrap;'],
+                        'options' => ['style' => 'min-width: 120px;'],
                     ],
                     [
                         'attribute' => 'title',
                         'contentOptions' => ['style' => 'white-space: normal; word-break: break-word;'],
                     ],
                     [
-                        'label' => Yii::t('backend', 'Ext'),
-                        'value' => static function ($model): string {
-                            $fileName = !empty($model->name) ? (string) $model->name : (string) $model->path;
-                            $extension = strtolower((string) pathinfo($fileName, PATHINFO_EXTENSION));
-
-                            if ('' === $extension && !empty($model->type) && str_contains((string) $model->type, '/')) {
-                                [, $mimeSuffix] = explode('/', (string) $model->type, 2);
-                                $extension = strtolower(trim($mimeSuffix));
-                            }
-
-                            return '' !== $extension ? strtoupper($extension) : '-';
-                        },
-                        'options' => ['style' => 'width: 8%'],
-                        'contentOptions' => ['style' => 'white-space: nowrap; text-align: center;'],
+                        'attribute' => 'document_type',
+                        'filter' => $documentTypeOptions,
+                        'value' => static fn ($model): string => $documentTypeOptions[$model->document_type] ?? '-',
+                        'options' => ['style' => 'min-width: 100px;'],
                     ],
-                    // 'date_issued',
-                    // 'base_url:url',
-                    // 'path',
-                    // 'name',
-                    // 'type',
-                    // 'size',
-                    // 'view_count',
-                    // 'download_count',
-                    // 'description:ntext',
-                    // 'created_at',
-                    // 'updated_at',
-                    // 'created_by',
-                    // 'updated_by',
-                    // 'is_deleted',
-                    // 'deleted_at',
-                    // 'deleted_by',
-                    // 'verlock',
-                    // 'uuid',
-                    
                     [
-                        'class' => \common\widgets\ActionColumn::class,
-                        'template' => '{view} {update} {download} {delete}',
+                        'attribute' => 'is_visible',
+                        'filter' => $visibleOptions,
+                        'value' => static fn ($model): string => $visibleOptions[$model->is_visible] ?? '-',
+                        'options' => ['style' => 'min-width: 100px;'],
+                    ],
+                    [
+                        'class' => ActionColumn::class,
+                        'template' => '{download} {view} {update} {delete}',
                         'buttons' => [
                             'download' => static function ($url, $model): string {
                                 return Html::a(
@@ -121,7 +94,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'visibleButtons' => [
                             'download' => static fn ($model): bool => !empty($model->path),
                         ],
-                        'options' => ['style' => 'width: 8%'],
+                        'options' => ['style' => 'min-width: 100px;'],
                         'contentOptions' => ['style' => 'white-space: nowrap;'],
                     ],
                 ],
@@ -129,7 +102,7 @@ $this->params['breadcrumbs'][] = $this->title;
     
         </div>
         <div class="card-footer">
-            <?php echo getDataProviderSummary($dataProvider) ?>
+            <?php echo getDataProviderSummary($dataProvider); ?>
         </div>
     </div>
 
