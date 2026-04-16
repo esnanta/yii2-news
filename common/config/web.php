@@ -1,19 +1,25 @@
 <?php
+
+use common\behaviors\LocaleBehavior;
+use yii\debug\Module;
+use yii\web\AssetManager;
+use yii\widgets\LinkPager;
+
 $config = [
     'components' => [
         'assetManager' => [
-            'class' => yii\web\AssetManager::class,
+            'class' => AssetManager::class,
             'linkAssets' => env('LINK_ASSETS'),
-            'appendTimestamp' => YII_ENV_DEV
-        ]
+            'appendTimestamp' => YII_ENV_DEV,
+        ],
     ],
     'as locale' => [
-        'class' => common\behaviors\LocaleBehavior::class,
-        'enablePreferredLanguage' => true
+        'class' => LocaleBehavior::class,
+        'enablePreferredLanguage' => true,
     ],
     'container' => [
         'definitions' => [
-           \yii\widgets\LinkPager::class => \yii\bootstrap4\LinkPager::class,
+            LinkPager::class => yii\bootstrap4\LinkPager::class,
         ],
     ],
 ];
@@ -21,7 +27,7 @@ $config = [
 if (YII_DEBUG) {
     $config['bootstrap'][] = 'debug';
     $config['modules']['debug'] = [
-        'class' => yii\debug\Module::class,
+        'class' => Module::class,
         'allowedIPs' => ['*'],
     ];
 }
@@ -31,6 +37,5 @@ if (YII_ENV_DEV) {
         'allowedIPs' => ['*'],
     ];
 }
-
 
 return $config;
