@@ -6,6 +6,7 @@ use common\models\Article;
 use common\models\ArticleCategory;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use yii\db\Expression;
 
 /**
  * ArticleSearch represents the model behind the search form about `common\models\Article`.
@@ -43,7 +44,7 @@ class ArticleSearch extends Article
             ->joinWith('category')
             ->andWhere(['{{%article_category}}.[[status]]' => ArticleCategory::STATUS_ACTIVE])
             ->andWhere(['{{%article}}.[[status]]' => Article::STATUS_PUBLISHED])
-            ->andWhere(['<=', '{{%article}}.[[published_at]]', date('Y-m-d H:i:s')])
+            ->andWhere(['<=', '{{%article}}.[[published_at]]', new Expression('NOW()')])
         ;
 
         $dataProvider = new ActiveDataProvider([

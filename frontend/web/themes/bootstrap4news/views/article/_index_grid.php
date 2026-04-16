@@ -9,7 +9,7 @@ $unset = '#NA';
 
 <?php
 $content = $model->body ?? $model->content ?? '';
-$defaultCoverUrl = \Yii::getAlias('@web/themes/bootstrap4news/assets/img/news-350x223-1.jpg');
+$defaultCoverUrl = Yii::getAlias('@web/themes/bootstrap4news/assets/img/news-350x223-1.jpg');
 $articleCover = ContentHelper::resolveCoverUrl(
     $model->thumbnail_base_url ?? null,
     $model->thumbnail_path ?? null,
@@ -24,7 +24,6 @@ if (false !== strpos($articleCover, 'iframe')) {
 ?>
 
 <?php if ('//' == substr($articleCover, 0, 2)) { ?>
-
     <div class="embed-responsive embed-responsive-16by9 mb-3">
         <iframe
                 allowfullscreen
@@ -35,7 +34,6 @@ if (false !== strpos($articleCover, 'iframe')) {
     </div>
 
 <?php } else { ?>
-
     <?php echo Html::img($articleCover, ['class' => 'img-fluid w-100 mb-3', 'height' => '200px']); ?>
 
 <?php } ?>
@@ -43,16 +41,28 @@ if (false !== strpos($articleCover, 'iframe')) {
 <article class="shadow-sm">
     <div class="bg-white p-3">
         <span class="d-block text-muted text-uppercase small mb-2">
-            <?php echo $model->articleCategory->title.' / '.Yii::$app->formatter->format($model->created_at, 'date'); ?>
+            <?php echo $model->category->title.' / '
+                    .Yii::$app->formatter->format($model->created_at, 'date');
+?>
         </span>
 
         <h2 class="h5 font-weight-bold mb-3">
-            <?php echo Html::a($model->title, $model->getUrl(), ['class' => 'text-dark text-decoration-none hover-primary']); ?>
+            <?php echo Html::a(
+                $model->title,
+                $model->getUrl(),
+                ['class' => 'text-dark text-decoration-none hover-primary']
+            );
+?>
         </h2>
 
         <p class="text-muted">
-            <?php echo strip_tags(ContentHelper::readMore($content)); ?>
-            <?php echo Html::a('(Read more)', $model->getUrl(), ['class' => 'small text-primary']); ?>
+            <?php echo strip_tags(ContentHelper::excerpt($content)); ?>
+            <?php echo Html::a(
+                '(Read more)',
+                $model->getUrl(),
+                ['class' => 'small text-primary']
+            );
+?>
         </p>
 
         <hr>

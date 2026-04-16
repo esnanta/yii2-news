@@ -6,7 +6,6 @@ use common\models\Article;
 use common\models\ArticleAttachment;
 use common\models\ArticleCategory;
 use frontend\models\search\ArticleSearch;
-use Yii;
 use yii\web\Controller;
 use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
@@ -17,9 +16,9 @@ use yii\web\Response;
  */
 class ArticleController extends Controller
 {
-    public $layout = "/column2_blog";
     private const POSTS_PER_PAGE = 3;
     private const ARCHIVE_MONTHS_COUNT = 12;
+    public $layout = '/column2_blog';
 
     /**
      * @return string
@@ -27,15 +26,15 @@ class ArticleController extends Controller
     public function actionIndex()
     {
         $searchModel = new ArticleSearch();
-        $params = Yii::$app->request->queryParams;
+        $params = \Yii::$app->request->queryParams;
 
         // Support legacy query params while keeping filtering centralized in ArticleSearch.
-        $tag = trim((string) Yii::$app->request->get('tag', ''));
+        $tag = trim((string) \Yii::$app->request->get('tag', ''));
         if ('' !== $tag) {
             $params[$searchModel->formName()]['tag'] = $tag;
         }
 
-        $cat = Yii::$app->request->get('cat');
+        $cat = \Yii::$app->request->get('cat');
         if (null !== $cat && '' !== (string) $cat) {
             $params[$searchModel->formName()]['category_id'] = (int) $cat;
         }
@@ -45,7 +44,7 @@ class ArticleController extends Controller
         $dataProvider->setSort([
             'defaultOrder' => [
                 'published_at' => SORT_DESC,
-            ]
+            ],
         ]);
 
         return $this->render('index', [
@@ -57,6 +56,8 @@ class ArticleController extends Controller
     }
 
     /**
+     * @param mixed $slug
+     *
      * @return string
      *
      * @throws NotFoundHttpException
@@ -82,6 +83,8 @@ class ArticleController extends Controller
     }
 
     /**
+     * @param mixed $id
+     *
      * @throws NotFoundHttpException
      * @throws HttpException
      */
