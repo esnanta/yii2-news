@@ -22,7 +22,7 @@ use yii\swiftmailer\Mailer;
 $config = [
     'name' => 'Yii2 Starter Kit',
     'vendorPath' => __DIR__.'/../../vendor',
-    'extensions' => require(__DIR__.'/../../vendor/yiisoft/extensions.php'),
+    'extensions' => require (__DIR__.'/../../vendor/yiisoft/extensions.php'),
     'sourceLanguage' => 'en-US',
     'language' => 'en-US',
     'bootstrap' => ['log'],
@@ -151,21 +151,21 @@ $config = [
                 'hostInfo' => env('BACKEND_HOST_INFO'),
                 'baseUrl' => env('BACKEND_BASE_URL'),
             ],
-            require(Yii::getAlias('@backend/config/_urlManager.php'))
+            require (Yii::getAlias('@backend/config/_urlManager.php'))
         ),
         'urlManagerFrontend' => ArrayHelper::merge(
             [
                 'hostInfo' => env('FRONTEND_HOST_INFO'),
                 'baseUrl' => env('FRONTEND_BASE_URL'),
             ],
-            require(Yii::getAlias('@frontend/config/_urlManager.php'))
+            require (Yii::getAlias('@frontend/config/_urlManager.php'))
         ),
         'urlManagerStorage' => ArrayHelper::merge(
             [
                 'hostInfo' => env('STORAGE_HOST_INFO'),
                 'baseUrl' => env('STORAGE_BASE_URL'),
             ],
-            require(Yii::getAlias('@storage/config/_urlManager.php'))
+            require (Yii::getAlias('@storage/config/_urlManager.php'))
         ),
 
         'queue' => [
