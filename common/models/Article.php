@@ -294,4 +294,9 @@ class Article extends BaseArticle
         $this->populateRelation('tags', array_values($existingTags));
         $this->tagTitles = $titles;
     }
+
+    public function getUrl(): string
+    {
+        return \Yii::$app->getUrlManager()->createUrl(['article/view', 'id' => $this->id, 'title' => $this->title]);
+    }
 }
