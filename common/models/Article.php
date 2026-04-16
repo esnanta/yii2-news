@@ -155,6 +155,10 @@ class Article extends BaseArticle
             if (array_key_exists('published_at', $values)) {
                 $values['published_at'] = $this->normalizeDateTimeInput($values['published_at']);
             }
+
+            if (array_key_exists('tagTitles', $values)) {
+                $values['tagTitles'] = $this->normalizeTagTitlesInput($values['tagTitles']);
+            }
         }
 
         parent::setAttributes($values, $safeOnly);
@@ -212,6 +216,32 @@ class Article extends BaseArticle
         }
 
         return $normalized;
+    }
+
+    /**
+     * @param mixed $value
+     *
+     * @return array<int, string>
+     */
+    private function normalizeTagTitlesInput($value): array
+    {
+        if (is_array($value)) {
+            $items = $value;
+        } elseif (null === $value || '' === $value) {
+            return [];
+        } else {
+            $items = explode(',', (string) $value);
+        }
+
+        $titles = [];
+        foreach ($items as $item) {
+            $normalized = trim((string) $item);
+            if ('' !== $normalized) {
+                $titles[$normalized] = $normalized;
+            }
+        }
+
+        return array_values($titles);
     }
 
     private function syncTagRelations(): void
