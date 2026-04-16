@@ -25,14 +25,14 @@ $defaultCoverUrl = Yii::getAlias('@web/themes/bootstrap4news/assets/img/news-350
 $articleCover = ContentHelper::resolveCoverUrl(
     $model->thumbnail_base_url ?? null,
     $model->thumbnail_path ?? null,
-    $model->body ?? $model->content ?? null,
+    $model->body ?? $model->body ?? null,
     $defaultCoverUrl
 ) ?? $defaultCoverUrl;
-$model->content = str_replace('&nbsp;', '', $model->content);
+$model->body = str_replace('&nbsp;', '', $model->body);
 
 $dom = new DOMDocument();
 libxml_use_internal_errors(true);
-$dom->loadHTML($model->content);
+$dom->loadHTML($model->body);
 $xpath = new DOMXPath($dom);
 
 // BUANG SEMUA STYLE
@@ -59,30 +59,30 @@ $newContent = str_replace('%09', '', $dom->saveHtml());
 ?>
 
 <?php
-Yii::$app->params['meta_author']['content'] = (!empty($model->author_id)) ? $model->author->title : '-';
-Yii::$app->params['meta_description']['content'] = $model->description;
-Yii::$app->params['meta_keywords']['content'] = $model->getTagKeywordString();
-
-// FACEBOOK
-Yii::$app->params['og_site_name']['content'] = Yii::$app->name;
-Yii::$app->params['og_title']['content'] = $model->title;
-Yii::$app->params['og_description']['content'] = $model->description;
-Yii::$app->params['og_type']['content'] = 'website';
-Yii::$app->params['og_image']['content'] = $articleCover;
-Yii::$app->params['og_url']['content'] = 'https://'.Yii::$app->request->serverName.$model->getUrl();
-Yii::$app->params['og_updated_time']['content'] = $model->updated_at;
-
-// TWITTER
-Yii::$app->params['twitter_title']['content'] = $model->title;
-Yii::$app->params['twitter_description']['content'] = $model->description;
-Yii::$app->params['twitter_card']['content'] = 'summary_large_image'; // summary_large_image
-Yii::$app->params['twitter_image']['content'] = $articleCover;
-Yii::$app->params['twitter_url']['content'] = 'https://'.Yii::$app->request->serverName.$model->getUrl();
-
-// GOOGLE PLUS
-Yii::$app->params['googleplus_name']['content'] = $model->title;
-Yii::$app->params['googleplus_description']['content'] = $model->description;
-Yii::$app->params['googleplus_image']['content'] = $articleCover;
+//Yii::$app->params['meta_author']['content'] = (!empty($model->author_id)) ? $model->author->title : '-';
+//Yii::$app->params['meta_description']['content'] = $model->description;
+//Yii::$app->params['meta_keywords']['content'] = $model->getTagKeywordString();
+//
+//// FACEBOOK
+//Yii::$app->params['og_site_name']['content'] = Yii::$app->name;
+//Yii::$app->params['og_title']['content'] = $model->title;
+//Yii::$app->params['og_description']['content'] = $model->description;
+//Yii::$app->params['og_type']['content'] = 'website';
+//Yii::$app->params['og_image']['content'] = $articleCover;
+//Yii::$app->params['og_url']['content'] = 'https://'.Yii::$app->request->serverName.$model->getUrl();
+//Yii::$app->params['og_updated_time']['content'] = $model->updated_at;
+//
+//// TWITTER
+//Yii::$app->params['twitter_title']['content'] = $model->title;
+//Yii::$app->params['twitter_description']['content'] = $model->description;
+//Yii::$app->params['twitter_card']['content'] = 'summary_large_image'; // summary_large_image
+//Yii::$app->params['twitter_image']['content'] = $articleCover;
+//Yii::$app->params['twitter_url']['content'] = 'https://'.Yii::$app->request->serverName.$model->getUrl();
+//
+//// GOOGLE PLUS
+//Yii::$app->params['googleplus_name']['content'] = $model->title;
+//Yii::$app->params['googleplus_description']['content'] = $model->description;
+//Yii::$app->params['googleplus_image']['content'] = $articleCover;
 ?>
 
 <div class="sn-container">
@@ -97,15 +97,20 @@ Yii::$app->params['googleplus_image']['content'] = $articleCover;
             </li>
             <li class="list-inline-item mx-2">/</li>
             <li class="list-inline-item">
-                <?php echo $model->articleCategory->title; ?>
+                <?php echo $model->category->title; ?>
             </li>
             <li class="list-inline-item mx-2">/</li>
             <li class="list-inline-item">
-                <?php echo Html::a($model->author->title, $model->author->getUrl(), ['class' => 'text-dark font-weight-bold']); ?>
+                <?php echo Html::a(
+                    $model->author->title,
+                    $model->author->getUrl(),
+                    ['class' => 'text-dark font-weight-bold']
+                );
+?>
             </li>
 
             <li class="list-inline-item float-right">
-                <i class="fas fa-eye mr-1"></i> <?php echo $model->view_counter; ?>
+                <i class="fas fa-eye mr-1"></i> <?php echo $model->view_count; ?>
             </li>
         </ul>
 
@@ -167,7 +172,9 @@ Yii::$app->params['googleplus_image']['content'] = $articleCover;
 
         <hr class="my-3">
 
-        <?php if (false == Yii::$app->params['GraphComment']) {?>
+        <?php
+        $comment = false;
+        if ($comment == false) {?>
             <div class="alert alert-warning">
                 Comment has been disabled.
             </div>

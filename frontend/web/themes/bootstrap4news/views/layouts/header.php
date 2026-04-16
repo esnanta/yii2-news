@@ -1,13 +1,13 @@
 <?php
 /**
  * @var Office      $office
- * @var OfficeMedia $officeMedias
+ * @var OfficeSocialAccount $officeMedias
  * @var string      $logo1Image
  * @var string      $logo2Image
  */
 
 use common\models\Office;
-use common\models\OfficeMedia;
+use common\models\OfficeSocialAccount;
 use rmrevin\yii\fontawesome\FAS;
 use yii\helpers\Html;
 
@@ -36,10 +36,20 @@ $backendDashboardUrl = $backendBaseUrl.'/site/index';
                     echo str_replace('user/user/', '', Html::a(FAS::icon('user'), $backendLoginUrl, ['class' => 'd-block g-color-secondary-dark-v1 g-color-primary--hover g-text-underline--none--hover g-py-5 g-px-20']));
                     echo '</li>';
                 } else {
-                    $signOut = Html::a(FAS::icon('sign-out-alt').' Sign Out', ['user/security/logout'], ['data-method' => 'POST', 'class' => 'g-color-secondary-dark-v1 g-color-primary--hover g-text-underline--none--hover g-py-5 g-px-20']);
-                    if (true == Yii::$app->user->identity->isAdmin) {
+                    $signOut = Html::a(
+                        FAS::icon('sign-out-alt').' Sign Out',
+                        ['user/security/logout'],
+                        ['data-method' => 'POST',
+                            'class' => 'g-color-secondary-dark-v1 g-color-primary--hover g-text-underline--none--hover g-py-5 g-px-20',
+                        ]
+                    );
+                    if (true == Yii::$app->user->identity->isAdmin()) {
                         echo '<li>';
-                        $admin = Html::a(FAS::icon('user').' Admin', $backendDashboardUrl, ['class' => 'g-color-secondary-dark-v1 g-color-primary--hover g-text-underline--none--hover g-py-5 g-px-20']);
+                        $admin = Html::a(
+                            FAS::icon('user').' Admin',
+                            $backendDashboardUrl,
+                            ['class' => 'g-color-secondary-dark-v1 g-color-primary--hover g-text-underline--none--hover g-py-5 g-px-20']
+                        );
                         echo $admin.' | '.$signOut;
                         echo '</li>';
                     } else {
@@ -48,7 +58,7 @@ $backendDashboardUrl = $backendBaseUrl.'/site/index';
                         echo '</li>';
                     }
                 }
-                ?>
+?>
                 </div>
             </div>
         </div>
@@ -96,7 +106,7 @@ $backendDashboardUrl = $backendBaseUrl.'/site/index';
                     <?php echo str_replace('user/', '', Html::a(Yii::t('app', 'Article'), ['article/index'], ['id' => 'nav-link--pages', 'class' => 'nav-item nav-link'])); ?>
                     <?php echo str_replace('user/', '', Html::a(Yii::t('app', 'Download'), ['document/index'], ['id' => 'nav-link--pages', 'class' => 'nav-item nav-link'])); ?>
                     <?php echo str_replace('user/', '', Html::a(Yii::t('app', 'Staff'), ['staff/index'], ['id' => 'nav-link--pages', 'class' => 'nav-item nav-link'])); ?>
-                    <?php echo str_replace('user/', '', Html::a(Yii::t('app', 'About'), ['page/view', 'slug'=>'about'], ['id' => 'nav-link--pages', 'class' => 'nav-item nav-link'])); ?>
+                    <?php echo str_replace('user/', '', Html::a(Yii::t('app', 'About'), ['page/view', 'slug' => 'about'], ['id' => 'nav-link--pages', 'class' => 'nav-item nav-link'])); ?>
 
 
                     <?php if (!empty($categories)) { ?>
