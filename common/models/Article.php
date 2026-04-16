@@ -297,6 +297,6 @@ class Article extends BaseArticle
 
     public function getUrl(): string
     {
-        return \Yii::$app->getUrlManager()->createUrl(['article/view', 'id' => $this->id, 'title' => $this->title]);
+        return \Yii::$app->getUrlManager()->createUrl(['article/view', 'slug' => $this->slug]);
     }
 }
