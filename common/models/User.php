@@ -290,4 +290,20 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return $this->getPrimaryKey();
     }
+
+    public function isAdmin()
+    {
+        return null !== \Yii::$app->authManager->getAssignment(
+            self::ROLE_ADMINISTRATOR,
+            $this->getId()
+        );
+    }
+
+    public function isManager()
+    {
+        return null !== \Yii::$app->authManager->getAssignment(
+            self::ROLE_MANAGER,
+            $this->getId()
+        );
+    }
 }
