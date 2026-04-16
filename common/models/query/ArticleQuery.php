@@ -12,7 +12,11 @@ namespace common\models\query;
 use common\models\Article;
 use common\models\ArticleCategory;
 use yii\db\ActiveQuery;
+use yii\db\Expression;
 
+/**
+ * @property mixed $fullArchive
+ */
 class ArticleQuery extends ActiveQuery
 {
     /**
@@ -21,7 +25,7 @@ class ArticleQuery extends ActiveQuery
     public function published()
     {
         $this->andWhere(['{{%article}}.[[status]]' => Article::STATUS_PUBLISHED]);
-        $this->andWhere(['<=', '{{%article}}.[[published_at]]', date('Y-m-d H:i:s')]);
+        $this->andWhere(['<=', '{{%article}}.[[published_at]]', new Expression('NOW()')]);
 
         return $this;
     }
