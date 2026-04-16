@@ -6,7 +6,6 @@ use backend\modules\file\models\search\FileStorageItemSearch;
 use common\models\FileStorageItem;
 use trntv\filekit\actions\DeleteAction;
 use trntv\filekit\actions\UploadAction;
-use Yii;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
@@ -14,8 +13,6 @@ use yii\web\NotFoundHttpException;
 
 class StorageController extends Controller
 {
-
-    /** @inheritdoc */
     public function behaviors()
     {
         return [
@@ -29,7 +26,6 @@ class StorageController extends Controller
         ];
     }
 
-    /** @inheritdoc */
     public function actions()
     {
         return [
@@ -46,6 +42,7 @@ class StorageController extends Controller
                 'responseUrlParam' => 'filelink',
                 'multiple' => false,
                 'disableCsrf' => true,
+                'path' => 'article',
             ],
         ];
     }
@@ -56,7 +53,7 @@ class StorageController extends Controller
     public function actionIndex()
     {
         $searchModel = new FileStorageItemSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
         $dataProvider->sort = [
             'defaultOrder' => ['created_at' => SORT_DESC],
         ];
@@ -76,7 +73,7 @@ class StorageController extends Controller
     }
 
     /**
-     * @param integer $id
+     * @param int $id
      *
      * @return mixed
      */
@@ -88,7 +85,7 @@ class StorageController extends Controller
     }
 
     /**
-     * @param integer $id
+     * @param int $id
      *
      * @return mixed
      */
@@ -100,17 +97,18 @@ class StorageController extends Controller
     }
 
     /**
-     * @param integer $id
+     * @param int $id
      *
      * @return FileStorageItem the loaded model
+     *
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
         if (($model = FileStorageItem::findOne($id)) !== null) {
             return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
         }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }
