@@ -1,17 +1,21 @@
 <?php
 
-use common\helpers\MetaHelper;
-use yii\widgets\ListView;
+/**
+ * @var ActiveDataProvider $dataProvider
+ */
 
+use common\helpers\MetaHelper;
+use yii\data\ActiveDataProvider;
+use yii\widgets\ListView;
 
 $this->title = Yii::t('app', 'Articles');
 MetaHelper::setMetaTags();
 ?>
 
-<?php //echo $this->render('_search', ['model' => $searchModel]); ?>
+<?php // echo $this->render('_search', ['model' => $searchModel]);?>
 
-<?=
-ListView::widget([
+<?php
+echo ListView::widget([
     'dataProvider' => $dataProvider,
     'summary' => '',
     'options' => [
@@ -51,14 +55,6 @@ ListView::widget([
         'nextPageCssClass' => 'page-item',
         'firstPageCssClass' => 'page-first',
         'lastPageCssClass' => 'page-last',
-
-
     ],
     'itemView' => '_index_grid', // Your view file for individual items
 ]);
-?>
-
-
-
-
-
