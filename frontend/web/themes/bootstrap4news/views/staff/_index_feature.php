@@ -7,7 +7,7 @@ use yii\helpers\Html;
 /**
  * @var Staff $model
  */
-$img = Html::img(str_replace('frontend', 'backend', $model->getAssetUrl()), [
+$img = Html::img(str_replace('frontend', 'backend', $model->getUrl()), [
     'class' => 'img-fluid rounded mb-3',
     'alt' => $model->title,
 ]);
@@ -21,7 +21,7 @@ $linkClass = 'text-dark font-weight-bold';
         <?php echo $img; ?>
 
         <em class="d-block text-uppercase text-primary mb-2">
-            <?php echo $model->employment_id ? $model->employment->title : 'Not Set'; ?>
+            <?php echo $model->job_title_id ? $model->jobTitle->title : 'Not Set'; ?>
         </em>
 
         <h5 class="card-title">
