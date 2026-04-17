@@ -1,12 +1,11 @@
 <?php
 
-use yii\helpers\Html;
 use yii\widgets\ListView;
 
 /**
  * @var yii\web\View $this
  * @var yii\data\ActiveDataProvider $dataProvider
- * @var common\models\StaffSearch $searchModel
+ * @var common\models\search\StaffSearch $searchModel
  */
 
 $this->title = 'Staff';
@@ -15,14 +14,14 @@ $this->params['breadcrumbs'][] = $this->title;
 $col = 'col-md-4';
 $countData = $dataProvider->getTotalCount();
 
-if ($countData == 2) {
+if (2 == $countData) {
     $col = 'col-md-4 offset-md-2';
 } elseif ($countData >= 3) {
     $col = 'col-md-4';
 }
 ?>
 
-    <?= ListView::widget([
+    <?php echo ListView::widget([
         'dataProvider' => $dataProvider,
         'summary' => false,
         'emptyText' => 'No staff found.',
@@ -32,7 +31,7 @@ if ($countData == 2) {
         ],
         'itemOptions' => [
             'tag' => 'div',
-            'class' => $col . ' mb-4',
+            'class' => $col.' mb-4',
         ],
         'pager' => [
             'prevPageLabel' => '<i class="fa fa-angle-left"></i> Previous',
@@ -41,7 +40,7 @@ if ($countData == 2) {
             'options' => [
                 'tag' => 'nav',
                 'class' => 'pagination justify-content-center mt-4',
-                'aria-label' => 'Page Navigation'
+                'aria-label' => 'Page Navigation',
             ],
             'linkContainerOptions' => ['class' => 'page-item'],
             'linkOptions' => ['class' => 'page-link'],
