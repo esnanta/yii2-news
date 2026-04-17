@@ -24,7 +24,7 @@ $linkClass = 'text-dark font-weight-bold';
         </div>
 
         <h5 class="card-title mb-1">
-            <?php echo Html::a(Html::encode($model->title), $model->getUrl(), ['class' => $linkClass]); ?>
+            <?php echo Html::a(Html::encode($model->title), $model->getViewUrl(), ['class' => $linkClass]); ?>
         </h5>
 
         <em class="d-block text-uppercase text-primary mb-3" style="font-size: 0.9rem;">

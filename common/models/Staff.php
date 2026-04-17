@@ -5,6 +5,7 @@ namespace common\models;
 use common\models\base\Staff as BaseStaff;
 use common\models\query\StaffQuery;
 use trntv\filekit\behaviors\UploadBehavior;
+use yii\helpers\Url;
 
 /**
  * This is the model class for table "t_staff".
@@ -113,6 +114,11 @@ class Staff extends BaseStaff
     public function getUrl()
     {
         return $this->base_url.'/'.$this->path;
+    }
+
+    public function getViewUrl()
+    {
+        return Url::to(['/staff/view', 'id' => $this->id]);
     }
 
     /**

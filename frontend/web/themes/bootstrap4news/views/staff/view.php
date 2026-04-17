@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <?php
-$img = Html::img(str_replace('frontend', 'backend', $model->getAssetUrl()), [
+$img = Html::img(str_replace('frontend', 'backend', $model->getUrl()), [
     'class' => 'img-fluid rounded-circle',
 ]);
 ?>
