@@ -12,7 +12,7 @@ use rmrevin\yii\fontawesome\FAS;
 use yii\helpers\Html;
 
 $backendBaseUrl = rtrim(Yii::getAlias('@backendUrl'), '/');
-$backendLoginUrl = $backendBaseUrl.'/user/sign-in/login';
+$backendLoginUrl = $backendBaseUrl.'/sign-in/login';
 $backendDashboardUrl = $backendBaseUrl.'/site/index';
 
 ?>
