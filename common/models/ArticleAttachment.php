@@ -32,7 +32,11 @@ class ArticleAttachment extends ActiveRecord
         return [
             [
                 'class' => TimestampBehavior::class,
+                'createdAtAttribute' => 'created_at',
                 'updatedAtAttribute' => false,
+                'value' => static function (): string {
+                    return date('Y-m-d H:i:s');
+                },
             ],
         ];
     }
