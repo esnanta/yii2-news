@@ -42,7 +42,7 @@ class StorageController extends Controller
                 'responseUrlParam' => 'filelink',
                 'multiple' => false,
                 'disableCsrf' => true,
-                'path' => 'article',
+                'uploadPath' => 'article',
             ],
         ];
     }
