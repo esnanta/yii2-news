@@ -3,7 +3,7 @@
 use common\helpers\MetaHelper;
 use yii\widgets\ListView;
 
-/*
+/**
  * @var yii\web\View $this
  * @var yii\data\ActiveDataProvider $dataProvider
  * @var common\models\AssetSearch $searchModel
