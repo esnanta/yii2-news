@@ -110,7 +110,7 @@ if (!empty($categories)) {
                         echo '</li>';
                     }
                 }
-?>
+                ?>
                 </div>
             </div>
         </div>
@@ -154,9 +154,13 @@ if (!empty($categories)) {
             <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                 <div class="mr-auto">
                     <?php echo Nav::widget([
-        'options' => ['class' => ['navbar-nav', 'mr-auto']],
-        'items' => $menuItems,
-    ]); ?>
+                        'options' => [
+                            'class' => [
+                                'navbar-nav', 'mr-auto',
+                            ],
+                        ],
+                        'items' => $menuItems,
+                    ]); ?>
 
                 </div>
                 <div class="social ml-auto">
