@@ -92,6 +92,7 @@ if (!empty($categories)) {
                         ['/user/sign-in/logout'],
                         [
                             'data-method' => 'POST',
+                            'data-confirm' => Yii::t('app', 'Are you sure you want to sign out?'),
                             'class' => $menuLinkClass,
                         ]
                     );
