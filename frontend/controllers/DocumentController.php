@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use common\models\Document;
 use common\models\search\DocumentSearch;
 use yii\filters\VerbFilter;
+use yii\helpers\FileHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -16,13 +17,14 @@ class DocumentController extends Controller
 {
     public $layout = '/column2_blog';
 
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'verbs' => [
                 'class' => VerbFilter::class,
                 'actions' => [
                     'download' => ['GET'],
+                    'preview' => ['GET'],
                 ],
             ],
         ];
@@ -37,6 +39,7 @@ class DocumentController extends Controller
     public function actionDownload(int $id): Response
     {
         $model = $this->findModel($id);
+        $this->assertDocumentAccessible($model);
         $filePath = $model->getStorageFilePath();
 
         if (null === $filePath || !is_file($filePath)) {
@@ -47,6 +50,32 @@ class DocumentController extends Controller
         $model->updateCounters(['download_count' => 1]);
 
         return \Yii::$app->response->sendFile($filePath, $model->name);
+    }
+
+    /**
+     * Streams a document inline so it can be rendered by browser viewers.
+     *
+     * @throws NotFoundHttpException if the model or file cannot be found
+     */
+    public function actionPreview(int $id): Response
+    {
+        $model = $this->findModel($id);
+        $this->assertDocumentAccessible($model);
+        $filePath = $model->getStorageFilePath();
+
+        if (null === $filePath || !is_file($filePath)) {
+            throw new NotFoundHttpException(\Yii::t('frontend', 'The requested file does not exist.'));
+        }
+
+        $mimeType = !empty($model->type) ? (string) $model->type : (string) FileHelper::getMimeType($filePath);
+        if ('' === $mimeType) {
+            $mimeType = 'application/octet-stream';
+        }
+
+        return \Yii::$app->response->sendFile($filePath, $model->name, [
+            'mimeType' => $mimeType,
+            'inline' => true,
+        ]);
     }
 
     /**
@@ -75,10 +104,7 @@ class DocumentController extends Controller
     public function actionView(int $id): string
     {
         $model = $this->findModel($id);
-
-        if (Document::FLAG_YES !== $model->is_visible && \Yii::$app->user->isGuest) {
-            throw new NotFoundHttpException(\Yii::t('frontend', 'The requested page does not exist.'));
-        }
+        $this->assertDocumentAccessible($model);
 
         // Increment view counter
         $model->updateCounters(['view_count' => 1]);
@@ -103,5 +129,17 @@ class DocumentController extends Controller
         }
 
         throw new NotFoundHttpException(\Yii::t('frontend', 'The requested page does not exist.'));
+    }
+
+    /**
+     * Keeps private documents inaccessible for guests across view/preview/download endpoints.
+     *
+     * @throws NotFoundHttpException
+     */
+    protected function assertDocumentAccessible(Document $model): void
+    {
+        if (Document::FLAG_YES !== (int) $model->is_visible && \Yii::$app->user->isGuest) {
+            throw new NotFoundHttpException(\Yii::t('frontend', 'The requested page does not exist.'));
+        }
     }
 }

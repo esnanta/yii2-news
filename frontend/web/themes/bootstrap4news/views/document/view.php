@@ -3,6 +3,7 @@
 use common\models\Document;
 use rmrevin\yii\fontawesome\FAS;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 /**
  * @var yii\web\View $this
@@ -13,7 +14,10 @@ $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Documents', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
-$documentUrl = $model->getUrl();
+$previewUrl = Url::to(['preview', 'id' => $model->id]);
+$downloadUrl = Url::to(['download', 'id' => $model->id]);
+$absolutePreviewUrl = Url::to(['preview', 'id' => $model->id], true);
+$canUseOfficeViewer = 0 === strpos($absolutePreviewUrl, 'https://');
 ?>
 
 <div class="document-view">
@@ -29,13 +33,13 @@ $documentUrl = $model->getUrl();
             <?php
             switch ($model->document_type) {
                 case Document::TYPE_IMAGE:
-                    echo Html::img($documentUrl, ['class' => 'img-fluid', 'alt' => $model->title]);
+                    echo Html::img($previewUrl, ['class' => 'img-fluid', 'alt' => $model->title]);
 
                     break;
 
                 case Document::TYPE_PDF:
                     echo Html::tag('iframe', '', [
-                        'src' => $documentUrl,
+                        'src' => $previewUrl,
                         'width' => '100%',
                         'height' => '800px',
                         'style' => 'border: none;',
@@ -44,33 +48,38 @@ $documentUrl = $model->getUrl();
                     break;
 
                 case Document::TYPE_OFFICE_DOCUMENT:
-                    // Gunakan Microsoft Office Online Viewer untuk menyematkan dokumen office
-                    $officeViewerUrl = 'https://view.officeapps.live.com/op/embed.aspx?src='.urlencode($documentUrl);
-                    echo Html::tag('iframe', 'Your browser does not support iframes.', [
-                        'src' => $officeViewerUrl,
-                        'width' => '100%',
-                        'height' => '800px',
-                        'frameborder' => '0',
-                    ]);
+                    if ($canUseOfficeViewer) {
+                        $officeViewerUrl = 'https://view.officeapps.live.com/op/embed.aspx?src='
+                            .rawurlencode($absolutePreviewUrl);
+                        echo Html::tag('iframe', 'Your browser does not support iframes.', [
+                            'src' => $officeViewerUrl,
+                            'width' => '100%',
+                            'height' => '800px',
+                            'frameborder' => '0',
+                        ]);
+                    } else {
+                        echo Html::tag(
+                            'div',
+                            Html::encode('Office preview needs a publicly reachable HTTPS URL. Please use Download.'),
+                            ['class' => 'alert alert-info']
+                        );
+                    }
 
                     break;
 
                 default:
-                    echo '<div class="alert alert-warning">Pratinjau tidak tersedia untuk tipe dokumen ini.</div>';
+                    echo '<div class="alert alert-warning">Preview is not available for this document type.</div>';
 
                     break;
             }
-?>
+            ?>
         </div>
         <div class="card-footer text-muted">
             <?php echo Html::a(
                 FAS::icon('download')
                 .' Download',
-                $documentUrl,
-                ['class' => 'btn btn-primary',
-                    'target' => '_blank',
-                    'rel' => 'noopener noreferrer',
-                ]
+                $downloadUrl,
+                ['class' => 'btn btn-primary']
             ); ?>
         </div>
     </div>
