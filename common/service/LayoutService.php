@@ -44,7 +44,7 @@ class LayoutService
         string $height = '40px',
         array $options = []
     ): string {
-        return self::renderWidgetImageByKey('logo_bottom', $width, $height, $options);
+        return self::renderWidgetImageByKey('hero_horizontal_top_center', $width, $height, $options);
     }
 
     public static function getLogoUrl(string $key = 'logo_top'): ?string
