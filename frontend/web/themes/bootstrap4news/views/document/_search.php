@@ -18,12 +18,15 @@ use yii\helpers\Html;
 
     <?php echo $form->field($model, 'title', [
         'inputOptions' => [
-            'class' => 'form-control',
+            'class' => 'form-control document-search-input',
             'placeholder' => Yii::t('frontend', 'Search for documents...'),
         ],
         'addon' => [
             'append' => [
-                'content' => Html::submitButton('<i class="fa fa-search"></i>', ['class' => 'btn btn-primary']),
+                'content' => Html::submitButton('<i class="fa fa-search"></i>', [
+                    'class' => 'btn btn-primary document-search-submit',
+                    'aria-label' => Yii::t('frontend', 'Search'),
+                ]),
                 'asButton' => true,
             ],
         ],

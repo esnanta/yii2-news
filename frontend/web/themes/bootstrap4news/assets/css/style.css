@@ -119,6 +119,25 @@ button.btn:hover {
     border-color: #FF6F61;
 }
 
+/* Keep document search input and icon button visually balanced */
+.document-search .document-search-input {
+    margin-bottom: 0;
+}
+
+.document-search .document-search-submit {
+    height: 35px;
+    min-height: 35px;
+    padding: 0 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.document-search .document-search-submit i {
+    font-size: 14px;
+}
+
 
 /**********************************/
 /*********** Top Bar CSS **********/
