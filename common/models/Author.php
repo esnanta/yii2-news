@@ -80,10 +80,7 @@ class Author extends BaseAuthor
     {
         return $this->base_url.'/'.$this->path;
     }
-//    public function getUrl()
-//    {
-//        return Yii::$app->getUrlManager()->createUrl(['author/view', 'id' => $this->id, 'title' => $this->title]);
-//    }
+
     /**
      * @return AuthorQuery the active query used by this AR class
      */
