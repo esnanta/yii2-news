@@ -27,7 +27,7 @@ use yii\helpers\Html;
             'minHeight' => 400,
             'maxHeight' => 400,
             'buttonSource' => true,
-            'imageUpload' => Yii::$app->urlManager->createUrl(['/file/storage/upload-imperavi']),
+            'imageUpload' => Yii::$app->urlManager->createUrl(['/file/storage/upload-imperavi-page']),
         ],
     ]
 ) ?>
@@ -37,7 +37,10 @@ use yii\helpers\Html;
 <?php echo $form->field($model, 'status')->checkbox() ?>
 
 <div class="form-group">
-    <?php echo Html::submitButton($model->isNewRecord ? Yii::t('backend', 'Create') : Yii::t('backend', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+    <?php echo Html::submitButton(
+        $model->isNewRecord ? Yii::t('backend', 'Create') : Yii::t('backend', 'Update'),
+        ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']
+    ) ?>
 </div>
 
 <?php ActiveForm::end() ?>

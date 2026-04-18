@@ -44,6 +44,14 @@ class StorageController extends Controller
                 'disableCsrf' => true,
                 'uploadPath' => 'article',
             ],
+            'upload-imperavi-page' => [
+                'class' => UploadAction::class,
+                'fileparam' => 'file',
+                'responseUrlParam' => 'filelink',
+                'multiple' => false,
+                'disableCsrf' => true,
+                'uploadPath' => 'page',
+            ],
         ];
     }
 
