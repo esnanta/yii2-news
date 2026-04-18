@@ -1,9 +1,9 @@
 <?php
 /**
- * @var Office      $office
+ * @var Office              $office
  * @var OfficeSocialAccount $officeMedias
- * @var string      $logo1Image
- * @var string      $logo2Image
+ * @var string              $logo1Image
+ * @var string              $logo2Image
  */
 
 use common\models\Office;
@@ -15,24 +15,55 @@ use yii\helpers\Html;
 $backendBaseUrl = rtrim(Yii::getAlias('@backendUrl'), '/');
 $backendLoginUrl = $backendBaseUrl.'/sign-in/login';
 $backendDashboardUrl = $backendBaseUrl.'/site/index';
+$currentRoute = '/'.Yii::$app->controller->getRoute();
+$currentSlug = Yii::$app->request->get('slug');
+$currentCategoryId = Yii::$app->request->get('cat');
+$menuLinkClass = 'g-color-secondary-dark-v1 g-color-primary--hover g-text-underline--none--hover g-py-5 g-px-20';
 
 $menuItems = [
-    ['label' => Yii::t('app', 'Home'), 'url' => ['/site/index']],
-    ['label' => Yii::t('app', 'Article'), 'url' => ['/article/index']],
-    ['label' => Yii::t('app', 'Download'), 'url' => ['/document/index']],
-    ['label' => Yii::t('app', 'Staff'), 'url' => ['/staff/index']],
-    ['label' => Yii::t('app', 'About'), 'url' => ['/page/view', 'slug' => 'about']],
+    [
+        'label' => Yii::t('app', 'Home'),
+        'url' => ['/site/index'],
+        'active' => '/site/index' === $currentRoute,
+    ],
+    [
+        'label' => Yii::t('app', 'Article'),
+        'url' => ['/article/index'],
+        'active' => '/article/index' === $currentRoute && empty($currentCategoryId),
+    ],
+    [
+        'label' => Yii::t('app', 'Document'),
+        'url' => ['/document/index'],
+        'active' => '/document/index' === $currentRoute,
+    ],
+    [
+        'label' => Yii::t('app', 'Staff'),
+        'url' => ['/staff/index'],
+        'active' => '/staff/index' === $currentRoute,
+    ],
+    [
+        'label' => Yii::t('app', 'About'),
+        'url' => ['/page/view', 'slug' => 'about'],
+        'active' => '/page/view' === $currentRoute && 'about' === $currentSlug,
+    ],
 ];
 
 if (!empty($categories)) {
+    $categoryItems = array_map(static function ($categoryModel) use ($currentRoute, $currentCategoryId) {
+        $categoryId = (string) $categoryModel->id;
+        $requestedCategoryId = null === $currentCategoryId ? null : (string) $currentCategoryId;
+
+        return [
+            'label' => $categoryModel->title,
+            'url' => ['/article/index', 'cat' => $categoryModel->id, 'title' => $categoryModel->title],
+            'active' => '/article/index' === $currentRoute && $requestedCategoryId === $categoryId,
+        ];
+    }, $categories);
+
     $menuItems[] = [
         'label' => Yii::t('app', 'Category'),
-        'items' => array_map(static function ($categoryModel) {
-            return [
-                'label' => $categoryModel->title,
-                'url' => ['/article/index', 'cat' => $categoryModel->id, 'title' => $categoryModel->title],
-            ];
-        }, $categories),
+        'items' => $categoryItems,
+        'active' => in_array(true, array_column($categoryItems, 'active'), true),
     ];
 }
 
@@ -53,14 +84,15 @@ if (!empty($categories)) {
                 <?php
                 if (Yii::$app->user->getIsGuest()) {
                     echo '<li>';
-                    echo Html::a(FAS::icon('user'), $backendLoginUrl, ['class' => 'd-block g-color-secondary-dark-v1 g-color-primary--hover g-text-underline--none--hover g-py-5 g-px-20']);
+                    echo Html::a(FAS::icon('user'), $backendLoginUrl, ['class' => 'd-block '.$menuLinkClass]);
                     echo '</li>';
                 } else {
                     $signOut = Html::a(
                         FAS::icon('sign-out-alt').' Sign Out',
                         ['/user/sign-in/logout'],
-                        ['data-method' => 'POST',
-                            'class' => 'g-color-secondary-dark-v1 g-color-primary--hover g-text-underline--none--hover g-py-5 g-px-20',
+                        [
+                            'data-method' => 'POST',
+                            'class' => $menuLinkClass,
                         ]
                     );
                     if (true == Yii::$app->user->identity->isAdmin()) {
@@ -68,7 +100,7 @@ if (!empty($categories)) {
                         $admin = Html::a(
                             FAS::icon('user').' Admin',
                             $backendDashboardUrl,
-                            ['class' => 'g-color-secondary-dark-v1 g-color-primary--hover g-text-underline--none--hover g-py-5 g-px-20']
+                            ['class' => $menuLinkClass]
                         );
                         echo $admin.' | '.$signOut;
                         echo '</li>';
@@ -122,9 +154,9 @@ if (!empty($categories)) {
             <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                 <div class="mr-auto">
                     <?php echo Nav::widget([
-                        'options' => ['class' => ['navbar-nav', 'mr-auto']],
-                        'items' => $menuItems,
-                    ]); ?>
+        'options' => ['class' => ['navbar-nav', 'mr-auto']],
+        'items' => $menuItems,
+    ]); ?>
 
                 </div>
                 <div class="social ml-auto">
