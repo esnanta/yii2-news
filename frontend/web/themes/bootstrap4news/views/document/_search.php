@@ -1,6 +1,7 @@
 <?php
 
 use kartik\widgets\ActiveForm;
+use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
@@ -9,29 +10,25 @@ use kartik\widgets\ActiveForm;
  */
 ?>
 
-<?php $form = ActiveForm::begin([
-    'action' => ['index'],
-    'method' => 'get',
-    'fieldConfig' => [
-        'options' => [
-            'class' => 'col-md-12 col-xs-12 form-group',
-            'tag' => 'div',
-        ],
-    ],
-    'formConfig' => [
-        'showLabels' => false,
-        'formConfig' => ['deviceSize' => ActiveForm::SIZE_LARGE],
-    ],
-    'options' => [
-        'class' => 'input-group rounded',
-    ], ]); ?>
-
-    <?php echo $form->field($model, 'title')->label(false)->textInput([
-        'class' => 'form-control g-brd-secondary-light-v2 g-brd-primary--focus 
-                    g-color-secondary-dark-v1 g-placeholder-secondary-dark-v1 g-bg-white 
-                    g-font-weight-400 g-font-size-13 g-px-20 g-py-12',
-        'placeholder' => 'Search Asset',
+<div class="document-search mb-4">
+    <?php $form = ActiveForm::begin([
+        'action' => ['index'],
+        'method' => 'get',
     ]); ?>
 
-<?php ActiveForm::end();
+    <?= $form->field($model, 'title', [
+        'inputOptions' => [
+            'class' => 'form-control',
+            'placeholder' => Yii::t('frontend', 'Search for documents...'),
+        ],
+        // Gunakan addon untuk menambahkan tombol di akhir input
+        'addon' => [
+            'append' => [
+                'content' => Html::submitButton('<i class="fa fa-search"></i>', ['class' => 'btn btn-primary']),
+                'asButton' => true
+            ]
+        ]
+    ])->label(false) ?>
 
+    <?php ActiveForm::end(); ?>
+</div>
