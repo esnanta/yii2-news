@@ -1,162 +1,158 @@
-# Yii 2 Starter Kit
 
-<!-- BADGES/ -->
+# Yii2 News
 
-[![Packagist](https://img.shields.io/packagist/v/yii2-starter-kit/yii2-starter-kit.svg)](https://packagist.org/packages/yii2-starter-kit/yii2-starter-kit)
-[![Packagist](https://img.shields.io/packagist/dt/yii2-starter-kit/yii2-starter-kit.svg)](https://packagist.org/packages/yii2-starter-kit/yii2-starter-kit)
-[![build](https://github.com/yii-starter-kit/yii2-starter-kit/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/yii-starter-kit/yii2-starter-kit/actions/workflows/main.yml)
+![Version](https://img.shields.io/github/v/tag/esnanta/yii2-news?label=version&color=blue)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+![PHP](https://img.shields.io/badge/PHP-8.x-blue)
 
-<!-- /BADGES -->
+Yii2 News is an open-source Yii2 application for managing news content, authors, staff, and
+assets (images and documents). This project is based on Yii2 Starter Kit and adapted for a news portal workflow.
 
-# Stand with Ukraine!
+## Highlights
 
----
-<p align="center">
-   <img align="center" src="https://github.blog/wp-content/uploads/2022/03/1200x630-GitHub-1.png?resize=320%2C240">
-</p>
+- Multi-app architecture: `frontend`, `backend`, `api`, `console`, and `storage`
+- CMS-like news management: articles, categories, static pages, menus, carousels, and text blocks
+- User management with RBAC (`guest`, `user`, `manager`, `administrator`)
+- REST API (`api/modules/v1`) with Swagger documentation
+- File upload, image processing (Glide), and file storage
+- Docker-first development workflow with Codeception test suites
 
-While Russia is destroying my home and my country, killing my friends and neighbors - any russian company, organization, or citizen, who do nothing about it, 
-is prohibited from using this package.
-For others - please, pray for us, share information about war crimes Russia is conducting in Ukraine, do everything you can
-to urge your governments to be on the right side of history.
-Ukraine will prevail! Good triumph over evil! Русский военный корабль, иди нах#й!
+## Application Map
 
----
-This is Yii2 start application template.
+- `frontend/`: public web interface for readers
+- `backend/`: admin panel for content and user management
+- `api/`: REST API endpoints
+- `console/`: setup, migration, and maintenance commands
+- `common/`: shared business logic, models, services, and config
+- `storage/`: uploaded files and cache serving
 
-It was created and developing as a fast start for building an advanced sites based on Yii2.
+Screenshots:
 
-It covers typical use cases for a new project and will help you not to waste your time doing the same work in every project
+- Frontend
+  ![Frontend](https://github.com/esnanta/yii2-news/blob/main/screenshots/home.png)
+- Backend
+  ![Backend](https://github.com/esnanta/yii2-news/blob/main/screenshots/article_create.png)
 
-## Before you start
-Please, consider helping project via [contributions](https://github.com/yii2-starter-kit/yii2-starter-kit/issues) or [donations](#donations).
+## Requirements
 
-## TABLE OF CONTENTS
-- [Demo](#demo)
-- [Features](#features)
-- [Installation](docs/installation.md)
-    - [Manual installation](docs/installation.md#manual-installation)
-    - [Docker installation](docs/installation.md#docker-installation)
-- [Components documentation](docs/components.md)
-- [Console commands](docs/console.md)
-- [Testing](docs/testing.md)
-- [FAQ](docs/faq.md)
-- [How to contribute?](#how-to-contribute)
-- [Have any questions?](#have-any-questions)
+- PHP 8.x
+- Composer 2.x
+- Docker + Docker Compose (recommended)
+- Node.js + npm (for asset build)
 
-## Quickstart
-1. [Install taskctl](https://getcomposer.org)
-2. [Install docker](https://docs.docker.com/install/)
-3. [Install docker-compose](https://docs.docker.com/compose/install/)
-4. Run
-    ```bash
-    composer create-project yii2-starter-kit/yii2-starter-kit myproject.com --ignore-platform-reqs
-    cd myproject.com
-    taskctl start
-    ```
-5. Go to [http://yii2-starter-kit.localhost](http://yii2-starter-kit.localhost)
+## Installation (Recommended: Docker)
 
-## FEATURES
-### Admin backend
-- Beautiful and open source dashboard theme for backend [AdminLTE 3](https://adminlte.io/themes/v3/)
-- Content management components: articles, categories, static pages, editable menu, editable carousels, text blocks
-- Settings editor. Application settings form (based on KeyStorage component)
-- [File manager](https://github.com/MihailDev/yii2-elfinder)
-- Users, RBAC management
-- Events timeline
-- Logs viewer
-- System monitoring
+This section follows the Starter Kit installation flow, adapted to this repository workflow.
 
-### Development tasks
-To list all available development tasks follow these steps:
-1. Install [taskctl](https://github.com/taskctl/taskctl) task runner
-2. Run ``taskctl``
+1. Clone repository
 
-### I18N
-- Built-in translations:
-    - English
-    - Spanish
-    - Russian
-    - Ukrainian
-    - Chinese
-    - Vietnamese
-    - Polish
-    - Portuguese (Brazil)
-    - Indonesian (Bahasa)
-- Language switcher, built-in behavior to choose locale based on browser preferred language
-- Backend translations manager
-
-### Users
-- Sign in
-- Sign up
-- Profile editing(avatar, locale, personal data)
-- Optional activation by email
-- OAuth authorization
-- RBAC with predefined `guest`, `user`, `manager` and `administrator` roles
-- RBAC migrations support
-
-### Development
-- Ready-to-use Docker-based stack (php, nginx, mysql, mailcatcher)
-- .env support
-- [Webpack](https://webpack.js.org/) build configuration
-- Key-value storage service
-- Ready to use REST API module
-- [File storage component + file upload widget](https://github.com/trntv/yii2-file-kit)
-- On-demand thumbnail creation [trntv/yii2-glide](https://github.com/trntv/yii2-glide)
-- Built-in queue component [yiisoft/yii2-queue](https://github.com/yiisoft/yii2-queue)
-- Command Bus with queued and async tasks support [trntv/yii2-command-bus](https://github.com/trntv/yii2-command-bus)
-- `ExtendedMessageController` with ability to replace source code language and migrate messages between message sources
-- [Some useful shortcuts](https://github.com/yii2-starter-kit/yii2-starter-kit/blob/master/common/helpers.php)
-
-### Other
-- Useful behaviors (GlobalAccessBehavior, CacheInvalidateBehavior)
-- Maintenance mode support ([more](#maintenance-mode))
-- [Aceeditor widget](https://github.com/trntv/yii2-aceeditor)
-- [Datetimepicker widget](https://github.com/trntv/yii2-bootstrap-datetimepicker),
-- [Imperavi Reactor Widget](https://github.com/asofter/yii2-imperavi-redactor),
-- [Xhprof Debug panel](https://github.com/trntv/yii2-debug-xhprof)
-- Sitemap generator
-- Extended IDE autocompletion
-- Test-ready
-- Docker support and Vagrant support
-- Built-in [mailcatcher](http://mailcatcher.me/)
-- [Swagger](https://swagger.io/) for API docs.
-
-## DEMO
-- Frontend: [https://yii2-starter-kit.herokuapp.com](https://yii2-starter-kit.herokuapp.com)
-- Backend: [https://yii2-starter-kit.herokuapp.com/backend](https://yii2-starter-kit.herokuapp.com/backend)
-
-`administrator` role account
-```
-Login: webmaster
-Password: webmaster
+```bash
+git clone https://github.com/esnanta/yii2-news.git
+cd yii2-news
 ```
 
-`manager` role account
-```
-Login: manager
-Password: manager
-```
+2. Build and start the application stack
 
-`user` role account
-```
-Login: user
-Password: user
+```bash
+composer docker:build
 ```
 
-## How to contribute?
-You can contribute in any way you want. Any help appreciated, but most of all i need help with docs (^_^)
+The command above automatically:
 
-## Have any questions?
-Mail to [victor@vgr.cl](mailto:victor@vgr.cl) or [yevhen.terentiev@gmail.com](mailto:yevhen.terentiev@gmai.com)
+- creates `.env` from `.env.dist`
+- starts Docker containers
+- installs PHP dependencies
+- runs app setup (`php console/yii app/setup --interactive=0`)
+- installs frontend dependencies (`npm install`) and builds bundles (`npm run build`)
 
-## READ MORE
-- [Yii2](https://github.com/yiisoft/yii2/tree/master/docs)
-- [Docker](https://docs.docker.com/get-started/)
+3. Add local hosts (if not already configured)
 
+```bash
+sudo sh -c 'cat >> /etc/hosts <<EOF
+127.0.0.1 yii2-starter-kit.localhost
+127.0.0.1 backend.yii2-starter-kit.localhost
+127.0.0.1 api.yii2-starter-kit.localhost
+127.0.0.1 storage.yii2-starter-kit.localhost
+EOF'
+```
 
-### NOTE
-This template was created mostly for developers NOT for end users.
-This is a point where you can start your application, rather than creating it from scratch.
-Good luck!
+4. Open the applications
 
+- Frontend: `http://yii2-starter-kit.localhost`
+- Backend: `http://backend.yii2-starter-kit.localhost`
+- API base: `http://api.yii2-starter-kit.localhost`
+- Storage: `http://storage.yii2-starter-kit.localhost`
+- Mailcatcher: `http://localhost:1080`
+
+## Default Accounts
+
+Seed data from migrations includes:
+
+- `administrator`: `webmaster` / `webmaster`
+- `manager`: `manager` / `manager`
+- `user`: `user` / `user`
+
+## Manual Installation (Non-Docker)
+
+If you are not using Docker, you can set up manually:
+
+```bash
+cp .env.dist .env
+composer install --prefer-dist -o
+php console/yii app/setup --interactive=0
+npm install
+npm run build
+```
+
+Then point your web server to each app entry point:
+
+- `frontend/web/index.php`
+- `backend/web/index.php`
+- `api/web/index.php`
+- `storage/web/index.php`
+
+## API and Swagger
+
+- Swagger UI: `http://api.yii2-starter-kit.localhost/site/docs`
+- OpenAPI JSON: `http://api.yii2-starter-kit.localhost/site/json-schema`
+- Currently active API route: `v1/article` (`index`, `view`, `options`)
+
+## Development Workflow
+
+Use the repository composer scripts:
+
+```bash
+composer docker:start
+composer docker:build
+composer docker:tests
+composer docker:cleanup
+```
+
+Run the test suite in a separate terminal after `composer docker:tests`:
+
+```bash
+docker-compose exec -T console vendor/bin/codecept run
+```
+
+## Database Utilities
+
+Destructive database reset:
+
+```bash
+php console/yii migrate/fresh --interactive=0
+php console/yii rbac-migrate/up --interactive=0
+```
+
+## Notes
+
+- Environment values are loaded from `.env` via `common/env.php` (`env()` helper)
+- API routing is defined explicitly in `api/config/_urlManager.php`
+- If Linux bind-mount permissions drift, fix permissions for `frontend/runtime`, `frontend/web/assets`, `backend/runtime`, and `backend/web/assets`
+
+## Contribution
+
+Pull requests, issues, and suggestions are welcome.
+
+## License
+
+This project is released under the MIT License. See [LICENSE](LICENSE.md).
