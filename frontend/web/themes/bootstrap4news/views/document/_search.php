@@ -16,19 +16,18 @@ use yii\helpers\Html;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'title', [
+    <?php echo $form->field($model, 'title', [
         'inputOptions' => [
             'class' => 'form-control',
             'placeholder' => Yii::t('frontend', 'Search for documents...'),
         ],
-        // Gunakan addon untuk menambahkan tombol di akhir input
         'addon' => [
             'append' => [
                 'content' => Html::submitButton('<i class="fa fa-search"></i>', ['class' => 'btn btn-primary']),
-                'asButton' => true
-            ]
-        ]
-    ])->label(false) ?>
+                'asButton' => true,
+            ],
+        ],
+    ])->label(false); ?>
 
     <?php ActiveForm::end(); ?>
 </div>
