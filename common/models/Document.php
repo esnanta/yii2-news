@@ -10,6 +10,7 @@ use trntv\filekit\behaviors\UploadBehavior;
  * This is the model class for table "t_document".
  *
  * @property null|string $storageFilePath
+ * @property null|string $url
  */
 class Document extends BaseDocument
 {
@@ -220,5 +221,10 @@ class Document extends BaseDocument
         }
 
         return null;
+    }
+
+    public function getUrl(): string
+    {
+        return $this->base_url.'/'.$this->path;
     }
 }
