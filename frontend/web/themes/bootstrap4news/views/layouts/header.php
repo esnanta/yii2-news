@@ -134,7 +134,13 @@ if (!empty($categories)) {
             </div>
             <div class="col-lg-3 col-md-4">
                 <div class="b-search">
-                    <div class="gcse-search" style="padding:0"></div>
+                    <form onsubmit="return executeQuery();">
+                        <input id="gsc-i-id1" type="text" placeholder="Search">
+                        <button type="submit"><i class="fa fa-search"></i></button>
+                    </form>
+                </div>
+                <div id="gsc-search-box-id" style="display:none">
+                    <div class="gcse-search"></div>
                 </div>
             </div>
         </div>
@@ -175,3 +181,15 @@ if (!empty($categories)) {
     </div>
 </div>
 <!-- Nav Bar End -->
+
+<script>
+    function executeQuery() {
+        var input = document.getElementById('gsc-i-id1');
+        var element = google.search.cse.element.getElement('gsc-search-box-id');
+        if (input.value === '') {
+            return false;
+        }
+        element.execute(input.value);
+        return false;
+    }
+</script>
