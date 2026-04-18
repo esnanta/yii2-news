@@ -1,15 +1,17 @@
 {
-  "name": "yii2-starter-kit/yii2-starter-kit",
-  "description": "Yii2 Starter Kit Application Template",
+  "name": "esnanta/yii2-news",
+  "description": "News and articles management application",
   "keywords": [
     "yii2",
-    "framework",
-    "start",
-    "cms",
-    "application template",
-    "yii2 advanced"
+    "yii2-news",
+    "news",
+    "articles"
   ],
   "authors": [
+    {
+      "name": "Nantha Seutia",
+      "email": "nanta.es13@gmail.com"
+    },
     {
       "name": "Yevhen Terentiev",
       "email": "yevhen.terentiev@gmail.com"
@@ -23,8 +25,8 @@
   "type": "project",
   "license": "BSD-3-Clause",
   "support": {
-    "issues": "https://github.com/yii2-starter-kit/yii2-starter-kit/issues?state=open",
-    "source": "https://github.com/yii2-starter-kit/yii2-starter-kit"
+    "issues": "https://github.com/esnanta/yii2-news/issues",
+    "source": "https://github.com/esnanta/yii2-news"
   },
   "require": {
     "php": "^8.0",
