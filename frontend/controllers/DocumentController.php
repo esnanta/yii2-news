@@ -4,14 +4,13 @@ namespace frontend\controllers;
 
 use common\models\Document;
 use common\models\search\DocumentSearch;
-use common\service\DataListService;
-use yii\base\Exception;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 /**
- * ArchiveController implements the CRUD actions for Archive model.
+ * DocumentController implements the actions for viewing and downloading Document models.
  */
 class DocumentController extends Controller
 {
@@ -23,111 +22,75 @@ class DocumentController extends Controller
             'verbs' => [
                 'class' => VerbFilter::class,
                 'actions' => [
-                    'delete' => ['post'],
+                    'download' => ['GET'],
                 ],
             ],
         ];
     }
 
-    public function beforeAction($action)
-    {
-        $this->enableCsrfValidation = false;
-
-        return parent::beforeAction($action);
-    }
-
-    public function actionDownload($id, $title = null)
+    /**
+     * Handles the download of a document.
+     * Increments the download counter and sends the file to the user.
+     *
+     * @throws NotFoundHttpException if the model or file cannot be found
+     */
+    public function actionDownload(int $id): Response
     {
         $model = $this->findModel($id);
-        $path = $model->getAssetFile();
-        if (!empty($path)) {
-            return $model->downloadFile($path);
+        $filePath = $model->getStorageFilePath();
+
+        if (null === $filePath || !is_file($filePath)) {
+            throw new NotFoundHttpException(\Yii::t('frontend', 'The requested file does not exist.'));
         }
 
-        throw new NotFoundHttpException("can't find {$model->title} file");
+        // Increment download counter
+        $model->updateCounters(['download_count' => 1]);
+
+        return \Yii::$app->response->sendFile($filePath, $model->name);
     }
 
     /**
-     * Lists all Archive models.
-     *
-     * @return mixed
+     * Lists all publicly visible Document models.
      */
-    public function actionIndex()
+    public function actionIndex(): string
     {
         $searchModel = new DocumentSearch();
         $dataProvider = $searchModel->search(\Yii::$app->request->getQueryParams());
-        if (\Yii::$app->user->getIsGuest()) {
-            $dataProvider->query->andWhere('t_document.is_visible = '.Document::FLAG_YES);
-        }
 
-        $assetCategoryList = DataListService::getDocumentCategory();
-        $isVisibleList = Document::visibleOptions();
+        // Ensure only public documents are shown
+        $dataProvider->query->andWhere(['t_document.is_visible' => Document::FLAG_YES]);
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel,
-            'archiveCategoryList' => $assetCategoryList,
-            'isVisibleList' => $isVisibleList,
         ]);
     }
 
     /**
-     * Displays a single Archive model.
+     * Displays a single Document model.
+     * Increments the view counter.
      *
-     * @param int $id
-     *
-     * @return mixed
-     *
-     * @throws Exception
+     * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView(int $id)
+    public function actionView(int $id): string
     {
         $model = $this->findModel($id);
-        $assetCategoryList = DataListService::getDocumentCategory();
-        $isVisibleList = Document::visibleOptions();
 
-        $oldFile = $model->getAssetFile();
-        $oldAvatar = $model->asset_name;
-
-        if ($model->load(\Yii::$app->request->post())) {
-            // process uploaded asset file instance
-            $asset = $model->uploadAsset();
-
-            // revert back if no valid file instance uploaded
-            if (false === $asset) {
-                $model->asset_name = $oldAvatar;
-                // $model->title = $oldFileName;
-            }
-
-            if ($model->save()) {
-                // upload only if valid uploaded file instance found
-                if (false !== $asset && file_exists($oldFile)) { // delete old and overwrite
-                    if (file_exists($oldFile)) {
-                        unlink($oldFile);
-                    }
-                    $path = $model->getAssetFile();
-                    $asset->saveAs($path);
-                }
-
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
-        } else {
-            // $model->view_counter = $model->view_counter + 1;
-            // $model->save();
-
-            return $this->render('view', [
-                'model' => $model,
-                'archiveCategoryList' => $assetCategoryList,
-                'isVisibleList' => $isVisibleList,
-            ]);
+        if (Document::FLAG_YES !== $model->is_visible && \Yii::$app->user->isGuest) {
+            throw new NotFoundHttpException(\Yii::t('frontend', 'The requested page does not exist.'));
         }
+
+        // Increment view counter
+        $model->updateCounters(['view_count' => 1]);
+
+        return $this->render('view', [
+            'model' => $model,
+        ]);
     }
 
     /**
-     * Finds the Archive model based on its primary key value.
+     * Finds the Document model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     *
-     * @param int $id
      *
      * @return Document the loaded model
      *
@@ -139,6 +102,6 @@ class DocumentController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException(\Yii::t('frontend', 'The requested page does not exist.'));
     }
 }
