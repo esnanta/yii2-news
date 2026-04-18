@@ -9,11 +9,32 @@
 use common\models\Office;
 use common\models\OfficeSocialAccount;
 use rmrevin\yii\fontawesome\FAS;
+use yii\bootstrap4\Nav;
 use yii\helpers\Html;
 
 $backendBaseUrl = rtrim(Yii::getAlias('@backendUrl'), '/');
 $backendLoginUrl = $backendBaseUrl.'/sign-in/login';
 $backendDashboardUrl = $backendBaseUrl.'/site/index';
+
+$menuItems = [
+    ['label' => Yii::t('app', 'Home'), 'url' => ['/site/index']],
+    ['label' => Yii::t('app', 'Article'), 'url' => ['/article/index']],
+    ['label' => Yii::t('app', 'Download'), 'url' => ['/document/index']],
+    ['label' => Yii::t('app', 'Staff'), 'url' => ['/staff/index']],
+    ['label' => Yii::t('app', 'About'), 'url' => ['/page/view', 'slug' => 'about']],
+];
+
+if (!empty($categories)) {
+    $menuItems[] = [
+        'label' => Yii::t('app', 'Category'),
+        'items' => array_map(static function ($categoryModel) {
+            return [
+                'label' => $categoryModel->title,
+                'url' => ['/article/index', 'cat' => $categoryModel->id, 'title' => $categoryModel->title],
+            ];
+        }, $categories),
+    ];
+}
 
 ?>
 
@@ -31,14 +52,13 @@ $backendDashboardUrl = $backendBaseUrl.'/site/index';
                 <div class="tb-menu">
                 <?php
                 if (Yii::$app->user->getIsGuest()) {
-                    echo Yii::$app->user->identity;
                     echo '<li>';
-                    echo str_replace('user/user/', '', Html::a(FAS::icon('user'), $backendLoginUrl, ['class' => 'd-block g-color-secondary-dark-v1 g-color-primary--hover g-text-underline--none--hover g-py-5 g-px-20']));
+                    echo Html::a(FAS::icon('user'), $backendLoginUrl, ['class' => 'd-block g-color-secondary-dark-v1 g-color-primary--hover g-text-underline--none--hover g-py-5 g-px-20']);
                     echo '</li>';
                 } else {
                     $signOut = Html::a(
                         FAS::icon('sign-out-alt').' Sign Out',
-                        ['user/security/logout'],
+                        ['/user/sign-in/logout'],
                         ['data-method' => 'POST',
                             'class' => 'g-color-secondary-dark-v1 g-color-primary--hover g-text-underline--none--hover g-py-5 g-px-20',
                         ]
@@ -72,12 +92,12 @@ $backendDashboardUrl = $backendBaseUrl.'/site/index';
         <div class="row align-items-center">
             <div class="col-lg-3 col-md-4">
                 <div class="b-logo">
-                    <?php echo str_replace('user/', '', Html::a($logo1Image, ['site/index'])); ?>
+                    <?php echo Html::a($logo1Image, ['/site/index']); ?>
                 </div>
             </div>
             <div class="col-lg-6 col-md-4">
                 <div class="b-ads">
-                    <?php echo str_replace('user/', '', Html::a($logo2Image, ['site/index'])); ?>
+                    <?php echo Html::a($logo2Image, ['/site/index']); ?>
                 </div>
             </div>
             <div class="col-lg-3 col-md-4">
@@ -100,32 +120,11 @@ $backendDashboardUrl = $backendBaseUrl.'/site/index';
             </button>
 
             <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                <div class="navbar-nav mr-auto">
-
-                    <?php echo str_replace('user/', '', Html::a(Yii::t('app', 'Home'), ['site/index'], ['id' => 'nav-link--pages', 'class' => 'nav-item nav-link'])); ?>
-                    <?php echo str_replace('user/', '', Html::a(Yii::t('app', 'Article'), ['article/index'], ['id' => 'nav-link--pages', 'class' => 'nav-item nav-link'])); ?>
-                    <?php echo str_replace('user/', '', Html::a(Yii::t('app', 'Download'), ['document/index'], ['id' => 'nav-link--pages', 'class' => 'nav-item nav-link'])); ?>
-                    <?php echo str_replace('user/', '', Html::a(Yii::t('app', 'Staff'), ['staff/index'], ['id' => 'nav-link--pages', 'class' => 'nav-item nav-link'])); ?>
-                    <?php echo str_replace('user/', '', Html::a(Yii::t('app', 'About'), ['page/view', 'slug' => 'about'], ['id' => 'nav-link--pages', 'class' => 'nav-item nav-link'])); ?>
-
-
-                    <?php if (!empty($categories)) { ?>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                            <?php echo Yii::t('app', 'Category'); ?>
-                        </a>
-                        <div class="dropdown-menu">
-                            <?php foreach ($categories as $categoryModel) { ?>
-                                <?php echo Html::a(
-                                    $categoryModel->title,
-                                    ['/article/index', 'cat' => $categoryModel->id, 'title' => $categoryModel->title],
-                                    ['class' => 'dropdown-item']
-                                );
-                                ?>
-                            <?php } ?>
-                        </div>
-                    </div>
-                    <?php } ?>
+                <div class="mr-auto">
+                    <?php echo Nav::widget([
+                        'options' => ['class' => ['navbar-nav', 'mr-auto']],
+                        'items' => $menuItems,
+                    ]); ?>
 
                 </div>
                 <div class="social ml-auto">
