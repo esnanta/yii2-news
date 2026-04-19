@@ -19,7 +19,7 @@ echo "<?php\n";
 namespace <?= $generator->nsModel ?>\base;
 
 use Yii;
-use yii\db\ActiveQuery;
+use common\base\BaseActiveRecord;
 <?php if ($generator->createdAt || $generator->updatedAt): ?>
 use yii\behaviors\TimestampBehavior;
 <?php endif; ?>
@@ -29,6 +29,28 @@ use yii\behaviors\BlameableBehavior;
 <?php if ($generator->UUIDColumn): ?>
 use mootensai\behaviors\UUIDBehavior;
 <?php endif; ?>
+use yii\db\ActiveQuery;
+<?php if (!$isTree): ?>
+use mootensai\relation\RelationTrait;
+<?php endif; ?>
+<?php if ($queryClassName): ?>
+use <?= $generator->queryNs . '\\' . $queryClassName ?>;
+<?php endif; ?>
+<?php
+$relationClassImports = [];
+foreach ($relations as $name => $relation) {
+    if (!in_array($name, $generator->skippedRelations) && !empty($relation[$generator::REL_CLASS])) {
+        $relationClass = $relation[$generator::REL_CLASS];
+        if ($relationClass !== $className) {
+            $relationClassImports[$relationClass] = true;
+        }
+    }
+}
+ksort($relationClassImports);
+?>
+<?php foreach (array_keys($relationClassImports) as $relationClass): ?>
+use <?= $generator->nsModel . '\\' . $relationClass ?>;
+<?php endforeach; ?>
 
 /**
  * This is the base model class for table "<?= $generator->generateTableName($tableName) ?>".
@@ -40,14 +62,14 @@ use mootensai\behaviors\UUIDBehavior;
  *
 <?php foreach ($relations as $name => $relation): ?>
 <?php if (!in_array($name, $generator->skippedRelations)): ?>
- * @property <?= '\\' . $generator->nsModel . '\\' . $relation[$generator::REL_CLASS] . ($relation[$generator::REL_IS_MULTIPLE] ? '[]' : '') . ' $' . lcfirst($name) . "\n" ?>
+ * @property <?= $relation[$generator::REL_CLASS] . ($relation[$generator::REL_IS_MULTIPLE] ? '[]' : '') . ' $' . lcfirst($name) . "\n" ?>
 <?php endif; ?>
 <?php endforeach; ?>
 <?php endif; ?>
  */
-class <?= $className ?> extends <?= ($isTree) ? '\kartik\tree\models\Tree' . "\n" : '\\' . ltrim($generator->baseModelClass, '\\') . "\n" ?>
+class <?= $className ?> extends <?= ($isTree) ? '\kartik\tree\models\Tree' . "\n" : 'BaseActiveRecord' . "\n" ?>
 {
-<?= (!$isTree) ? "    use \\mootensai\\relation\\RelationTrait;\n" : "" ?>
+<?= (!$isTree) ? "    use RelationTrait;\n" : "" ?>
 
 <?php if($generator->deletedBy): ?>
     private $_rt_softdelete;
@@ -141,7 +163,9 @@ class <?= $className ?> extends <?= ($isTree) ? '\kartik\tree\models\Tree' . "\n
      */
     public function get<?= ucfirst($name) ?>(): ActiveQuery
     {
-        <?= $relation[0] . "\n" ?>
+<?php $relationDeclaration = str_replace('\\' . $generator->nsModel . '\\', '', $relation[0]); ?>
+<?php $relationDeclaration = str_replace('::className()', '::class', $relationDeclaration); ?>
+        <?= $relationDeclaration . "\n" ?>
     }
     <?php endif; ?>
 <?php endforeach; ?>
@@ -205,7 +229,6 @@ class <?= $className ?> extends <?= ($isTree) ? '\kartik\tree\models\Tree' . "\n
 <?php endif; ?>
 <?php if ($queryClassName): ?>
 <?php
-    $queryClassFullName = '\\' . $generator->queryNs . '\\' . $queryClassName;
     echo "\n";
 ?>
 <?php if( $generator->deletedBy): ?>
@@ -234,15 +257,15 @@ class <?= $className ?> extends <?= ($isTree) ? '\kartik\tree\models\Tree' . "\n
 
     /**
      * @inheritdoc
-     * @return <?= $queryClassFullName ?> the active query used by this AR class.
+     * @return <?= $queryClassName ?> the active query used by this AR class.
      */
-    public static function find()
+    public static function find(): <?= $queryClassName ?>
     {
 <?php if($generator->deletedBy): ?>
-        $query = new <?= $queryClassFullName ?>(get_called_class());
+        $query = new <?= $queryClassName ?>(get_called_class());
         return $query->where(['<?= $tableName ?>.<?= $generator->deletedBy ?>' => <?= $generator->deletedByValueRestored ?>]);
 <?php else: ?>
-        return new <?= $queryClassFullName ?>(get_called_class());
+        return new <?= $queryClassName ?>(get_called_class());
 <?php endif; ?>
     }
 <?php endif; ?>

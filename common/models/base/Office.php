@@ -2,52 +2,63 @@
 
 namespace common\models\base;
 
-use Yii;
-use yii\db\ActiveQuery;
-use yii\behaviors\TimestampBehavior;
-use yii\behaviors\BlameableBehavior;
+use common\base\BaseActiveRecord;
+use common\models\Author;
+use common\models\AuthorSocialAccount;
+use common\models\Document;
+use common\models\DocumentCategory;
+use common\models\JobTitle;
+use common\models\OfficeSocialAccount;
+use common\models\query\OfficeQuery;
+use common\models\Staff;
+use common\models\StaffSocialAccount;
 use mootensai\behaviors\UUIDBehavior;
+use mootensai\relation\RelationTrait;
+use yii\behaviors\BlameableBehavior;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
 
 /**
- * This is the base model class for table "tx_office".
+ * This is the base model class for table "t_office".
  *
- * @property integer $id
- * @property string $unique_id
- * @property string $title
- * @property string $phone_number
- * @property string $fax_number
- * @property string $email
- * @property string $web
- * @property string $address
- * @property string $latitude
- * @property string $longitude
- * @property string $description
- * @property string $created_at
- * @property string $updated_at
- * @property integer $created_by
- * @property integer $updated_by
- * @property integer $is_deleted
- * @property string $deleted_at
- * @property integer $deleted_by
- * @property integer $verlock
- * @property string $uuid
- *
- * @property \common\models\AuthorMedia[] $authorMedia
- * @property \common\models\Counter[] $counters
- * @property \common\models\Employment[] $employments
- * @property \common\models\Event[] $events
- * @property \common\models\OfficeMedia[] $officeMedia
- * @property \common\models\Staff[] $staff
- * @property \common\models\StaffMedia[] $staffMedia
+ * @property int                   $id
+ * @property string                $unique_id
+ * @property string                $title
+ * @property string                $phone_number
+ * @property string                $fax_number
+ * @property string                $email
+ * @property string                $web
+ * @property string                $address
+ * @property string                $latitude
+ * @property string                $longitude
+ * @property string                $description
+ * @property string                $created_at
+ * @property string                $updated_at
+ * @property int                   $created_by
+ * @property int                   $updated_by
+ * @property int                   $is_deleted
+ * @property string                $deleted_at
+ * @property int                   $deleted_by
+ * @property int                   $verlock
+ * @property string                $uuid
+ * @property Author[]              $authors
+ * @property AuthorSocialAccount[] $authorSocialAccounts
+ * @property Document[]            $documents
+ * @property DocumentCategory[]    $documentCategories
+ * @property JobTitle[]          $employments
+ * @property OfficeSocialAccount[] $officeSocialAccounts
+ * @property Staff[]               $staff
+ * @property StaffSocialAccount[]  $staffSocialAccounts
  */
-class Office extends \yii\db\ActiveRecord
+class Office extends BaseActiveRecord
 {
-    use \mootensai\relation\RelationTrait;
+    use RelationTrait;
 
     private $_rt_softdelete;
     private $_rt_softrestore;
 
-    public function __construct(){
+    public function __construct()
+    {
         parent::__construct();
         $this->_rt_softdelete = [
             'deleted_by' => \Yii::$app->user->id,
@@ -60,25 +71,24 @@ class Office extends \yii\db\ActiveRecord
     }
 
     /**
-    * This function helps \mootensai\relation\RelationTrait runs faster
-    * @return array relation names of this model
-    */
+     * This function helps \mootensai\relation\RelationTrait runs faster.
+     *
+     * @return array relation names of this model
+     */
     public function relationNames(): array
     {
         return [
-            'authorMedia',
-            'counters',
+            'authors',
+            'authorSocialAccounts',
+            'documents',
+            'documentCategories',
             'employments',
-            'events',
-            'officeMedia',
+            'officeSocialAccounts',
             'staff',
-            'staffMedia'
+            'staffSocialAccounts',
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function rules(): array
     {
         return [
@@ -86,113 +96,90 @@ class Office extends \yii\db\ActiveRecord
             [['created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['unique_id'], 'string', 'max' => 15],
-            [['title', 'phone_number', 'fax_number', 'email', 'web', 'address', 'latitude', 'longitude'], 'string', 'max' => 100],
+            [['title', 'phone_number', 'fax_number', 'email', 'web', 'address',
+                'latitude', 'longitude'], 'string', 'max' => 100],
             [['uuid'], 'string', 'max' => 36],
             [['verlock'], 'default', 'value' => '0'],
-            [['verlock'], 'mootensai\components\OptimisticLockValidator']
+            [['verlock'], 'mootensai\components\OptimisticLockValidator'],
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public static function tableName(): string
     {
-        return 'tx_office';
+        return 't_office';
     }
 
     /**
-     *
      * @return string
-     * overwrite function optimisticLock
-     * return string name of field are used to stored optimistic lock
-     *
+     *                overwrite function optimisticLock
+     *                return string name of field are used to stored optimistic lock
      */
-    public function optimisticLock(): string {
+    public function optimisticLock(): string
+    {
         return 'verlock';
     }
 
-    /**
-     * @inheritdoc
-     */
     public function attributeLabels(): array
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'unique_id' => Yii::t('app', 'Unique ID'),
-            'title' => Yii::t('app', 'Title'),
-            'phone_number' => Yii::t('app', 'Phone Number'),
-            'fax_number' => Yii::t('app', 'Fax Number'),
-            'email' => Yii::t('app', 'Email'),
-            'web' => Yii::t('app', 'Web'),
-            'address' => Yii::t('app', 'Address'),
-            'latitude' => Yii::t('app', 'Latitude'),
-            'longitude' => Yii::t('app', 'Longitude'),
-            'description' => Yii::t('app', 'Description'),
-            'is_deleted' => Yii::t('app', 'Is Deleted'),
-            'verlock' => Yii::t('app', 'Verlock'),
-            'uuid' => Yii::t('app', 'Uuid'),
+            'id' => \Yii::t('common', 'ID'),
+            'unique_id' => \Yii::t('common', 'Unique ID'),
+            'title' => \Yii::t('common', 'Title'),
+            'phone_number' => \Yii::t('common', 'Phone Number'),
+            'fax_number' => \Yii::t('common', 'Fax Number'),
+            'email' => \Yii::t('common', 'Email'),
+            'web' => \Yii::t('common', 'Web'),
+            'address' => \Yii::t('common', 'Address'),
+            'latitude' => \Yii::t('common', 'Latitude'),
+            'longitude' => \Yii::t('common', 'Longitude'),
+            'description' => \Yii::t('common', 'Description'),
+            'is_deleted' => \Yii::t('common', 'Is Deleted'),
+            'verlock' => \Yii::t('common', 'Verlock'),
+            'uuid' => \Yii::t('common', 'Uuid'),
         ];
     }
-    
-    /**
-     * @return ActiveQuery
-     */
-    public function getAuthorMedia(): ActiveQuery
+
+    public function getAuthors(): ActiveQuery
     {
-        return $this->hasMany(\common\models\AuthorMedia::className(), ['office_id' => 'id']);
+        return $this->hasMany(Author::class, ['office_id' => 'id']);
     }
-        
-    /**
-     * @return ActiveQuery
-     */
-    public function getCounters(): ActiveQuery
+
+    public function getAuthorSocialAccounts(): ActiveQuery
     {
-        return $this->hasMany(\common\models\Counter::className(), ['office_id' => 'id']);
+        return $this->hasMany(AuthorSocialAccount::class, ['office_id' => 'id']);
     }
-        
-    /**
-     * @return ActiveQuery
-     */
+
+    public function getDocuments(): ActiveQuery
+    {
+        return $this->hasMany(Document::class, ['office_id' => 'id']);
+    }
+
+    public function getDocumentCategories(): ActiveQuery
+    {
+        return $this->hasMany(DocumentCategory::class, ['office_id' => 'id']);
+    }
+
     public function getEmployments(): ActiveQuery
     {
-        return $this->hasMany(\common\models\Employment::className(), ['office_id' => 'id']);
+        return $this->hasMany(JobTitle::class, ['office_id' => 'id']);
     }
-        
-    /**
-     * @return ActiveQuery
-     */
-    public function getEvents(): ActiveQuery
+
+    public function getOfficeSocialAccounts(): ActiveQuery
     {
-        return $this->hasMany(\common\models\Event::className(), ['office_id' => 'id']);
+        return $this->hasMany(OfficeSocialAccount::class, ['office_id' => 'id']);
     }
-        
-    /**
-     * @return ActiveQuery
-     */
-    public function getOfficeMedia(): ActiveQuery
-    {
-        return $this->hasMany(\common\models\OfficeMedia::className(), ['office_id' => 'id']);
-    }
-        
-    /**
-     * @return ActiveQuery
-     */
+
     public function getStaff(): ActiveQuery
     {
-        return $this->hasMany(\common\models\Staff::className(), ['office_id' => 'id']);
+        return $this->hasMany(Staff::class, ['office_id' => 'id']);
     }
-        
-    /**
-     * @return ActiveQuery
-     */
-    public function getStaffMedia(): ActiveQuery
+
+    public function getStaffSocialAccounts(): ActiveQuery
     {
-        return $this->hasMany(\common\models\StaffMedia::className(), ['office_id' => 'id']);
+        return $this->hasMany(StaffSocialAccount::class, ['office_id' => 'id']);
     }
-    
+
     /**
-     * @inheritdoc
      * @return array mixed
      */
     public function behaviors(): array
@@ -214,5 +201,37 @@ class Office extends \yii\db\ActiveRecord
                 'column' => 'uuid',
             ],
         ];
+    }
+
+    /**
+     * The following code shows how to apply a default condition for all queries:
+     *
+     * ```php
+     * class Customer extends ActiveRecord
+     * {
+     *     public static function find()
+     *     {
+     *         return parent::find()->where(['deleted' => false]);
+     *     }
+     * }
+     *
+     * // Use andWhere()/orWhere() to apply the default condition
+     * // SELECT FROM customer WHERE `deleted`=:deleted AND age>30
+     * $customers = Customer::find()->andWhere('age>30')->all();
+     *
+     * // Use where() to ignore the default condition
+     * // SELECT FROM customer WHERE age>30
+     * $customers = Customer::find()->where('age>30')->all();
+     * ```
+     */
+
+    /**
+     * @return OfficeQuery the active query used by this AR class
+     */
+    public static function find(): OfficeQuery
+    {
+        $query = new OfficeQuery(get_called_class());
+
+        return $query->where(['t_office.deleted_by' => 0]);
     }
 }

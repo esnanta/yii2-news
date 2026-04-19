@@ -1,16 +1,35 @@
-/backend/runtime/
-/backend/web/uploads/
-/backend/web/assets/
-/frontend/runtime/
-/frontend/web/uploads/
-/frontend/web/assets/
-/auth.json
+# Env
+/.env
+
+# Composer
 /vendor
-/backend/config/params-local.php
-/common/config/main-local.php
-/common/config/params-local.php
-/frontend/config/main-local.php
-/frontend/config/params-local.php
-/backend/config/main-local.php
-.php-cs-fixer.cache
-.env
+composer.phar
+
+# JS
+node_modules
+spa/npm-debug.log
+spa/yarn-error.log
+
+# IDE
+.idea
+nbproject
+.buildpath
+.project
+.settings
+
+# windows thumbnail cache
+Thumbs.db
+
+# Mac DS_Store Files
+.DS_Store
+
+# phpunit
+phpunit.phar
+/phpunit.xml
+
+# Vagrant
+/.vagrant
+
+# Tests
+tests/codeception/*/_support/_generated/*
+/.php-cs-fixer.cache

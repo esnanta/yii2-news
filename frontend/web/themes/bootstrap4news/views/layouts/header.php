@@ -1,13 +1,71 @@
 <?php
 /**
- * @var common\models\Office $office
- * @var common\models\OfficeMedia $officeMedias
- * @var String $logo1Image
- * @var String $logo2Image
+ * @var Office              $office
+ * @var OfficeSocialAccount $officeMedias
+ * @var string              $logo1Image
+ * @var string              $logo2Image
  */
 
-use common\helper\IconHelper;
+use common\models\Office;
+use common\models\OfficeSocialAccount;
+use rmrevin\yii\fontawesome\FAS;
+use yii\bootstrap4\Nav;
 use yii\helpers\Html;
+
+$backendBaseUrl = rtrim(Yii::getAlias('@backendUrl'), '/');
+$backendLoginUrl = $backendBaseUrl.'/sign-in/login';
+$backendDashboardUrl = $backendBaseUrl.'/site/index';
+$currentRoute = '/'.Yii::$app->controller->getRoute();
+$currentSlug = Yii::$app->request->get('slug');
+$currentCategoryId = Yii::$app->request->get('cat');
+$menuLinkClass = 'g-color-secondary-dark-v1 g-color-primary--hover g-text-underline--none--hover g-py-5 g-px-20';
+
+$menuItems = [
+    [
+        'label' => Yii::t('app', 'Home'),
+        'url' => ['/site/index'],
+        'active' => '/site/index' === $currentRoute,
+    ],
+    [
+        'label' => Yii::t('app', 'Article'),
+        'url' => ['/article/index'],
+        'active' => '/article/index' === $currentRoute && empty($currentCategoryId),
+    ],
+    [
+        'label' => Yii::t('app', 'Document'),
+        'url' => ['/document/index'],
+        'active' => '/document/index' === $currentRoute,
+    ],
+    [
+        'label' => Yii::t('app', 'Staff'),
+        'url' => ['/staff/index'],
+        'active' => '/staff/index' === $currentRoute,
+    ],
+    [
+        'label' => Yii::t('app', 'About'),
+        'url' => ['/page/view', 'slug' => 'about'],
+        'active' => '/page/view' === $currentRoute && 'about' === $currentSlug,
+    ],
+];
+
+if (!empty($categories)) {
+    $categoryItems = array_map(static function ($categoryModel) use ($currentRoute, $currentCategoryId) {
+        $categoryId = (string) $categoryModel->id;
+        $requestedCategoryId = null === $currentCategoryId ? null : (string) $currentCategoryId;
+
+        return [
+            'label' => $categoryModel->title,
+            'url' => ['/article/index', 'cat' => $categoryModel->id, 'title' => $categoryModel->title],
+            'active' => '/article/index' === $currentRoute && $requestedCategoryId === $categoryId,
+        ];
+    }, $categories);
+
+    $menuItems[] = [
+        'label' => Yii::t('app', 'Category'),
+        'items' => $categoryItems,
+        'active' => in_array(true, array_column($categoryItems, 'active'), true),
+    ];
+}
 
 ?>
 
@@ -17,23 +75,34 @@ use yii\helpers\Html;
         <div class="row">
             <div class="col-md-6">
                 <div class="tb-contact">
-                    <p><i class="fas fa-envelope"></i><?= $office->email; ?></p>
-                    <p><i class="fas fa-phone-alt"></i><?= $office->phone_number; ?></p>
+                    <p><i class="fas fa-envelope"></i><?php echo $office->email; ?></p>
+                    <p><i class="fas fa-phone-alt"></i><?php echo $office->phone_number; ?></p>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="tb-menu">
                 <?php
                 if (Yii::$app->user->getIsGuest()) {
-                    echo Yii::$app->user->identity;
                     echo '<li>';
-                    echo str_replace('user/user/', '', Html::a(IconHelper::getUser(), ['admin/user/login'], ['class' => 'd-block g-color-secondary-dark-v1 g-color-primary--hover g-text-underline--none--hover g-py-5 g-px-20']));
+                    echo Html::a(FAS::icon('user'), $backendLoginUrl, ['class' => 'd-block '.$menuLinkClass]);
                     echo '</li>';
                 } else {
-                    $signOut = Html::a(IconHelper::getSignOut().' Sign Out', ['user/security/logout'], ['data-method' => 'POST', 'class' => 'g-color-secondary-dark-v1 g-color-primary--hover g-text-underline--none--hover g-py-5 g-px-20']);
-                    if (Yii::$app->user->identity->isAdmin == true) {
+                    $signOut = Html::a(
+                        FAS::icon('sign-out-alt').' Sign Out',
+                        ['/user/sign-in/logout'],
+                        [
+                            'data-method' => 'POST',
+                            'data-confirm' => Yii::t('app', 'Are you sure you want to sign out?'),
+                            'class' => $menuLinkClass,
+                        ]
+                    );
+                    if (true == Yii::$app->user->identity->isAdmin()) {
                         echo '<li>';
-                        $admin = Html::a(IconHelper::getUser().' Admin', ['/backend/web/site/index'], ['class' => 'g-color-secondary-dark-v1 g-color-primary--hover g-text-underline--none--hover g-py-5 g-px-20']);
+                        $admin = Html::a(
+                            FAS::icon('user').' Admin',
+                            $backendDashboardUrl,
+                            ['class' => $menuLinkClass]
+                        );
                         echo $admin.' | '.$signOut;
                         echo '</li>';
                     } else {
@@ -56,17 +125,23 @@ use yii\helpers\Html;
         <div class="row align-items-center">
             <div class="col-lg-3 col-md-4">
                 <div class="b-logo">
-                    <?= str_replace('user/', '', Html::a($logo1Image, ['site/index'])); ?>
+                    <?php echo Html::a($logo1Image, ['/site/index']); ?>
                 </div>
             </div>
             <div class="col-lg-6 col-md-4">
                 <div class="b-ads">
-                    <?= str_replace('user/', '', Html::a($logo2Image, ['site/index'])); ?>
+                    <?php echo Html::a($logo2Image, ['/site/index']); ?>
                 </div>
             </div>
             <div class="col-lg-3 col-md-4">
                 <div class="b-search">
-                    <div class="gcse-search" style="padding:0"></div>
+                    <form onsubmit="return executeQuery();">
+                        <input id="gsc-i-id1" type="text" placeholder="Search">
+                        <button type="submit"><i class="fa fa-search"></i></button>
+                    </form>
+                </div>
+                <div id="gsc-search-box-id" style="display:none">
+                    <div class="gcse-search"></div>
                 </div>
             </div>
         </div>
@@ -84,41 +159,38 @@ use yii\helpers\Html;
             </button>
 
             <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                <div class="navbar-nav mr-auto">
-
-                    <?= str_replace('user/', '', Html::a(Yii::t('app', 'Home'), ['site/index'], ['id' => 'nav-link--pages', 'class' => 'nav-item nav-link'])) ?>
-                    <?= str_replace('user/', '', Html::a(Yii::t('app', 'Article'), ['article/index'], ['id' => 'nav-link--pages', 'class' => 'nav-item nav-link'])) ?>
-                    <?= str_replace('user/', '', Html::a(Yii::t('app', 'Download'), ['asset/index'], ['id' => 'nav-link--pages', 'class' => 'nav-item nav-link'])) ?>
-                    <?= str_replace('user/', '', Html::a(Yii::t('app', 'Staff'), ['staff/index'], ['id' => 'nav-link--pages', 'class' => 'nav-item nav-link'])) ?>
-                    <?= str_replace('user/', '', Html::a(Yii::t('app', 'About'), ['site/about'], ['id' => 'nav-link--pages', 'class' => 'nav-item nav-link'])) ?>
-
-                    <?php if(!empty($categories)) : ?>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                            <?=Yii::t('app', 'Category');?>
-                        </a>
-                        <div class="dropdown-menu">
-                            <?php foreach ($categories as $categoryModel) { ?>
-                                <?php
-                                echo Html::a($categoryModel->title,
-                                    ['/article/index', 'cat' => $categoryModel->id, 'title' => $categoryModel->title],
-                                    ['class' => 'dropdown-item']);
-                                ?>
-                            <?php } ?>
-                        </div>
-                    </div>
-                    <?php endif; ?>
+                <div class="mr-auto">
+                    <?php echo Nav::widget([
+                        'options' => [
+                            'class' => [
+                                'navbar-nav', 'mr-auto',
+                            ],
+                        ],
+                        'items' => $menuItems,
+                    ]); ?>
 
                 </div>
                 <div class="social ml-auto">
                     <?php foreach ($officeMedias as $officeMediaItem) {  ?>
-                        <a href="<?= $officeMediaItem->description; ?>">
-                            <i class="<?= $officeMediaItem->title; ?>"></i>
+                        <a href="<?php echo $officeMediaItem->description; ?>">
+                            <i class="<?php echo $officeMediaItem->title; ?>"></i>
                         </a>
-                    <?php }; ?>
+                    <?php } ?>
                 </div>
             </div>
         </nav>
     </div>
 </div>
 <!-- Nav Bar End -->
+
+<script>
+    function executeQuery() {
+        var input = document.getElementById('gsc-i-id1');
+        var element = google.search.cse.element.getElement('gsc-search-box-id');
+        if (input.value === '') {
+            return false;
+        }
+        element.execute(input.value);
+        return false;
+    }
+</script>

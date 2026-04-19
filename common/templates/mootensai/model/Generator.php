@@ -330,9 +330,11 @@ class Generator extends BaseGenerator {
                 'relations' => isset($relations[$tableName]) ? $relations[$tableName] : [],
                 'isTree' => $this->isTree
             ];
+            $baseModelContent = $this->enforceBaseModelSignatures($this->render('model.php', $params));
             // model :
             $files[] = new CodeFile(
-                Yii::getAlias('@' . str_replace('\\', '/', $this->nsModel)) . '/base/' . $modelClassName . '.php', $this->render('model.php', $params)
+                Yii::getAlias('@' . str_replace('\\', '/', $this->nsModel)) . '/base/' . $modelClassName . '.php',
+                $baseModelContent
             );
             if (!$this->generateBaseOnly) {
                 $files[] = new CodeFile(
@@ -363,6 +365,16 @@ class Generator extends BaseGenerator {
         $this->skippedRelations = (is_array($this->skippedRelations)) ? implode(', ', $this->skippedRelations) : '';
 
         return $files;
+    }
+
+    /**
+     * Guarantees generated base model signatures stay typed even if template cache is stale.
+     */
+    protected function enforceBaseModelSignatures($content) {
+        $content = preg_replace('/public function rules\s*\(\s*\)\s*(?!:)/', 'public function rules(): array ', $content, 1);
+        $content = preg_replace('/public static function tableName\s*\(\s*\)\s*(?!:)/', 'public static function tableName(): string ', $content, 1);
+
+        return $content;
     }
 
     /**
@@ -438,16 +450,37 @@ class Generator extends BaseGenerator {
                     $types['required'][] = $column->name;
                 }
             }
-            switch ($column->type) {
+            // Normalize type metadata because DB drivers can expose
+            // different type names.
+            $abstractType = strtolower((string) $column->type);
+            $dbType = strtolower((string) $column->dbType);
+            $phpType = strtolower((string) $column->phpType);
+
+            // Remove modifiers, e.g. int(11) -> int, numeric(10,2) -> numeric.
+            $dbType = preg_replace('/\(.*/', '', $dbType);
+            $dbType = trim((string) strtok($dbType, ' '));
+
+            $integerDbTypes = [
+                'tinyint', 'tinyinteger', 'smallint', 'mediumint', 'int', 'integer', 'bigint',
+                'int2', 'int4', 'int8', 'serial', 'smallserial', 'bigserial',
+            ];
+
+            // Requested behavior: treat tinyint/tinyinteger/boolean as integer.
+            if (in_array($phpType, ['integer', 'boolean'], true) || in_array($dbType, $integerDbTypes, true)) {
+                $types['integer'][] = $column->name;
+                continue;
+            }
+
+            switch ($abstractType) {
+                case Schema::TYPE_TINYINT:
                 case Schema::TYPE_SMALLINT:
                 case Schema::TYPE_INTEGER:
                 case Schema::TYPE_BIGINT:
+                case Schema::TYPE_BOOLEAN:
                     $types['integer'][] = $column->name;
                     break;
-                case Schema::TYPE_BOOLEAN:
-                    $types['boolean'][] = $column->name;
-                    break;
                 case Schema::TYPE_FLOAT:
+                case Schema::TYPE_DOUBLE:
                 case 'double': // Schema::TYPE_DOUBLE, which is available since Yii 2.0.3
                 case Schema::TYPE_DECIMAL:
                 case Schema::TYPE_MONEY:

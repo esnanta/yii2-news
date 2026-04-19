@@ -2,11 +2,13 @@
 
 namespace backend\controllers;
 
-use common\helper\MessageHelper;
+use backend\models\search\UserSearch;
+use backend\models\UserForm;
 use common\models\User;
-use common\models\UserSearch;
+use common\models\UserToken;
 use Yii;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -15,7 +17,7 @@ use yii\web\NotFoundHttpException;
  */
 class UserController extends Controller
 {
-    public function behaviors(): array
+    public function behaviors()
     {
         return [
             'verbs' => [
@@ -49,18 +51,29 @@ class UserController extends Controller
      */
     public function actionView($id)
     {
-        $model = $this->findModel($id);
-        $providerAuthor = new \yii\data\ArrayDataProvider([
-            'allModels' => $model->authors,
-        ]);
-        $providerSocialAccount = new \yii\data\ArrayDataProvider([
-            'allModels' => $model->socialAccounts,
-        ]);
         return $this->render('view', [
             'model' => $this->findModel($id),
-            'providerAuthor' => $providerAuthor,
-            'providerSocialAccount' => $providerSocialAccount,
         ]);
+    }
+
+    /**
+     * @param $id
+     * @return \yii\web\Response
+     * @throws \yii\base\Exception
+     * @throws NotFoundHttpException
+     */
+    public function actionLogin($id)
+    {
+        $model = $this->findModel($id);
+        $tokenModel = UserToken::create(
+            $model->getId(),
+            UserToken::TYPE_LOGIN_PASS,
+            60
+        );
+
+        return $this->redirect(
+            Yii::$app->urlManagerFrontend->createAbsoluteUrl(['user/sign-in/login-by-pass', 'token' => $tokenModel->token])
+        );
     }
 
     /**
@@ -70,36 +83,35 @@ class UserController extends Controller
      */
     public function actionCreate()
     {
-        $model = new User();
-
-        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
-            MessageHelper::getFlashSaveSuccess();
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+        $model = new UserForm();
+        $model->setScenario('create');
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['index']);
         }
+
+        return $this->render('create', [
+            'model' => $model,
+            'roles' => ArrayHelper::map(Yii::$app->authManager->getRoles(), 'name', 'name')
+        ]);
     }
 
     /**
      * Updates an existing User model.
-     * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
-
-        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
-            MessageHelper::getFlashUpdateSuccess();
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+        $model = new UserForm();
+        $model->setModel($this->findModel($id));
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['index']);
         }
+
+        return $this->render('update', [
+            'model' => $model,
+            'roles' => ArrayHelper::map(Yii::$app->authManager->getRoles(), 'name', 'name')
+        ]);
     }
 
     /**
@@ -110,12 +122,12 @@ class UserController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->deleteWithRelated();
-        MessageHelper::getFlashDeleteSuccess();
+        Yii::$app->authManager->revokeAll($id);
+        $this->findModel($id)->delete();
+
         return $this->redirect(['index']);
     }
 
-    
     /**
      * Finds the User model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -127,56 +139,6 @@ class UserController extends Controller
     {
         if (($model = User::findOne($id)) !== null) {
             return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-    }
-    
-    /**
-    * Action to load a tabular form grid
-    * for Author
-    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
-    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
-    *
-    * @return mixed
-    */
-    public function actionAddAuthor()
-    {
-        if (Yii::$app->request->isAjax) {
-            $row = Yii::$app->request->post('Author');
-            if (!empty($row)) {
-                $row = array_values($row);
-            }
-            if ((Yii::$app->request->post('isNewRecord') &&
-                    Yii::$app->request->post('_action') == 'load' &&
-                    empty($row)) || Yii::$app->request->post('_action') == 'add') {
-                $row[] = [];
-            }
-            return $this->renderAjax('_formAuthor', ['row' => $row]);
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-    }
-    
-    /**
-    * Action to load a tabular form grid
-    * for SocialAccount
-    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
-    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
-    *
-    * @return mixed
-    */
-    public function actionAddSocialAccount()
-    {
-        if (Yii::$app->request->isAjax) {
-            $row = Yii::$app->request->post('SocialAccount');
-            if (!empty($row)) {
-                $row = array_values($row);
-            }
-            if ((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('_action') == 'load' && empty($row)) || Yii::$app->request->post('_action') == 'add') {
-                $row[] = [];
-            }
-            return $this->renderAjax('_formSocialAccount', ['row' => $row]);
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }

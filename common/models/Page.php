@@ -2,93 +2,89 @@
 
 namespace common\models;
 
+use common\models\query\PageQuery;
+use yii\behaviors\SluggableBehavior;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
 
-use common\helper\ContentHelper;
-use common\helper\IconHelper;
-use common\helper\LabelHelper;
-use common\models\base\Page as BaseThemeDetail;
-use Yii;
-use yii\helpers\Html;
-
-class Page extends BaseThemeDetail
+/**
+ * This is the model class for table "page".
+ *
+ * @property int    $id
+ * @property string $slug
+ * @property string $title
+ * @property string $body
+ * @property string $view
+ * @property int    $status
+ * @property int    $created_at
+ * @property int    $updated_at
+ */
+class Page extends ActiveRecord
 {
-    const PAGE_TYPE_TEXT     = 1;
-    const PAGE_TYPE_IMAGE    = 2;
+    public const STATUS_DRAFT = 0;
+    public const STATUS_PUBLISHED = 1;
 
-    /**
-     * @inheritdoc
-     */ 
-    public function rules(): array
+    public static function tableName()
     {
-        return [
-            //TAMBAHAN
-            [['content'], 'validateImageSize'],
-
-            [['page_type', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
-            [['content', 'description'], 'string'],
-            [['created_at', 'updated_at', 'deleted_at'], 'safe'],
-            [['title'], 'string', 'max' => 100],
-            [['uuid'], 'string', 'max' => 36],
-            [['verlock'], 'default', 'value' => '0'],
-            [['verlock'], 'mootensai\components\OptimisticLockValidator']
-        ];
+        return '{{%page}}';
     }
 
     /**
-     * Custom validator for image size in content
+     * @return PageQuery
      */
-    public function validateImageSize($attribute, $params, $validator): void
+    public static function find()
     {
-        $validationResult = ContentHelper::validateImageSize($this->$attribute);
-        if ($validationResult !== true) {
-            $this->addError($attribute, $validationResult);
-        }
+        return new PageQuery(get_called_class());
     }
 
-    public static function getArrayPageType(): array
+    /**
+     * @return array statuses list
+     */
+    public static function statuses()
     {
         return [
-            //MASTER
-            self::PAGE_TYPE_TEXT    => Yii::t('app', 'Text'),
-            self::PAGE_TYPE_IMAGE   => Yii::t('app', 'Image'),
+            self::STATUS_DRAFT => \Yii::t('common', 'Draft'),
+            self::STATUS_PUBLISHED => \Yii::t('common', 'Published'),
         ];
     }
 
-    public static function getOnePageType($_module = null): string
+    public function behaviors()
     {
-        if($_module)
-        {
-            $arrayModule = self::getArrayPageType();
-            switch ($_module) {
-                case ($_module == self::PAGE_TYPE_TEXT):
-                    $returnValue = LabelHelper::getPrimary($arrayModule[$_module]);
-                    break;
-                case ($_module == self::PAGE_TYPE_IMAGE):
-                    $returnValue = LabelHelper::getSuccess($arrayModule[$_module]);
-                    break;
-                default:
-                    $returnValue = LabelHelper::getDefault();
-            }
-            return $returnValue;
-        }
-        else
-            return 'null';
+        return [
+            TimestampBehavior::class,
+            'slug' => [
+                'class' => SluggableBehavior::class,
+                'attribute' => 'title',
+                'ensureUnique' => true,
+                'immutable' => true,
+            ],
+        ];
     }
 
-    public function getRemoveContentUrl(): string
+    public function rules()
     {
-        $value = LabelHelper::getNo(IconHelper::getMinus());
+        return [
+            [['title', 'body'], 'required'],
+            [['body'], 'string'],
+            [['status'], 'integer'],
+            [['slug'], 'unique'],
+            [['slug'], 'string', 'max' => 2048],
+            [['title'], 'string', 'max' => 512],
+            [['view'], 'string', 'max' => 255],
+        ];
+    }
 
-        return Html::a(
-            $value,
-            ['page/remove-content','id'=>$this->id],
-            [
-                'data-method' => 'post',
-                'data-confirm' => 'Remove content?',
-                'class' => 'nav-link',
-                'role' => 'button',
-                'title'=> 'Remove content'
-            ]
-        );
+    public function attributeLabels()
+    {
+        return [
+            'id' => \Yii::t('common', 'ID'),
+            'slug' => \Yii::t('common', 'Slug'),
+            'title' => \Yii::t('common', 'Title'),
+            'body' => \Yii::t('common', 'Body'),
+            'view' => \Yii::t('common', 'Page View'),
+            'status' => \Yii::t('common', 'Active'),
+            'created_at' => \Yii::t('common', 'Created At'),
+            'updated_at' => \Yii::t('common', 'Updated At'),
+        ];
     }
 }

@@ -2,97 +2,84 @@
 
 namespace common\models;
 
-use common\helper\LabelHelper;
 use common\models\base\ArticleCategory as BaseArticleCategory;
-use common\models\Article as Article;
+use common\models\query\ArticleCategoryQuery;
+use yii\behaviors\SluggableBehavior;
 
 /**
- * This is the model class for table "tx_category".
+ * This is the model class for table "t_article_category".
+ *
+ * @property int             $id
+ * @property string          $slug
+ * @property string          $title
+ * @property string          $body
+ * @property null|int        $parent_id
+ * @property null|int        $status
+ * @property null|string     $created_at
+ * @property null|string     $updated_at
+ * @property null|int        $created_by
+ * @property null|int        $updated_by
+ * @property null|int        $is_deleted
+ * @property null|string     $deleted_at
+ * @property null|int        $deleted_by
+ * @property null|int        $verlock
+ * @property null|string     $uuid
+ * @property Article[]       $articles
+ * @property ArticleCategory $parent
  */
 class ArticleCategory extends BaseArticleCategory
 {
-    
-    const TIME_LINE_NO     = 1;
-    const TIME_LINE_YES    = 2;    
-    
+    public const STATUS_ACTIVE = 1;
+    public const STATUS_DRAFT = 0;
+
     /**
-     * @inheritdoc
+     * @return array statuses list
      */
+    public static function statuses(): array
+    {
+        return [
+            self::STATUS_DRAFT => \Yii::t('common', 'Draft'),
+            self::STATUS_ACTIVE => \Yii::t('common', 'Active'),
+        ];
+    }
+
+    public function behaviors(): array
+    {
+        $behaviors = parent::behaviors();
+        $behaviors['slug'] = [
+            'class' => SluggableBehavior::class,
+            'attribute' => 'title',
+            'immutable' => true,
+        ];
+
+        return $behaviors;
+    }
+
     public function rules(): array
     {
-        return [
-            [['office_id', 'sequence', 'time_line', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
-            [['description'], 'string'],
-            [['created_at', 'updated_at', 'deleted_at'], 'safe'],
-            [['title'], 'string', 'max' => 100],
-            [['label'], 'string', 'max' => 20],
-            [['uuid'], 'string', 'max' => 36],
-            [['verlock'], 'default', 'value' => '0'],
-            [['verlock'], 'mootensai\components\OptimisticLockValidator']
-        ];         
-        
+        return array_merge(parent::rules(), [
+            ['parent_id', 'exist',
+                'skipOnError' => true,
+                'targetClass' => self::class,
+                'targetAttribute' => ['parent_id' => 'id']],
+        ]);
     }
-	
-    public function beforeSave($insert) {
-        if (!parent::beforeSave($insert)) {
-            return false;
-        }
 
-        if (empty($this->time_line)){
-            $this->time_line = self::TIME_LINE_NO;
-        }
-        
-        if ($this->time_line==self::TIME_LINE_YES) {
-            $categories = ArticleCategory::find()->where(['<>','id',$this->id])->all();
-            foreach ($categories as $categoryModel) {
-                $categoryModel->time_line = self::TIME_LINE_NO;
-                $categoryModel->save();
-            }
-        }        
-
-        return true;
-    }    
-    
-    public static function getArrayTimeLine(): array
+    public function attributeLabels(): array
     {
-        return [
-            //MASTER
-            self::TIME_LINE_NO      => 'No',
-            self::TIME_LINE_YES     => 'Yes',
-        ];
-    }    
-    
-    public static function getOneTimeLine($_module = null)
+        return array_merge(parent::attributeLabels(), [
+            'parent_id' => \Yii::t('common', 'Parent Category'),
+            'status' => \Yii::t('common', 'Status'),
+        ]);
+    }
+
+    /**
+     * @return ArticleCategoryQuery the active query used by this AR class
+     */
+    public static function find(): ArticleCategoryQuery
     {
-        if($_module)
-        {
-            $arrayModule = self::getArrayTimeLine();
+        $query = new ArticleCategoryQuery(get_called_class());
 
-            switch ($_module) {
-                case ($_module == self::TIME_LINE_NO):
-                    $returnValue = LabelHelper::getDanger($arrayModule[$_module]);
-                    break;
-                case ($_module == self::TIME_LINE_YES):
-                    $returnValue = LabelHelper::getPrimary($arrayModule[$_module]);
-                    break;
-                default:
-                    $returnValue = LabelHelper::getDefault();
-            }
-
-            return $returnValue;
-
-        }
-        else
-            return;
-    }        
-    
-    
-    public function countAuthorBlog($author){
-        return Article::find()->where
-            ([
-                'article_category_id'=>$this->id,
-                'author_id'=>$author,
-                'publish_status'=>Article::PUBLISH_STATUS_YES
-            ])->count();
+        return $query->where(['t_article_category.is_deleted' => 0]);
     }
 }

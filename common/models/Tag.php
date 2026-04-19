@@ -2,100 +2,86 @@
 
 namespace common\models;
 
-use Yii;
-use yii\helpers\Html;
+use common\models\base\Tag as BaseTag;
+use common\models\query\TagQuery;
+use yii\base\InvalidConfigException;
+use yii\behaviors\BlameableBehavior;
+use yii\behaviors\SluggableBehavior;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
 
-/**
- * This is the model class for table "tx_tag".
- *
- * @property integer $id
- * @property string $tag_name
- * @property integer $frequency
- */
-class Tag extends \common\models\base\Tag
+class Tag extends BaseTag
 {
-    
-    public static function string2array($tags)
+    public static function find(): TagQuery
     {
-        return preg_split('/\s*,\s*/',trim($tags),-1,PREG_SPLIT_NO_EMPTY);
+        return new TagQuery(static::class);
     }
 
-    public static function array2string($tags)
+    public function rules(): array
     {
-        return implode(',',$tags);
+        return [
+            [['title'], 'required'],
+            [['frequency', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['created_at', 'updated_at', 'deleted_at'], 'safe'],
+            [['title'], 'string', 'max' => 150],
+            [['slug'], 'string', 'max' => 100],
+            [['uuid'], 'string', 'max' => 36],
+            [['slug'], 'unique'],
+        ];
     }
 
-    public static function updateFrequency($oldTags, $newTags)
+    public function behaviors(): array
     {
-        $oldTags = self::string2array($oldTags);
-        $newTags = self::string2array($newTags);
-        self::addTags(array_values(array_diff($newTags, $oldTags)));
-        self::removeTags(array_values(array_diff($oldTags, $newTags)));
+        return [
+            'timestamp' => [
+                'class' => TimestampBehavior::class,
+                'createdAtAttribute' => 'created_at',
+                'updatedAtAttribute' => 'updated_at',
+                'value' => static fn (): string => date('Y-m-d H:i:s'),
+            ],
+            'blameable' => [
+                'class' => BlameableBehavior::class,
+                'createdByAttribute' => 'created_by',
+                'updatedByAttribute' => 'updated_by',
+            ],
+            'slug' => [
+                'class' => SluggableBehavior::class,
+                'attribute' => 'title',
+                'slugAttribute' => 'slug',
+                'immutable' => true,
+                'ensureUnique' => true,
+            ],
+        ];
     }
 
-    public static function updateFrequencyOnDelete($oldTags)
+    /**
+     * @throws InvalidConfigException
+     */
+    public function getArticles(): ActiveQuery
     {
-        $oldTags = self::string2array($oldTags);
-        self::removeTags($oldTags);
+        return $this->hasMany(Article::class, ['id' => 'article_id'])
+            ->viaTable('{{%article_tag}}', ['tag_id' => 'id'])
+        ;
     }
 
-    public static function addTags($tags)
+    /**
+     * Returns most used tags with a usage count calculated from the pivot table.
+     */
+    public static function findTagWeights(int $limit = 8): array
     {
-
-        Tag::updateAllCounters(['frequency' => 1], 'tag_name in ("' . implode ( '"," ', $tags) . '")');
-
-        foreach($tags as $name)
-        {
-            if(!Tag::findOne(['tag_name' => $name,]))
-            {
-                $tag = new Tag;
-                $tag->tag_name = $name;
-                $tag->frequency = 1;
-                $tag->save();
-            }
-        }
-    }
-
-    public static function removeTags($tags)
-    {
-        if(empty($tags))
-            return;
-        Tag::updateAllCounters(['frequency' => 1], 'tag_name in ("' . implode ( '"," ', $tags) . '")');
-        Tag::deleteAll('frequency <= 0');
-    }
-
-    public static function findTagWeights($limit=20)
-    {
-        $models = Tag::find()->limit($limit)->orderBy(['frequency' => SORT_DESC])->all();
-
-        $total = 0;
-        foreach($models as $model){
-            $total += $model->frequency;
-        }
-
-        $tags = [];
-        if($total>0)
-        {
-            foreach($models as $model)
-                $tags[$model->tag_name] = 8 + (int)(16*$model->frequency/($total+10));
-            ksort($tags);
-        }
-        return $tags;
-    }
-
-    public static function getTagLinks($tags,$class=null): array
-    {
-        $links = [];
-        foreach(Tag::string2array($tags) as $tag){
-            if($class==null){
-                $links[] = Html::a($tag,
-                    Yii::$app->getUrlManager()->createUrl(['article/index', 'tag'=>$tag]));
-            }
-            else{
-                $links[] = Html::a('<span class="'.$class.'">'.$tag.'</span>',
-                    Yii::$app->getUrlManager()->createUrl(['article/index', 'tag'=>$tag]));
-            }
-        }
-        return $links;
+        return static::find()
+            ->notDeleted()
+            ->withPublishedArticles()
+            ->select([
+                '{{%tag}}.[[title]]',
+                '{{%tag}}.[[slug]]',
+                'COUNT({{%article_tag}}.[[article_id]]) AS [[weight]]',
+            ])
+            ->groupBy(['{{%tag}}.[[id]]', '{{%tag}}.[[title]]', '{{%tag}}.[[slug]]'])
+            ->orderBy(['weight' => SORT_DESC, '{{%tag}}.[[title]]' => SORT_ASC])
+            ->limit($limit)
+            ->asArray()
+            ->all()
+        ;
     }
 }

@@ -119,6 +119,25 @@ button.btn:hover {
     border-color: #FF6F61;
 }
 
+/* Keep document search input and icon button visually balanced */
+.document-search .document-search-input {
+    margin-bottom: 0;
+}
+
+.document-search .document-search-submit {
+    height: 35px;
+    min-height: 35px;
+    padding: 0 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.document-search .document-search-submit i {
+    font-size: 14px;
+}
+
 
 /**********************************/
 /*********** Top Bar CSS **********/
@@ -468,7 +487,7 @@ button.btn:hover {
 
 .top-news .slick-prev::before,
 .top-news .slick-next::before {
-    font-family: "Font Awesome 5 Free";
+    font-family: "Font Awesome 5 Free", serif;
     font-size: 18px;
     font-weight: 900;
     color: #ffffff;
@@ -572,7 +591,7 @@ button.btn:hover {
 
 .cat-news .slick-prev::before,
 .cat-news .slick-next::before {
-    font-family: "Font Awesome 5 Free";
+    font-family: "Font Awesome 5 Free", serif;
     font-size: 18px;
     font-weight: 900;
     color: #ffffff;
@@ -733,7 +752,7 @@ button.btn:hover {
 .main-news .mn-list ul li::before {
     position: absolute;
     content: '\f061';
-    font-family: 'Font Awesome 5 Free';
+    font-family: 'Font Awesome 5 Free', serif;
     font-weight: 900;
     color: #000000;
     left: 1px;
@@ -879,7 +898,7 @@ button.btn:hover {
 
 .single-news .sn-slider .slick-prev::before,
 .single-news .sn-slider .slick-next::before {
-    font-family: "Font Awesome 5 Free";
+    font-family: "Font Awesome 5 Free", serif;
     font-size: 18px;
     font-weight: 900;
     color: #ffffff;
@@ -1035,7 +1054,7 @@ button.btn:hover {
 .sidebar .category ul li::before {
     position: absolute;
     content: '\f061';
-    font-family: 'Font Awesome 5 Free';
+    font-family: 'Font Awesome 5 Free', serif;
     font-weight: 900;
     color: #000000;
     left: 1px;
@@ -1190,7 +1209,7 @@ button.btn:hover {
 
 .footer .footer-widget ul li a::before {
     content: '\f061';
-    font-family: 'Font Awesome 5 Free';
+    font-family: 'Font Awesome 5 Free', serif;
     font-weight: 900;
     padding-right: 5px;
 }
@@ -1265,7 +1284,6 @@ button.btn:hover {
     top: 0;
     right: 0;
     padding: 0 15px;
-    border: none;
     background: #111111;
     color: #ffffff;
     font-size: 14px;

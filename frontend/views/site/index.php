@@ -1,20 +1,32 @@
 <?php
-
-/* @var $this yii\web\View */
-
-$this->title = 'My Yii Application';
+/**
+ * @var yii\web\View $this
+ */
+$this->title = Yii::$app->name;
 ?>
 <div class="site-index">
+    <div class="container">
+        <?php echo \common\widgets\DbCarousel::widget([
+            'key' => 'index',
+            'assetManager' => Yii::$app->getAssetManager(),
+            'options' => [
+                'class' => 'slide', // enables slide effect
+            ],
+        ]) ?>
 
-    <div class="jumbotron">
-        <h1>Congratulations!</h1>
+        <div class="jumbotron">
+            <h1>Congratulations!</h1>
 
-        <p class="lead">You have successfully created your Yii-powered application.</p>
+            <p class="lead">You have successfully created your Yii-powered application.</p>
 
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
-    </div>
+            <?php echo \common\widgets\DbMenu::widget([
+                'key'=>'frontend-index',
+                'options'=>[
+                    'tag'=>'p'
+                ]
+            ]) ?>
 
-    <div class="body-content">
+        </div>
 
         <div class="row">
             <div class="col-lg-4">

@@ -2,15 +2,13 @@
 
 $this->beginContent('@app/views/layouts/main.php');
 
-use common\helper\MediaTypeHelper;
-use common\models\OfficeMedia;
-
-use common\widgets\bootstrap4news\RecentBlogs;
+use common\models\OfficeSocialAccount;
+use common\widgets\bootstrap4news\RecentArticles;
 use common\widgets\bootstrap4news\TagCloud;
 
-
-$siteLinks = OfficeMedia::find()->where(['media_type' => MediaTypeHelper::getLink()])->limit(6)
-    ->orderBy(['id' => SORT_ASC])->all();
+$siteLinks = OfficeSocialAccount::find()->limit(6)
+    ->orderBy(['id' => SORT_ASC])->all()
+;
 ?>
 
 
@@ -20,7 +18,7 @@ $siteLinks = OfficeMedia::find()->where(['media_type' => MediaTypeHelper::getLin
                 <div class="col-lg-8">
                     <div class="sn-container">
                         <div class="sn-content">
-                            <?= $content; ?>
+                            <?php echo $content; ?>
                         </div>
                     </div>
                 </div>
@@ -31,12 +29,11 @@ $siteLinks = OfficeMedia::find()->where(['media_type' => MediaTypeHelper::getLin
                         <div class="sidebar-widget">
                             <h2 class="sw-title">Tags Cloud</h2>
                             <div class="tags">
-                                <?=
-                                TagCloud::widget([
+                                <?php echo TagCloud::widget([
                                     'title' => 'Tags',
                                     'maxTags' => 8,
-                                ])
-                                ?>
+                                ]);
+?>
                             </div>
                         </div>
 
@@ -44,12 +41,11 @@ $siteLinks = OfficeMedia::find()->where(['media_type' => MediaTypeHelper::getLin
 
                             <h2 class="sw-title">In This Category</h2>
                             <div class="news-list">
-                                <?=
-                                RecentBlogs::widget([
+                                <?php echo RecentArticles::widget([
                                     'title' => 'Recent Posts',
                                     'maxData' => 8,
-                                ])
-                                ?>
+                                ]);
+?>
                             </div>
                         </div>
                     </div>

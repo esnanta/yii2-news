@@ -1,8 +1,8 @@
 <?php
+
 namespace common\widgets\bootstrap4news;
 
-use Yii;
-use common\models\Tag as Tag;
+use common\models\Tag;
 use yii\base\Widget;
 use yii\helpers\Html;
 
@@ -15,19 +15,36 @@ class TagCloud extends Widget
     {
         parent::init();
 
-        if ($this->title === null) {
+        if (null === $this->title) {
             $this->title = 'title';
         }
     }
 
     public function run()
     {
-        $tags = Tag::findTagWeights($this->maxTags);
+        $cacheKey = [__CLASS__, 'weights', (int) $this->maxTags];
+        if (\Yii::$app->has('cache')) {
+            $tags = \Yii::$app->cache->getOrSet(
+                $cacheKey,
+                fn (): array => Tag::findTagWeights($this->maxTags),
+                120
+            );
+        } else {
+            $tags = Tag::findTagWeights($this->maxTags);
+        }
+
         $str = '';
-        foreach($tags as $tag=>$weight)
-        {
-            $link = Html::a($tag, Yii::$app->getUrlManager()
-                        ->createUrl(['article/index','tag'=>$tag]));
+        foreach ($tags as $tagData) {
+            $title = (string) ($tagData['title'] ?? '');
+            if ('' === $title) {
+                continue;
+            }
+
+            $slug = (string) ($tagData['slug'] ?? '');
+            $link = Html::a(
+                Html::encode($title),
+                \Yii::$app->getUrlManager()->createUrl(['article/index', 'tag' => '' !== $slug ? $slug : $title])
+            );
 
             $str .= $link.' ';
         }

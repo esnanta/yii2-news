@@ -30,7 +30,7 @@ class <?= $className ?> extends Base<?= $className . "\n" ?>
      */
     public function rules(): array
     {
-        return array_replace_recursive(parent::rules(),
+        return array_merge(parent::rules(),
 	    [<?= "\n            " . implode(",\n            ", $rules) . "\n        " ?>]);
     }
 	
@@ -38,7 +38,7 @@ class <?= $className ?> extends Base<?= $className . "\n" ?>
     /**
      * @inheritdoc
      */
-    public function attributeHints()
+    public function attributeHints(): array
     {
         return [
 <?php foreach ($labels as $name => $label): ?>

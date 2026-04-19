@@ -21,7 +21,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'title') ?>
 
-    <?= $form->field($model, 'file_name') ?>
+    <?= $form->field($model, 'photo_name') ?>
 
     <?= $form->field($model, 'description') ?>
 

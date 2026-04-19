@@ -2,7 +2,11 @@
 
 namespace frontend\assets;
 
+use common\assets\Html5shiv;
+use rmrevin\yii\fontawesome\NpmFreeAssetBundle;
+use yii\bootstrap4\BootstrapAsset;
 use yii\web\AssetBundle;
+use yii\web\YiiAsset;
 
 /**
  * Main frontend application asset bundle.
@@ -29,7 +33,9 @@ class Bootstrap4news extends AssetBundle
         'js/main.js',
     ];
     public $depends = [
-        'yii\web\YiiAsset',
-        'yii\bootstrap4\BootstrapAsset',
+        YiiAsset::class,
+        BootstrapAsset::class,
+        Html5shiv::class,
+        NpmFreeAssetBundle::class,
     ];
 }

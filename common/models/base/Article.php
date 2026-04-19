@@ -2,52 +2,61 @@
 
 namespace common\models\base;
 
-use Yii;
-use yii\db\ActiveQuery;
-use yii\behaviors\TimestampBehavior;
-use yii\behaviors\BlameableBehavior;
+use common\base\BaseActiveRecord;
+use common\models\ArticleAttachment;
+use common\models\ArticleCategory;
+use common\models\Author;
+use common\models\query\ArticleQuery;
+use common\models\Tag;
+use common\models\User;
 use mootensai\behaviors\UUIDBehavior;
+use mootensai\relation\RelationTrait;
+use yii\base\InvalidConfigException;
+use yii\behaviors\BlameableBehavior;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
 
 /**
- * This is the base model class for table "tx_article".
+ * This is the base model class for table "t_article".
  *
- * @property integer $id
- * @property integer $office_id
- * @property integer $article_category_id
- * @property integer $author_id
- * @property string $title
- * @property string $cover
- * @property string $url
- * @property string $content
- * @property string $description
- * @property string $tags
- * @property integer $publish_status
- * @property integer $pinned_status
- * @property integer $view_counter
- * @property double $rating
- * @property string $date_issued
- * @property string $created_at
- * @property string $updated_at
- * @property integer $created_by
- * @property integer $updated_by
- * @property integer $is_deleted
- * @property string $deleted_at
- * @property integer $deleted_by
- * @property integer $verlock
- * @property string $uuid
- *
- * @property \common\models\Author $author
- * @property \common\models\ArticleCategory $articleCategory
- * @property \common\models\Office $office
+ * @property int                 $id
+ * @property int                 $author_id
+ * @property string              $slug
+ * @property string              $title
+ * @property string              $body
+ * @property string              $view
+ * @property int                 $category_id
+ * @property string              $thumbnail_base_url
+ * @property string              $thumbnail_path
+ * @property int                 $status
+ * @property int                 $created_by
+ * @property int                 $updated_by
+ * @property string              $created_at
+ * @property string              $updated_at
+ * @property string              $published_at
+ * @property int                 $is_pinned
+ * @property int                 $view_count
+ * @property int                 $is_deleted
+ * @property string              $deleted_at
+ * @property int                 $deleted_by
+ * @property int                 $verlock
+ * @property string              $uuid
+ * @property Author              $author
+ * @property User                $createdBy
+ * @property ArticleCategory     $category
+ * @property User                $updatedBy
+ * @property ArticleAttachment[] $articleAttachments
+ * @property Tag[]               $tags
  */
-class Article extends \yii\db\ActiveRecord
+class Article extends BaseActiveRecord
 {
-    use \mootensai\relation\RelationTrait;
+    use RelationTrait;
 
     private $_rt_softdelete;
     private $_rt_softrestore;
 
-    public function __construct(){
+    public function __construct()
+    {
         parent::__construct();
         $this->_rt_softdelete = [
             'deleted_by' => \Yii::$app->user->id,
@@ -60,108 +69,114 @@ class Article extends \yii\db\ActiveRecord
     }
 
     /**
-    * This function helps \mootensai\relation\RelationTrait runs faster
-    * @return array relation names of this model
-    */
+     * This function helps \mootensai\relation\RelationTrait runs faster.
+     *
+     * @return array relation names of this model
+     */
     public function relationNames(): array
     {
         return [
             'author',
-            'articleCategory',
-            'office'
+            'createdBy',
+            'category',
+            'updatedBy',
+            'articleAttachments',
+            'tags',
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function rules(): array
     {
         return [
-            [['office_id', 'article_category_id', 'author_id', 'publish_status', 'pinned_status', 'view_counter', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
-            [['content', 'description', 'tags'], 'string'],
-            [['rating'], 'number'],
-            [['date_issued', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
-            [['title'], 'string', 'max' => 200],
-            [['cover', 'url'], 'string', 'max' => 300],
+            [['author_id', 'category_id', 'status',
+                'created_by', 'updated_by', 'is_pinned',
+                'view_count', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+            [['slug', 'title', 'body'], 'required'],
+            [['body'], 'string'],
+            [['created_at', 'updated_at', 'published_at', 'deleted_at'], 'safe'],
+            [['slug', 'view'], 'string', 'max' => 255],
+            [['title'], 'string', 'max' => 512],
+            [['thumbnail_base_url', 'thumbnail_path'], 'string', 'max' => 1024],
             [['uuid'], 'string', 'max' => 36],
+            [['slug'], 'unique'],
             [['verlock'], 'default', 'value' => '0'],
-            [['verlock'], 'mootensai\components\OptimisticLockValidator']
+            [['verlock'], 'mootensai\components\OptimisticLockValidator'],
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public static function tableName(): string
     {
-        return 'tx_article';
+        return 't_article';
     }
 
     /**
-     *
      * @return string
-     * overwrite function optimisticLock
-     * return string name of field are used to stored optimistic lock
-     *
+     *                overwrite function optimisticLock
+     *                return string name of field are used to stored optimistic lock
      */
-    public function optimisticLock(): string {
+    public function optimisticLock(): string
+    {
         return 'verlock';
     }
 
-    /**
-     * @inheritdoc
-     */
     public function attributeLabels(): array
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'office_id' => Yii::t('app', 'Office ID'),
-            'article_category_id' => Yii::t('app', 'Article Category ID'),
-            'author_id' => Yii::t('app', 'Author ID'),
-            'title' => Yii::t('app', 'Title'),
-            'cover' => Yii::t('app', 'Cover'),
-            'url' => Yii::t('app', 'Url'),
-            'content' => Yii::t('app', 'Content'),
-            'description' => Yii::t('app', 'Description'),
-            'tags' => Yii::t('app', 'Tags'),
-            'publish_status' => Yii::t('app', 'Publish Status'),
-            'pinned_status' => Yii::t('app', 'Pinned Status'),
-            'view_counter' => Yii::t('app', 'View Counter'),
-            'rating' => Yii::t('app', 'Rating'),
-            'date_issued' => Yii::t('app', 'Date Issued'),
-            'is_deleted' => Yii::t('app', 'Is Deleted'),
-            'verlock' => Yii::t('app', 'Verlock'),
-            'uuid' => Yii::t('app', 'Uuid'),
+            'id' => \Yii::t('common', 'ID'),
+            'author_id' => \Yii::t('common', 'Author ID'),
+            'slug' => \Yii::t('common', 'Slug'),
+            'title' => \Yii::t('common', 'Title'),
+            'body' => \Yii::t('common', 'Body'),
+            'view' => \Yii::t('common', 'View'),
+            'category_id' => \Yii::t('common', 'Category ID'),
+            'thumbnail_base_url' => \Yii::t('common', 'Thumbnail Base Url'),
+            'thumbnail_path' => \Yii::t('common', 'Thumbnail Path'),
+            'status' => \Yii::t('common', 'Status'),
+            'published_at' => \Yii::t('common', 'Published At'),
+            'is_pinned' => \Yii::t('common', 'Is Pinned'),
+            'view_count' => \Yii::t('common', 'View Count'),
+            'is_deleted' => \Yii::t('common', 'Is Deleted'),
+            'verlock' => \Yii::t('common', 'Verlock'),
+            'uuid' => \Yii::t('common', 'Uuid'),
         ];
     }
-    
-    /**
-     * @return ActiveQuery
-     */
+
     public function getAuthor(): ActiveQuery
     {
-        return $this->hasOne(\common\models\Author::className(), ['id' => 'author_id']);
+        return $this->hasOne(Author::class, ['id' => 'author_id']);
     }
-        
-    /**
-     * @return ActiveQuery
-     */
-    public function getArticleCategory(): ActiveQuery
+
+    public function getCreatedBy(): ActiveQuery
     {
-        return $this->hasOne(\common\models\ArticleCategory::className(), ['id' => 'article_category_id']);
+        return $this->hasOne(User::class, ['id' => 'created_by']);
     }
-        
-    /**
-     * @return ActiveQuery
-     */
-    public function getOffice(): ActiveQuery
+
+    public function getCategory(): ActiveQuery
     {
-        return $this->hasOne(\common\models\Office::className(), ['id' => 'office_id']);
+        return $this->hasOne(ArticleCategory::class, ['id' => 'category_id']);
     }
-    
+
+    public function getUpdatedBy(): ActiveQuery
+    {
+        return $this->hasOne(User::class, ['id' => 'updated_by']);
+    }
+
+    public function getArticleAttachments(): ActiveQuery
+    {
+        return $this->hasMany(ArticleAttachment::class, ['article_id' => 'id']);
+    }
+
     /**
-     * @inheritdoc
+     * @throws InvalidConfigException
+     */
+    public function getTags(): ActiveQuery
+    {
+        return $this->hasMany(Tag::class, ['id' => 'tag_id'])
+            ->viaTable('{{%article_tag}}', ['article_id' => 'id'])
+        ;
+    }
+
+    /**
      * @return array mixed
      */
     public function behaviors(): array
@@ -183,5 +198,37 @@ class Article extends \yii\db\ActiveRecord
                 'column' => 'uuid',
             ],
         ];
+    }
+
+    /**
+     * The following code shows how to apply a default condition for all queries:
+     *
+     * ```php
+     * class Customer extends ActiveRecord
+     * {
+     *     public static function find()
+     *     {
+     *         return parent::find()->where(['deleted' => false]);
+     *     }
+     * }
+     *
+     * // Use andWhere()/orWhere() to apply the default condition
+     * // SELECT FROM customer WHERE `deleted`=:deleted AND age>30
+     * $customers = Customer::find()->andWhere('age>30')->all();
+     *
+     * // Use where() to ignore the default condition
+     * // SELECT FROM customer WHERE age>30
+     * $customers = Customer::find()->where('age>30')->all();
+     * ```
+     */
+
+    /**
+     * @return ArticleQuery the active query used by this AR class
+     */
+    public static function find(): ArticleQuery
+    {
+        $query = new ArticleQuery(get_called_class());
+
+        return $query->where(['t_article.deleted_by' => 0]);
     }
 }

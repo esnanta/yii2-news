@@ -106,45 +106,42 @@ if ($generator->indexWidgetType === 'grid'):
         'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container-<?= Inflector::camel2id(StringHelper::basename($generator->modelClass))?>']],
         'panel' => [
             'type' => GridView::TYPE_DEFAULT,
-            'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-th-list"></i>  ' . Html::encode($this->title).' </h3>',
+            'heading' => '<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;">'
+                . '<h3 class="panel-title" style="margin:0;"><i class="glyphicon glyphicon-th-list"></i> ' . Html::encode($this->title) . '</h3>'
+                . '<div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap;">'
+                    . Html::a('<i class="fas fa-plus"></i> Add New', ['create'], ['class' => 'btn btn-success'])
+                    . ' '
+                    . Html::a('<i class="fas fa-redo"></i> Reset List', ['index'], ['class' => 'btn btn-info'])
+                    . ' '
+                    . Html::a('<i class="fas fa-search"></i> Advance Search', ['#'], ['class' => 'btn btn-warning search-button'])
+                    . ' '
+                    . ExportMenu::widget([
+                        'dataProvider' => $dataProvider,
+                        'columns' => $gridColumn,
+                        'target' => ExportMenu::TARGET_BLANK,
+                        'fontAwesome' => true,
+                        'dropdownOptions' => [
+                            'label' => 'Full',
+                            'class' => 'btn btn-default',
+                            'itemsBefore' => [
+                                '<li class="dropdown-header">Export All Data</li>',
+                            ],
+                        ],
+<?php if(!$generator->pdf):?>
+                        'exportConfig' => [
+                            ExportMenu::FORMAT_PDF => false
+                        ]
+<?php endif;?>
+                    ])
+                . '</div>'
+            . '</div>',
+            'before' => false,
         ],
 <?php if(!$generator->pdf) : ?>
         'export' => false,
 <?php endif; ?>
-        // your toolbar can include the additional full export menu
-        'toolbar' => [
-        
-            [
-                'content'=>
-                    Html::a('<i class="fas fa-plus"></i> Add New', ['create'], ['class' => 'btn btn-success'])
-                    . ' '.
-                    Html::a('<i class="fas fa-redo"></i> Reset List', ['index'], ['class' => 'btn btn-info'])
-                    . ' '.
-                    Html::a('<i class="fas fa-search"></i> Advance Search', ['#'], ['class' => 'btn btn-warning search-button']),
-                'options' => ['class' => 'btn-group-md', 'style'=>'margin-right:5px']
-            ],
-            
-            '{export}',
-            ExportMenu::widget([
-                'dataProvider' => $dataProvider,
-                'columns' => $gridColumn,
-                'target' => ExportMenu::TARGET_BLANK,
-                'fontAwesome' => true,
-                'dropdownOptions' => [
-                    'label' => 'Full',
-                    'class' => 'btn btn-default',
-                    'itemsBefore' => [
-                        '<li class="dropdown-header">Export All Data</li>',
-                    ],
-                ],
-<?php if(!$generator->pdf):?>
-                'exportConfig' => [
-                    ExportMenu::FORMAT_PDF => false
-                ]
-<?php endif;?>
-            ]) ,
-        ],
-        
+        'toolbar' => false,
+
         'responsive' => true,
         'hover' => true,
         'condensed' => true,

@@ -2,148 +2,101 @@
 
 namespace common\models;
 
-use common\helper\ImageHelper;
 use common\models\base\Author as BaseAuthor;
-use common\service\AssetService;
-use common\service\CacheService;
+use common\models\query\AuthorQuery;
+use trntv\filekit\behaviors\UploadBehavior;
 use Yii;
-use yii\base\Exception;
-use yii\helpers\FileHelper;
-use yii\web\UploadedFile;
 
+/**
+ * This is the model class for table "t_author".
+ *
+ * @property mixed  $publicIdentity
+ * @property string $url
+ */
 class Author extends BaseAuthor
 {
+    /**
+     * Virtual attribute used by filekit upload widget.
+     */
+    public array|string|null $image = null;
+
+    public function behaviors(): array
+    {
+        return array_merge(parent::behaviors(), [
+            'photoUpload' => [
+                'class' => UploadBehavior::class,
+                'attribute' => 'image',
+                'pathAttribute' => 'path',
+                'baseUrlAttribute' => 'base_url',
+                'typeAttribute' => 'type',
+                'sizeAttribute' => 'size',
+                'nameAttribute' => 'name',
+            ],
+        ]);
+    }
 
     public function rules(): array
     {
-        return [
-            //TIDAK PERLU TAMBAHAN
-            //PENGATURAN FILE MENYEBABKAN ERROR UNTUK KASUS CROPPING
-            //[['file_name'], 'file', 'extensions'=>'jpg, gif, png, jpeg','maxSize' => (1024 * 1024 * 1), 'tooBig' => 'Limit is 1Mb'],
+        return array_merge(
+            parent::rules(),
+            [
+                [['image'], 'safe'],
+                [['office_id', 'size', 'created_by', 'updated_by',
+                    'is_deleted', 'deleted_by', 'verlock'], 'integer'],
+                [['address', 'description'], 'string'],
+                [['created_at', 'updated_at', 'deleted_at'], 'safe'],
+                [['title', 'email'], 'string', 'max' => 100],
+                [['phone_number'], 'string', 'max' => 50],
+                [['base_url', 'path', 'name', 'type'], 'string', 'max' => 255],
+                [['uuid'], 'string', 'max' => 36],
+                [['verlock'], 'default', 'value' => '0'],
+                [['verlock'], 'mootensai\components\OptimisticLockValidator'],
+            ]
+        );
+    }
 
-            [['office_id', 'user_id', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
-            [['address', 'description'], 'string'],
-            [['created_at', 'updated_at', 'deleted_at'], 'safe'],
-            [['title', 'email', 'file_name'], 'string', 'max' => 100],
-            [['phone_number'], 'string', 'max' => 50],
-            [['uuid'], 'string', 'max' => 36],
-            [['verlock'], 'default', 'value' => '0'],
-            [['verlock'], 'mootensai\components\OptimisticLockValidator']
+    public function attributeLabels(): array
+    {
+        return [
+            'id' => \Yii::t('common', 'ID'),
+            'office_id' => \Yii::t('common', 'Office'),
+            'title' => \Yii::t('common', 'Title'),
+            'phone_number' => \Yii::t('common', 'Phone Number'),
+            'email' => \Yii::t('common', 'Email'),
+            'base_url' => \Yii::t('common', 'Base Url'),
+            'path' => \Yii::t('common', 'Path'),
+            'name' => \Yii::t('common', 'Name'),
+            'type' => \Yii::t('common', 'Type'),
+            'size' => \Yii::t('common', 'Size'),
+            'address' => \Yii::t('common', 'Address'),
+            'description' => \Yii::t('common', 'Description'),
+            'is_deleted' => \Yii::t('common', 'Is Deleted'),
+            'verlock' => \Yii::t('common', 'Verlock'),
+            'uuid' => \Yii::t('common', 'Uuid'),
         ];
     }
-    private function getPath() : string {
-        $officeUniqueId = CacheService::getInstance()->getOfficeUniqueId();
-        return '/uploads/author/'.$officeUniqueId;
+
+    public function getUrl(): string
+    {
+        return $this->base_url.'/'.$this->path;
     }
 
     /**
-     * fetch stored image file name with complete path
-     * @return string
-     * @throws Exception
+     * @return AuthorQuery the active query used by this AR class
      */
-    /**
-     * fetch stored image file name with complete path
-     * @return string
-     * @throws Exception
-     */
-    public function getAssetFile($isTemporary=false): string
+    public static function find(): AuthorQuery
     {
-        $directory = str_replace('frontend', 'backend', Yii::getAlias('@webroot')) . $this->getPath();
-        if ($isTemporary) :
-            $directory = str_replace('frontend', 'backend', Yii::getAlias('@webroot')) . $this->getTmpPath();
-        endif;
+        $query = new AuthorQuery(get_called_class());
 
-        if (!is_dir($directory)) {
-            FileHelper::createDirectory($directory, $mode = 0777);
-        }
-        return (!empty($this->file_name)) ? $directory.'/'. $this->file_name : '';
+        return $query->where(['t_author.is_deleted' => 0]);
     }
 
-
-    public function getAssetUrl(): string
+    public function getPublicIdentity(): string
     {
-        // return a default image placeholder if your source avatar is not found
-        $defaultImage = '/images/if_skype2512x512_197582.png';
-        $file_name = (!empty($this->file_name)) ? $this->file_name : $defaultImage;
-        $directory = str_replace('frontend', 'backend', Yii::getAlias('@webroot')) . $this->getPath();
-
-        if (file_exists($directory.'/'.$file_name)) {
-            $file_parts = pathinfo($directory.'/'.$file_name);
-            if($file_parts['extension']=='pdf'){
-                Yii::$app->urlManager->baseUrl . $this->getPath().'/'.$file_name;
-            }
-
-            return Yii::$app->urlManager->baseUrl . $this->getPath().'/'.$file_name;
-        }
-        else{
-            return Yii::$app->urlManager->baseUrl . $defaultImage;
-        }
-    }
-
-    public function createBackendDirectory($path): string
-    {
-        $directory = str_replace('frontend', 'backend', Yii::getAlias('@webroot')) . $path;
-        if (!is_dir($directory)) {
-            FileHelper::createDirectory($directory, $mode = 0777);
-        }
-        return $directory;
-    }
-
-    public function getDefaultImage(): string
-    {
-        return str_replace('frontend', 'backend', ImageHelper::getNotAvailable()) ;
-    }
-
-    /**
-    * Process upload of image
-    *
-    * @return mixed the uploaded image instance
-    */
-    public function uploadImage() {
-        // get the uploaded file instance. for multiple file uploads
-        // the following data will return an array (you may need to use
-        // getInstances method)
-        $image = UploadedFile::getInstance($this, 'file_name');
-
-        // if no image was uploaded abort the upload
-        if (empty($image)) {
-            return false;
+        if ($this->title) {
+            return $this->title;
         }
 
-        // store the source file name
-        if($this->title==''){
-            $this->title = $image->name;
-        }
-        
-        // generate a unique file name
-        //$ext = end((explode(".", $image->name)));
-        $tmp = explode('.', $image->name);
-        $ext = end($tmp);  
-        $this->file_name = Yii::$app->security->generateRandomString().".{$ext}";
-
-        // the uploaded image instance
-        return $image;
-    }    
-    
-    /**
-    * Process deletion of image
-    *
-    * @return boolean the status of deletion
-    */
-    public function deleteAsset() {
-        $file = $this->getAssetFile();
-
-        if(AssetService::deleteFile($file)){
-            $this->file_name = null;
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-
-    public function getUrl()
-    {
-        return Yii::$app->getUrlManager()->createUrl(['author/view', 'id' => $this->id, 'title' => $this->title]);
+        return $this->email;
     }
 }

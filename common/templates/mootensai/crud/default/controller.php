@@ -7,6 +7,7 @@ use yii\helpers\StringHelper;
 
 /* @var $this yii\web\View */
 /* @var $generator \mootensai\enhancedgii\crud\Generator */
+/* @var $relations array */
 
 $controllerClass = StringHelper::basename($generator->controllerClass);
 $modelClass = StringHelper::basename($generator->modelClass);
@@ -18,9 +19,22 @@ $pks = $generator->tableSchema->primaryKey;
 $urlParams = $generator->generateUrlParams();
 $actionParams = $generator->generateActionParams();
 $actionParamComments = $generator->generateActionParamComments();
-$skippedRelations = array_map(function($value){
-    return "'$value'";
-},$generator->skippedRelations);
+$typedActionParams = [];
+$typedActionParamNames = [];
+foreach ($pks as $pk) {
+    $typeHint = '';
+    if (isset($generator->tableSchema->columns[$pk])) {
+        $phpType = $generator->tableSchema->columns[$pk]->phpType;
+        if (in_array($phpType, ['int', 'float', 'bool', 'string'], true)) {
+            $typeHint = $phpType . ' ';
+        }
+    }
+    $typedActionParams[] = $typeHint . '$' . $pk;
+    $typedActionParamNames[] = '$' . $pk;
+}
+$typedActionParamsString = implode(', ', $typedActionParams);
+$actionParamNamesString = implode(', ', $typedActionParamNames);
+$permissionPrefix = lcfirst($modelClass);
 echo "<?php\n";
 ?>
 
@@ -33,19 +47,19 @@ use <?= ltrim($generator->searchModelClass, '\\') . (isset($searchModelAlias) ? 
 <?php else : ?>
 use yii\data\ActiveDataProvider;
 <?php endif; ?>
-use <?= ltrim($generator->baseControllerClass, '\\') ?>;
-use yii\db\StaleObjectException;
+use common\base\BaseController;
+use yii\data\ArrayDataProvider;
+use yii\db\Exception;
+use yii\web\Response;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
-
-use common\helper\MessageHelper;
 /**
  * <?= $controllerClass ?> implements the CRUD actions for <?= $modelClass ?> model.
  */
-class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->baseControllerClass) . "\n" ?>
+class <?= $controllerClass ?> extends BaseController
 {
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'verbs' => [
@@ -87,154 +101,154 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
 
     /**
      * Lists all <?= $modelClass ?> models.
-     * @return mixed
+     * @return string
+     * @throws ForbiddenHttpException
      */
-    public function actionIndex()
+    public function actionIndex(): string
     {
-        if(Yii::$app->user->can('index-<?= strtolower($modelClass) ?>')){
+        $this->checkAccess('<?= $permissionPrefix ?>.index');
 <?php if (!empty($generator->searchModelClass)): ?>
-            $searchModel = new <?= isset($searchModelAlias) ? $searchModelAlias : $searchModelClass ?>();
-            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $searchModel = new <?= isset($searchModelAlias) ? $searchModelAlias : $searchModelClass ?>();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-            return $this->render('index', [
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
-            ]);
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
 <?php else : ?>
-            $dataProvider = new ActiveDataProvider([
-                'query' => <?= $modelClass ?>::find(),
-            ]);
+        $dataProvider = new ActiveDataProvider([
+            'query' => <?= $modelClass ?>::find(),
+        ]);
 
-            return $this->render('index', [
-                'dataProvider' => $dataProvider,
-            ]);
+        return $this->render('index', [
+            'dataProvider' => $dataProvider,
+        ]);
 <?php endif; ?>
-        }
-        else{
-            MessageHelper::getFlashAccessDenied();
-            throw new ForbiddenHttpException;
-        }
     }
 
     /**
      * Displays a single <?= $modelClass ?> model.
      * <?= implode("\n     * ", $actionParamComments) . "\n" ?>
-     * @return mixed
+     * @return string
+     * @throws ForbiddenHttpException
+     * @throws NotFoundHttpException
      */
-    public function actionView(<?= $actionParams ?>)
+    public function actionView(<?= $typedActionParamsString ?>): string
     {
-        if(Yii::$app->user->can('view-<?= strtolower($modelClass) ?>')){
-            $model = $this->findModel(<?= $actionParams ?>);
+        $this->checkAccess('<?= $permissionPrefix ?>.view');
+
+        $model = $this->findModel(<?= $actionParamNamesString ?>);
 <?php foreach ($relations as $name => $rel): ?>
 <?php if ($rel[2] && isset($rel[3]) && !in_array($name, $generator->skippedRelations)): ?>
-            $provider<?= $rel[1]?> = new \yii\data\ArrayDataProvider([
-                'allModels' => $model-><?= $name ?>,
-            ]);
+        $provider<?= $rel[1]?> = new ArrayDataProvider([
+            'allModels' => $model-><?= $name ?>,
+        ]);
 <?php endif; ?>
 <?php endforeach; ?>
-            return $this->render('view', [
-                'model' => $this->findModel(<?= $actionParams ?>),
+        return $this->render('view', [
+            'model' => $model,
 <?php foreach ($relations as $name => $rel): ?>
 <?php if ($rel[2] && isset($rel[3]) && !in_array($name, $generator->skippedRelations)): ?>
-                'provider<?= $rel[1]?>' => $provider<?= $rel[1]?>,
+            'provider<?= $rel[1]?>' => $provider<?= $rel[1]?>,
 <?php endif; ?>
 <?php endforeach; ?>
-            ]);
-        }
-        else{
-            MessageHelper::getFlashAccessDenied();
-            throw new ForbiddenHttpException;
-        }
+        ]);
     }
 
     /**
      * Creates a new <?= $modelClass ?> model.
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
+     * @return string|Response
+     * @throws ForbiddenHttpException
+     * @throws Exception
      */
     public function actionCreate()
     {
-        if(Yii::$app->user->can('create-<?= strtolower($modelClass) ?>')){
-            $model = new <?= $modelClass ?>();
+        $this->checkAccess('<?= $permissionPrefix ?>.create');
 
-            if ($model->loadAll(Yii::$app->request->post()<?= !empty($generator->skippedRelations) ? ", [".implode(", ", $skippedRelations)."]" : ""; ?>) && $model->saveAll(<?= !empty($generator->skippedRelations) ? "[".implode(", ", $skippedRelations)."]" : ""; ?>)) {
-                return $this->redirect(['view', <?= $urlParams ?>]);
-            } else {
-                return $this->render('create', [
-                    'model' => $model,
-                ]);
-            }
+        $model = new <?= $modelClass ?>();
+
+        if (
+            $model->loadSafely(Yii::$app->request->post()) &&
+            $model->saveSafely()
+        ) {
+            return $this->redirect(['view', <?= $urlParams ?>]);
         }
-        else{
-            MessageHelper::getFlashAccessDenied();
-            throw new ForbiddenHttpException;
-        }
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
     }
 
     /**
      * Updates an existing <?= $modelClass ?> model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * <?= implode("\n     * ", $actionParamComments) . "\n" ?>
-     * @return mixed
+     * @return Response|string
+     * @throws ForbiddenHttpException
+     * @throws NotFoundHttpException
+     * @throws Exception
      */
-    public function actionUpdate(<?= $actionParams ?>)
+    public function actionUpdate(<?= $typedActionParamsString ?>)
     {
-        if(Yii::$app->user->can('update-<?= strtolower($modelClass) ?>')){
+        $this->checkAccess('<?= $permissionPrefix ?>.update');
+
 <?php if($generator->saveAsNew) : ?>
-            if (Yii::$app->request->post('_asnew') == '1') {
-                $model = new <?= $modelClass ?>();
-            }else{
-                $model = $this->findModel(<?= $actionParams ?>);
-            }
+        if (Yii::$app->request->post('_asnew') == '1') {
+            $model = new <?= $modelClass ?>();
+        } else {
+            $model = $this->findModel(<?= $actionParamNamesString ?>);
+        }
 
 <?php else: ?>
-            $model = $this->findModel(<?= $actionParams ?>);
+        $model = $this->findModel(<?= $actionParamNamesString ?>);
 
 <?php endif; ?>
-            if ($model->loadAll(Yii::$app->request->post()<?= !empty($generator->skippedRelations) ? ", [".implode(", ", $skippedRelations)."]" : ""; ?>) && $model->saveAll(<?= !empty($generator->skippedRelations) ? "[".implode(", ", $skippedRelations)."]" : ""; ?>)) {
-                return $this->redirect(['view', <?= $urlParams ?>]);
-            } else {
-                return $this->render('update', [
-                    'model' => $model,
-                ]);
-            }
+        if (
+            $model->loadSafely(Yii::$app->request->post()) &&
+            $model->saveSafely()
+        ) {
+            return $this->redirect(['view', <?= $urlParams ?>]);
         }
-        else{
-            MessageHelper::getFlashAccessDenied();
-            throw new ForbiddenHttpException;
-        }
+
+        return $this->render('update', [
+            'model' => $model,
+        ]);
     }
 
     /**
      * Deletes an existing <?= $modelClass ?> model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * <?= implode("\n     * ", $actionParamComments) . "\n" ?>
-     * @return mixed
+     * @return Response
+     * @throws ForbiddenHttpException
+     * @throws NotFoundHttpException
      */
-    public function actionDelete(<?= $actionParams ?>)
+    public function actionDelete(<?= $typedActionParamsString ?>): Response
     {
-        if(Yii::$app->user->can('delete-<?= strtolower($modelClass) ?>')){
-            $this->findModel(<?= $actionParams ?>)->deleteWithRelated();
+        $model = $this->findModel(<?= $actionParamNamesString ?>);
+        $this->checkAccess('<?= $permissionPrefix ?>.delete');
+        $model->deleteSafely();
 
-            return $this->redirect(['index']);
-        }
-        else{
-            MessageHelper::getFlashLoginInfo();
-            throw new ForbiddenHttpException;
-        }
+        return $this->redirect(['index']);
     }
 <?php if ($generator->pdf):?>    
     /**
      * 
      * Export <?= $modelClass ?> information into PDF format.
      * <?= implode("\n     * ", $actionParamComments) . "\n" ?>
-     * @return mixed
+     * @return string
+     * @throws ForbiddenHttpException
+     * @throws NotFoundHttpException
      */
-    public function actionPdf(<?= $actionParams ?>) {
-        $model = $this->findModel(<?= $actionParams ?>);
+    public function actionPdf(<?= $typedActionParamsString ?>): string
+    {
+        $this->checkAccess('<?= $permissionPrefix ?>.pdf');
+
+        $model = $this->findModel(<?= $actionParamNamesString ?>);
 <?php foreach ($relations as $name => $rel): ?>
 <?php if ($rel[2] && isset($rel[3]) && !in_array($name, $generator->skippedRelations)): ?>
-        $provider<?= $rel[1] ?> = new \yii\data\ArrayDataProvider([
+        $provider<?= $rel[1] ?> = new ArrayDataProvider([
             'allModels' => $model-><?= $name; ?>,
         ]);
 <?php endif; ?>
@@ -275,22 +289,31 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
     * If creation is successful, the browser will be redirected to the 'view' page.
     *
     * @param mixed $id
-    * @return mixed
+    * @return Response|string
+    * @throws NotFoundHttpException
+    * @throws ForbiddenHttpException
+    * @throws Exception
     */
-    public function actionSaveAsNew(<?= $actionParams; ?>) {
+    public function actionSaveAsNew(<?= $typedActionParamsString; ?>): Response|string
+    {
+        $this->checkAccess('<?= $permissionPrefix ?>.saveAsNew');
+
         $model = new <?= $modelClass ?>();
 
         if (Yii::$app->request->post('_asnew') != '1') {
-            $model = $this->findModel(<?= $actionParams; ?>);
+            $model = $this->findModel(<?= $actionParamNamesString; ?>);
         }
     
-        if ($model->loadAll(Yii::$app->request->post()<?= !empty($generator->skippedRelations) ? ", [".implode(", ", $skippedRelations)."]" : ""; ?>) && $model->saveAll(<?= !empty($generator->skippedRelations) ? "[".implode(", ", $skippedRelations)."]" : ""; ?>)) {
+        if (
+            $model->loadSafely(Yii::$app->request->post()) &&
+            $model->saveSafely()
+        ) {
             return $this->redirect(['view', <?= $urlParams ?>]);
-        } else {
-            return $this->render('saveAsNew', [
-                'model' => $model,
-            ]);
         }
+
+        return $this->render('saveAsNew', [
+            'model' => $model,
+        ]);
     }
 <?php endif; ?>
     
@@ -301,11 +324,11 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
      * @return <?=                   $modelClass ?> the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel(<?= $actionParams ?>)
+    protected function findModel(<?= $typedActionParamsString ?>): <?= $modelClass ?>
     {
 <?php
 if (count($pks) === 1) {
-    $condition = '$id';
+    $condition = $typedActionParamNames[0];
 } else {
     $condition = [];
     foreach ($pks as $pk) {
@@ -329,9 +352,10 @@ if (count($pks) === 1) {
     * @author Yohanes Candrajaya <moo.tensai@gmail.com>
     * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
     *
-    * @return mixed
+    * @return string
+    * @throws NotFoundHttpException
     */
-    public function actionAdd<?= $rel[1] ?>()
+    public function actionAdd<?= $rel[1] ?>(): string
     {
         if (Yii::$app->request->isAjax) {
             $row = Yii::$app->request->post('<?= $rel[1] ?>');

@@ -8,22 +8,28 @@
 /* @var $className string class name */
 /* @var $modelClassName string related model class name */
 
-$modelFullClassName = $modelClassName;
-if ($generator->nsModel !== $generator->queryNs) {
-    $modelFullClassName = '\\' . $generator->queryNs . '\\' . $modelFullClassName;
-}
+$modelNamespace = trim($generator->nsModel, '\\');
+$modelClass = trim($modelClassName, '\\');
+$modelFullClassName = strpos($modelClass, '\\') === false ? $modelNamespace . '\\' . $modelClass : $modelClass;
+
+$queryBaseClassName = ltrim($generator->queryBaseClass, '\\');
+$queryBaseShortName = preg_replace('/^.*\\\\/', '', $queryBaseClassName);
 
 echo "<?php\n";
 ?>
 
 namespace <?= $generator->queryNs ?>;
 
+use <?= $modelFullClassName ?>;
+use <?= $queryBaseClassName ?>;
+use yii\db\ActiveRecord;
+
 /**
- * This is the ActiveQuery class for [[<?= $modelFullClassName ?>]].
+ * This is the ActiveQuery class for [<?= $modelClass ?>].
  *
- * @see <?= $modelFullClassName . "\n" ?>
+ * @see <?= $modelClass . "\n" ?>
  */
-class <?= $className ?> extends <?= '\\' . ltrim($generator->queryBaseClass, '\\') . "\n" ?>
+class <?= $className ?> extends <?= $queryBaseShortName . "\n" ?>
 {
     /*public function active()
     {
@@ -33,16 +39,16 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->queryBaseClass, '\\
 
     /**
      * @inheritdoc
-     * @return <?= $modelFullClassName ?>[]|array
+     * @return <?= $modelClass ?>[]|array
      */
-    public function all($db = null)
+    public function all($db = null): array
     {
         return parent::all($db);
     }
 
     /**
      * @inheritdoc
-     * @return <?= $modelFullClassName ?>|array|null
+     * @return array|ActiveRecord|null
      */
     public function one($db = null)
     {

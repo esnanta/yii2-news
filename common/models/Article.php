@@ -2,37 +2,116 @@
 
 namespace common\models;
 
-use common\helper\ContentHelper;
-use common\helper\LabelHelper;
 use common\models\base\Article as BaseArticle;
+use common\models\query\ArticleQuery;
+use trntv\filekit\behaviors\UploadBehavior;
+use yii\behaviors\BlameableBehavior;
+use yii\behaviors\SluggableBehavior;
+use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
-use yii\helpers\Html;
 
+/**
+ * @property string      $tagKeywordString
+ * @property ActiveQuery $updater
+ */
 class Article extends BaseArticle
 {
-    public const PUBLISH_STATUS_NO = 1;
-    public const PUBLISH_STATUS_YES = 2;
+    public const FLAG_NO = 2;
+    public const FLAG_YES = 1;
 
-    public const PINNED_STATUS_NO = 1;
-    public const PINNED_STATUS_YES = 2;
-    public static $path = '/images';
-    private $_oldTags;
+    public const STATUS_PUBLISHED = 1;
+    public const STATUS_DRAFT = 2;
+
+    public array $attachments = [];
+
+    public ?array $thumbnail = null;
+
+    /**
+     * Editable tag input from form. Pivot table remains the single source of truth.
+     *
+     * @var array<int, string>
+     */
+    public array $tagTitles = [];
+
+    /**
+     * @return array statuses list
+     */
+    public static function statuses(): array
+    {
+        return [
+            self::STATUS_DRAFT => \Yii::t('common', 'Draft'),
+            self::STATUS_PUBLISHED => \Yii::t('common', 'Published'),
+        ];
+    }
+
+    /**
+     * @return array pinning options
+     */
+    public static function pinnedOptions(): array
+    {
+        return [
+            self::FLAG_NO => \Yii::t('common', 'No'),
+            self::FLAG_YES => \Yii::t('common', 'Yes'),
+        ];
+    }
+
+    public function behaviors(): array
+    {
+        return [
+            'timestamp' => [
+                'class' => TimestampBehavior::class,
+                'createdAtAttribute' => 'created_at',
+                'updatedAtAttribute' => 'updated_at',
+                'value' => static function (): string {
+                    return date('Y-m-d H:i:s');
+                },
+            ],
+            BlameableBehavior::class,
+            [
+                'class' => SluggableBehavior::class,
+                'attribute' => 'title',
+                'immutable' => true,
+            ],
+            [
+                'class' => UploadBehavior::class,
+                'attribute' => 'attachments',
+                'multiple' => true,
+                'uploadRelation' => 'articleAttachments',
+                'pathAttribute' => 'path',
+                'baseUrlAttribute' => 'base_url',
+                'orderAttribute' => 'order',
+                'typeAttribute' => 'type',
+                'sizeAttribute' => 'size',
+                'nameAttribute' => 'name',
+            ],
+            [
+                'class' => UploadBehavior::class,
+                'attribute' => 'thumbnail',
+                'pathAttribute' => 'thumbnail_path',
+                'baseUrlAttribute' => 'thumbnail_base_url',
+            ],
+        ];
+    }
 
     public function rules(): array
     {
         return [
-            [['tags'], 'safe'],
-            [['content'], 'validateImageSize'],
-
-            [['office_id', 'article_category_id', 'author_id', 'publish_status', 'pinned_status',
-                'view_counter', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'],
-                'integer'],
-            [['content', 'description'], 'string'],
-            [['rating'], 'number'],
-            [['date_issued', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
-            [['title'], 'string', 'max' => 200],
-            [['cover', 'url'], 'string', 'max' => 300],
+            [['attachments', 'thumbnail'], 'safe'],
+            [['tagTitles'], 'default', 'value' => []],
+            [['tagTitles'], 'each', 'rule' => ['string', 'max' => 150]],
+            [['author_id', 'category_id', 'status',
+                'created_by', 'updated_by', 'is_pinned', 'is_deleted',
+                'deleted_by', 'verlock'], 'integer'],
+            [['slug', 'title', 'body'], 'required'],
+            [['body'], 'string'],
+            [['created_at', 'updated_at', 'deleted_at'], 'safe'],
+            [['published_at'], 'filter', 'filter' => fn ($value) => $this->normalizeDateTimeInput($value)],
+            [['published_at'], 'date', 'format' => 'php:Y-m-d H:i:s'],
+            [['slug', 'view'], 'string', 'max' => 255],
+            [['title'], 'string', 'max' => 512],
+            [['thumbnail_base_url', 'thumbnail_path'], 'string', 'max' => 1024],
             [['uuid'], 'string', 'max' => 36],
+            [['slug'], 'unique'],
             [['verlock'], 'default', 'value' => '0'],
             [['verlock'], 'mootensai\components\OptimisticLockValidator'],
         ];
@@ -41,247 +120,183 @@ class Article extends BaseArticle
     public function attributeLabels(): array
     {
         return [
-            'id' => \Yii::t('app', 'ID'),
-            'office_id' => \Yii::t('app', 'Office'),
-            'article_category_id' => \Yii::t('app', 'Category'),
-            'author_id' => \Yii::t('app', 'Author'),
-            'title' => \Yii::t('app', 'Title'),
-            'cover' => \Yii::t('app', 'Cover'),
-            'url' => \Yii::t('app', 'Url'),
-            'content' => \Yii::t('app', 'Content'),
-            'description' => \Yii::t('app', 'Description'),
-            'tags' => \Yii::t('app', 'Tags'),
-            'publish_status' => \Yii::t('app', 'Publish'),
-            'pinned_status' => \Yii::t('app', 'Pinned'),
-            'view_counter' => \Yii::t('app', 'Counter'),
-            'rating' => \Yii::t('app', 'Rating'),
-            'date_issued' => \Yii::t('app', 'Issued'),
-            'is_deleted' => \Yii::t('app', 'Is Deleted'),
-            'verlock' => \Yii::t('app', 'Verlock'),
-            'uuid' => \Yii::t('app', 'Uuid'),
+            'id' => \Yii::t('common', 'ID'),
+            'author_id' => \Yii::t('common', 'Author'),
+            'slug' => \Yii::t('common', 'Slug'),
+            'title' => \Yii::t('common', 'Title'),
+            'tagTitles' => \Yii::t('common', 'Tags'),
+            'body' => \Yii::t('common', 'Body'),
+            'view' => \Yii::t('common', 'Article View'),
+            'category_id' => \Yii::t('common', 'Category'),
+            'thumbnail_base_url' => \Yii::t('common', 'Thumbnail'),
+            'thumbnail_path' => \Yii::t('common', 'Thumbnail Path'),
+            'status' => \Yii::t('common', 'Status'),
+            'published_at' => \Yii::t('common', 'Published At'),
+            'is_pinned' => \Yii::t('common', 'Pinned'),
+            'is_deleted' => \Yii::t('common', 'Is Deleted'),
+            'verlock' => \Yii::t('common', 'Verlock'),
+            'uuid' => \Yii::t('common', 'Uuid'),
         ];
     }
 
-    /**
-     * Custom validator for image size in content.
-     *
-     * @param mixed $attribute
-     * @param mixed $params
-     * @param mixed $validator
-     */
-    public function validateImageSize($attribute, $params, $validator): void
+    public function setAttributes($values, $safeOnly = true): void
     {
-        $validationResult = ContentHelper::validateImageSize($this->{$attribute});
-        if (true !== $validationResult) {
-            $this->addError($attribute, $validationResult);
+        if (is_array($values)) {
+            if (array_key_exists('thumbnail', $values)
+                && ('' === $values['thumbnail'] || null === $values['thumbnail'])) {
+                $values['thumbnail'] = null;
+            }
+
+            if (array_key_exists('attachments', $values)
+                && ('' === $values['attachments'] || null === $values['attachments'])) {
+                $values['attachments'] = [];
+            }
+
+            if (array_key_exists('published_at', $values)) {
+                $values['published_at'] = $this->normalizeDateTimeInput($values['published_at']);
+            }
+
+            if (array_key_exists('tagTitles', $values)) {
+                $values['tagTitles'] = $this->normalizeTagTitlesInput($values['tagTitles']);
+            }
         }
+
+        parent::setAttributes($values, $safeOnly);
     }
 
-    public function beforeSave($insert): bool
+    public function afterFind(): void
     {
-        if ($this->isNewRecord) {
-            $this->view_counter = 0;
-            $this->publish_status = self::PUBLISH_STATUS_NO;
-            $this->pinned_status = self::PINNED_STATUS_NO;
-        }
+        parent::afterFind();
 
-        if (empty($this->date_issued)) {
-            $this->date_issued = $this->created_at;
-        }
-
-        return parent::beforeSave($insert);
+        $this->tagTitles = array_values(array_unique(array_filter(array_map(
+            static fn (Tag $tag): string => trim((string) $tag->title),
+            $this->tags
+        ))));
     }
 
     public function afterSave($insert, $changedAttributes): void
     {
         parent::afterSave($insert, $changedAttributes);
-        // add your code here
-        Tag::updateFrequency($this->_oldTags, $this->tags);
+
+        $this->syncTagRelations();
     }
 
-    public function afterDelete(): void
+    public function getUpdater(): ActiveQuery
     {
-        parent::afterDelete();
-        // add your code here
-        Tag::updateFrequencyOnDelete($this->_oldTags);
+        return $this->getUpdatedBy();
     }
 
     /**
-     * This is invoked when a record is populated with data from a find() call.
+     * @return ArticleQuery the active query used by this AR class
      */
-    public function afterFind(): void
+    public static function find(): ArticleQuery
     {
-        parent::afterFind();
-        $this->_oldTags = $this->tags;
+        $query = new ArticleQuery(get_called_class());
+
+        return $query->where(['t_article.is_deleted' => 0]);
+    }
+
+    public function getTagKeywordString(): string
+    {
+        return implode(', ', $this->tagTitles);
     }
 
     /**
-     * This function helps \mootensai\relation\RelationTrait runs faster.
+     * Normalizes datetime input coming from HTML datetime-local fields.
+     */
+    private function normalizeDateTimeInput(?string $value): ?string
+    {
+        if (null === $value || '' === $value) {
+            return $value;
+        }
+
+        $normalized = str_replace('T', ' ', trim($value));
+        if (1 === preg_match('/^\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}$/', $normalized)) {
+            $normalized .= ':00';
+        }
+
+        return $normalized;
+    }
+
+    /**
+     * @param mixed $value
      *
-     * @return array relation names of this model
+     * @return array<int, string>
      */
-    public function relationNames(): array
+    private function normalizeTagTitlesInput($value): array
     {
-        return [
-            'author',
-            'articleCategory',
-            'office',
-            'user', // ADD
-        ];
-    }
-
-    public static function getArrayPublishStatus(): array
-    {
-        return [
-            // MASTER
-            self::PUBLISH_STATUS_NO => \Yii::t('app', 'Draft'),
-            self::PUBLISH_STATUS_YES => \Yii::t('app', 'Published'),
-        ];
-    }
-
-    public static function getOnePublishStatus($_module = null): string
-    {
-        if ($_module) {
-            $arrayModule = self::getArrayPublishStatus();
-
-            switch ($_module) {
-                case self::PUBLISH_STATUS_NO == $_module:
-                    $returnValue = LabelHelper::getNo($arrayModule[$_module]);
-
-                    break;
-
-                case self::PUBLISH_STATUS_YES == $_module:
-                    $returnValue = LabelHelper::getYes($arrayModule[$_module]);
-
-                    break;
-
-                default:
-                    $returnValue = LabelHelper::getDefault();
-            }
-
-            return $returnValue;
+        if (is_array($value)) {
+            $items = $value;
+        } elseif (null === $value || '' === $value) {
+            return [];
+        } else {
+            $items = explode(',', (string) $value);
         }
 
-        return 'null';
-    }
-
-    public static function getArrayPinnedStatus(): array
-    {
-        return [
-            // MASTER
-            self::PINNED_STATUS_NO => \Yii::t('app', 'No'),
-            self::PINNED_STATUS_YES => \Yii::t('app', 'Yes'),
-        ];
-    }
-
-    public static function getOnePinnedStatus($_module = null): string
-    {
-        if ($_module) {
-            $arrayModule = self::getArrayPinnedStatus();
-
-            switch ($_module) {
-                case self::PINNED_STATUS_NO == $_module:
-                    $returnValue = LabelHelper::getNo($arrayModule[$_module]);
-
-                    break;
-
-                case self::PINNED_STATUS_YES == $_module:
-                    $returnValue = LabelHelper::getYes($arrayModule[$_module]);
-
-                    break;
-
-                default:
-                    $returnValue = LabelHelper::getDefault();
+        $titles = [];
+        foreach ($items as $item) {
+            $normalized = trim((string) $item);
+            if ('' !== $normalized) {
+                $titles[$normalized] = $normalized;
             }
-
-            return $returnValue;
         }
 
-        return 'null';
+        return array_values($titles);
     }
 
-    public function getUser(): ActiveQuery
+    private function syncTagRelations(): void
     {
-        return $this->hasOne(User::class, ['id' => 'created_by']);
+        $titles = [];
+        foreach ($this->tagTitles as $tagTitle) {
+            $normalized = trim((string) $tagTitle);
+            if ('' !== $normalized) {
+                $titles[$normalized] = $normalized;
+            }
+        }
+
+        $titles = array_values($titles);
+        $db = static::getDb();
+
+        $db->createCommand()->delete('{{%article_tag}}', ['article_id' => $this->id])->execute();
+
+        if ([] === $titles) {
+            return;
+        }
+
+        $existingTags = Tag::find()->where(['title' => $titles])->indexBy('title')->all();
+        $tagIds = [];
+
+        foreach ($titles as $title) {
+            if (!isset($existingTags[$title])) {
+                $tag = new Tag(['title' => $title]);
+                if (!$tag->save()) {
+                    continue;
+                }
+
+                $existingTags[$title] = $tag;
+            }
+
+            $tagIds[] = (int) $existingTags[$title]->id;
+        }
+
+        $tagIds = array_values(array_unique($tagIds));
+        if ([] === $tagIds) {
+            return;
+        }
+
+        $rows = array_map(fn (int $tagId): array => [$this->id, $tagId], $tagIds);
+        $db->createCommand()
+            ->batchInsert('{{%article_tag}}', ['article_id', 'tag_id'], $rows)
+            ->execute()
+        ;
+
+        // Keep in-memory relation and helper output consistent after save.
+        $this->populateRelation('tags', array_values($existingTags));
+        $this->tagTitles = $titles;
     }
 
     public function getUrl(): string
     {
-        return \Yii::$app->getUrlManager()->createUrl(['article/view', 'id' => $this->id, 'title' => $this->title]);
-    }
-
-    public function getPublishUrl(): string
-    {
-        $value = (self::PUBLISH_STATUS_NO == $this->publish_status)
-            ? LabelHelper::getNo(LabelHelper::getPrintIcon())
-            : LabelHelper::getYes(LabelHelper::getPrintIcon());
-
-        return Html::a($value, \Yii::$app->getUrlManager()->createUrl(['article/publish', 'id' => $this->id]));
-    }
-
-    public function getPinUrl(): string
-    {
-        $value = (self::PINNED_STATUS_NO == $this->pinned_status)
-            ? LabelHelper::getNo(LabelHelper::getPinIcon())
-            : LabelHelper::getYes(LabelHelper::getPinIcon());
-
-        return Html::a($value, \Yii::$app->getUrlManager()->createUrl(['article/pinned', 'id' => $this->id]));
-    }
-
-    /**
-     * fetch stored image url.
-     */
-    public function getDefaultAuthorImage(): string
-    {
-        return $this->author->getAssetUrl();
-    }
-
-    /**
-     * Process deletion of image.
-     *
-     * @return bool the status of deletion
-     */
-    public function deleteImage()
-    {
-        $fileDirectory = str_replace('frontend', 'backend', \Yii::getAlias('@webroot')).'/uploads/article';
-
-        $dom = new \DOMDocument();
-        libxml_use_internal_errors(true);
-        $dom->loadHTML($this->content);
-        $xpath = new \DOMXPath($dom);
-
-        foreach ($xpath->query('//img') as $node) {
-            $poolNode = $node->getAttribute('src');
-            if (str_contains($poolNode, 'article/')) {
-                $image = substr($poolNode, strpos($poolNode, 'article/'));
-
-                $file = $fileDirectory.str_replace('article', '', $image);
-                if (file_exists($file)) {
-                    unlink($file);
-                }
-            }
-        }
-    }
-
-    public static function countByMonthPeriod($year, $month)
-    {
-        $monthPeriod = (strlen($month) > 1) ? $month : '0'.$month;
-
-        $query = Article::find()->where(['month_period' => $monthPeriod.$year]);
-
-        $queryCount = $query->asArray()->count();
-
-        return (!empty($queryCount)) ? $queryCount : 0;
-    }
-
-    public static function getCounterByMonthPeriod($year, $month)
-    {
-        $monthPeriod = (strlen($month) > 1) ? $month : '0'.$month;
-
-        $query = Article::find()->where(['month_period' => $monthPeriod.$year]);
-
-        $queryCount = $query->sum('view_counter');
-
-        return (!empty($queryCount)) ? $queryCount : 0;
+        return \Yii::$app->getUrlManager()->createUrl(['article/view', 'slug' => $this->slug]);
     }
 }

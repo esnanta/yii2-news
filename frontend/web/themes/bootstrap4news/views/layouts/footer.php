@@ -1,15 +1,16 @@
 <?php
 /**
- * @var common\models\Office $office
- * @var common\models\OfficeMedia $officeMedias
+ * @var Office      $office
+ * @var OfficeMedia $officeMedias
  */
 
-use common\helper\IconHelper;
-use common\helper\MediaTypeHelper;
-use common\models\OfficeMedia;
+use common\models\Office;
+use common\models\OfficeSocialAccount;
+use rmrevin\yii\fontawesome\FAS;
 
-$siteLinks = OfficeMedia::find()->where(['media_type'=>MediaTypeHelper::getLink()])->limit(6)
-    ->orderBy(['id'=>SORT_ASC])->all();
+$siteLinks = OfficeSocialAccount::find()->limit(6)
+    ->orderBy(['id' => SORT_ASC])->all()
+;
 ?>
 
 
@@ -21,9 +22,9 @@ $siteLinks = OfficeMedia::find()->where(['media_type'=>MediaTypeHelper::getLink(
                 <div class="footer-widget">
                     <h3 class="title">Get in Touch</h3>
                     <div class="contact-info">
-                        <p><i class="fa fa-map-marker"></i><?=$office->address;?></p>
-                        <p><i class="fa fa-envelope"></i><?=$office->email;?></p>
-                        <p><i class="fa fa-phone"></i><?=$office->phone_number;?></p>
+                        <p><i class="fa fa-map-marker"></i><?php echo $office->address; ?></p>
+                        <p><i class="fa fa-envelope"></i><?php echo $office->email; ?></p>
+                        <p><i class="fa fa-phone"></i><?php echo $office->phone_number; ?></p>
 
                     </div>
                 </div>
@@ -34,8 +35,8 @@ $siteLinks = OfficeMedia::find()->where(['media_type'=>MediaTypeHelper::getLink(
                     <h3 class="title">Useful Links</h3>
                     <ul>
                         <?php foreach ($siteLinks as $siteLinkItem) {  ?>
-                            <li><a href="<?=$siteLinkItem->description?>">
-                                    <?=$siteLinkItem->title?>
+                            <li><a href="<?php echo $siteLinkItem->description; ?>">
+                                    <?php echo $siteLinkItem->title; ?>
                                 </a>
                             </li>
                         <?php } ?>
@@ -49,8 +50,8 @@ $siteLinks = OfficeMedia::find()->where(['media_type'=>MediaTypeHelper::getLink(
                     <div class="footer-widget">
                         <div class="social">
                             <?php foreach ($officeMedias as $officeMediaItem) {  ?>
-                                <a href="<?= $officeMediaItem->description; ?>">
-                                    <i class="<?= $officeMediaItem->title; ?>"></i></a>
+                                <a href="<?php echo $officeMediaItem->description; ?>">
+                                    <i class="<?php echo $officeMediaItem->title; ?>"></i></a>
                             <?php } ?>
                         </div>
 
@@ -83,7 +84,7 @@ $siteLinks = OfficeMedia::find()->where(['media_type'=>MediaTypeHelper::getLink(
     <div class="container">
         <div class="row">
             <div class="col-md-6 copyright">
-                <p><?= IconHelper::getGlobe()?> <a href="https://daraspace.com"> DARASPACE</a> | Some Rights Reserved</p>
+                <p><?php echo FAS::icon('globe'); ?> <a href="https://daraspace.com"> DARASPACE</a> | Some Rights Reserved</p>
             </div>
 
             <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->

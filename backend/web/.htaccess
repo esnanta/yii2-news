@@ -1,6 +1,9 @@
-RewriteEngine on
+RewriteEngine On
 
-RewriteCond %{REQUEST_FILENAME} !-f 
-RewriteCond %{REQUEST_FILENAME} !-d 
+# Redirect only direct legacy requests that still expose /backend/web.
+RewriteCond %{THE_REQUEST} \s/+[^\s]*?/backend/web(?:/|\s|\?) [NC]
+RewriteRule ^(.*)$ ../$1 [R=301,L,NE]
 
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . index.php

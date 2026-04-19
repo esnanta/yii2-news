@@ -1,0 +1,79 @@
+<?php
+
+namespace common\models;
+
+use common\behaviors\CacheInvalidateBehavior;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
+
+/**
+ * This is the model class for table "text_block".
+ *
+ * @property int    $id
+ * @property string $key
+ * @property string $title
+ * @property string $body
+ * @property int    $status
+ */
+class WidgetText extends ActiveRecord
+{
+    public const STATUS_ACTIVE = 1;
+    public const STATUS_DRAFT = 0;
+
+    public static function tableName()
+    {
+        return '{{%widget_text}}';
+    }
+
+    /**
+     * @return array statuses list
+     */
+    public static function statuses()
+    {
+        return [
+            self::STATUS_DRAFT => \Yii::t('common', 'Draft'),
+            self::STATUS_ACTIVE => \Yii::t('common', 'Active'),
+        ];
+    }
+
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::class,
+            'cacheInvalidate' => [
+                'class' => CacheInvalidateBehavior::class,
+                'cacheComponent' => 'frontendCache',
+                'keys' => [
+                    function ($model) {
+                        return [
+                            self::class,
+                            $model->key,
+                        ];
+                    },
+                ],
+            ],
+        ];
+    }
+
+    public function rules()
+    {
+        return [
+            [['key', 'title', 'body'], 'required'],
+            [['key'], 'unique'],
+            [['body'], 'string'],
+            [['status'], 'integer'],
+            [['title', 'key'], 'string', 'max' => 255],
+        ];
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'id' => \Yii::t('common', 'ID'),
+            'key' => \Yii::t('common', 'Key'),
+            'title' => \Yii::t('common', 'Title'),
+            'body' => \Yii::t('common', 'Body'),
+            'status' => \Yii::t('common', 'Active'),
+        ];
+    }
+}

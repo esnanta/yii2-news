@@ -24,7 +24,6 @@ echo "<?php\n";
 
 namespace <?= $generator->nsSearchModel ?>;
 
-use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use <?= ltrim($generator->nsModel . '\\' . $modelClass, '\\') . (isset($modelAlias) ? " as $modelAlias" : "") ?>;
@@ -38,7 +37,7 @@ use <?= ltrim($generator->nsModel . '\\' . $modelClass, '\\') . (isset($modelAli
     /**
      * @inheritdoc
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             <?= implode(",\n            ", $rules) ?>,
@@ -48,20 +47,20 @@ use <?= ltrim($generator->nsModel . '\\' . $modelClass, '\\') . (isset($modelAli
     /**
      * @inheritdoc
      */
-    public function scenarios()
+    public function scenarios(): array
     {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
 
     /**
-     * Creates data provider instance with search query applied
+     * Creates a data provider instance with a search query applied
      *
      * @param array $params
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search(array $params): ActiveDataProvider
     {
         $query = <?= isset($modelAlias) ? $modelAlias : $modelClass ?>::find();
 
