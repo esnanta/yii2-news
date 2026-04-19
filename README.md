@@ -5,19 +5,23 @@
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![PHP](https://img.shields.io/badge/PHP-8.x-blue)
 
-Yii2 News is an open-source Yii2 application for managing news content, authors, staff, and
-assets (images and documents). This project is based on Yii2 Starter Kit and adapted for a news portal workflow.
+Yii2 News is an open-source Yii2 application for managing news content, authors, staff, and assets (images and documents).
+This project is based on Yii2 Starter Kit and adapted for a news portal workflow.
 
-## Highlights
+- Repository: https://github.com/esnanta/yii2-news
+- Issues: https://github.com/esnanta/yii2-news/issues
 
-- Multi-app architecture: `frontend`, `backend`, `api`, `console`, and `storage`
-- CMS-like news management: articles, categories, static pages, menus, carousels, and text blocks
-- User management with RBAC (`guest`, `user`, `manager`, `administrator`)
-- REST API (`api/modules/v1`) with Swagger documentation
-- File upload, image processing (Glide), and file storage
-- Docker-first development workflow with Codeception test suites
+## Features
 
-## Application Map
+### Admin backend
+- Dashboard theme: [AdminLTE 3](https://adminlte.io/themes/v3/)
+- Content management: articles, categories, static pages, menus, carousels, and text blocks
+- Settings editor (KeyStorage based)
+- [File manager](https://github.com/MihailDev/yii2-elfinder)
+- Users and RBAC management
+- Events timeline, logs viewer, and system monitoring
+
+## Application map
 
 - `frontend/`: public web interface for readers
 - `backend/`: admin panel for content and user management
@@ -35,48 +39,46 @@ Screenshots:
 
 ## Requirements
 
+### Docker path (recommended)
+- Docker
+- Docker Compose
+- Composer 2.x
+
+### Manual path (without Docker)
 - PHP 8.x
 - Composer 2.x
-- Docker + Docker Compose (recommended)
-- Node.js + npm (for asset build)
+- Node.js + npm
+- MySQL/MariaDB
+- Web server (Nginx/Apache)
 
-## Installation (Recommended: Docker)
+## Installation
 
-This section follows the Starter Kit installation flow, adapted to this repository workflow.
+Choose one installation path:
 
-1. Clone repository
+- [Docker installation](#docker-installation-recommended)
+- [Manual installation](#manual-installation-non-docker)
+
+### Docker installation (recommended)
+
+1. Copy environment file:
 
 ```bash
-git clone https://github.com/esnanta/yii2-news.git
-cd yii2-news
+cp .env.dist .env
 ```
 
-2. Build and start the application stack
+2. Build and set up app/services:
 
 ```bash
 composer docker:build
 ```
 
-The command above automatically:
-
-- creates `.env` from `.env.dist`
-- starts Docker containers
-- installs PHP dependencies
-- runs app setup (`php console/yii app/setup --interactive=0`)
-- installs frontend dependencies (`npm install`) and builds bundles (`npm run build`)
-
-3. Add local hosts (if not already configured)
+3. Start containers (if not already running):
 
 ```bash
-sudo sh -c 'cat >> /etc/hosts <<EOF
-127.0.0.1 yii2-starter-kit.localhost
-127.0.0.1 backend.yii2-starter-kit.localhost
-127.0.0.1 api.yii2-starter-kit.localhost
-127.0.0.1 storage.yii2-starter-kit.localhost
-EOF'
+composer docker:start
 ```
 
-4. Open the applications
+4. Open applications:
 
 - Frontend: `http://yii2-starter-kit.localhost`
 - Backend: `http://backend.yii2-starter-kit.localhost`
@@ -84,7 +86,44 @@ EOF'
 - Storage: `http://storage.yii2-starter-kit.localhost`
 - Mailcatcher: `http://localhost:1080`
 
-## Default Accounts
+### Manual installation (non-Docker)
+
+1. Create a new project (you can replace `myproject.com` with your preferred folder name):
+
+```bash
+composer create-project yii2-starter-kit/yii2-starter-kit myproject.com --ignore-platform-reqs
+```
+
+2. Move into the project directory and install dependencies:
+
+```bash
+cd myproject.com
+taskctl install
+```
+
+3. Run setup/build with one of these options:
+
+- Option A:
+
+```bash
+taskctl build:env
+```
+
+- Option B:
+
+```bash
+php console/yii app/setup
+npm run build
+```
+
+4. Point your web server to these entry points:
+
+- `frontend/web/index.php`
+- `backend/web/index.php`
+- `api/web/index.php`
+- `storage/web/index.php`
+
+## Default accounts
 
 Seed data from migrations includes:
 
@@ -92,34 +131,15 @@ Seed data from migrations includes:
 - `manager`: `manager` / `manager`
 - `user`: `user` / `user`
 
-## Manual Installation (Non-Docker)
-
-If you are not using Docker, you can set up manually:
-
-```bash
-cp .env.dist .env
-composer install --prefer-dist -o
-php console/yii app/setup --interactive=0
-npm install
-npm run build
-```
-
-Then point your web server to each app entry point:
-
-- `frontend/web/index.php`
-- `backend/web/index.php`
-- `api/web/index.php`
-- `storage/web/index.php`
-
 ## API and Swagger
 
 - Swagger UI: `http://api.yii2-starter-kit.localhost/site/docs`
 - OpenAPI JSON: `http://api.yii2-starter-kit.localhost/site/json-schema`
-- Currently active API route: `v1/article` (`index`, `view`, `options`)
+- Active route: `v1/article` (`index`, `view`, `options`)
 
-## Development Workflow
+## Development workflow
 
-Use the repository composer scripts:
+Use composer scripts:
 
 ```bash
 composer docker:start
@@ -128,13 +148,13 @@ composer docker:tests
 composer docker:cleanup
 ```
 
-Run the test suite in a separate terminal after `composer docker:tests`:
+After `composer docker:tests`, run tests in another terminal:
 
 ```bash
 docker-compose exec -T console vendor/bin/codecept run
 ```
 
-## Database Utilities
+## Database utilities
 
 Destructive database reset:
 
@@ -142,6 +162,16 @@ Destructive database reset:
 php console/yii migrate/fresh --interactive=0
 php console/yii rbac-migrate/up --interactive=0
 ```
+
+## Documentation
+
+For more detailed guides, see:
+
+- Installation: [`docs/installation.md`](docs/installation.md)
+- Testing: [`docs/testing.md`](docs/testing.md)
+- Components and architecture: [`docs/components.md`](docs/components.md)
+- Console commands: [`docs/console.md`](docs/console.md)
+- FAQ: [`docs/faq.md`](docs/faq.md)
 
 ## Notes
 

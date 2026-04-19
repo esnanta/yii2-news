@@ -33,3 +33,5 @@ phpunit.phar
 # Tests
 tests/codeception/*/_support/_generated/*
 /.php-cs-fixer.cache
+/command-note.md
+/AGENTS.md
