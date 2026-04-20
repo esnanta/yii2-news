@@ -1,5 +1,10 @@
 RewriteEngine On
 
+# Redirect only direct legacy requests that still expose /frontend/web.
+RewriteCond %{THE_REQUEST} \s/+[^\s]*/frontend/web(?:/|\s|\?) [NC]
+RewriteCond %{REQUEST_URI} ^(.*/)?frontend/web/?(.*)$ [NC]
+RewriteRule ^(.*)$ %1%2 [R=301,L,NE]
+
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . index.php
