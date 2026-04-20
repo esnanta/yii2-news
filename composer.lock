@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "21fbc269469e279adf86564b3049a46c",
+    "content-hash": "a1bf4a480f327161a03c97387f39ab38",
     "packages": [
         {
             "name": "alexantr/yii2-elfinder",
@@ -13824,15 +13824,12 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^8.0",
+        "php": "~8.0.0 || ~8.1.0 || ~8.2.0",
         "ext-intl": "*",
         "ext-gd": "*",
         "ext-libxml": "*",
         "ext-dom": "*"
     },
     "platform-dev": {},
-    "platform-overrides": {
-        "php": "8.2.0"
-    },
     "plugin-api-version": "2.6.0"
 }

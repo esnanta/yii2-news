@@ -29,7 +29,7 @@
     "source": "https://github.com/esnanta/yii2-news"
   },
   "require": {
-    "php": "^8.0",
+    "php": "~8.0.0 || ~8.1.0 || ~8.2.0",
     "ext-intl": "*",
     "ext-gd": "*",
     "yiisoft/yii2": "^2.0.13",
@@ -96,9 +96,6 @@
     "allow-plugins": {
       "yiisoft/yii2-composer": true,
       "dealerdirect/phpcodesniffer-composer-installer": true
-    },
-    "platform": {
-      "php": "8.2.0"
     }
   },
   "repositories": [
