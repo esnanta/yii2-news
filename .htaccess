@@ -1,12 +1,22 @@
 RewriteEngine On
 
+# Canonicalize legacy frontend/web URLs to root frontend URL.
+RewriteCond %{THE_REQUEST} \s/+[^\s]*/frontend/web(?:/|\s|\?) [NC]
+RewriteCond %{REQUEST_URI} ^(.*/)?frontend/web/?(.*)$ [NC]
+RewriteRule ^frontend/web/?(.*)$ %1%2 [R=301,L,NE]
+
+# Canonicalize legacy /frontend URLs to root frontend URL.
+RewriteCond %{THE_REQUEST} \s/+[^\s]*/frontend(?:/|\s|\?) [NC]
+RewriteCond %{REQUEST_URI} ^(.*/)?frontend/?(.*)$ [NC]
+RewriteRule ^frontend/?(.*)$ %1%2 [R=301,L,NE]
+
 # Canonicalize legacy backend/web URLs to clean backend URLs.
 RewriteCond %{THE_REQUEST} \s/+[^\s]*?/backend/web(?:/|\s|\?) [NC]
 RewriteRule ^backend/web/?(.*)$ backend/$1 [R=301,L,NE]
 
-# Canonicalize other old URLs that still contain /web.
-RewriteCond %{THE_REQUEST} \s/+[^\s]*?(frontend|storage)/web(?:/|\s|\?) [NC]
-RewriteRule ^(frontend|storage)/web/?(.*)$ $1/$2 [R=301,L,NE]
+# Canonicalize old storage/web URLs to clean storage URLs.
+RewriteCond %{THE_REQUEST} \s/+[^\s]*?/storage/web(?:/|\s|\?) [NC]
+RewriteRule ^storage/web/?(.*)$ storage/$1 [R=301,L,NE]
 
 # Stop processing internally rewritten /web paths to avoid rewrite loops.
 RewriteRule ^(frontend|backend|storage)/web(?:/|$) - [L]
@@ -17,7 +27,7 @@ RewriteRule ^backend(?:/(.*))?$ backend/web/$1 [L,QSA]
 # Clean storage URL: /storage -> storage/web
 RewriteRule ^storage(?:/(.*))?$ storage/web/$1 [L,QSA]
 
-# Optional clean frontend URL: /frontend -> frontend/web
+# Legacy compatibility for old /frontend URLs (canonicalized above).
 RewriteRule ^frontend(?:/(.*))?$ frontend/web/$1 [L,QSA]
 
 # Default app at project root without exposing /web.
