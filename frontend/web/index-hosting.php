@@ -6,6 +6,7 @@ use yii\helpers\ArrayHelper;
 use yii\web\Application;
 
 // Project root resolved for this hosting setup.
+// ex. public_html/yii2-news/frontend/web -> 4
 $root = dirname(__DIR__, 4);
 
 // Application source directory.
