@@ -4,6 +4,7 @@ use Sitemaped\Sitemap;
 
 return [
     'class' => 'yii\web\UrlManager',
+    'baseUrl' => '', //Only if generate link still inserts folder name
     'enablePrettyUrl' => true,
     'showScriptName' => false,
     'rules' => [
