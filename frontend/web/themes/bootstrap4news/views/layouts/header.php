@@ -15,7 +15,10 @@ use yii\helpers\Html;
 $backendBaseUrl = rtrim(Yii::getAlias('@backendUrl'), '/');
 $backendLoginUrl = $backendBaseUrl.'/sign-in/login';
 $backendDashboardUrl = $backendBaseUrl.'/site/index';
-$currentRoute = '/'.Yii::$app->controller->getRoute();
+$currentRoute = '/'.ltrim(Yii::$app->controller->getRoute(), '/');
+// Normalize route when web server internally rewrites to project web roots.
+$currentRoute = preg_replace('#^/yii2-news/frontend/web/#', '/', $currentRoute);
+$currentRoute = preg_replace('#^/frontend/web/#', '/', $currentRoute);
 $currentSlug = Yii::$app->request->get('slug');
 $currentCategoryId = Yii::$app->request->get('cat');
 $menuLinkClass = 'g-color-secondary-dark-v1 g-color-primary--hover g-text-underline--none--hover g-py-5 g-px-20';
