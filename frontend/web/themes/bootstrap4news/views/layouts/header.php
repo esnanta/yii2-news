@@ -15,10 +15,7 @@ use yii\helpers\Html;
 $backendBaseUrl = rtrim(Yii::getAlias('@backendUrl'), '/');
 $backendLoginUrl = $backendBaseUrl.'/sign-in/login';
 $backendDashboardUrl = $backendBaseUrl.'/site/index';
-$currentRoute = '/'.ltrim(Yii::$app->controller->getRoute(), '/');
-// Normalize route when web server internally rewrites to project web roots.
-$currentRoute = preg_replace('#^/yii2-news/frontend/web/#', '/', $currentRoute);
-$currentRoute = preg_replace('#^/frontend/web/#', '/', $currentRoute);
+$currentRoute = '/'.Yii::$app->controller->getRoute();
 $currentSlug = Yii::$app->request->get('slug');
 $currentCategoryId = Yii::$app->request->get('cat');
 $menuLinkClass = 'g-color-secondary-dark-v1 g-color-primary--hover g-text-underline--none--hover g-py-5 g-px-20';
@@ -114,7 +111,7 @@ if (!empty($categories)) {
                         echo '</li>';
                     }
                 }
-                ?>
+?>
                 </div>
             </div>
         </div>
@@ -164,13 +161,13 @@ if (!empty($categories)) {
             <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                 <div class="mr-auto">
                     <?php echo Nav::widget([
-                        'options' => [
-                            'class' => [
-                                'navbar-nav', 'mr-auto',
-                            ],
-                        ],
-                        'items' => $menuItems,
-                    ]); ?>
+        'options' => [
+            'class' => [
+                'navbar-nav', 'mr-auto',
+            ],
+        ],
+        'items' => $menuItems,
+    ]); ?>
 
                 </div>
                 <div class="social ml-auto">
