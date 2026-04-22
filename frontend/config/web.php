@@ -68,6 +68,7 @@ $config = [
         ],
         'request' => [
             'cookieValidationKey' => env('FRONTEND_COOKIE_VALIDATION_KEY'),
+            'baseUrl' => env('FRONTEND_BASE_URL'),
         ],
         'user' => [
             'class' => User::class,
