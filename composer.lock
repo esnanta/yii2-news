@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a1bf4a480f327161a03c97387f39ab38",
+    "content-hash": "aebc1d0f9eb50604b3a6d53e7a7e6b43",
     "packages": [
         {
             "name": "alexantr/yii2-elfinder",
@@ -249,7 +249,7 @@
             "version": "1.12.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/components/jqueryui.git",
+                "url": "git@github.com:components/jqueryui.git",
                 "reference": "44ecf3794cc56b65954cc19737234a3119d036cc"
             },
             "dist": {
@@ -1470,72 +1470,6 @@
                 }
             ],
             "time": "2022-05-21T17:30:32+00:00"
-        },
-        {
-            "name": "jeremykendall/php-domain-parser",
-            "version": "3.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/jeremykendall/php-domain-parser.git",
-                "reference": "896e7e70f02bd4fd77190052799bc61e4d779672"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/jeremykendall/php-domain-parser/zipball/896e7e70f02bd4fd77190052799bc61e4d779672",
-                "reference": "896e7e70f02bd4fd77190052799bc61e4d779672",
-                "shasum": ""
-            },
-            "require": {
-                "ext-curl": "*",
-                "ext-intl": "*",
-                "ext-mbstring": "*",
-                "php": ">=5.3.0"
-            },
-            "require-dev": {
-                "jeremykendall/debug-die": "0.0.1.*",
-                "mikey179/vfsstream": "~1.4",
-                "phpunit/phpunit": "~4.4"
-            },
-            "bin": [
-                "bin/parse",
-                "bin/update-psl"
-            ],
-            "type": "library",
-            "autoload": {
-                "files": [
-                    "src/pdp-parse-url.php"
-                ],
-                "psr-0": {
-                    "Pdp\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jeremy Kendall",
-                    "homepage": "http://about.me/jeremykendall",
-                    "role": "Developer"
-                },
-                {
-                    "name": "Contributors",
-                    "homepage": "https://github.com/jeremykendall/php-domain-parser/graphs/contributors"
-                }
-            ],
-            "description": "Public Suffix List based URL parsing implemented in PHP.",
-            "homepage": "https://github.com/jeremykendall/php-domain-parser",
-            "keywords": [
-                "Public Suffix List",
-                "domain parsing",
-                "url parsing"
-            ],
-            "support": {
-                "issues": "https://github.com/jeremykendall/php-domain-parser/issues",
-                "source": "https://github.com/jeremykendall/php-domain-parser"
-            },
-            "time": "2015-03-30T12:49:45+00:00"
         },
         {
             "name": "kartik-v/bootstrap-fileinput",
@@ -3942,30 +3876,35 @@
         },
         {
             "name": "league/uri",
-            "version": "5.0.0",
+            "version": "5.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/uri.git",
-                "reference": "ef6f413061bd4a9926c4c4394a5f5d384bfd8487"
+                "reference": "f2bceb755f1108758cf4cf925e4cd7699ce686aa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/uri/zipball/ef6f413061bd4a9926c4c4394a5f5d384bfd8487",
-                "reference": "ef6f413061bd4a9926c4c4394a5f5d384bfd8487",
+                "url": "https://api.github.com/repos/thephpleague/uri/zipball/f2bceb755f1108758cf4cf925e4cd7699ce686aa",
+                "reference": "f2bceb755f1108758cf4cf925e4cd7699ce686aa",
                 "shasum": ""
             },
             "require": {
                 "ext-fileinfo": "*",
                 "ext-intl": "*",
                 "ext-mbstring": "*",
-                "league/uri-manipulations": "^1.0",
-                "league/uri-schemes": "^1.0",
-                "php": ">=7.0"
+                "league/uri-components": "^1.8",
+                "league/uri-hostname-parser": "^1.1",
+                "league/uri-interfaces": "^1.0",
+                "league/uri-manipulations": "^1.5",
+                "league/uri-parser": "^1.4",
+                "league/uri-schemes": "^1.2",
+                "php": ">=7.0.13",
+                "psr/http-message": "^1.0"
             },
             "type": "metapackage",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "5.0.x-dev"
+                    "dev-master": "5.x-dev"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -3985,11 +3924,15 @@
                 "data-uri",
                 "file-uri",
                 "ftp",
+                "hostname",
                 "http",
                 "https",
                 "middleware",
+                "parse_str",
                 "parse_url",
                 "psr-7",
+                "query-string",
+                "querystring",
                 "rfc3986",
                 "rfc3987",
                 "uri",
@@ -4001,42 +3944,48 @@
                 "issues": "https://github.com/thephpleague/uri/issues",
                 "source": "https://github.com/thephpleague/uri/tree/master"
             },
-            "time": "2017-02-06T08:50:02+00:00"
+            "time": "2018-03-14T17:19:39+00:00"
         },
         {
             "name": "league/uri-components",
-            "version": "1.0.4",
+            "version": "1.8.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/uri-components.git",
-                "reference": "268c971e9ddeb079adc083d74556f14ddb54e4ca"
+                "reference": "d0412fd730a54a8284009664188cf239070eae64"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/uri-components/zipball/268c971e9ddeb079adc083d74556f14ddb54e4ca",
-                "reference": "268c971e9ddeb079adc083d74556f14ddb54e4ca",
+                "url": "https://api.github.com/repos/thephpleague/uri-components/zipball/d0412fd730a54a8284009664188cf239070eae64",
+                "reference": "d0412fd730a54a8284009664188cf239070eae64",
                 "shasum": ""
             },
             "require": {
+                "ext-curl": "*",
                 "ext-fileinfo": "*",
                 "ext-intl": "*",
-                "ext-mbstring": "*",
-                "jeremykendall/php-domain-parser": "^3.0",
+                "league/uri-hostname-parser": "^1.1.0",
                 "php": ">=7.0"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.3",
+                "phpstan/phpstan": "^0.9.2",
+                "phpstan/phpstan-phpunit": "^0.9.4",
+                "phpstan/phpstan-strict-rules": "^0.9.0",
                 "phpunit/phpunit": "^6.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev"
+                    "dev-master": "1.x-dev"
                 }
             },
             "autoload": {
+                "files": [
+                    "src/functions_include.php"
+                ],
                 "psr-4": {
-                    "League\\Uri\\Components\\": "src"
+                    "League\\Uri\\": "src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -4070,7 +4019,81 @@
                 "issues": "https://github.com/thephpleague/uri-components/issues",
                 "source": "https://github.com/thephpleague/uri-components/tree/master"
             },
-            "time": "2017-08-10T13:35:19+00:00"
+            "time": "2018-10-24T11:31:02+00:00"
+        },
+        {
+            "name": "league/uri-hostname-parser",
+            "version": "1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/uri-hostname-parser.git",
+                "reference": "a3ef2f862640bfd79dd3fc28f23c98be09152603"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/uri-hostname-parser/zipball/a3ef2f862640bfd79dd3fc28f23c98be09152603",
+                "reference": "a3ef2f862640bfd79dd3fc28f23c98be09152603",
+                "shasum": ""
+            },
+            "require": {
+                "ext-intl": "*",
+                "php": ">=7.0",
+                "psr/simple-cache": "^1.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.7",
+                "mikey179/vfsstream": "^1.6",
+                "phpunit/phpunit": "^6.3"
+            },
+            "suggest": {
+                "ext-curl": "To use the bundle cURL HTTP client",
+                "psr/simple-cache-implementation": "To enable using other cache providers"
+            },
+            "bin": [
+                "bin/update-psl-icann-section"
+            ],
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/functions_include.php"
+                ],
+                "psr-4": {
+                    "League\\Uri\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jeremy Kendall",
+                    "homepage": "http://about.me/jeremykendall",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Ignace Nyamagana Butera",
+                    "homepage": "http://nyamsprod.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Contributors",
+                    "homepage": "https://github.com/phpleague/uri-hostname-parser/graphs/contributors"
+                }
+            ],
+            "description": "ICANN base hostname parsing implemented in PHP.",
+            "homepage": "https://github.com/thephphleague/uri-hostname-parser",
+            "keywords": [
+                "Public Suffix List",
+                "domain parsing",
+                "icann"
+            ],
+            "support": {
+                "issues": "https://github.com/thephphleague/uri-hostname-parser/issues",
+                "source": "https://github.com/thephphleague/uri-hostname-parser"
+            },
+            "abandoned": "jeremykendall/php-domain-parser",
+            "time": "2021-03-06T11:52:47+00:00"
         },
         {
             "name": "league/uri-interfaces",
@@ -4130,29 +4153,34 @@
         },
         {
             "name": "league/uri-manipulations",
-            "version": "1.0.1",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/uri-manipulations.git",
-                "reference": "3db42474cb68546ec9180d76dbf9807a8e1bcf98"
+                "reference": "ae8d49a3203ccf7a1e39aaf7fae9f08bfbc454a2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/uri-manipulations/zipball/3db42474cb68546ec9180d76dbf9807a8e1bcf98",
-                "reference": "3db42474cb68546ec9180d76dbf9807a8e1bcf98",
+                "url": "https://api.github.com/repos/thephpleague/uri-manipulations/zipball/ae8d49a3203ccf7a1e39aaf7fae9f08bfbc454a2",
+                "reference": "ae8d49a3203ccf7a1e39aaf7fae9f08bfbc454a2",
                 "shasum": ""
             },
             "require": {
-                "league/uri-components": "^1.0",
+                "ext-intl": "*",
+                "league/uri-components": "^1.8.0",
                 "league/uri-interfaces": "^1.0",
                 "php": ">=7.0",
                 "psr/http-message": "^1.0"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^1.9",
+                "friendsofphp/php-cs-fixer": "^2.0",
                 "guzzlehttp/psr7": "^1.2",
-                "league/uri-schemes": "^1.0",
-                "phpunit/phpunit": "^6.0"
+                "league/uri-schemes": "^1.2",
+                "phpstan/phpstan": "^0.9.2",
+                "phpstan/phpstan-phpunit": "^0.9.4",
+                "phpstan/phpstan-strict-rules": "^0.9.0",
+                "phpunit/phpunit": "^6.0",
+                "zendframework/zend-diactoros": "1.4.0"
             },
             "suggest": {
                 "league/uri-schemes": "Allow manipulating URI objects"
@@ -4160,7 +4188,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev"
+                    "dev-master": "1.x-dev"
                 }
             },
             "autoload": {
@@ -4168,7 +4196,7 @@
                     "src/functions_include.php"
                 ],
                 "psr-4": {
-                    "League\\Uri\\Modifiers\\": "src"
+                    "League\\Uri\\": "src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -4203,7 +4231,7 @@
                 "source": "https://github.com/thephpleague/uri-manipulations/tree/master"
             },
             "abandoned": "league/uri-components",
-            "time": "2017-02-06T07:57:03+00:00"
+            "time": "2018-03-14T16:44:57+00:00"
         },
         {
             "name": "league/uri-parser",
@@ -5663,25 +5691,25 @@
         },
         {
             "name": "psr/simple-cache",
-            "version": "3.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/simple-cache.git",
-                "reference": "764e0b3939f5ca87cb904f570ef9be2d78a07865"
+                "reference": "408d5eafb83c57f6365a3ca330ff23aa4a5fa39b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/simple-cache/zipball/764e0b3939f5ca87cb904f570ef9be2d78a07865",
-                "reference": "764e0b3939f5ca87cb904f570ef9be2d78a07865",
+                "url": "https://api.github.com/repos/php-fig/simple-cache/zipball/408d5eafb83c57f6365a3ca330ff23aa4a5fa39b",
+                "reference": "408d5eafb83c57f6365a3ca330ff23aa4a5fa39b",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.0.0"
+                "php": ">=5.3.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.0.x-dev"
+                    "dev-master": "1.0.x-dev"
                 }
             },
             "autoload": {
@@ -5696,7 +5724,7 @@
             "authors": [
                 {
                     "name": "PHP-FIG",
-                    "homepage": "https://www.php-fig.org/"
+                    "homepage": "http://www.php-fig.org/"
                 }
             ],
             "description": "Common interfaces for simple caching",
@@ -5708,9 +5736,9 @@
                 "simple-cache"
             ],
             "support": {
-                "source": "https://github.com/php-fig/simple-cache/tree/3.0.0"
+                "source": "https://github.com/php-fig/simple-cache/tree/master"
             },
-            "time": "2021-10-29T13:26:27+00:00"
+            "time": "2017-10-23T01:57:42+00:00"
         },
         {
             "name": "ralouphie/getallheaders",
@@ -7150,16 +7178,16 @@
         },
         {
             "name": "trntv/yii2-glide",
-            "version": "1.2.2",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/trntv/yii2-glide.git",
-                "reference": "a2a0fed9d236ef274a8297d01d0124bf1afe1f91"
+                "reference": "7393e879f938994bbf1bdb2ab95db038dbd68612"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/trntv/yii2-glide/zipball/a2a0fed9d236ef274a8297d01d0124bf1afe1f91",
-                "reference": "a2a0fed9d236ef274a8297d01d0124bf1afe1f91",
+                "url": "https://api.github.com/repos/trntv/yii2-glide/zipball/7393e879f938994bbf1bdb2ab95db038dbd68612",
+                "reference": "7393e879f938994bbf1bdb2ab95db038dbd68612",
                 "shasum": ""
             },
             "require": {
@@ -7172,6 +7200,7 @@
             "require-dev": {
                 "phpunit/phpunit": "^6.0"
             },
+            "default-branch": true,
             "type": "yii2-extension",
             "autoload": {
                 "psr-4": {
@@ -7199,7 +7228,7 @@
                 "issues": "https://github.com/trntv/yii2-glide/issues",
                 "source": "https://github.com/trntv/yii2-glide/tree/master"
             },
-            "time": "2018-04-26T11:16:54+00:00"
+            "time": "2019-08-12T14:14:54+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
@@ -7830,45 +7859,35 @@
         },
         {
             "name": "yiisoft/yii2-debug",
-            "version": "2.1.27",
+            "version": "2.1.28",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-debug.git",
-                "reference": "44e158914911ef81cd7111fd6d46b918f65fae7c"
+                "reference": "0a2ce3cb91d36d5558c7189d9012795874e1ee60"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/44e158914911ef81cd7111fd6d46b918f65fae7c",
-                "reference": "44e158914911ef81cd7111fd6d46b918f65fae7c",
+                "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/0a2ce3cb91d36d5558c7189d9012795874e1ee60",
+                "reference": "0a2ce3cb91d36d5558c7189d9012795874e1ee60",
                 "shasum": ""
             },
             "require": {
                 "ext-mbstring": "*",
-                "php": ">=5.4",
-                "yiisoft/yii2": "~2.0.13"
+                "php": ">=7.4",
+                "yiisoft/yii2": "~2.0.54"
             },
             "require-dev": {
-                "cweagans/composer-patches": "^1.7",
-                "phpunit/phpunit": "4.8.34",
-                "yiisoft/yii2-coding-standards": "~2.0",
+                "phpstan/phpstan": "^2.1",
+                "phpstan/phpstan-phpunit": "^2.0",
+                "phpunit/phpunit": "^9.6",
+                "yiisoft/yii2-coding-standards": "~3.0",
                 "yiisoft/yii2-swiftmailer": "*"
             },
             "type": "yii2-extension",
             "extra": {
-                "patches": {
-                    "phpunit/phpunit": {
-                        "Fix PHP 7 compatibility": "https://yiisoft.github.io/phpunit-patches/phpunit_php7.patch",
-                        "Fix PHP 8 compatibility": "https://yiisoft.github.io/phpunit-patches/phpunit_php8.patch",
-                        "Fix PHP 8.1 compatibility": "https://yiisoft.github.io/phpunit-patches/phpunit_php81.patch"
-                    },
-                    "phpunit/phpunit-mock-objects": {
-                        "Fix PHP 7 and 8 compatibility": "https://yiisoft.github.io/phpunit-patches/phpunit_mock_objects.patch"
-                    }
-                },
                 "branch-alias": {
                     "dev-master": "2.0.x-dev"
-                },
-                "composer-exit-on-patch-failure": true
+                }
             },
             "autoload": {
                 "psr-4": {
@@ -7917,7 +7936,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-06-08T13:32:11+00:00"
+            "time": "2026-04-22T10:35:38+00:00"
         },
         {
             "name": "yiisoft/yii2-httpclient",
@@ -13819,7 +13838,8 @@
         "kartik-v/yii2-social": 20,
         "mootensai/yii2-enhanced-gii": 20,
         "trntv/cheatsheet": 20,
-        "trntv/yii2-datetime-widget": 20
+        "trntv/yii2-datetime-widget": 20,
+        "trntv/yii2-glide": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
