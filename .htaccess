@@ -30,6 +30,21 @@ RewriteRule ^storage(?:/(.*))?$ storage/web/$1 [L,QSA]
 # Legacy compatibility for old /frontend URLs (canonicalized above).
 RewriteRule ^frontend(?:/(.*))?$ frontend/web/$1 [L,QSA]
 
-# Default app at project root without exposing /web.
+# =========================
+# PRIORITAS BACKEND DULU
+# =========================
+
+RewriteRule ^backend(?:/(.*))?$ backend/web/$1 [L,QSA]
+
+# =========================
+# STORAGE
+# =========================
+
+RewriteRule ^storage(?:/(.*))?$ storage/web/$1 [L,QSA]
+
+# =========================
+# FRONTEND (DEFAULT)
+# =========================
+
 RewriteRule ^$ frontend/web/ [L,QSA]
-RewriteRule ^(.*)$ frontend/web/$1 [L,QSA]
+RewriteRule ^(?!backend|storage)(.*)$ frontend/web/$1 [L,QSA]
