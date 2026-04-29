@@ -8,7 +8,7 @@ class m260420_100400_seed_news_key_storage_settings extends Migration
     private const DEFAULT_SETTINGS = [
         'frontend.app.name' => [
             'value' => 'Set your app name',
-            'comment' => 'Default app name',
+            'comment' => 'App name',
         ],
         'frontend.meta.description' => [
             'value' => 'Website resmi Main Office.',
