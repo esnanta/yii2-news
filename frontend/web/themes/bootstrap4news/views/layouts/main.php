@@ -10,6 +10,15 @@ use frontend\assets\Bootstrap4news;
 use yii\helpers\Html;
 use yii\web\View;
 
+$appName = trim(LayoutService::getAppName());
+if ('' !== $appName) {
+    Yii::$app->name = $appName;
+}
+
+if (empty($this->title)) {
+    $this->title = Yii::$app->name;
+}
+
 MetaHelper::registerMetaTags($this);
 
 $layoutData = LayoutService::getLayoutData('200px', '60px', '500px', '90px');
