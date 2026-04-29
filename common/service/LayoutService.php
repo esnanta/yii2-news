@@ -57,18 +57,44 @@ class LayoutService
         return FileDisplayService::resolvePublicUrl($model->base_url, $model->path);
     }
 
+    public static function getAppName(): string
+    {
+        $cacheKey = 'layout:frontend:app-name';
+
+        return \Yii::$app->cache->getOrSet($cacheKey, static function () {
+            $model = KeyStorageItem::find(['value'])
+                ->where(['key' => 'frontend.app.name'])
+                ->one()
+            ;
+
+            $name = strip_tags((string) ($model->value ?? ''));
+
+            return '' !== trim($name) ? $name : \Yii::$app->name;
+        }, 86400); // 24 hours
+    }
+
     public static function getDescription(): string
     {
-        $model = KeyStorageItem::find(['value'])->where(['key' => 'frontend.meta.description'])->one();
+        return \Yii::$app->cache->getOrSet('layout:frontend:meta-description', static function () {
+            $model = KeyStorageItem::find(['value'])
+                ->where(['key' => 'frontend.meta.description'])
+                ->one()
+            ;
 
-        return empty($model->value) ? '' : strip_tags($model->value);
+            return strip_tags((string) ($model->value ?? ''));
+        }, 86400); // 24 hours
     }
 
     public static function getKeyWord(): string
     {
-        $model = KeyStorageItem::find(['value'])->where(['key' => 'frontend.meta.keywords'])->one();
+        return \Yii::$app->cache->getOrSet('layout:frontend:meta-keywords', static function () {
+            $model = KeyStorageItem::find(['value'])
+                ->where(['key' => 'frontend.meta.keywords'])
+                ->one()
+            ;
 
-        return empty($model->value) ? '' : strip_tags($model->value);
+            return strip_tags((string) ($model->value ?? ''));
+        }, 86400); // 24 hours
     }
 
     public static function getAbout(): ActiveRecord|array|null
