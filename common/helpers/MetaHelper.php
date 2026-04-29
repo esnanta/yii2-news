@@ -29,7 +29,14 @@ class MetaHelper
      */
     public static function getResolvedMetaTags(array $overrides = []): array
     {
-        self::setMetaTags($overrides);
+        if ([] !== $overrides) {
+            self::setMetaTags($overrides);
+        } elseif (!isset(\Yii::$app->params['metaTagsResolved'])
+            || !is_array(\Yii::$app->params['metaTagsResolved'])
+            || [] === \Yii::$app->params['metaTagsResolved']
+        ) {
+            self::setMetaTags();
+        }
 
         $resolvedMetaTags = \Yii::$app->params['metaTagsResolved']
             ?? \Yii::$app->params['metaTags']
@@ -64,7 +71,8 @@ class MetaHelper
         ];
 
         foreach ($legacyMetaKeys as $metaKey) {
-            if (isset(\Yii::$app->params[$metaKey]) && is_array(\Yii::$app->params[$metaKey])) {
+            if (isset(\Yii::$app->params[$metaKey])
+                && is_array(\Yii::$app->params[$metaKey])) {
                 $resolvedMetaTags[$metaKey] = \Yii::$app->params[$metaKey];
             }
         }
@@ -73,7 +81,7 @@ class MetaHelper
     }
 
     /**
-     * Registers all resolved meta tags to provided view.
+     * Registers all resolved meta tags to the provided view.
      */
     public static function registerMetaTags(View $view, array $overrides = []): void
     {

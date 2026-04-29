@@ -3,6 +3,7 @@
 namespace frontend\web\themes\unify263blog\views\blog;
 
 use common\helpers\ContentHelper;
+use common\helpers\MetaHelper;
 use DOMDocument;
 use DOMXPath;
 use kartik\social\FacebookPlugin;
@@ -11,7 +12,7 @@ use rmrevin\yii\fontawesome\FAS;
 use Yii;
 use yii\helpers\Html;
 
-/*
+/**
  * @var yii\web\View $this
  * @var common\models\Article $model
  */
@@ -56,33 +57,37 @@ foreach ($xpath->query('//img') as $node) {
 
 $newContent = str_replace('%09', '', $dom->saveHtml());
 
-?>
+$articleUrl = $model->getUrl();
+if (0 !== strpos($articleUrl, 'http://') && 0 !== strpos($articleUrl, 'https://')) {
+    $articleUrl = Yii::$app->request->hostInfo.$articleUrl;
+}
 
-<?php
-//Yii::$app->params['meta_author']['content'] = (!empty($model->author_id)) ? $model->author->title : '-';
-//Yii::$app->params['meta_description']['content'] = $model->description;
-//Yii::$app->params['meta_keywords']['content'] = $model->getTagKeywordString();
-//
-//// FACEBOOK
-//Yii::$app->params['og_site_name']['content'] = Yii::$app->name;
-//Yii::$app->params['og_title']['content'] = $model->title;
-//Yii::$app->params['og_description']['content'] = $model->description;
-//Yii::$app->params['og_type']['content'] = 'website';
-//Yii::$app->params['og_image']['content'] = $articleCover;
-//Yii::$app->params['og_url']['content'] = 'https://'.Yii::$app->request->serverName.$model->getUrl();
-//Yii::$app->params['og_updated_time']['content'] = $model->updated_at;
-//
-//// TWITTER
-//Yii::$app->params['twitter_title']['content'] = $model->title;
-//Yii::$app->params['twitter_description']['content'] = $model->description;
-//Yii::$app->params['twitter_card']['content'] = 'summary_large_image'; // summary_large_image
-//Yii::$app->params['twitter_image']['content'] = $articleCover;
-//Yii::$app->params['twitter_url']['content'] = 'https://'.Yii::$app->request->serverName.$model->getUrl();
-//
-//// GOOGLE PLUS
-//Yii::$app->params['googleplus_name']['content'] = $model->title;
-//Yii::$app->params['googleplus_description']['content'] = $model->description;
-//Yii::$app->params['googleplus_image']['content'] = $articleCover;
+$updatedAtRaw = $model->updated_at ?? null;
+$updatedAtTimestamp = is_numeric($updatedAtRaw)
+    ? (int) $updatedAtRaw
+    : strtotime((string) $updatedAtRaw);
+$updatedAtIso = false !== $updatedAtTimestamp ? date('c', $updatedAtTimestamp) : date('c');
+
+MetaHelper::setMetaTags([
+    'meta_author' => ['name' => 'author', 'content' => !empty($model->author_id) ? $model->author->title : '-'],
+    'meta_description' => ['name' => 'description', 'content' => $model->description ?? ''],
+    'meta_keywords' => ['name' => 'keywords', 'content' => (string) $model->getTagKeywordString()],
+    'og_site_name' => ['property' => 'og:site_name', 'content' => Yii::$app->name],
+    'og_title' => ['property' => 'og:title', 'content' => (string) $model->title],
+    'og_description' => ['property' => 'og:description', 'content' => $model->description ?? ''],
+    'og_type' => ['property' => 'og:type', 'content' => 'article'],
+    'og_image' => ['property' => 'og:image', 'content' => (string) $articleCover],
+    'og_url' => ['property' => 'og:url', 'content' => $articleUrl],
+    'og_updated_time' => ['property' => 'og:updated_time', 'content' => $updatedAtIso],
+    'twitter_title' => ['name' => 'twitter:title', 'content' => (string) $model->title],
+    'twitter_description' => ['name' => 'twitter:description', 'content' => $model->description ?? ''],
+    'twitter_card' => ['name' => 'twitter:card', 'content' => 'summary_large_image'],
+    'twitter_image' => ['name' => 'twitter:image', 'content' => (string) $articleCover],
+    'twitter_url' => ['name' => 'twitter:url', 'content' => $articleUrl],
+    'googleplus_name' => ['itemprop' => 'name', 'content' => (string) $model->title],
+    'googleplus_description' => ['itemprop' => 'description', 'content' => $model->description ?? ''],
+    'googleplus_image' => ['itemprop' => 'image', 'content' => (string) $articleCover],
+]);
 ?>
 
 <div class="sn-container">
