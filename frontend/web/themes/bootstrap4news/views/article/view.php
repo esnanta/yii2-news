@@ -4,6 +4,8 @@ namespace frontend\web\themes\unify263blog\views\blog;
 
 use common\helpers\ContentHelper;
 use common\helpers\MetaHelper;
+use common\models\Article;
+use common\service\LayoutService;
 use DOMDocument;
 use DOMXPath;
 use kartik\social\FacebookPlugin;
@@ -14,7 +16,7 @@ use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
- * @var common\models\Article $model
+ * @var Article $model
  */
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Articles', 'url' => ['index']];
@@ -59,7 +61,31 @@ $newContent = str_replace('%09', '', $dom->saveHtml());
 
 $articleUrl = $model->getUrl();
 if (0 !== strpos($articleUrl, 'http://') && 0 !== strpos($articleUrl, 'https://')) {
+    if ('/' !== substr($articleUrl, 0, 1)) {
+        $articleUrl = '/'.$articleUrl;
+    }
     $articleUrl = Yii::$app->request->hostInfo.$articleUrl;
+}
+
+$metaImageUrl = (string) $articleCover;
+if ('' !== $metaImageUrl
+    && !str_starts_with($metaImageUrl, 'http://')
+    && !str_starts_with($metaImageUrl, 'https://')
+    && !str_starts_with($metaImageUrl, '//')
+    && !str_starts_with($metaImageUrl, 'data:')
+) {
+    if (!str_starts_with($metaImageUrl, '/')) {
+        $metaImageUrl = '/'.$metaImageUrl;
+    }
+    $metaImageUrl = Yii::$app->request->hostInfo.$metaImageUrl;
+}
+
+$articleDescription = trim((string) ($model->description ?? ''));
+if ('' === $articleDescription) {
+    $articleDescription = ContentHelper::excerpt((string) $model->body, 160);
+}
+if ('' === $articleDescription) {
+    $articleDescription = trim(LayoutService::getDescription());
 }
 
 $updatedAtRaw = $model->updated_at ?? null;
@@ -70,23 +96,23 @@ $updatedAtIso = false !== $updatedAtTimestamp ? date('c', $updatedAtTimestamp) :
 
 MetaHelper::setMetaTags([
     'meta_author' => ['name' => 'author', 'content' => !empty($model->author_id) ? $model->author->title : '-'],
-    'meta_description' => ['name' => 'description', 'content' => $model->description ?? ''],
+    'meta_description' => ['name' => 'description', 'content' => $articleDescription],
     'meta_keywords' => ['name' => 'keywords', 'content' => (string) $model->getTagKeywordString()],
     'og_site_name' => ['property' => 'og:site_name', 'content' => Yii::$app->name],
     'og_title' => ['property' => 'og:title', 'content' => (string) $model->title],
-    'og_description' => ['property' => 'og:description', 'content' => $model->description ?? ''],
+    'og_description' => ['property' => 'og:description', 'content' => $articleDescription],
     'og_type' => ['property' => 'og:type', 'content' => 'article'],
-    'og_image' => ['property' => 'og:image', 'content' => (string) $articleCover],
+    'og_image' => ['property' => 'og:image', 'content' => $metaImageUrl],
     'og_url' => ['property' => 'og:url', 'content' => $articleUrl],
     'og_updated_time' => ['property' => 'og:updated_time', 'content' => $updatedAtIso],
     'twitter_title' => ['name' => 'twitter:title', 'content' => (string) $model->title],
-    'twitter_description' => ['name' => 'twitter:description', 'content' => $model->description ?? ''],
+    'twitter_description' => ['name' => 'twitter:description', 'content' => $articleDescription],
     'twitter_card' => ['name' => 'twitter:card', 'content' => 'summary_large_image'],
-    'twitter_image' => ['name' => 'twitter:image', 'content' => (string) $articleCover],
+    'twitter_image' => ['name' => 'twitter:image', 'content' => $metaImageUrl],
     'twitter_url' => ['name' => 'twitter:url', 'content' => $articleUrl],
     'googleplus_name' => ['itemprop' => 'name', 'content' => (string) $model->title],
-    'googleplus_description' => ['itemprop' => 'description', 'content' => $model->description ?? ''],
-    'googleplus_image' => ['itemprop' => 'image', 'content' => (string) $articleCover],
+    'googleplus_description' => ['itemprop' => 'description', 'content' => $articleDescription],
+    'googleplus_image' => ['itemprop' => 'image', 'content' => $metaImageUrl],
 ]);
 ?>
 
