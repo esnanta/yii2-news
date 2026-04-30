@@ -4,18 +4,17 @@ namespace backend\modules\system\controllers;
 
 use backend\modules\system\models\search\SystemLogSearch;
 use backend\modules\system\models\SystemLog;
-use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
+use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 /**
  * LogController implements the CRUD actions for SystemLog model.
  */
 class LogController extends Controller
 {
-
-    /** @inheritdoc */
     public function behaviors()
     {
         return [
@@ -37,9 +36,9 @@ class LogController extends Controller
     public function actionIndex()
     {
         $searchModel = new SystemLogSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
 
-        if (strcasecmp(Yii::$app->request->method, 'delete') == 0) {
+        if (0 == strcasecmp(\Yii::$app->request->method, 'delete')) {
             SystemLog::deleteAll($dataProvider->query->where);
 
             return $this->refresh();
@@ -55,13 +54,13 @@ class LogController extends Controller
     }
 
     /**
-     * @return \yii\web\Response
-     * @throws HttpException
+     * @return Response
+     *
      */
     public function actionClearLogs()
     {
         SystemLog::deleteAll();
-        Yii::$app->session->setFlash('alert', [
+        \Yii::$app->session->setFlash('alert', [
             'body' => \Yii::t('backend', 'The logs have been cleared'),
             'options' => ['class' => 'alert-success'],
         ]);
@@ -72,7 +71,7 @@ class LogController extends Controller
     /**
      * Displays a single SystemLog model.
      *
-     * @param integer $id
+     * @param int $id
      *
      * @return mixed
      */
@@ -87,7 +86,7 @@ class LogController extends Controller
      * Deletes an existing SystemLog model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      *
-     * @param integer $id
+     * @param int $id
      *
      * @return mixed
      */
@@ -102,17 +101,18 @@ class LogController extends Controller
      * Finds the SystemLog model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      *
-     * @param integer $id
+     * @param int $id
      *
      * @return SystemLog the loaded model
+     *
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
         if (($model = SystemLog::findOne($id)) !== null) {
             return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
         }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }
