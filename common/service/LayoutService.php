@@ -13,6 +13,16 @@ use yii\helpers\Html;
 
 class LayoutService
 {
+    private const CACHE_KEY_APP_NAME = 'layout:frontend:app-name';
+    private const CACHE_KEY_META_DESCRIPTION = 'layout:frontend:meta-description';
+    private const CACHE_KEY_META_KEYWORDS = 'layout:frontend:meta-keywords';
+
+    private const KEY_STORAGE_CACHE_MAP = [
+        'frontend.app.name' => [self::CACHE_KEY_APP_NAME],
+        'frontend.meta.description' => [self::CACHE_KEY_META_DESCRIPTION],
+        'frontend.meta.keywords' => [self::CACHE_KEY_META_KEYWORDS],
+    ];
+
     public static function getLayoutData(
         string $logo1Width = '200px',
         string $logo1Height = '60px',
@@ -59,7 +69,7 @@ class LayoutService
 
     public static function getAppName(): string
     {
-        $cacheKey = 'layout:frontend:app-name';
+        $cacheKey = self::CACHE_KEY_APP_NAME;
 
         return \Yii::$app->cache->getOrSet($cacheKey, static function () {
             $model = KeyStorageItem::find(['value'])
@@ -75,7 +85,7 @@ class LayoutService
 
     public static function getDescription(): string
     {
-        return \Yii::$app->cache->getOrSet('layout:frontend:meta-description', static function () {
+        return \Yii::$app->cache->getOrSet(self::CACHE_KEY_META_DESCRIPTION, static function () {
             $model = KeyStorageItem::find(['value'])
                 ->where(['key' => 'frontend.meta.description'])
                 ->one()
@@ -87,7 +97,7 @@ class LayoutService
 
     public static function getKeyWord(): string
     {
-        return \Yii::$app->cache->getOrSet('layout:frontend:meta-keywords', static function () {
+        return \Yii::$app->cache->getOrSet(self::CACHE_KEY_META_KEYWORDS, static function () {
             $model = KeyStorageItem::find(['value'])
                 ->where(['key' => 'frontend.meta.keywords'])
                 ->one()
@@ -193,6 +203,27 @@ class LayoutService
         $model = WidgetImage::find()->where(['key' => $key])->one();
 
         return $model instanceof WidgetImage ? $model : null;
+    }
+
+    /**
+     * Invalidate layout metadata cache that depends on key_storage_item values.
+     */
+    public static function invalidateByKeyStorageKey(string $key): void
+    {
+        foreach (self::KEY_STORAGE_CACHE_MAP[$key] ?? [] as $cacheKey) {
+            self::deleteCacheKeyFromAvailableComponents($cacheKey);
+        }
+    }
+
+    private static function deleteCacheKeyFromAvailableComponents(string $cacheKey): void
+    {
+        foreach (['cache', 'frontendCache'] as $componentId) {
+            if (!\Yii::$app->has($componentId)) {
+                continue;
+            }
+
+            \Yii::$app->get($componentId)->delete($cacheKey);
+        }
     }
 
     private static function resolveSocialIconClass(OfficeSocialAccount $account): string
