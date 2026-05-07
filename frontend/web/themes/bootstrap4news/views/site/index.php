@@ -7,8 +7,6 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 
-$this->title = Yii::$app->name;
-
 MetaHelper::setMetaTags();
 
 $articleService = new ArticleService();
@@ -107,7 +105,7 @@ $resolveArticleCover = static function ($article) use ($defaultCoverUrl): string
                                         $resolveArticleCover($article),
                                         ['width' => '150px', 'height' => '95px']
                                     );
-                                    ?>
+                            ?>
                                 </div>
                                 <div class="tn-title">
                                     <?php echo Html::a($article->title, $article->getUrl()); ?>
@@ -183,7 +181,7 @@ $resolveArticleCover = static function ($article) use ($defaultCoverUrl): string
                                     $resolveArticleCover($article),
                                     ['width' => '255px', 'height' => '160px']
                                 );
-                                ?>
+                        ?>
                                 <div class="mn-title">
                                     <?php echo Html::a($article->title, $article->getUrl()); ?>
                                 </div>
