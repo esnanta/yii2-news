@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\service\LayoutService;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 
@@ -44,5 +45,26 @@ class KeyStorageItem extends ActiveRecord
             'value' => \Yii::t('common', 'Value'),
             'comment' => \Yii::t('common', 'Comment'),
         ];
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+
+        $keysToInvalidate = [(string) $this->key];
+        if (array_key_exists('key', $changedAttributes) && null !== $changedAttributes['key']) {
+            $keysToInvalidate[] = (string) $changedAttributes['key'];
+        }
+
+        foreach (array_unique($keysToInvalidate) as $key) {
+            LayoutService::invalidateByKeyStorageKey($key);
+        }
+    }
+
+    public function afterDelete()
+    {
+        parent::afterDelete();
+
+        LayoutService::invalidateByKeyStorageKey((string) $this->key);
     }
 }
