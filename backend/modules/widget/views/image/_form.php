@@ -45,7 +45,9 @@ use yii\helpers\Html;
         </div>
         <div class="card-footer">
             <?php echo Html::submitButton(
-                $model->isNewRecord ? FAS::icon('save').' '.Yii::t('backend', 'Create') : FAS::icon('save').' '.Yii::t('backend', 'Save Changes'),
+                $model->isNewRecord ? FAS::icon('save').' '
+                        .Yii::t('backend', 'Create') : FAS::icon('save').' '
+                        .Yii::t('backend', 'Save Changes'),
                 ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']
             ); ?>
         </div>
