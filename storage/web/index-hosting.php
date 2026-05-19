@@ -1,30 +1,34 @@
 <?php
 
-// This entry point is intended for public_html deployments.
-
+use yii\helpers\ArrayHelper;
 use yii\web\Application;
 
-// Project root resolved for this hosting setup.
-// ex. public_html/news/storage/web -> 4
+// ex:
+// /public_html/news/storage/web
 $root = dirname(__DIR__, 4);
 
-// Application source directory.
+// Repository app.
 $app = $root.'/repositories/yii2-news';
 
-// Load the Composer autoloader.
+// Composer.
 require $app.'/vendor/autoload.php';
 
-// Load environment variables from .env.
+// Environment.
 require $app.'/common/env.php';
 
-// Load the Yii framework core.
+// Yii framework.
 require $app.'/vendor/yiisoft/yii2/Yii.php';
 
-// Run application bootstrap files.
+// Bootstrap.
 require $app.'/common/config/bootstrap.php';
 
-// Load storage application config.
-$config = require $app.'/storage/config/base.php';
+// Merge config:
+// - original repository config
+// - hosting/public_html override
+$config = ArrayHelper::merge(
+    require $app.'/storage/config/base.php',
+    require dirname(__DIR__).'/config/web.php'
+);
 
-// Start the application.
+// Run app.
 (new Application($config))->run();
