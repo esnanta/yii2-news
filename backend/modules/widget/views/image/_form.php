@@ -5,7 +5,7 @@ use trntv\filekit\widget\Upload;
 use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
 
-/**
+/*
  * @var yii\web\View $this
  * @var common\models\WidgetImage $model
  */
@@ -15,6 +15,9 @@ use yii\helpers\Html;
 <?php $form = ActiveForm::begin([
     'enableClientValidation' => false,
     'enableAjaxValidation' => true,
+    'options' => [
+        'enctype' => 'multipart/form-data',
+    ],
 ]); ?>
     <div class="card card-success">
         <div class="card-header">
