@@ -1,9 +1,10 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: zein
  * Date: 7/3/14
- * Time: 3:14 PM
+ * Time: 3:14 PM.
  */
 
 namespace backend\assets;
@@ -12,35 +13,35 @@ use common\assets\AdminLte;
 use common\assets\Html5shiv;
 use yii\web\AssetBundle;
 use yii\web\YiiAsset;
-use rmrevin\yii\fontawesome\NpmFreeAssetBundle;
 
 class BackendAsset extends AssetBundle
 {
     /**
      * @var string
      */
-    public $sourcePath = '@backend/web/bundle';
+    public $sourcePath = '@backend/web';
 
     /**
      * @var array
      */
     public $css = [
-        'style.css'
+        'css/style.css',
     ];
+
     /**
      * @var array
      */
     public $js = [
-        'app.js'
+        'js/app.js',
     ];
 
     public $publishOptions = [
         'only' => [
             '*.css',
             '*.js',
-            '../img/*'
+            '../img/*',
         ],
-        "forceCopy" => YII_ENV_DEV,
+        'forceCopy' => YII_ENV_DEV,
     ];
 
     /**
