@@ -110,8 +110,11 @@ tasks:
       - '[ -d "$HOME/public_html/news/backend/runtime" ] || { echo "Error: path not found: $HOME/public_html/news/backend/runtime"; exit 1; }'
       - '[ -d "$HOME/public_html/news/frontend/runtime" ] || { echo "Error: path not found: $HOME/public_html/news/frontend/runtime"; exit 1; }'
       - chmod -R 775 $HOME/public_html/news/storage/cache
+      - chmod -R 775 $HOME/public_html/news/storage/web/source
       - chmod -R 775 $HOME/repositories/yii2-news/backend/runtime
       - chmod -R 775 $HOME/repositories/yii2-news/frontend/runtime
+      - chmod -R 775 $HOME/repositories/yii2-news/storage/cache
+      - chmod -R 775 $HOME/repositories/yii2-news/storage/web/source
 
   hosting:done:
     command:
