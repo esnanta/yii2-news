@@ -102,8 +102,7 @@ tasks:
 
       - '[ -d "$HOME/repositories/yii2-news/storage/web/source" ] || { echo "Error: source path not found: $HOME/repositories/yii2-news/storage/web/source"; exit 1; }'
       - rm -rf $HOME/public_html/news/storage/web/source
-      - ln -s $HOME/repositories/yii2-news/storage/web/source $HOME/public_html/news/storage/web/source
-
+      - 'if command -v rsync >/dev/null 2>&1; then rsync -a --delete "$HOME/repositories/yii2-news/storage/web/source/" "$HOME/public_html/news/storage/web/source/"; else cp -R "$HOME/repositories/yii2-news/storage/web/source" "$HOME/public_html/news/storage/web/source"; fi'
   hosting:permissions:
     command:
       - '[ -d "$HOME/public_html/news/storage/cache" ] || { echo "Error: path not found: $HOME/public_html/news/storage/cache"; exit 1; }'
