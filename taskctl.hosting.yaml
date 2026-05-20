@@ -40,7 +40,7 @@ pipelines:
 tasks:
   hosting:prepare:
     command:
-      - 'command -v rsync >/dev/null 2>&1 || { echo "Error: rsync is required but not installed"; exit 1; }'
+      - 'if command -v rsync >/dev/null 2>&1; then echo "Info: rsync found, incremental deploy enabled"; else echo "Info: rsync not found, fallback to cp"; fi'
       - '[ -f ".env.dist" ] || { echo "Error: source file not found: .env.dist"; exit 1; }'
       - 'if [ -f ".env" ]; then echo "Info: .env already exists, skipping copy"; else cp ".env.dist" ".env"; echo "Info: .env created from .env.dist"; fi'
       - '[ -d "$HOME/repositories/yii2-news" ] || { echo "Error: source repository not found: $HOME/repositories/yii2-news"; exit 1; }'
@@ -68,19 +68,19 @@ tasks:
     command:
       - '[ -d backend/web ] || { echo "Error: source directory not found: backend/web"; exit 1; }'
       - '[ -d "$HOME/public_html/news/backend" ] || { echo "Error: target directory not found: $HOME/public_html/news/backend"; exit 1; }'
-      - rsync -a --delete backend/web/ $HOME/public_html/news/backend/web/
+      - 'if command -v rsync >/dev/null 2>&1; then rsync -a --delete "backend/web/" "$HOME/public_html/news/backend/web/"; else rm -rf "$HOME/public_html/news/backend/web" && cp -R "backend/web" "$HOME/public_html/news/backend/"; fi'
 
   hosting:deploy:frontend:
     command:
       - '[ -d frontend/web ] || { echo "Error: source directory not found: frontend/web"; exit 1; }'
       - '[ -d "$HOME/public_html/news/frontend" ] || { echo "Error: target directory not found: $HOME/public_html/news/frontend"; exit 1; }'
-      - rsync -a --delete frontend/web/ $HOME/public_html/news/frontend/web/
+      - 'if command -v rsync >/dev/null 2>&1; then rsync -a --delete "frontend/web/" "$HOME/public_html/news/frontend/web/"; else rm -rf "$HOME/public_html/news/frontend/web" && cp -R "frontend/web" "$HOME/public_html/news/frontend/"; fi'
 
   hosting:deploy:storage:
     command:
       - '[ -d storage/web ] || { echo "Error: source directory not found: storage/web"; exit 1; }'
       - '[ -d "$HOME/public_html/news/storage" ] || { echo "Error: target directory not found: $HOME/public_html/news/storage"; exit 1; }'
-      - rsync -a --delete storage/web/ $HOME/public_html/news/storage/web/
+      - 'if command -v rsync >/dev/null 2>&1; then rsync -a --delete "storage/web/" "$HOME/public_html/news/storage/web/"; else rm -rf "$HOME/public_html/news/storage/web" && cp -R "storage/web" "$HOME/public_html/news/storage/"; fi'
 
   hosting:index:
     command:
