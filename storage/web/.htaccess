@@ -1,6 +1,13 @@
-RewriteEngine on
+RewriteEngine On
 
-RedirectMatch 403 /\..*$
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . index.php
+# Block hidden files (.env, .git, dst)
+RewriteRule "(^|/)\." - [F,L]
+
+# Serve existing file/dir/symlink directly
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d [OR]
+RewriteCond %{REQUEST_FILENAME} -l
+RewriteRule ^ - [L]
+
+# Fallback to Yii front controller
+RewriteRule ^ index.php [L]
