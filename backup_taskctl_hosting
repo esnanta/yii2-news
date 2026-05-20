@@ -1,50 +1,84 @@
-# taskctl config for deploying Yii2 web assets directly on hosting server.
+# =========================================================
+# TASKCTL HOSTING DEPLOYMENT CONFIGURATION
+# =========================================================
 #
-# What:
-# - Publishes `backend/web`, `frontend/web`, and `storage/web` to `$HOME/public_html/news`.
-# - Switches `index-hosting.php` to `index.php` for each published app.
-# - Recreates symlinks for `storage/cache` and `storage/web/source`.
+# This file is intended for deployment execution directly
+# on the hosting server.
 #
-# Why:
-# - Provides a repeatable deployment flow with validation and fail-fast checks.
+# Deployment Target:
+#   $HOME/public_html/news
 #
-# How:
-# - Full pipeline: `taskctl -c taskctl.hosting.yaml hosting:deploy`
-# - Single step: `taskctl -c taskctl.hosting.yaml hosting:deploy:backend`
+# Repository Source:
+#   $HOME/repositories/yii2-news
+#
+# Published Directories:
+#   - backend/web
+#   - frontend/web
+#   - storage/web
+#
+# Symlinked Directories:
+#   - storage/cache
+#   - storage/web/source
+#
+# Index Replacement:
+#   index-hosting.php -> index.php
+#
+# Requirements:
+#   - taskctl installed
+#   - shell access enabled
+#
+# Example Usage:
+#
+#   taskctl -c taskctl.hosting.yaml hosting:deploy
+#
+# =========================================================
 
 pipelines:
   hosting:deploy:
     - task: hosting:prepare
+
     - task: hosting:cleanup
       depends_on: hosting:prepare
+
     - task: hosting:deploy:root
       depends_on: hosting:cleanup
+
     - task: hosting:deploy:backend
       depends_on: hosting:deploy:root
+
     - task: hosting:deploy:frontend
       depends_on: hosting:deploy:root
+
     - task: hosting:deploy:storage
       depends_on: hosting:deploy:root
+
     - task: hosting:index
       depends_on:
         - hosting:deploy:backend
         - hosting:deploy:frontend
         - hosting:deploy:storage
+
     - task: hosting:symlink
       depends_on: hosting:index
+
     - task: hosting:permissions
       depends_on: hosting:symlink
+
     - task: hosting:done
       depends_on: hosting:permissions
 
 tasks:
+
   hosting:prepare:
     command:
-      - 'if command -v rsync >/dev/null 2>&1; then echo "Info: rsync found, incremental deploy enabled"; else echo "Info: rsync not found, fallback to cp"; fi'
-      - '[ -f ".env.dist" ] || { echo "Error: source file not found: .env.dist"; exit 1; }'
-      - 'if [ -f ".env" ]; then echo "Info: .env already exists, skipping copy"; else cp ".env.dist" ".env"; echo "Info: .env created from .env.dist"; fi'
-      - '[ -d "$HOME/repositories/yii2-news" ] || { echo "Error: source repository not found: $HOME/repositories/yii2-news"; exit 1; }'
+      - '[ -d "$HOME/repositories/yii2-news" ] || { echo "Error: repository not found: $HOME/repositories/yii2-news"; exit 1; }'
+      - '[ -f ".htaccess" ] || { echo "Error: .htaccess not found"; exit 1; }'
+      - '[ -d "backend/web" ] || { echo "Error: backend/web not found"; exit 1; }'
+      - '[ -d "frontend/web" ] || { echo "Error: frontend/web not found"; exit 1; }'
+      - '[ -d "storage/web" ] || { echo "Error: storage/web not found"; exit 1; }'
+
       - chmod 711 $HOME/repositories
+
       - mkdir -p $HOME/public_html/news
       - mkdir -p $HOME/public_html/news/backend
       - mkdir -p $HOME/public_html/news/frontend
@@ -52,70 +86,67 @@ tasks:
 
   hosting:cleanup:
     command:
-      - '[ -d "$HOME/public_html/news" ] || { echo "Error: deploy base directory not found: $HOME/public_html/news"; exit 1; }'
+      - '[ -d "$HOME/public_html/news" ] || { echo "Error: deploy directory not found"; exit 1; }'
+
       - rm -rf $HOME/public_html/news/backend/web
       - rm -rf $HOME/public_html/news/frontend/web
       - rm -rf $HOME/public_html/news/storage/web
 
   hosting:deploy:root:
     command:
-      - '[ -f .htaccess ] || { echo "Error: source file not found: .htaccess"; exit 1; }'
       - cp .htaccess $HOME/public_html/news/.htaccess
 
   hosting:deploy:backend:
     command:
-      - '[ -d backend/web ] || { echo "Error: source directory not found: backend/web"; exit 1; }'
-      - '[ -d "$HOME/public_html/news/backend" ] || { echo "Error: target directory not found: $HOME/public_html/news/backend"; exit 1; }'
-      - 'if command -v rsync >/dev/null 2>&1; then rsync -a --delete "backend/web/" "$HOME/public_html/news/backend/web/"; else rm -rf "$HOME/public_html/news/backend/web" && cp -R "backend/web" "$HOME/public_html/news/backend/"; fi'
+      - cp -R backend/web $HOME/public_html/news/backend/
 
   hosting:deploy:frontend:
     command:
-      - '[ -d frontend/web ] || { echo "Error: source directory not found: frontend/web"; exit 1; }'
-      - '[ -d "$HOME/public_html/news/frontend" ] || { echo "Error: target directory not found: $HOME/public_html/news/frontend"; exit 1; }'
-      - 'if command -v rsync >/dev/null 2>&1; then rsync -a --delete "frontend/web/" "$HOME/public_html/news/frontend/web/"; else rm -rf "$HOME/public_html/news/frontend/web" && cp -R "frontend/web" "$HOME/public_html/news/frontend/"; fi'
+      - cp -R frontend/web $HOME/public_html/news/frontend/
 
   hosting:deploy:storage:
     command:
-      - '[ -d storage/web ] || { echo "Error: source directory not found: storage/web"; exit 1; }'
-      - '[ -d "$HOME/public_html/news/storage" ] || { echo "Error: target directory not found: $HOME/public_html/news/storage"; exit 1; }'
-      - 'if command -v rsync >/dev/null 2>&1; then rsync -a --delete "storage/web/" "$HOME/public_html/news/storage/web/"; else rm -rf "$HOME/public_html/news/storage/web" && cp -R "storage/web" "$HOME/public_html/news/storage/"; fi'
+      - cp -R storage/web $HOME/public_html/news/storage/
 
   hosting:index:
     command:
-      - '[ -f "$HOME/public_html/news/backend/web/index-hosting.php" ] || { echo "Error: missing backend hosting index file"; exit 1; }'
+      - '[ -f "$HOME/public_html/news/backend/web/index-hosting.php" ] || { echo "Error: backend index-hosting.php not found"; exit 1; }'
       - rm -f $HOME/public_html/news/backend/web/index.php
       - cp $HOME/public_html/news/backend/web/index-hosting.php $HOME/public_html/news/backend/web/index.php
 
-      - '[ -f "$HOME/public_html/news/frontend/web/index-hosting.php" ] || { echo "Error: missing frontend hosting index file"; exit 1; }'
+      - '[ -f "$HOME/public_html/news/frontend/web/index-hosting.php" ] || { echo "Error: frontend index-hosting.php not found"; exit 1; }'
       - rm -f $HOME/public_html/news/frontend/web/index.php
       - cp $HOME/public_html/news/frontend/web/index-hosting.php $HOME/public_html/news/frontend/web/index.php
 
-      - '[ -f "$HOME/public_html/news/storage/web/index-hosting.php" ] || { echo "Error: missing storage hosting index file"; exit 1; }'
+      - '[ -f "$HOME/public_html/news/storage/web/index-hosting.php" ] || { echo "Error: storage index-hosting.php not found"; exit 1; }'
       - rm -f $HOME/public_html/news/storage/web/index.php
       - cp $HOME/public_html/news/storage/web/index-hosting.php $HOME/public_html/news/storage/web/index.php
 
   hosting:symlink:
     command:
-      - '[ -d "$HOME/repositories/yii2-news/storage/cache" ] || { echo "Error: source path not found: $HOME/repositories/yii2-news/storage/cache"; exit 1; }'
+      - '[ -d "$HOME/repositories/yii2-news/storage/cache" ] || { echo "Error: storage/cache not found"; exit 1; }'
+      - '[ -d "$HOME/repositories/yii2-news/storage/web/source" ] || { echo "Error: storage/web/source not found"; exit 1; }'
+
       - rm -rf $HOME/public_html/news/storage/cache
       - ln -s $HOME/repositories/yii2-news/storage/cache $HOME/public_html/news/storage/cache
 
-      - '[ -d "$HOME/repositories/yii2-news/storage/web/source" ] || { echo "Error: source path not found: $HOME/repositories/yii2-news/storage/web/source"; exit 1; }'
       - rm -rf $HOME/public_html/news/storage/web/source
       - ln -s $HOME/repositories/yii2-news/storage/web/source $HOME/public_html/news/storage/web/source
 
   hosting:permissions:
     command:
-      - '[ -d "$HOME/public_html/news/storage/cache" ] || { echo "Error: path not found: $HOME/public_html/news/storage/cache"; exit 1; }'
-      - '[ -d "$HOME/repositories/yii2-news/backend/runtime" ] || { echo "Error: path not found: $HOME/public_html/news/backend/runtime"; exit 1; }'
-      - '[ -d "$HOME/repositories/yii2-news/frontend/runtime" ] || { echo "Error: path not found: $HOME/public_html/news/frontend/runtime"; exit 1; }'
-      - chmod -R 775 $HOME/public_html/news/storage/cache
-      - chmod -R 775 $HOME/public_html/news/storage/web/source
+      - '[ -d "$HOME/repositories/yii2-news/backend/runtime" ] || { echo "Error: backend/runtime not found"; exit 1; }'
+      - '[ -d "$HOME/repositories/yii2-news/frontend/runtime" ] || { echo "Error: frontend/runtime not found"; exit 1; }'
+      - '[ -d "$HOME/repositories/yii2-news/storage/cache" ] || { echo "Error: storage/cache not found"; exit 1; }'
+      - '[ -d "$HOME/repositories/yii2-news/storage/web/source" ] || { echo "Error: storage/web/source not found"; exit 1; }'
+
       - chmod -R 775 $HOME/repositories/yii2-news/backend/runtime
       - chmod -R 775 $HOME/repositories/yii2-news/frontend/runtime
       - chmod -R 775 $HOME/repositories/yii2-news/storage/cache
-      - chmod -R 775 $HOME/repositories/yii2-news/storage/web/source
+
+      - find "$HOME/repositories/yii2-news/storage/web/source" -type d -exec chmod 775 {} \;
+      - find "$HOME/repositories/yii2-news/storage/web/source" -type f -exec chmod 664 {} \;
 
   hosting:done:
     command:
-      - echo "Hosting deployment completed!"
+      - echo "Hosting deployment completed successfully!"
