@@ -1,6 +1,5 @@
 <?php
 
-use yii\helpers\ArrayHelper;
 use yii\web\Application;
 
 // ex:
@@ -22,13 +21,7 @@ require $app.'/vendor/yiisoft/yii2/Yii.php';
 // Bootstrap.
 require $app.'/common/config/bootstrap.php';
 
-// Merge config:
-// - original repository config
-// - hosting/public_html override
-$config = ArrayHelper::merge(
-    require $app.'/storage/config/base.php',
-    require dirname(__DIR__).'/config/web.php'
-);
+$config = require $app.'/storage/config/base.php';
 
 // Run app.
 (new Application($config))->run();
