@@ -3,7 +3,7 @@
 # What:
 # - Publishes `backend/web`, `frontend/web`, and `storage/web` to `$HOME/public_html/news`.
 # - Switches `index-hosting.php` to `index.php` for each published app.
-# - Recreates symlinks for `storage/cache` and `storage/web/source`.
+# - Recreates symlink for `storage/cache` and copies `storage/web/source`.
 #
 # Why:
 # - Provides a repeatable deployment flow with validation and fail-fast checks.
@@ -103,6 +103,7 @@ tasks:
       - '[ -d "$HOME/repositories/yii2-news/storage/web/source" ] || { echo "Error: source path not found: $HOME/repositories/yii2-news/storage/web/source"; exit 1; }'
       - rm -rf $HOME/public_html/news/storage/web/source
       - 'if command -v rsync >/dev/null 2>&1; then rsync -a --delete "$HOME/repositories/yii2-news/storage/web/source/" "$HOME/public_html/news/storage/web/source/"; else cp -R "$HOME/repositories/yii2-news/storage/web/source" "$HOME/public_html/news/storage/web/source"; fi'
+      - '[ -d "$HOME/public_html/news/storage/web/source" ] || { echo "Error: target path not found after copy: $HOME/public_html/news/storage/web/source"; exit 1; }'
   hosting:permissions:
     command:
       - '[ -d "$HOME/public_html/news/storage/cache" ] || { echo "Error: path not found: $HOME/public_html/news/storage/cache"; exit 1; }'
@@ -110,6 +111,8 @@ tasks:
       - '[ -d "$HOME/repositories/yii2-news/frontend/runtime" ] || { echo "Error: path not found: $HOME/public_html/news/frontend/runtime"; exit 1; }'
       - chmod -R 775 $HOME/public_html/news/storage/cache
       - chmod -R 775 $HOME/public_html/news/storage/web/source
+      - 'find "$HOME/public_html/news/storage/web/source" -type d -exec chmod 775 {} \;'
+      - 'find "$HOME/public_html/news/storage/web/source" -type f -exec chmod 664 {} \;'
       - chmod -R 775 $HOME/repositories/yii2-news/backend/runtime
       - chmod -R 775 $HOME/repositories/yii2-news/frontend/runtime
       - chmod -R 775 $HOME/repositories/yii2-news/storage/cache
