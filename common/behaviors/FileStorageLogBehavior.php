@@ -5,13 +5,12 @@ namespace common\behaviors;
 use common\models\FileStorageItem;
 use League\Flysystem\File;
 use trntv\filekit\Storage;
-use Yii;
 use yii\base\Behavior;
 use yii\base\InvalidConfigException;
 
 /**
- * Class FileStorageLogBehavior
- * @package common\behaviors
+ * Class FileStorageLogBehavior.
+ *
  * @author Eugene Terentev <eugene@terentev.net>
  */
 class FileStorageLogBehavior extends Behavior
@@ -22,7 +21,7 @@ class FileStorageLogBehavior extends Behavior
     {
         return [
             Storage::EVENT_AFTER_SAVE => 'afterSave',
-            Storage::EVENT_AFTER_DELETE => 'afterDelete'
+            Storage::EVENT_AFTER_DELETE => 'afterDelete',
         ];
     }
 
@@ -39,22 +38,24 @@ class FileStorageLogBehavior extends Behavior
         $model->size = $file->getSize();
         $model->type = $file->getMimeType();
         $model->name = pathinfo($file->getPath(), PATHINFO_FILENAME);
-        if (Yii::$app->request->getIsConsoleRequest() === false) {
-            $model->upload_ip = Yii::$app->request->getUserIP();
+        if (false === \Yii::$app->request->getIsConsoleRequest()) {
+            $model->upload_ip = \Yii::$app->request->getUserIP();
         }
         $model->save(false);
     }
 
     /**
-     * @return \trntv\filekit\Storage
-     * @throws \yii\base\InvalidConfigException
+     * @return Storage
+     *
+     * @throws InvalidConfigException
      */
     public function getStorage()
     {
-        if ($this->component === null) {
+        if (null === $this->component) {
             throw new InvalidConfigException('Storage component name must be set');
         }
-        return Yii::$app->get($this->component);
+
+        return \Yii::$app->get($this->component);
     }
 
     /**
@@ -64,7 +65,7 @@ class FileStorageLogBehavior extends Behavior
     {
         FileStorageItem::deleteAll([
             'component' => $this->component,
-            'path' => $event->path
+            'path' => $event->path,
         ]);
     }
 }
