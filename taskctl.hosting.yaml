@@ -133,37 +133,38 @@ tasks:
       - rm -rf $HOME/public_html/news/storage/web/source
       - ln -s $HOME/repositories/yii2-news/storage/web/source $HOME/public_html/news/storage/web/source
 
-hosting:permissions:
-  command:
-    - '[ -d "$HOME/repositories/yii2-news/backend/runtime" ] || { echo "Error: backend/runtime not found"; exit 1; }'
-    - '[ -d "$HOME/repositories/yii2-news/frontend/runtime" ] || { echo "Error: frontend/runtime not found"; exit 1; }'
-    - '[ -d "$HOME/repositories/yii2-news/storage/cache" ] || { echo "Error: storage/cache not found"; exit 1; }'
-    - '[ -d "$HOME/repositories/yii2-news/storage/web/source" ] || { echo "Error: storage/web/source not found"; exit 1; }'
+  hosting:permissions:
+    command:
+      - '[ -d "$HOME/repositories/yii2-news/backend/runtime" ] || { echo "Error: backend/runtime not found"; exit 1; }'
+      - '[ -d "$HOME/repositories/yii2-news/frontend/runtime" ] || { echo "Error: frontend/runtime not found"; exit 1; }'
+      - '[ -d "$HOME/repositories/yii2-news/storage/cache" ] || { echo "Error: storage/cache not found"; exit 1; }'
+      - '[ -d "$HOME/repositories/yii2-news/storage/web/source" ] || { echo "Error: storage/web/source not found"; exit 1; }'
 
-    # =====================================================
-    # DIRECTORY TRAVERSAL PERMISSIONS (PENTING UNTUK SYMLINK)
-    # =====================================================
+      # =====================================================
+      # DIRECTORY TRAVERSAL PERMISSIONS (PENTING UNTUK SYMLINK)
+      # =====================================================
 
-    - chmod 755 $HOME
-    - chmod 711 $HOME/repositories
-    - chmod 755 $HOME/repositories/yii2-news
-    - chmod 755 $HOME/repositories/yii2-news/storage
-    - chmod 755 $HOME/repositories/yii2-news/storage/web
+      - chmod 755 $HOME
+      - chmod 711 $HOME/repositories
+      - chmod 755 $HOME/repositories/yii2-news
+      - chmod 755 $HOME/repositories/yii2-news/storage
+      - chmod 755 $HOME/repositories/yii2-news/storage/web
 
-    # =====================================================
-    # RUNTIME & CACHE
-    # =====================================================
+      # =====================================================
+      # RUNTIME & CACHE
+      # =====================================================
 
-    - chmod -R 775 $HOME/repositories/yii2-news/backend/runtime
-    - chmod -R 775 $HOME/repositories/yii2-news/frontend/runtime
-    - chmod -R 775 $HOME/repositories/yii2-news/storage/cache
+      - chmod -R 775 $HOME/repositories/yii2-news/backend/runtime
+      - chmod -R 775 $HOME/repositories/yii2-news/frontend/runtime
+      - chmod -R 775 $HOME/repositories/yii2-news/storage/cache
 
-    # =====================================================
-    # STORAGE SOURCE
-    # =====================================================
+      # =====================================================
+      # STORAGE SOURCE
+      # =====================================================
 
-    - find "$HOME/repositories/yii2-news/storage/web/source" -type d -exec chmod 775 {} \;
-    - find "$HOME/repositories/yii2-news/storage/web/source" -type f -exec chmod 664 {} \;
+      - find "$HOME/repositories/yii2-news/storage/web/source" -type d -exec chmod 775 {} \;
+      - find "$HOME/repositories/yii2-news/storage/web/source" -type f -exec chmod 664 {} \;
+
   hosting:done:
     command:
       - echo "Hosting deployment completed successfully!"
