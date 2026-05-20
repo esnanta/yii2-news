@@ -49,8 +49,6 @@ tasks:
       - mkdir -p $HOME/public_html/news/backend
       - mkdir -p $HOME/public_html/news/frontend
       - mkdir -p $HOME/public_html/news/storage
-      - mkdir -p $HOME/public_html/news/backend/runtime
-      - mkdir -p $HOME/public_html/news/frontend/runtime
 
   hosting:cleanup:
     command:
