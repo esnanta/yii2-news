@@ -257,7 +257,14 @@ $logEntries[] = [
                             'icon' => FAS::icon('sitemap', ['class' => ['nav-icon']]),
                             'options' => ['class' => 'nav-item has-treeview'],
                             'active' => 'content' === Yii::$app->controller->module->id
-                                && in_array(Yii::$app->controller->id, ['job-title', 'staff', 'staff-social-account', 'social-platform', 'office', 'office-social-account']),
+                                && in_array(
+                                    Yii::$app->controller->id,
+                                    [
+                                        'job-title', 'staff', 'staff-social-account',
+                                        'social-platform', 'office',
+                                        'office-social-account',
+                                    ]
+                                ),
                             'items' => [
                                 [
                                     'label' => Yii::t('backend', 'Job Title'),
@@ -310,14 +317,16 @@ $logEntries[] = [
                         [
                             'label' => Yii::t('backend', 'Translation'),
                             'options' => ['class' => 'nav-header'],
-                            'visible' => DbMessageSource::class === Yii::$app->components['i18n']['translations']['*']['class'],
+                            'visible' => DbMessageSource::class
+                                    === Yii::$app->components['i18n']['translations']['*']['class'],
                         ],
                         [
                             'label' => Yii::t('backend', 'Translation'),
                             'url' => ['/translation/default/index'],
                             'icon' => FAS::icon('language', ['class' => ['nav-icon']]),
                             'active' => ('translation' == Yii::$app->controller->module->id),
-                            'visible' => DbMessageSource::class === Yii::$app->components['i18n']['translations']['*']['class'],
+                            'visible' => DbMessageSource::class
+                                    === Yii::$app->components['i18n']['translations']['*']['class'],
                         ],
                         [
                             'label' => Yii::t('backend', 'System'),
@@ -595,4 +604,56 @@ $logEntries[] = [
     <!-- /control sidebar -->
     <?php } ?>
 </div>
+
+<div id="global-ajax-loader" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.25);z-index:3000;">
+    <div style="max-width:280px;margin:22vh auto;
+        background:#fff;padding:12px 16px;border-radius:8px;
+        text-align:center;"
+    >
+        <span id="global-ajax-loader-text">Processing...</span>
+    </div>
+</div>
+
+<?php
+$this->registerJs(<<<'JS'
+(function () {
+  var $loader = $('#global-ajax-loader');
+  var $text = $('#global-ajax-loader-text');
+  var active = 0;
+  var timer = null;
+
+  function show(msg) {
+    if (msg) $text.text(msg);
+    clearTimeout(timer);
+    timer = setTimeout(function () {
+      if (active > 0) $loader.show();
+    }, 200);
+  }
+
+  function hide() {
+    active--;
+    if (active <= 0) {
+      active = 0;
+      clearTimeout(timer);
+      $loader.hide();
+      $text.text('Processing...');
+    }
+  }
+
+  $(document).ajaxSend(function (e, xhr, settings) {
+    active++;
+    // Custom text untuk endpoint upload storage
+    if (settings.url && settings.url.indexOf('/file/storage/upload') !== -1) {
+      show('Uploading image...');
+    } else {
+      show('Processing...');
+    }
+  });
+
+  $(document).ajaxComplete(function () { hide(); });
+  $(document).ajaxError(function () { hide(); });
+})();
+JS);
+?>
+
 <?php $this->endContent(); ?>
