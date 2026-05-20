@@ -40,7 +40,7 @@ pipelines:
 tasks:
   hosting:prepare:
     command:
-      - command -v rsync >/dev/null 2>&1 || { echo "Error: rsync is required but not installed"; exit 1; }
+      - 'command -v rsync >/dev/null 2>&1 || { echo "Error: rsync is required but not installed"; exit 1; }'
       - '[ -f ".env.dist" ] || { echo "Error: source file not found: .env.dist"; exit 1; }'
       - 'if [ -f ".env" ]; then echo "Info: .env already exists, skipping copy"; else cp ".env.dist" ".env"; echo "Info: .env created from .env.dist"; fi'
       - '[ -d "$HOME/repositories/yii2-news" ] || { echo "Error: source repository not found: $HOME/repositories/yii2-news"; exit 1; }'
