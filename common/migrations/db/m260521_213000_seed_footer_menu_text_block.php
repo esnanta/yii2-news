@@ -13,7 +13,7 @@ class m260521_213000_seed_footer_menu_text_block extends Migration
     public function safeUp()
     {
         $this->insert('{{%widget_text}}', [
-            'key' => 'frontend.footer-menu',
+            'key' => 'footer_menu',
             'title' => 'Footer Menu',
             'body' => '
             <a href="">Terms of use</a>
