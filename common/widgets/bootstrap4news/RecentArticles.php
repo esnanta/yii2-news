@@ -8,7 +8,7 @@ use yii\base\Widget;
 class RecentArticles extends Widget
 {
     public $title;
-    public $maxData = 5;
+    public $maxData = 10;
 
     public function init()
     {

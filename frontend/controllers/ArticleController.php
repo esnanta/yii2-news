@@ -16,7 +16,7 @@ use yii\web\Response;
  */
 class ArticleController extends Controller
 {
-    private const POSTS_PER_PAGE = 3;
+    private const POSTS_PER_PAGE = 8;
     private const ARCHIVE_MONTHS_COUNT = 12;
     public $layout = '/column2_blog';
 

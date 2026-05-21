@@ -28,7 +28,6 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php echo DetailView::widget([
                 'model' => $model,
                 'attributes' => [
-                    'id',
                     'unique_id',
                     'title',
                     'phone_number',
@@ -41,14 +40,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     'description:ntext',
                     'created_at',
                     'updated_at',
-                    'created_by',
-                    'updated_by',
-                    'is_deleted',
-                    'deleted_at',
-                    'deleted_by',
-                    'verlock',
-                    'uuid',
-                    
                 ],
             ]) ?>
         </div>

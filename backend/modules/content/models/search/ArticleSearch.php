@@ -25,16 +25,16 @@ class ArticleSearch extends Article
     }
 
     /**
-     * Creates data provider instance with search query applied.
-     *
+     * Creates data provider instance with a search query applied.
      * @param mixed $params
-     *
      * @return ActiveDataProvider
      * @throws \Exception
      */
     public function search($params)
     {
-        $query = Article::find();
+        $query = Article::find()->orderBy([
+            'created_at' => SORT_DESC,
+        ]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

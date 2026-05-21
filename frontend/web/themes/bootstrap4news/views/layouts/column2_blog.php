@@ -31,7 +31,7 @@ $siteLinks = OfficeSocialAccount::find()->limit(6)
                             <div class="tags">
                                 <?php echo TagCloud::widget([
                                     'title' => 'Tags',
-                                    'maxTags' => 8,
+                                    'maxTags' => 10,
                                 ]);
 ?>
                             </div>
@@ -43,7 +43,7 @@ $siteLinks = OfficeSocialAccount::find()->limit(6)
                             <div class="news-list">
                                 <?php echo RecentArticles::widget([
                                     'title' => 'Recent Posts',
-                                    'maxData' => 8,
+                                    'maxData' => 10,
                                 ]);
 ?>
                             </div>
