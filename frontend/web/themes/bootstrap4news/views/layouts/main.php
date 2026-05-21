@@ -24,7 +24,7 @@ MetaHelper::registerMetaTags($this);
 $layoutData = LayoutService::getLayoutData('200px', '60px', '500px', '90px');
 $office = $layoutData['office'];
 $categories = $layoutData['categories'];
-$officeMedias = $layoutData['officeMedias'];
+$officeSocialAccount = $layoutData['officeSocialAccount'];
 $logo1Image = $layoutData['logo1Image'];
 $logo2Image = $layoutData['logo2Image'];
 
@@ -54,7 +54,7 @@ Bootstrap4news::register($this);
     'logo1Image' => $logo1Image,
     'logo2Image' => $logo2Image,
     'categories' => $categories,
-    'officeMedias' => $officeMedias,
+    'officeSocialAccount' => $officeSocialAccount,
 ]); ?>
 
     <?php // AlertBootstrap4::widget()?>
@@ -62,7 +62,7 @@ Bootstrap4news::register($this);
 
 <?php echo $this->render('footer.php', [
     'office' => $office,
-    'officeMedias' => $officeMedias,
+    'officeSocialAccount' => $officeSocialAccount,
 ]); ?>
 
 <!-- Back to Top -->

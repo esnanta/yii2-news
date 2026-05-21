@@ -35,7 +35,7 @@ class LayoutService
         return [
             'office' => $office,
             'categories' => self::getCategories($officeId),
-            'officeMedias' => self::getSocialLinks($officeId),
+            'officeSocialAccount' => self::getSocialLinks($officeId),
             'logo1Image' => self::getLogo1($logo1Width, $logo1Height),
             'logo2Image' => self::getLogo2($logo2Width, $logo2Height),
         ];

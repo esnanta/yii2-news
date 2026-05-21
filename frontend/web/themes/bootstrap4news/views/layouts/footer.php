@@ -1,11 +1,12 @@
 <?php
 /**
- * @var Office $office
+ * @var Office              $office
  * @var OfficeSocialAccount $officeSocialAccount
  */
 
 use common\models\Office;
 use common\models\OfficeSocialAccount;
+use common\widgets\DbText;
 use rmrevin\yii\fontawesome\FAS;
 
 $siteLinks = OfficeSocialAccount::find()->limit(6)
@@ -68,12 +69,9 @@ $siteLinks = OfficeSocialAccount::find()->limit(6)
 <div class="footer-menu">
     <div class="container">
         <div class="f-menu">
-            <a href="">Terms of use</a>
-            <a href="">Privacy policy</a>
-            <a href="">Cookies</a>
-            <a href="">Accessibility help</a>
-            <a href="">Advertise with us</a>
-            <a href="">Contact us</a>
+            <?php echo DbText::widget([
+                'key' => 'footer_menu',
+            ]); ?>
         </div>
     </div>
 </div>
@@ -84,7 +82,10 @@ $siteLinks = OfficeSocialAccount::find()->limit(6)
     <div class="container">
         <div class="row">
             <div class="col-md-6 copyright">
-                <p><?php echo FAS::icon('globe'); ?> <a href="https://daraspace.com"> DARASPACE</a> | Some Rights Reserved</p>
+                <p>
+                    <?php echo FAS::icon('globe'); ?>
+                    <a href="https://daraspace.com"> DARASPACE</a> | Some Rights Reserved
+                </p>
             </div>
 
             <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
