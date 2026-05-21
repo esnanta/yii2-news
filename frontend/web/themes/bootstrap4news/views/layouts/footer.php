@@ -1,7 +1,7 @@
 <?php
 /**
- * @var Office      $office
- * @var OfficeMedia $officeMedias
+ * @var Office $office
+ * @var OfficeSocialAccount $officeSocialAccount
  */
 
 use common\models\Office;
@@ -49,7 +49,7 @@ $siteLinks = OfficeSocialAccount::find()->limit(6)
                     <h3 class="title">Social</h3>
                     <div class="footer-widget">
                         <div class="social">
-                            <?php foreach ($officeMedias as $officeMediaItem) {  ?>
+                            <?php foreach ($officeSocialAccount as $officeMediaItem) {  ?>
                                 <a href="<?php echo $officeMediaItem->description; ?>">
                                     <i class="<?php echo $officeMediaItem->title; ?>"></i></a>
                             <?php } ?>
