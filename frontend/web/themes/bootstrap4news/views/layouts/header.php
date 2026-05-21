@@ -1,7 +1,7 @@
 <?php
 /**
  * @var Office              $office
- * @var OfficeSocialAccount $officeMedias
+ * @var OfficeSocialAccount $officeSocialAccount
  * @var string              $logo1Image
  * @var string              $logo2Image
  */
@@ -171,9 +171,9 @@ if (!empty($categories)) {
 
                 </div>
                 <div class="social ml-auto">
-                    <?php foreach ($officeMedias as $officeMediaItem) {  ?>
-                        <a href="<?php echo $officeMediaItem->description; ?>">
-                            <i class="<?php echo $officeMediaItem->title; ?>"></i>
+                    <?php foreach ($officeSocialAccount as $officeSocialAccountItem) {  ?>
+                        <a href="<?php echo $officeSocialAccountItem->description; ?>">
+                            <i class="<?php echo $officeSocialAccountItem->title; ?>"></i>
                         </a>
                     <?php } ?>
                 </div>
