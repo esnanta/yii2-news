@@ -29,13 +29,23 @@ $this->params['breadcrumbs'][] = $this->title;
                 'class' => ['gridview', 'table-responsive'],
             ],
             'tableOptions' => [
-                'class' => ['table', 'text-nowrap', 'table-striped', 'table-bordered', 'mb-0'],
+                'class' => ['table', 'table-striped', 'table-bordered', 'mb-0'],
             ],
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
 
-                'key',
-                'value',
+                [
+                    'attribute' => 'key',
+                    'contentOptions' => [
+                        'style' => 'white-space: normal; word-break: break-word;',
+                    ],
+                ],
+                [
+                    'attribute' => 'value',
+                    'contentOptions' => [
+                        'style' => 'white-space: normal; word-break: break-word;',
+                    ],
+                ],
 
                 [
                     'class' => \common\widgets\ActionColumn::class,
@@ -48,5 +58,3 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php echo getDataProviderSummary($dataProvider) ?>
     </div>
 </div>
-
-
