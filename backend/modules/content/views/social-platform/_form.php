@@ -18,8 +18,8 @@ use yii\helpers\Html;
                 <?php echo $form->errorSummary($model); ?>
 
                 <?php echo $form->field($model, 'code')->textInput(['maxlength' => true]); ?>
-                <?php echo $form->field($model, 'name')->textInput(['maxlength' => true]); ?>
-                <?php echo $form->field($model, 'base_url')->textInput(['maxlength' => true]); ?>
+                <?php echo $form->field($model, 'title')->textInput(['maxlength' => true]); ?>
+                <?php echo $form->field($model, 'url')->textInput(['maxlength' => true]); ?>
                 <?php echo $form->field($model, 'sequence')->textInput(); ?>
 
             </div>

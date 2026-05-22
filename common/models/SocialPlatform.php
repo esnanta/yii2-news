@@ -15,13 +15,13 @@ class SocialPlatform extends BaseSocialPlatform
         return array_merge(
             parent::rules(),
             [
-                [['code', 'name'], 'required'],
+                [['code', 'title'], 'required'],
                 [['sequence', 'created_by', 'updated_by', 'is_deleted',
                     'deleted_by', 'verlock'], 'integer'],
                 [['created_at', 'updated_at', 'deleted_at'], 'safe'],
                 [['code'], 'string', 'max' => 50],
-                [['name'], 'string', 'max' => 100],
-                [['base_url'], 'string', 'max' => 255],
+                [['title'], 'string', 'max' => 100],
+                [['url'], 'string', 'max' => 255],
                 [['uuid'], 'string', 'max' => 36],
                 [['code'], 'unique'],
                 [['verlock'], 'default', 'value' => '0'],

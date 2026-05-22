@@ -8,7 +8,7 @@ use yii\widgets\DetailView;
  * @var common\models\SocialPlatform $model
  */
 
-$this->title = $model->name;
+$this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Social Platforms'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -29,8 +29,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'model' => $model,
                 'attributes' => [
                     'code',
-                    'name',
-                    'base_url:url',
+                    'title',
+                    'url:url',
                     'sequence',
                 ],
             ]); ?>

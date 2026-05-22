@@ -17,8 +17,8 @@ use yii\db\ActiveQuery;
  *
  * @property int                   $id
  * @property string                $code
- * @property string                $name
- * @property string                $base_url
+ * @property string                $title
+ * @property string                $url
  * @property int                   $sequence
  * @property string                $created_at
  * @property string                $updated_at
@@ -68,12 +68,12 @@ class SocialPlatform extends BaseActiveRecord
     public function rules(): array
     {
         return [
-            [['code', 'name'], 'required'],
+            [['code', 'title'], 'required'],
             [['sequence', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['code'], 'string', 'max' => 50],
-            [['name'], 'string', 'max' => 100],
-            [['base_url'], 'string', 'max' => 255],
+            [['title'], 'string', 'max' => 100],
+            [['url'], 'string', 'max' => 255],
             [['uuid'], 'string', 'max' => 36],
             [['code'], 'unique'],
             [['verlock'], 'default', 'value' => '0'],
@@ -101,8 +101,8 @@ class SocialPlatform extends BaseActiveRecord
         return [
             'id' => \Yii::t('common', 'ID'),
             'code' => \Yii::t('common', 'Code'),
-            'name' => \Yii::t('common', 'Name'),
-            'base_url' => \Yii::t('common', 'Base Url'),
+            'title' => \Yii::t('common', 'Title'),
+            'url' => \Yii::t('common', 'Url'),
             'sequence' => \Yii::t('common', 'Sequence'),
             'is_deleted' => \Yii::t('common', 'Is Deleted'),
             'verlock' => \Yii::t('common', 'Verlock'),

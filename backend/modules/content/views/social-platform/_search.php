@@ -19,8 +19,8 @@ use yii\bootstrap4\ActiveForm;
 
     <?php echo $form->field($model, 'id') ?>
     <?php echo $form->field($model, 'code') ?>
-    <?php echo $form->field($model, 'name') ?>
-    <?php echo $form->field($model, 'base_url') ?>
+    <?php echo $form->field($model, 'title') ?>
+    <?php echo $form->field($model, 'url') ?>
     <?php echo $form->field($model, 'is_active') ?>
     <?php // echo $form->field($model, 'sequence') ?>
     <?php // echo $form->field($model, 'created_at') ?>
