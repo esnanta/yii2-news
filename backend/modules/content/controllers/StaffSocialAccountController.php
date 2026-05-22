@@ -4,6 +4,7 @@ namespace backend\modules\content\controllers;
 
 use common\base\BaseController;
 use common\models\search\StaffSocialAccountSearch;
+use common\models\Staff;
 use common\models\StaffSocialAccount;
 use common\service\DataListService;
 use yii\db\Exception;
@@ -82,11 +83,26 @@ class StaffSocialAccountController extends BaseController
         $this->checkAccess('staffSocialAccount.create');
 
         $model = new StaffSocialAccount();
+        $staffId = (int) \Yii::$app->request->get('staff_id');
+        $staff = $staffId > 0 ? Staff::findOne($staffId) : null;
+        if ($staff !== null) {
+            $model->staff_id = $staff->id;
+            $model->office_id = $staff->office_id;
+        }
 
-        if ($model->loadSafely(\Yii::$app->request->post())
-            && $model->saveSafely()
-        ) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->loadSafely(\Yii::$app->request->post())) {
+            if ($staff !== null) {
+                $model->staff_id = $staff->id;
+                $model->office_id = $staff->office_id;
+            }
+
+            if ($model->saveSafely()) {
+                if ($staffId > 0) {
+                    return $this->redirect(['staff/view', 'id' => $model->staff_id, 'tab' => 'social-account']);
+                }
+
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('create', [
@@ -112,10 +128,15 @@ class StaffSocialAccountController extends BaseController
         $this->checkAccess('staffSocialAccount.update');
 
         $model = $this->findModel($id);
+        $staffId = (int) \Yii::$app->request->get('staff_id');
 
         if ($model->loadSafely(\Yii::$app->request->post())
             && $model->saveSafely()
         ) {
+            if ($staffId > 0) {
+                return $this->redirect(['staff/view', 'id' => $model->staff_id, 'tab' => 'social-account']);
+            }
+
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -140,7 +161,12 @@ class StaffSocialAccountController extends BaseController
     {
         $model = $this->findModel($id);
         $this->checkAccess('staffSocialAccount.delete');
+        $staffId = $model->staff_id;
         $model->deleteSafely();
+
+        if ((int) \Yii::$app->request->get('staff_id') > 0) {
+            return $this->redirect(['staff/view', 'id' => $staffId, 'tab' => 'social-account']);
+        }
 
         return $this->redirect(['index']);
     }
