@@ -41,6 +41,7 @@ class OfficeSocialAccount extends BaseOfficeSocialAccount
         return array_replace_recursive(
             parent::rules(),
             [
+                [['platform_id'], 'required'],
                 [['office_id', 'platform_id', 'is_primary', 'is_visible',
                     'sequence', 'created_by', 'updated_by',
                     'is_deleted', 'deleted_by', 'verlock'], 'integer'],
@@ -66,5 +67,23 @@ class OfficeSocialAccount extends BaseOfficeSocialAccount
         $query = new OfficeSocialAccountQuery(get_called_class());
 
         return $query->where(['t_office_social_account.is_deleted' => 0]);
+    }
+
+    public function attributeLabels(): array
+    {
+        return [
+            'id' => \Yii::t('common', 'ID'),
+            'office_id' => \Yii::t('common', 'Office ID'),
+            'platform_id' => \Yii::t('common', 'Platform ID'),
+            'title' => \Yii::t('common', 'Username'),
+            'profile_url' => \Yii::t('common', 'Profile Url'),
+            'is_primary' => \Yii::t('common', 'Is Primary'),
+            'is_visible' => \Yii::t('common', 'Is Visible'),
+            'sequence' => \Yii::t('common', 'Sequence'),
+            'description' => \Yii::t('common', 'Description'),
+            'is_deleted' => \Yii::t('common', 'Is Deleted'),
+            'verlock' => \Yii::t('common', 'Verlock'),
+            'uuid' => \Yii::t('common', 'Uuid'),
+        ];
     }
 }

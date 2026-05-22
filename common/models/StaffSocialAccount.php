@@ -40,6 +40,7 @@ class StaffSocialAccount extends BaseStaffSocialAccount
         return array_merge(
             parent::rules(),
             [
+                [['platform_id'], 'required'],
                 [['office_id', 'staff_id', 'platform_id', 'is_primary', 'is_visible',
                     'sequence', 'created_by', 'updated_by',
                     'is_deleted', 'deleted_by', 'verlock'], 'integer'],
@@ -64,7 +65,7 @@ class StaffSocialAccount extends BaseStaffSocialAccount
             'office_id' => \Yii::t('common', 'Office'),
             'staff_id' => \Yii::t('common', 'Staff'),
             'platform_id' => \Yii::t('common', 'Platform'),
-            'title' => \Yii::t('common', 'Title'),
+            'title' => \Yii::t('common', 'Username'),
             'profile_url' => \Yii::t('common', 'Profile Url'),
             'is_primary' => \Yii::t('common', 'Is Primary'),
             'is_visible' => \Yii::t('common', 'Is Visible'),

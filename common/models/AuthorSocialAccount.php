@@ -40,6 +40,7 @@ class AuthorSocialAccount extends BaseAuthorSocialAccount
         return array_merge(
             parent::rules(),
             [
+                [['platform_id'], 'required'],
                 [['office_id', 'author_id', 'platform_id',
                     'is_primary', 'is_visible', 'sequence',
                     'created_by', 'updated_by', 'is_deleted',
@@ -65,7 +66,7 @@ class AuthorSocialAccount extends BaseAuthorSocialAccount
             'office_id' => \Yii::t('common', 'Office'),
             'author_id' => \Yii::t('common', 'Author'),
             'platform_id' => \Yii::t('common', 'Platform'),
-            'title' => \Yii::t('common', 'Title'),
+            'title' => \Yii::t('common', 'Username'),
             'profile_url' => \Yii::t('common', 'Profile Url'),
             'is_primary' => \Yii::t('common', 'Is Primary'),
             'is_visible' => \Yii::t('common', 'Is Visible'),
