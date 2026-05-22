@@ -64,11 +64,12 @@ class AuthorController extends BaseController
         $activeTab = (string) \Yii::$app->request->get('tab', 'profile');
         $socialAccounts = [];
 
-        if ($activeTab === 'social-account') {
+        if ('social-account' === $activeTab) {
             $socialAccounts = $model->getAuthorSocialAccounts()
                 ->with('platform')
                 ->orderBy(['sequence' => SORT_ASC, 'id' => SORT_ASC])
-                ->all();
+                ->all()
+            ;
         }
 
         return $this->render('view', [
