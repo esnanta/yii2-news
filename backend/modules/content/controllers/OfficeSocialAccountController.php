@@ -82,6 +82,11 @@ class OfficeSocialAccountController extends BaseController
         $this->checkAccess('officeSocialAccount.create');
 
         $model = new OfficeSocialAccount();
+        $officeId = (int)
+            \Yii::$app->request->get('office_id');
+        if ($officeId > 0) {
+            $model->office_id = $officeId;
+        }
 
         if ($model->loadSafely(\Yii::$app->request->post())
             && $model->saveSafely()

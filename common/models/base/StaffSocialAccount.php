@@ -20,7 +20,7 @@ use yii\db\ActiveQuery;
  * @property int            $office_id
  * @property int            $staff_id
  * @property int            $platform_id
- * @property string         $username
+ * @property string         $title
  * @property string         $profile_url
  * @property int            $is_primary
  * @property int            $is_visible
@@ -81,7 +81,7 @@ class StaffSocialAccount extends BaseActiveRecord
                 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
             [['description'], 'string'],
             [['created_at', 'updated_at', 'deleted_at'], 'safe'],
-            [['username'], 'string', 'max' => 100],
+            [['title'], 'string', 'max' => 100],
             [['profile_url'], 'string', 'max' => 500],
             [['uuid'], 'string', 'max' => 36],
             [['staff_id', 'platform_id'], 'unique',
@@ -114,7 +114,7 @@ class StaffSocialAccount extends BaseActiveRecord
             'office_id' => \Yii::t('common', 'Office ID'),
             'staff_id' => \Yii::t('common', 'Staff ID'),
             'platform_id' => \Yii::t('common', 'Platform ID'),
-            'username' => \Yii::t('common', 'Username'),
+            'title' => \Yii::t('common', 'Title'),
             'profile_url' => \Yii::t('common', 'Profile Url'),
             'is_primary' => \Yii::t('common', 'Is Primary'),
             'is_visible' => \Yii::t('common', 'Is Visible'),

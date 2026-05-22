@@ -21,7 +21,7 @@ use yii\bootstrap4\ActiveForm;
     <?php echo $form->field($model, 'office_id') ?>
     <?php echo $form->field($model, 'author_id') ?>
     <?php echo $form->field($model, 'platform_id') ?>
-    <?php echo $form->field($model, 'username') ?>
+    <?php echo $form->field($model, 'title') ?>
     <?php // echo $form->field($model, 'profile_url') ?>
     <?php // echo $form->field($model, 'is_primary') ?>
     <?php // echo $form->field($model, 'is_visible') ?>

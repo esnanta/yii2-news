@@ -43,7 +43,7 @@ class SocialPlatformController extends BaseController
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->sort->defaultOrder = [
             'sequence' => SORT_ASC,
-            'name' => SORT_ASC,
+            'title' => SORT_ASC,
         ];
 
         return $this->render('index', [

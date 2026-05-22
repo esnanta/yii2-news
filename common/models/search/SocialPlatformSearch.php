@@ -15,7 +15,7 @@ class SocialPlatformSearch extends SocialPlatform
     {
         return [
             [['id', 'sequence', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
-            [['code', 'name', 'base_url', 'created_at', 'updated_at', 'deleted_at', 'uuid'], 'safe'],
+            [['code', 'title', 'url', 'created_at', 'updated_at', 'deleted_at', 'uuid'], 'safe'],
         ];
     }
 
@@ -56,8 +56,8 @@ class SocialPlatformSearch extends SocialPlatform
         ]);
 
         $query->andFilterWhere(['like', 'code', $this->code])
-            ->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'base_url', $this->base_url])
+            ->andFilterWhere(['like', 'title', $this->title])
+            ->andFilterWhere(['like', 'url', $this->url])
             ->andFilterWhere(['like', 'uuid', $this->uuid])
         ;
 

@@ -15,7 +15,7 @@ class AuthorSocialAccountSearch extends AuthorSocialAccount
     {
         return [
             [['id', 'office_id', 'author_id', 'platform_id', 'is_primary', 'is_visible', 'sequence', 'created_by', 'updated_by', 'is_deleted', 'deleted_by', 'verlock'], 'integer'],
-            [['username', 'profile_url', 'description', 'created_at', 'updated_at', 'deleted_at', 'uuid'], 'safe'],
+            [['title', 'profile_url', 'description', 'created_at', 'updated_at', 'deleted_at', 'uuid'], 'safe'],
         ];
     }
 
@@ -60,7 +60,7 @@ class AuthorSocialAccountSearch extends AuthorSocialAccount
             'verlock' => $this->verlock,
         ]);
 
-        $query->andFilterWhere(['like', 'username', $this->username])
+        $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'profile_url', $this->profile_url])
             ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'uuid', $this->uuid])

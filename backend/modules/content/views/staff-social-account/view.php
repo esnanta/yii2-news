@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'office_id',
                     'staff_id',
                     'platform_id',
-                    'username',
+                    'title',
                     'profile_url:url',
                     'is_primary',
                     'is_visible',

@@ -48,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute' => 'platform_id',
                         'value' => $platformOptions[$model->platform_id] ?? '-',
                     ],
-                    'username',
+                    'title',
                     'profile_url:url',
                     'is_primary',
                     'is_visible',

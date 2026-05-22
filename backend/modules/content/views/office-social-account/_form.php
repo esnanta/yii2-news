@@ -36,7 +36,7 @@ use yii\helpers\Html;
                         )]
                 ); ?>
 
-                <?php echo $form->field($model, 'username')->textInput(['maxlength' => true]); ?>
+                <?php echo $form->field($model, 'title')->textInput(['maxlength' => true]); ?>
                 <?php echo $form->field($model, 'profile_url')->textInput(['maxlength' => true]); ?>
                 <?php echo $form->field($model, 'is_primary')->dropDownList(
                     $model::primaryOptions(),

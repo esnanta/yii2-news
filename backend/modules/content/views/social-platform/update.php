@@ -7,9 +7,9 @@
 
 $this->title = Yii::t('backend', 'Update {modelClass}: ', [
     'modelClass' => 'Social Platform',
-]) . ' ' . $model->name;
+]) . ' ' . $model->title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Social Platforms'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('backend', 'Update');
 ?>
 <div class="social-platform-update">

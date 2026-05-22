@@ -58,7 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'contentOptions' => ['style' => 'white-space: nowrap;'],
                     ],
                     [
-                        'attribute' => 'username',
+                        'attribute' => 'title',
                         'options' => ['style' => 'width: 20%'],
                         'contentOptions' => ['style' => 'white-space: normal; word-break: break-word;'],
                     ],

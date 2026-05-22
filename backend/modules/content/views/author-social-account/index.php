@@ -66,7 +66,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'contentOptions' => ['style' => 'white-space: nowrap;'],
                     ],
                     [
-                        'attribute' => 'username',
+                        'attribute' => 'title',
                         'contentOptions' => ['style' => 'white-space: normal; word-break: break-word;'],
                     ],
                     // 'profile_url:url',
