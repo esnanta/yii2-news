@@ -24,7 +24,9 @@ use yii\helpers\Html;
                         'prompt' => Yii::t(
                             'backend',
                             'Select office'
-                        )]
+                        ),
+                        'disabled' => true,
+                    ]
                 ); ?>
 
                 <?php echo $form->field($model, 'platform_id')->dropDownList(
