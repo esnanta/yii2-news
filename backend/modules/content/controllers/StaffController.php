@@ -61,8 +61,21 @@ class StaffController extends BaseController
     {
         $this->checkAccess('staff.view');
 
+        $model = $this->findModel($id);
+        $activeTab = (string) \Yii::$app->request->get('tab', 'profile');
+        $socialAccounts = [];
+
+        if ($activeTab === 'social-account') {
+            $socialAccounts = $model->getStaffSocialAccounts()
+                ->with('platform')
+                ->orderBy(['sequence' => SORT_ASC, 'id' => SORT_ASC])
+                ->all();
+        }
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'activeTab' => $activeTab,
+            'socialAccounts' => $socialAccounts,
             'officeOptions' => DataListService::getOffice(),
             'jobTitleOptions' => DataListService::getJobTitle(),
         ]);

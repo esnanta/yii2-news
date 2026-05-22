@@ -11,17 +11,20 @@ use yii\widgets\DetailView;
  * @var common\models\Staff $model
  * @var array $officeOptions
  * @var array $jobTitleOptions
+ * @var string $activeTab
+ * @var common\models\StaffSocialAccount[] $socialAccounts
  */
 
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Staff'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
-$activeTab = Yii::$app->request->get('tab', 'profile');
-$socialAccounts = $model->getStaffSocialAccounts()
-    ->with('platform')
-    ->orderBy(['sequence' => SORT_ASC, 'id' => SORT_ASC])
-    ->all();
+$primaryOptions = StaffSocialAccount::primaryOptions();
+$visibleOptions = StaffSocialAccount::visibleOptions();
+$badgeClassMap = [
+    StaffSocialAccount::FLAG_YES => 'badge-success',
+    StaffSocialAccount::FLAG_NO => 'badge-secondary',
+];
 ?>
 <div class="staff-view">
     <div class="card">
@@ -86,10 +89,8 @@ $socialAccounts = $model->getStaffSocialAccounts()
                                 <tbody>
                                     <?php foreach ($socialAccounts as $account) : ?>
                                         <?php
-                                        $isPrimary = $account->is_primary === StaffSocialAccount::FLAG_YES;
-                                        $isVisible = $account->is_visible === StaffSocialAccount::FLAG_YES;
                                         $platformName = $account->platform
-                                            ? $account->platform->name
+                                            ? $account->platform->title
                                             : Yii::t('backend', 'Unknown');
                                         ?>
                                         <tr>
@@ -107,21 +108,19 @@ $socialAccounts = $model->getStaffSocialAccounts()
                                                 <?php endif; ?>
                                             </td>
                                             <td>
-                                                <span class="badge <?php echo $isPrimary
-                                                    ? 'badge-success'
-                                                    : 'badge-secondary'; ?>">
-                                                    <?php echo $isPrimary
-                                                        ? Yii::t('backend', 'Yes')
-                                                        : Yii::t('backend', 'No'); ?>
+                                                <span class="badge <?php echo $badgeClassMap[$account->is_primary]
+                                                    ?? 'badge-secondary'; ?>">
+                                                    <?php echo Html::encode(
+                                                        $primaryOptions[$account->is_primary] ?? '-'
+                                                    ); ?>
                                                 </span>
                                             </td>
                                             <td>
-                                                <span class="badge <?php echo $isVisible
-                                                    ? 'badge-success'
-                                                    : 'badge-secondary'; ?>">
-                                                    <?php echo $isVisible
-                                                        ? Yii::t('backend', 'Yes')
-                                                        : Yii::t('backend', 'No'); ?>
+                                                <span class="badge <?php echo $badgeClassMap[$account->is_visible]
+                                                    ?? 'badge-secondary'; ?>">
+                                                    <?php echo Html::encode(
+                                                        $visibleOptions[$account->is_visible] ?? '-'
+                                                    ); ?>
                                                 </span>
                                             </td>
                                             <td><?php echo Html::encode((string) $account->sequence); ?></td>
