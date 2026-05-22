@@ -21,11 +21,17 @@ use yii\helpers\Html;
 
                 <?php echo $form->field($model, 'office_id')->dropDownList(
                     $officeOptions,
-                    ['prompt' => Yii::t('backend', 'Select office')]
+                    [
+                        'prompt' => Yii::t('backend', 'Select office'),
+                        'disabled' => true,
+                    ]
                 ); ?>
                 <?php echo $form->field($model, 'staff_id')->dropDownList(
                     $staffOptions,
-                    ['prompt' => Yii::t('backend', 'Select staff')]
+                    [
+                        'prompt' => Yii::t('backend', 'Select staff'),
+                        'disabled' => true,
+                    ]
                 ); ?>
                 <?php echo $form->field($model, 'platform_id')->dropDownList(
                     $platformOptions,
