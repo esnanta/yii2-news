@@ -3,6 +3,7 @@
 namespace backend\modules\content\controllers;
 
 use common\base\BaseController;
+use common\models\Author;
 use common\models\AuthorSocialAccount;
 use common\models\search\AuthorSocialAccountSearch;
 use common\service\DataListService;
@@ -82,11 +83,26 @@ class AuthorSocialAccountController extends BaseController
         $this->checkAccess('authorSocialAccount.create');
 
         $model = new AuthorSocialAccount();
+        $authorId = (int) \Yii::$app->request->get('author_id');
+        $author = $authorId > 0 ? Author::findOne($authorId) : null;
+        if ($author !== null) {
+            $model->author_id = $author->id;
+            $model->office_id = $author->office_id;
+        }
 
-        if ($model->loadSafely(\Yii::$app->request->post())
-            && $model->saveSafely()
-        ) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->loadSafely(\Yii::$app->request->post())) {
+            if ($author !== null) {
+                $model->author_id = $author->id;
+                $model->office_id = $author->office_id;
+            }
+
+            if ($model->saveSafely()) {
+                if ($authorId > 0) {
+                    return $this->redirect(['author/view', 'id' => $model->author_id, 'tab' => 'social-account']);
+                }
+
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('create', [
@@ -112,10 +128,15 @@ class AuthorSocialAccountController extends BaseController
         $this->checkAccess('authorSocialAccount.update');
 
         $model = $this->findModel($id);
+        $authorId = (int) \Yii::$app->request->get('author_id');
 
         if ($model->loadSafely(\Yii::$app->request->post())
             && $model->saveSafely()
         ) {
+            if ($authorId > 0) {
+                return $this->redirect(['author/view', 'id' => $model->author_id, 'tab' => 'social-account']);
+            }
+
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -140,7 +161,12 @@ class AuthorSocialAccountController extends BaseController
     {
         $model = $this->findModel($id);
         $this->checkAccess('authorSocialAccount.delete');
+        $authorId = $model->author_id;
         $model->deleteSafely();
+
+        if ((int) \Yii::$app->request->get('author_id') > 0) {
+            return $this->redirect(['author/view', 'id' => $authorId, 'tab' => 'social-account']);
+        }
 
         return $this->redirect(['index']);
     }

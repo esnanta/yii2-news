@@ -60,8 +60,21 @@ class AuthorController extends BaseController
     {
         $this->checkAccess('author.view');
 
+        $model = $this->findModel($id);
+        $activeTab = (string) \Yii::$app->request->get('tab', 'profile');
+        $socialAccounts = [];
+
+        if ($activeTab === 'social-account') {
+            $socialAccounts = $model->getAuthorSocialAccounts()
+                ->with('platform')
+                ->orderBy(['sequence' => SORT_ASC, 'id' => SORT_ASC])
+                ->all();
+        }
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'activeTab' => $activeTab,
+            'socialAccounts' => $socialAccounts,
             'officeOptions' => DataListService::getOffice(),
         ]);
     }

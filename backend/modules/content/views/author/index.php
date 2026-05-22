@@ -48,12 +48,12 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute' => 'office_id',
                         'label' => Yii::t('backend', 'Office'),
                         //'options' => ['style' => 'width: 25%'],
-                        'value' => function ($model) {
-                            if ($model->office_id) {
-                                return $model->office->title;
+                        'value' => static function ($model) use ($officeOptions) {
+                            if (empty($model->office_id)) {
+                                return null;
                             }
 
-                            return null;
+                            return $officeOptions[$model->office_id] ?? null;
                         },
                         'filter' => Select2::widget([
                             'model' => $searchModel,

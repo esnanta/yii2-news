@@ -3,6 +3,7 @@
 namespace backend\modules\content\controllers;
 
 use common\base\BaseController;
+use common\models\Office;
 use common\models\OfficeSocialAccount;
 use common\models\search\OfficeSocialAccountSearch;
 use common\service\DataListService;
@@ -82,16 +83,24 @@ class OfficeSocialAccountController extends BaseController
         $this->checkAccess('officeSocialAccount.create');
 
         $model = new OfficeSocialAccount();
-        $officeId = (int)
-            \Yii::$app->request->get('office_id');
-        if ($officeId > 0) {
-            $model->office_id = $officeId;
+        $officeId = (int) \Yii::$app->request->get('office_id');
+        $office = $officeId > 0 ? Office::findOne($officeId) : null;
+        if ($office !== null) {
+            $model->office_id = $office->id;
         }
 
-        if ($model->loadSafely(\Yii::$app->request->post())
-            && $model->saveSafely()
-        ) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->loadSafely(\Yii::$app->request->post())) {
+            if ($office !== null) {
+                $model->office_id = $office->id;
+            }
+
+            if ($model->saveSafely()) {
+                if ($officeId > 0) {
+                    return $this->redirect(['office/view', 'id' => $model->office_id, 'tab' => 'social-account']);
+                }
+
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('create', [
@@ -117,10 +126,15 @@ class OfficeSocialAccountController extends BaseController
         $this->checkAccess('officeSocialAccount.update');
 
         $model = $this->findModel($id);
+        $officeId = (int) \Yii::$app->request->get('office_id');
 
         if ($model->loadSafely(\Yii::$app->request->post())
             && $model->saveSafely()
         ) {
+            if ($officeId > 0) {
+                return $this->redirect(['office/view', 'id' => $model->office_id, 'tab' => 'social-account']);
+            }
+
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -145,7 +159,12 @@ class OfficeSocialAccountController extends BaseController
     {
         $model = $this->findModel($id);
         $this->checkAccess('officeSocialAccount.delete');
+        $officeId = $model->office_id;
         $model->deleteSafely();
+
+        if ((int) \Yii::$app->request->get('office_id') > 0) {
+            return $this->redirect(['office/view', 'id' => $officeId, 'tab' => 'social-account']);
+        }
 
         return $this->redirect(['index']);
     }
