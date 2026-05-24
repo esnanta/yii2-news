@@ -34,14 +34,9 @@ $siteLinks = OfficeSocialAccount::find()->limit(6)
             <div class="col-lg-5 col-md-5">
                 <div class="footer-widget">
                     <h3 class="title">Useful Links</h3>
-                    <ul>
-                        <?php foreach ($siteLinks as $siteLinkItem) {  ?>
-                            <li><a href="<?php echo $siteLinkItem->description; ?>">
-                                    <?php echo $siteLinkItem->title; ?>
-                                </a>
-                            </li>
-                        <?php } ?>
-                    </ul>
+                    <?php echo DbText::widget([
+                            'key' => 'footer_site_links',
+                    ]); ?>
                 </div>
             </div>
 
