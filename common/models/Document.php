@@ -211,6 +211,7 @@ class Document extends BaseDocument
         $relativePath = ltrim((string) $this->path, '/');
         $candidates = [
             \Yii::getAlias('@storage/web/source/'.$relativePath),
+            \Yii::getAlias('@storage/web/source/legacy_asset/671f6e6105723/'.$relativePath),
             \Yii::getAlias('@storage/web/'.$relativePath),
         ];
 
