@@ -46,7 +46,11 @@ class m260420_100100_alter_article_schema_for_news extends Migration
         $this->convertUnixIntToDateTime('{{%article}}', 'updated_at');
         $this->convertUnixIntToDateTime('{{%article}}', 'published_at');
 
-        $this->alterColumn('{{%article}}', 'body', $this->longText()->notNull());
+        $this->alterColumn('{{%article}}', 'body', $this->text()->notNull());
+
+        if ($this->db->driverName === 'mysql') {
+            $this->execute('ALTER TABLE {{%article}} MODIFY COLUMN [[body]] LONGTEXT NOT NULL');
+        }
 
         $this->addColumn('{{%article}}', 'is_pinned', $this->integer()->notNull()->defaultValue(0));
         $this->addColumn('{{%article}}', 'view_count', $this->integer()->notNull()->defaultValue(0));
