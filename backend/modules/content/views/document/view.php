@@ -72,6 +72,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                         'view_count',
                         'download_count',
+                        'path',
                         'description:ntext',
                         'created_at',
                         'updated_at',
