@@ -69,6 +69,7 @@ class DocumentController extends BaseController
             'officeOptions' => DataListService::getOffice(),
             'documentCategoryOptions' => DataListService::getDocumentCategory(),
             'visibleOptions' => Document::visibleOptions(),
+            'documentTypeOptions' => Document::documentTypeOptions(),
         ]);
     }
 

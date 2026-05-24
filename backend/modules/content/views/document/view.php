@@ -10,6 +10,7 @@ use yii\widgets\DetailView;
  * @var array $officeOptions
  * @var array $documentCategoryOptions
  * @var array $visibleOptions
+ * @var array $documentTypeOptions
  */
 
 $this->title = $model->title;
@@ -58,18 +59,25 @@ $this->params['breadcrumbs'][] = $this->title;
                             },
                         ],
                         [
+                            'attribute' => 'document_type',
+                            'label' => Yii::t('backend', 'Document Type'),
+                            'value' => static function ($model) use ($documentTypeOptions) {
+                                return $documentTypeOptions[$model->document_type] ?? '-';
+                            },
+                        ],
+                        [
                             'attribute' => 'category_id',
                             'label' => Yii::t('backend', 'Category'),
                             'value' => static function ($model) use ($documentCategoryOptions) {
                                 return $documentCategoryOptions[$model->category_id] ?? null;
                             },
-                        ],
+                    ],
                         'title',
                         'date_issued',
                         [
                             'attribute' => 'size',
                             'value' => static fn ($model) => FileDisplayService::formatSizeInKbOrMb($model->size),
-                        ],
+                    ],
                         'view_count',
                         'download_count',
                         'path',
