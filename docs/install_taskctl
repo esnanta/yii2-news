@@ -1,0 +1,33 @@
+# =====================================================
+# CHECK SERVER ARCHITECTURE
+# =====================================================
+
+uname -m
+
+# =====================================================
+# ADD ~/bin TO PATH
+# =====================================================
+
+echo 'export PATH=$HOME/bin:$PATH' >> ~/.bashrc
+source ~/.bashrc
+
+# =====================================================
+# GO TO THE BIN FOLDER
+# =====================================================
+
+mkdir -p ~/bin
+cd ~/bin
+
+# =====================================================
+# DOWNLOAD & EXTRACT TASKCTL
+# =====================================================
+
+wget https://github.com/taskctl/taskctl/releases/download/1.4.2/taskctl_1.4.2_linux_amd64.tar.gz
+tar -xzf taskctl_1.4.2_linux_amd64.tar.gz
+
+# =====================================================
+# GRANT EXECUTABLE PERMISSION & VERIFY
+# =====================================================
+
+chmod +x taskctl
+taskctl --version
