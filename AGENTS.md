@@ -14,6 +14,11 @@
 - api/modules/v1/controllers/UserController.php implements CompositeAuth (basic/bearer/header/query-param), but it is not reachable until a matching rule is added to api/config/_urlManager.php.
 - Swagger docs come from api/controllers/SiteController.php (site/docs and site/json-schema) scanning api/modules/v1/controllers + api/modules/v1/models.
 
+## Backend module map
+- Backend modules live under `backend/modules` and each module is organized with `controllers/`, `views/`, and (when needed) `models/search/` for filter/grid scenarios.
+- Current backend modules: `content`, `file`, `rbac`, `system`, `translation`, `widget`.
+- Keep canonical/full ActiveRecord domain models in `common/models`; backend module models should be search/form/presentation helpers, not duplicated business entities.
+
 ## Shared infrastructure and side effects
 - common/config/base.php defines core services: DB, RBAC (DbManager), commandBus, file queue (yii\queue\file\Queue), Glide, file storage, key storage, and cross-app URL managers.
 - User lifecycle emits timeline events from model hooks in common/models/User.php (notifySignup / notifyDeletion via AddToTimelineCommand).
@@ -37,8 +42,10 @@
 - **Structural Boundary:** Put shared business logic in `common/`; keep app-specific code in `frontend/`, `backend/`, or `api/`.
 
 ### Model (Fat Models)
+- Canonical/full ActiveRecord domain models MUST live in `common/models` (single source of truth for cross-app rules, relations, and behaviors).
 - Reuse query scopes via custom query classes (example: `common/models/query/ArticleQuery.php::published()`) and use eager loading where expected.
 - API resources should extend common AR models and trim/shape fields (example: `api/modules/v1/resources/Article.php`) instead of duplicating model logic.
+- `backend/modules/*/models/search` is only for listing/filtering/search-form concerns (grid filters, sorting, query params) and MUST NOT duplicate primary/full AR entities.
 - Check `behaviors()` before adding manual lifecycle logic (timestamp, sluggable, upload, login timestamp, access behaviors are heavily used). Data manipulation belongs here, not in the controller.
 
 ### View (Passive Views)

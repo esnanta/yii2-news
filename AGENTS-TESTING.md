@@ -4,6 +4,8 @@
 
 - This document follows the architecture in `AGENTS.md`: multi-app Yii2 (`backend/`, `frontend/`, `api/`, `console/`, shared logic in `common/`).
 - Primary testing focus remains `backend/` and shared business logic in `common/`.
+- Canonical/full ActiveRecord domain models are centered in `common/models` and should be treated as the single source of truth in tests.
+- `backend/modules/*/models/search` is limited to listing/filtering/search-form behavior; tests should not treat search models as domain/business model replacements.
 - `console/` and `api/` are selective/skeleton scope for now.
 - Use canonical project commands from `composer.json` and avoid legacy service names.
 
@@ -138,12 +140,14 @@ Recommended targets:
 - query classes/scopes (e.g. `ArticleQuery::published()`)
 - command handlers and small domain utilities
 - custom behaviors with isolated logic
+- backend search models only for filtering/sorting/query-param mapping behavior
 
 Rules:
 
 - keep tests fast and isolated
 - avoid full app boot unless required
 - avoid DB/filesystem unless that interaction is the test subject
+- keep domain/business assertions on canonical models in `common/models`, not on backend search models
 - do not unit test trivial getters/setters or framework internals
 
 ---
