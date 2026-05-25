@@ -1,0 +1,16 @@
+# Check current versions (optional)
+node -v
+npm -v
+
+cd ~
+wget https://nodejs.org/dist/v20.19.2/node-v20.19.2-linux-x64.tar.gz
+tar -xzf node-v20.19.2-linux-x64.tar.gz
+mv node-v20.19.2-linux-x64 nodejs
+
+# Add Node.js to PATH (append once)
+grep -qxF 'export PATH="$HOME/nodejs/bin:$PATH"' ~/.bashrc || echo 'export PATH="$HOME/nodejs/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
+
+# Verify installation
+node -v
+npm -v
