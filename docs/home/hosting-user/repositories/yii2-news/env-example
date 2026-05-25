@@ -1,0 +1,19 @@
+# Framework
+# ---------
+YII_DEBUG=0
+YII_ENV=prod
+APP_MAINTENANCE=0
+
+# Application
+# -----------
+LINK_ASSETS=0
+
+
+# Single domain example
+# ----
+FRONTEND_HOST_INFO=https://example.com
+FRONTEND_BASE_URL=/news
+BACKEND_HOST_INFO=https://example.com
+BACKEND_BASE_URL=/news/backend
+STORAGE_HOST_INFO=https://example.com
+STORAGE_BASE_URL=/news/storage
