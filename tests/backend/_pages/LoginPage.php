@@ -6,18 +6,18 @@ use tests\backend\AcceptanceTester;
 use yii\helpers\Url;
 
 /**
- * Represents login page
+ * Represents login page.
  */
 class LoginPage
 {
     /** @var string */
     public $route = '/sign-in/login';
+
     /** @var AcceptanceTester */
     protected $actor;
 
     /**
      * LoginPage constructor.
-     * @param $actor
      */
     public function __construct($actor)
     {
@@ -26,14 +26,12 @@ class LoginPage
     }
 
     /**
-     * @param $actor
      * @return LoginPage
      */
     public static function openBy($actor)
     {
         return new self($actor);
     }
-
 
     /**
      * @param string $username
