@@ -1,4 +1,7 @@
 <?php
+
+use cheatsheet\Time;
+
 /**
  * @author Eugene Terentev <eugene@terentev.net>
  */
@@ -14,7 +17,7 @@ return [
         'updated_by' => 1,
         'published_at' => time() - 10,
         'created_at' => time() - 10,
-        'updated_at' => time() - 10
+        'updated_at' => time() - 10,
     ],
     [
         'id' => 2,
@@ -25,8 +28,8 @@ return [
         'created_by' => 1,
         'updated_by' => 1,
         'status' => 1,
-        'published_at' => time() + \cheatsheet\Time::SECONDS_IN_A_YEAR,
-        'created_at' => time() + \cheatsheet\Time::SECONDS_IN_A_YEAR,
-        'updated_at' => time() + \cheatsheet\Time::SECONDS_IN_A_YEAR
-    ]
+        'published_at' => time() + Time::SECONDS_IN_A_YEAR,
+        'created_at' => time() + Time::SECONDS_IN_A_YEAR,
+        'updated_at' => time() + Time::SECONDS_IN_A_YEAR,
+    ],
 ];

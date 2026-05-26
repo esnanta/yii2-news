@@ -1,12 +1,15 @@
 <?php
+
+use Dotenv\Dotenv;
+
 /**
  * @author Eugene Terentev <eugene@terentev.net>
  */
 
-require __DIR__ . '/../vendor/autoload.php';
+require __DIR__.'/../vendor/autoload.php';
 
 // Environment
-$dotenv = \Dotenv\Dotenv::createImmutable(dirname(__DIR__));
+$dotenv = Dotenv::createImmutable(dirname(__DIR__));
 $dotenv->load();
 $dotenv->required('TEST_DB_DSN');
 $dotenv->required('TEST_DB_USERNAME');

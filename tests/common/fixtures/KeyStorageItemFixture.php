@@ -6,7 +6,7 @@ use common\models\KeyStorageItem;
 use yii\test\ActiveFixture;
 
 /**
- * Key storage item fixture
+ * Key storage item fixture.
  */
 class KeyStorageItemFixture extends ActiveFixture
 {

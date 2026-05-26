@@ -11,6 +11,6 @@ class ArticleAttachmentFixture extends ActiveFixture
 {
     public $modelClass = 'common\models\ArticleAttachment';
     public $depends = [
-        ArticleFixture::class
+        ArticleFixture::class,
     ];
 }

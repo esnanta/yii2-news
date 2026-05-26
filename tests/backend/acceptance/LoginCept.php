@@ -37,7 +37,7 @@ if (method_exists($I, 'wait')) {
 $I->expectTo('see that user is logged');
 $I->seeLink('Logout');
 
-/** Uncomment if using WebDriver
+/* Uncomment if using WebDriver
  * $I->click('Logout (erau)');
  * $I->dontSeeLink('Logout (erau)');
  * $I->seeLink('Login');

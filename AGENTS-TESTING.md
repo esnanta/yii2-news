@@ -173,7 +173,7 @@ If custom behavior changes save/update lifecycle (`TimestampBehavior`, `Sluggabl
 Prioritize tests for operational safety:
 
 - setup/bootstrap commands
-- migration and RBAC migration behavior
+- project-specific migration/RBAC command wiring (avoid retesting Yii2 framework internals)
 - maintenance toggle and cache/queue-related commands
 
 ### API (Skeleton)

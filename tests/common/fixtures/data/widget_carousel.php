@@ -2,8 +2,8 @@
 
 return [
     [
-        "id" => "1",
-        "key" => "index",
-        "status" => "1"
-    ]
+        'id' => '1',
+        'key' => 'index',
+        'status' => '1',
+    ],
 ];

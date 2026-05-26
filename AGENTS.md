@@ -34,6 +34,7 @@
 - composer docker:tests prepares test DB/build artifacts, then starts a PHP server in the console container; run docker-compose exec -T console vendor/bin/codecept run```` in another terminal to execute suites.
 - Frontend/backend bundles are produced by webpack to `frontend/web/bundle` and `backend/web/bundle` (`webpack.config.js`, `npm run build`).
 - Tests are Codeception per app (`tests/{common,console,backend,frontend,api}` + root `codeception.yml`), with `tests/bin/yii` and `TEST_DB_*` env vars.
+- If test execution reports `Class "Yii" not found` in console context, verify bootstrap via `php console/yii` first (for example `php console/yii help`) and then run tests from the project root/console container.
 - `taskctl.yaml` references old compose service names (`app`, `webpacker`) while `docker-compose.yml` uses `console`, `node`; use composer scripts unless intentionally updating taskctl.
 - `docs/testing.md` also uses legacy `docker-compose exec ... app` examples; follow `composer.json`/`README.md` commands that target the `console` service.
 

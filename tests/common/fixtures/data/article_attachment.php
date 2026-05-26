@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author Eugene Terentev <eugene@terentev.net>
  */
@@ -9,6 +10,6 @@ return [
         'path' => 'test-file.png',
         'name' => 'Test File',
         'base_url' => 'http://example.org',
-        'size' => 1024
-    ]
+        'size' => 1024,
+    ],
 ];

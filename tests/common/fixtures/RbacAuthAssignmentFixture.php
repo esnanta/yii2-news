@@ -5,7 +5,7 @@ namespace tests\common\fixtures;
 use yii\test\ActiveFixture;
 
 /**
- * User fixture
+ * User fixture.
  */
 class RbacAuthAssignmentFixture extends ActiveFixture
 {

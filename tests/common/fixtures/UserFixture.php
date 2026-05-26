@@ -6,7 +6,7 @@ use common\models\User;
 use yii\test\ActiveFixture;
 
 /**
- * User fixture
+ * User fixture.
  */
 class UserFixture extends ActiveFixture
 {
