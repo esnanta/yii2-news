@@ -108,9 +108,9 @@ This deployment path assumes you have terminal access on your hosting server.
 
 Install these tools first:
 
-- Composer: [`docs/home/install_composer`](docs/home/install_composer)
-- Node.js: [`docs/home/install_nodejs`](docs/home/install_nodejs)
-- taskctl: [`docs/home/install_taskctl`](docs/home/install_taskctl)
+- Composer: [`docs/hosting/install_composer`](docs/hosting/install_composer)
+- Node.js: [`docs/hosting/install_nodejs`](docs/hosting/install_nodejs)
+- taskctl: [`docs/hosting/install_taskctl`](docs/hosting/install_taskctl)
 
 ### Deploy steps
 
@@ -131,7 +131,7 @@ taskctl -c taskctl.hosting.yaml hosting:deploy
 
 3. If deployment succeeds, your hosting directory structure should match:
 
-[`docs/home/hosting-dir-example`](docs/home/hosting-dir-example)
+[`docs/hosting/directory-example`](docs/hosting/directory-example)
 
 4. Configure `.env` in `~/repositories/yii2-news/.env` (adjust values for your domain):
 
@@ -150,7 +150,7 @@ STORAGE_BASE_URL=/news/storage
 
 You can use this file as a reference template:
 
-[`docs/home/hosting-dir-example/repositories/yii2-news/env-example`](docs/home/hosting-dir-example/repositories/yii2-news/env-example)
+[`docs/hosting/directory-example/repositories/yii2-news/env-example`](docs/hosting/directory-example/repositories/yii2-news/env-example)
 
 ## Documentation
 
@@ -161,12 +161,11 @@ For more detailed guides, see:
 - Components and architecture: [`docs/components.md`](docs/components.md)
 - Console commands: [`docs/console.md`](docs/console.md)
 - FAQ: [`docs/faq.md`](docs/faq.md)
-- Hosting directory reference: [`docs/home/hosting-directory.md`](docs/home/hosting-directory.md)
+- Hosting directory reference: [`docs/hosting/hosting-directory.md`](docs/hosting/hosting-directory.md)
 
 ## Notes
 
 - Environment values are loaded from `.env` via `common/env.php` (`env()` helper)
-- For clearer intent, consider renaming `docs/home/` to `docs/hosting/` in a follow-up cleanup
 
 ## Contribution
 
