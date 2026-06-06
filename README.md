@@ -76,11 +76,6 @@ php console/yii app/setup --interactive=0
 npm run build
 ```
 
-5. Point your web server to these entry points:
-
-- `frontend/web/index.php`
-- `backend/web/index.php`
-- `storage/web/index.php`
 
 If `taskctl` is not available, use this fallback for dependency installation:
 
