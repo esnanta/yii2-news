@@ -1,4 +1,4 @@
-/home/u7897825
+/home/your-username
 │
 ├── public_html
 │   └── news
