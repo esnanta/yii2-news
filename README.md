@@ -166,7 +166,7 @@ For more detailed guides, see:
 - Components and architecture: [`docs/components.md`](docs/components.md)
 - Console commands: [`docs/console.md`](docs/console.md)
 - FAQ: [`docs/faq.md`](docs/faq.md)
-- Hosting directory reference: [`docs/hosting/hosting-directory.md`](docs/hosting/hosting-directory.md)
+- Hosting directory reference: [https://github.com/esnanta/yii2-news/blob/main/docs/hosting/hosting-directory.md?plain=1](https://github.com/esnanta/yii2-news/blob/main/docs/hosting/hosting-directory.md?plain=1)
 
 ## Notes
 
