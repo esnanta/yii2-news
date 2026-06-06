@@ -14,7 +14,7 @@ use yii\helpers\Html;
 
 $backendBaseUrl = rtrim(Yii::getAlias('@backendUrl'), '/');
 $backendLoginUrl = $backendBaseUrl.'/sign-in/login';
-$backendDashboardUrl = $backendBaseUrl.'/site/index';
+$backendDashboardUrl = $backendBaseUrl.'/timeline-event/index';
 $currentRoute = '/'.Yii::$app->controller->getRoute();
 $currentSlug = Yii::$app->request->get('slug');
 $currentCategoryId = Yii::$app->request->get('cat');
