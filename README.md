@@ -23,13 +23,13 @@ This project is based on Yii2 Starter Kit and adapted for a news portal workflow
 
 ## Screenshots
 
-See more screenshots at:
+See more at:
 https://github.com/esnanta/yii2-news/tree/main/screenshots
 
-### Screenshot frontend - Home
+### Frontend - Home
 ![Screenshot frontend - Home](https://github.com/esnanta/yii2-news/blob/main/screenshots/home-1.png)
 
-### Screenshot backend - Dashboard - article
+### Backend - Dashboard - article
 ![Screenshot backend - Dashboard - article](https://github.com/esnanta/yii2-news/blob/main/screenshots/dashboard-2.png)
 
 ## Application map
