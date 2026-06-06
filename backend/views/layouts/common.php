@@ -39,7 +39,12 @@ $logEntries = [
 ];
 foreach (SystemLog::find()->orderBy(['log_time' => SORT_DESC])->limit(5)->all() as $logEntry) {
     $logEntries[] = [
-        'label' => FAS::icon('exclamation-triangle', ['class' => [Logger::LEVEL_ERROR === $logEntry->level ? 'text-red' : 'text-yellow']]).' '.$logEntry->category,
+        'label' => FAS::icon(
+            'exclamation-triangle',
+            ['class' => [
+                Logger::LEVEL_ERROR === $logEntry->level ? 'text-red' : 'text-yellow',
+            ]]
+        ).' '.$logEntry->category,
         'url' => ['/system/log/view', 'id' => $logEntry->id],
     ];
     $logEntries[] = '<div class="dropdown-divider"></div>';
