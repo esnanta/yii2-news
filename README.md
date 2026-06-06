@@ -168,10 +168,6 @@ For more detailed guides, see:
 - FAQ: [`docs/faq.md`](docs/faq.md)
 - Hosting directory reference: [`docs/hosting/hosting-directory.md`](https://github.com/esnanta/yii2-news/blob/main/docs/hosting/hosting-directory.md?plain=1)
 
-## Notes
-
-- Environment values are loaded from `.env` via `common/env.php` (`env()` helper)
-
 ## Contribution
 
 Pull requests, issues, and suggestions are welcome.
