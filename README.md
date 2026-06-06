@@ -21,107 +21,76 @@ This project is based on Yii2 Starter Kit and adapted for a news portal workflow
 - Users and RBAC management
 - Events timeline, logs viewer, and system monitoring
 
+## Screenshots
+
+### Screenshot frontend - Home
+![Screenshot frontend - Home](https://github.com/esnanta/yii2-news/blob/main/screenshots/home-1.png)
+
+### Screenshot backend - Dashboard - article
+![Screenshot backend - Dashboard - article](https://github.com/esnanta/yii2-news/blob/main/screenshots/dashboard-2.png)
+
 ## Application map
 
 - `frontend/`: public web interface for readers
 - `backend/`: admin panel for content and user management
-- `api/`: REST API endpoints
 - `console/`: setup, migration, and maintenance commands
 - `common/`: shared business logic, models, services, and config
 - `storage/`: uploaded files and cache serving
 
-Screenshots:
+## Requirements (Manual Setup)
 
-- Frontend
-  ![Frontend](https://github.com/esnanta/yii2-news/blob/main/screenshots/home.png)
-- Backend
-  ![Backend](https://github.com/esnanta/yii2-news/blob/main/screenshots/article_create.png)
-
-## Requirements
-
-### Docker path (recommended)
-- Docker
-- Docker Compose
-- Composer 2.x
-
-### Manual path (without Docker)
 - PHP 8.x
 - Composer 2.x
 - Node.js + npm
 - MySQL/MariaDB
 - Web server (Nginx/Apache)
+- `taskctl` (recommended for shortcut commands)
 
 ## Installation
 
-Choose one installation path:
+### Manual installation (non-Docker)
 
-- [Docker installation](#docker-installation-recommended)
-- [Manual installation](#manual-installation-non-docker)
+1. Clone this repository and enter the project directory:
 
-### Docker installation (recommended)
+```bash
+git clone https://github.com/esnanta/yii2-news.git
+cd yii2-news
+```
 
-1. Copy environment file:
+2. Install dependencies:
+
+```bash
+taskctl install
+```
+
+3. Create `.env`:
 
 ```bash
 cp .env.dist .env
 ```
 
-2. Build and set up app/services:
+4. Run application setup and build frontend/backend bundles:
 
 ```bash
-composer docker:build
-```
-
-3. Start containers (if not already running):
-
-```bash
-composer docker:start
-```
-
-4. Open applications:
-
-- Frontend: `http://yii2-starter-kit.localhost`
-- Backend: `http://backend.yii2-starter-kit.localhost`
-- API base: `http://api.yii2-starter-kit.localhost`
-- Storage: `http://storage.yii2-starter-kit.localhost`
-- Mailcatcher: `http://localhost:1080`
-
-### Manual installation (non-Docker)
-
-1. Create a new project (you can replace `myproject.com` with your preferred folder name):
-
-```bash
-composer create-project yii2-starter-kit/yii2-starter-kit myproject.com --ignore-platform-reqs
-```
-
-2. Move into the project directory and install dependencies:
-
-```bash
-cd myproject.com
-taskctl install
-```
-
-3. Run setup/build with one of these options:
-
-- Option A:
-
-```bash
-taskctl build:env
-```
-
-- Option B:
-
-```bash
-php console/yii app/setup
+php console/yii app/setup --interactive=0
 npm run build
 ```
 
-4. Point your web server to these entry points:
+5. Point your web server to these entry points:
 
 - `frontend/web/index.php`
 - `backend/web/index.php`
-- `api/web/index.php`
 - `storage/web/index.php`
+
+If `taskctl` is not available, use this fallback for dependency installation:
+
+```bash
+composer install
+npm install
+```
+
+> Note: `taskctl install` only installs dependencies (`composer install` + `npm install`).
+> Setup (`app/setup`) and asset build (`npm run build`) are still required.
 
 ## Default accounts
 
@@ -131,37 +100,57 @@ Seed data from migrations includes:
 - `manager`: `manager` / `manager`
 - `user`: `user` / `user`
 
-## API and Swagger
+## Shared Hosting Deployment
 
-- Swagger UI: `http://api.yii2-starter-kit.localhost/site/docs`
-- OpenAPI JSON: `http://api.yii2-starter-kit.localhost/site/json-schema`
-- Active route: `v1/article` (`index`, `view`, `options`)
+This deployment path assumes you have terminal access on your hosting server.
 
-## Development workflow
+### Prerequisites
 
-Use composer scripts:
+Install these tools first:
 
-```bash
-composer docker:start
-composer docker:build
-composer docker:tests
-composer docker:cleanup
-```
+- Composer: [`docs/home/install_composer`](docs/home/install_composer)
+- Node.js: [`docs/home/install_nodejs`](docs/home/install_nodejs)
+- taskctl: [`docs/home/install_taskctl`](docs/home/install_taskctl)
 
-After `composer docker:tests`, run tests in another terminal:
+### Deploy steps
 
-```bash
-docker-compose exec -T console vendor/bin/codecept run
-```
+1. Use your hosting Git menu/tooling to pull this repository:
 
-## Database utilities
+`https://github.com/esnanta/yii2-news`
 
-Destructive database reset:
+Most shared hosting setups place it under:
+
+`~/repositories/yii2-news`
+
+2. Use terminal and run deployment pipeline:
 
 ```bash
-php console/yii migrate/fresh --interactive=0
-php console/yii rbac-migrate/up --interactive=0
+cd ~/repositories/yii2-news
+taskctl -c taskctl.hosting.yaml hosting:deploy
 ```
+
+3. If deployment succeeds, your hosting directory structure should match:
+
+[`docs/home/hosting-dir-example`](docs/home/hosting-dir-example)
+
+4. Configure `.env` in `~/repositories/yii2-news/.env` (adjust values for your domain):
+
+```dotenv
+YII_DEBUG=0
+YII_ENV=prod
+APP_MAINTENANCE=0
+
+FRONTEND_HOST_INFO=https://example.com
+FRONTEND_BASE_URL=/news
+BACKEND_HOST_INFO=https://example.com
+BACKEND_BASE_URL=/news/backend
+STORAGE_HOST_INFO=https://example.com
+STORAGE_BASE_URL=/news/storage
+```
+
+You can use this file as a reference template:
+
+[`docs/home/hosting-dir-example/repositories/yii2-news/env-example`](docs/home/hosting-dir-example/repositories/yii2-news/env-example)
 
 ## Documentation
 
@@ -172,12 +161,12 @@ For more detailed guides, see:
 - Components and architecture: [`docs/components.md`](docs/components.md)
 - Console commands: [`docs/console.md`](docs/console.md)
 - FAQ: [`docs/faq.md`](docs/faq.md)
+- Hosting directory reference: [`docs/home/hosting-directory.md`](docs/home/hosting-directory.md)
 
 ## Notes
 
 - Environment values are loaded from `.env` via `common/env.php` (`env()` helper)
-- API routing is defined explicitly in `api/config/_urlManager.php`
-- If Linux bind-mount permissions drift, fix permissions for `frontend/runtime`, `frontend/web/assets`, `backend/runtime`, and `backend/web/assets`
+- For clearer intent, consider renaming `docs/home/` to `docs/hosting/` in a follow-up cleanup
 
 ## Contribution
 
