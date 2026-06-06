@@ -23,6 +23,9 @@ This project is based on Yii2 Starter Kit and adapted for a news portal workflow
 
 ## Screenshots
 
+See more screenshots at:
+https://github.com/esnanta/yii2-news/tree/main/screenshots
+
 ### Screenshot frontend - Home
 ![Screenshot frontend - Home](https://github.com/esnanta/yii2-news/blob/main/screenshots/home-1.png)
 
@@ -72,8 +75,7 @@ cp .env.dist .env
 4. Run application setup and build frontend/backend bundles:
 
 ```bash
-php console/yii app/setup --interactive=0
-npm run build
+taskctl local:build
 ```
 
 
@@ -84,8 +86,16 @@ composer install
 npm install
 ```
 
+Then continue with environment setup and build:
+
+```bash
+cp .env.dist .env
+php console/yii app/setup --interactive=0
+npm run build
+```
+
 > Note: `taskctl install` only installs dependencies (`composer install` + `npm install`).
-> Setup (`app/setup`) and asset build (`npm run build`) are still required.
+> Then run `cp .env.dist .env` and `taskctl local:build`.
 
 ## Default accounts
 
