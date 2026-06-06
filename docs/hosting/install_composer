@@ -1,23 +1,23 @@
 # =====================================================
-# MASUK KE HOME DIRECTORY
+# GO TO HOME DIRECTORY
 # =====================================================
 
 cd ~
 
 # =====================================================
-# DOWNLOAD INSTALLER COMPOSER
+# DOWNLOAD COMPOSER INSTALLER
 # =====================================================
 
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 
 # =====================================================
-# INSTALL COMPOSER KE ~/bin
+# INSTALL COMPOSER TO ~/bin
 # =====================================================
 
 php composer-setup.php --install-dir=$HOME/bin --filename=composer
 
 # =====================================================
-# VERIFY & HAPUS FILE INSTALLER
+# VERIFY INSTALLATION & REMOVE INSTALLER FILE
 # =====================================================
 composer --version
 rm composer-setup.php
