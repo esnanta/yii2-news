@@ -2,12 +2,19 @@
 │
 ├── public_html
 │   └── news
-│       │
-│       ├── .htaccess
-│       │
+│       ├── .htaccess                       # copied from repository root
+│       ├── backend
+│       │   └── web                         # copied from repositories/yii2-news/backend/web
+│       │       ├── index.php               # replaced from index-hosting.php during deploy
+│       │       ├── .htaccess
+│       │       ├── assets
+│       │       ├── bundle
+│       │       ├── css
+│       │       ├── img
+│       │       └── js
 │       ├── frontend
-│       │   └── web
-│       │       ├── index.php
+│       │   └── web                         # copied from repositories/yii2-news/frontend/web
+│       │       ├── index.php               # replaced from index-hosting.php during deploy
 │       │       ├── .htaccess
 │       │       ├── assets
 │       │       ├── bundle
@@ -15,65 +22,42 @@
 │       │       ├── img
 │       │       ├── js
 │       │       └── themes
-│       │
-│       ├── backend
-│       │   └── web
-│       │       ├── index.php
-│       │       ├── .htaccess
-│       │       ├── assets
-│       │       ├── bundle
-│       │       ├── css
-│       │       ├── img
-│       │       └── js
-│       │
 │       └── storage
-│           ├── config
-│           │   ├── web.php
-│           │
-│           ├── cache
-│           │
-│           └── web
-│               ├── index.php
+│           ├── cache -> $HOME/repositories/yii2-news/storage/cache
+│           └── web                         # copied from repositories/yii2-news/storage/web
+│               ├── index.php               # replaced from index-hosting.php during deploy
 │               ├── .htaccess
-│               │
-│               └── source
-│                   ├── 1
-│                   │   ├── *.jpg
-│                   │   └── ...
-│                   │
-│                   └── legacy_blog
-│
+│               └── source -> $HOME/repositories/yii2-news/storage/web/source
 │
 └── repositories
     └── yii2-news
-        │
         ├── .git
         ├── .github
         ├── .idea
         ├── .env
-        │
         ├── api
         ├── backend
+        │   ├── runtime                     # writable, used directly from repository
+        │   └── web
         ├── common
         ├── console
         ├── deploy
         ├── docker
         ├── docs
         ├── frontend
+        │   ├── runtime                     # writable, used directly from repository
+        │   └── web
         ├── node_modules
-        ├── tests
-        ├── vendor
-        │
         ├── storage
-        │   ├── cache
+        │   ├── cache                       # writable, symlink target in public_html/news/storage/cache
         │   ├── config
         │   └── web
-        │       └── source
-        │           └── legacy_blog
-        │
+        │       └── source                  # writable, symlink target in public_html/news/storage/web/source
+        ├── tests
+        ├── vendor
         ├── composer.json
         ├── composer.lock
         ├── package.json
         ├── package-lock.json
-        ├── taskctl.yml
+        ├── taskctl.hosting.yaml
         └── ...
