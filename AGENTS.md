@@ -66,3 +66,8 @@
 ## Additional Reading
 - [Yii2 Boost Rules](console/.cursor/rules/yii2-boost.mdc): Comprehensive Yii2 coding standards and patterns.
 - [AI Guidelines](console/.ai/guidelines): Detailed domain-specific guides (Auth, DB, Mailer, etc.).
+
+## Software engineering principles (read)
+- High-level SE principles used by maintainers are documented in `docs/sep/se_principle.md` — consult it for guidance when designing features or deciding scope.
+- Key ideas included: YAGNI (don't add unused features), KISS (keep designs simple), MVP / MMF and ROI-driven deliveries, Gall's law (evolve from simple working systems), and "Least" principles (Least Astonishment, Least Effort).
+- When in doubt about adding complexity or features, prefer the smallest change that delivers customer value and iterate.

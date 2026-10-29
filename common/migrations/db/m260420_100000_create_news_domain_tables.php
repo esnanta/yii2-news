@@ -26,7 +26,7 @@ class m260420_100000_create_news_domain_tables extends Migration
         $this->createTable('{{%social_platform}}', array_merge([
             'id' => $this->primaryKey(),
             'code' => $this->string(50)->notNull(),
-            'name' => $this->string(100)->notNull(),
+            'title' => $this->string(100)->notNull(),
             'base_url' => $this->string(255),
             'sequence' => $this->integer()->defaultValue(0),
         ], $this->auditColumns()));
